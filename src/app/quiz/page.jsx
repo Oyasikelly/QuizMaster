@@ -3,6 +3,7 @@ import { useState } from "react";
 
 // components
 import QuizQuestion from "../../components/QuizQuestion";
+import Link from "next/link";
 
 const questions = [
   {
@@ -55,12 +56,15 @@ const Quiz = () => {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto text-center">
+    <div className="w-full max-w-2xl mx-auto flex flex-col items-center text-center">
       <QuizQuestion
         question={questions[currentQuestionIndex].question}
         options={questions[currentQuestionIndex].options}
         onAnswer={handleAnswer}
       />
+      <div className="w-fit  bg-blue-500 text-white px-4 py-[0.5rem] mt-10 hover:bg-blue-600">
+        <Link href="/">Go to main menu</Link>
+      </div>
     </div>
   );
 };

@@ -1,8 +1,9 @@
 "use client";
+
 import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const TeenagersResults = () => {
+const AdultResults = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const correctAnswers = parseInt(searchParams.get("correct"), 10);
@@ -35,7 +36,7 @@ const TeenagersResults = () => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => router.push("/quiz/teenagers")}
+          onClick={() => router.push("/quiz")}
           className="bg-purple-500 hover:bg-purple-700 text-white py-3 px-6 rounded-lg text-xl w-full"
         >
           Try Again
@@ -44,4 +45,5 @@ const TeenagersResults = () => {
     </div>
   );
 };
-export default TeenagersResults;
+
+export default AdultResults;

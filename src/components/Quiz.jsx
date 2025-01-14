@@ -80,29 +80,33 @@ const Quiz = ({ initialQuestions }) => {
 
     // Find the selected category based on the current pathname
 
-    const selectedCategory = Categories.find(
-      (category) => pathname === category.pathname
-    );
+    // const selectedCategory = Categories.find(
+    //   (category) => pathname === category.pathname
+    // );
 
-    console.log(
-      pathname,
-      Categories.map((cat) => cat.pathname)
-    );
-    // Ensure a valid category is selected
-    if (selectedCategory && selectedCategory.pathname) {
-      // Append '/results' to the selected category's pathname
-      const resultsPath = `${selectedCategory.pathname}/results`;
+    // console.log(
+    //   pathname,
+    //   Categories.map((cat) => cat.pathname)
+    // );
+    // // Ensure a valid category is selected
+    // if (selectedCategory && selectedCategory.pathname) {
+    //   // Append '/results' to the selected category's pathname
+    //   const resultsPath = `${selectedCategory.pathname}/results`;
 
-      // Navigate to the new path with query parameters
-      router.push(
-        `${resultsPath}?correct=${correctAnswersCount}&total=${questions.length}`
-      );
-    } else {
-      console.error(
-        "No matching category found for the current pathname:",
-        pathname
-      );
-    }
+    //   // Navigate to the new path with query parameters
+    //   router.push(
+    //     `${resultsPath}?correct=${correctAnswersCount}&total=${questions.length}`
+    //   );
+    // } else {
+    //   console.error(
+    //     "No matching category found for the current pathname:",
+    //     pathname
+    //   );
+    // }
+
+    router.push(
+      `/quiz/results?correct=${correctAnswersCount}&total=${questions.length}`
+    );
   };
 
   const formatTime = (seconds) => {
