@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
@@ -41,39 +42,37 @@ export default function Home() {
             Select a Quiz Category:
           </motion.h2>
           <div className="flex flex-wrap justify-center gap-4 mt-4">
-            {["Science", "History", "General Knowledge"].map(
-              (category, index) => (
-                <motion.div
-                  key={category}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
+            {["YAYA", "Adults", "Teenagers"].map((category, index) => (
+              <motion.div
+                key={category}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Link
+                  href={`/quiz/${category.toLocaleLowerCase()}`}
+                  className={`py-2 px-4 rounded shadow ${
+                    index === 0
+                      ? "bg-blue-500 hover:bg-blue-600 text-white"
+                      : index === 1
+                      ? "bg-green-500 hover:bg-green-600 text-white"
+                      : "bg-purple-500 hover:bg-purple-600 text-white"
+                  }`}
                 >
-                  <Link href={`/quiz/${category.toLowerCase()}`}>
-                    <a
-                      className={`py-2 px-4 rounded shadow ${
-                        index === 0
-                          ? "bg-blue-500 hover:bg-blue-600 text-white"
-                          : index === 1
-                          ? "bg-green-500 hover:bg-green-600 text-white"
-                          : "bg-purple-500 hover:bg-purple-600 text-white"
-                      }`}
-                    >
-                      {category}
-                    </a>
-                  </Link>
-                </motion.div>
-              )
-            )}
+                  {category}
+                </Link>
+              </motion.div>
+            ))}
           </div>
         </section>
 
         {/* Start Quiz */}
         <section className="mt-6">
           <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
-            <Link href="/quiz">
-              <a className="bg-yellow-500 text-white py-3 px-6 rounded shadow hover:bg-yellow-600 font-medium">
-                Start Random Quiz
-              </a>
+            <Link
+              href="/quiz"
+              className="bg-yellow-500 text-white py-3 px-6 rounded shadow hover:bg-yellow-600 font-medium"
+            >
+              Start Random Quiz
             </Link>
           </motion.div>
         </section>

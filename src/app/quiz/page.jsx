@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 // components
-import QuizQuestion from "../components/QuizQuestion";
+import QuizQuestion from "../../components/QuizQuestion";
 
 const questions = [
   {
