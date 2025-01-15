@@ -1,6 +1,6 @@
 // Original questions before shuffling
 
-import Quiz from "@/components/Quiz";
+import Quiz from "../../../../components/Quiz";
 
 const AdultsQuiz = () => {
   const initialQuestions = [

@@ -36,7 +36,7 @@ const AdultResults = () => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          onClick={() => router.push("/quiz")}
+          onClick={() => router.push("/")}
           className="bg-purple-500 hover:bg-purple-700 text-white py-3 px-6 rounded-lg text-xl w-full"
         >
           Try Again

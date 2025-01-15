@@ -1,12 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 
 // components
-import TimerAndQuestionSelection from "@/components/TimerAndQuestionSelection";
+import SelectTime from "../../../components/SelectTime";
 const YAYAIntroduction = () => {
-  const router = useRouter();
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-600 to-blue-600 text-white p-4 pt-10">
       <motion.div
@@ -22,15 +19,7 @@ const YAYAIntroduction = () => {
           dive in and challenge your intellect!
         </p>
 
-        <TimerAndQuestionSelection />
-        {/* <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        onClick={handleStartQuiz}
-        className="bg-yellow-500 hover:bg-yellow-600 text-black py-3 px-6 rounded-lg text-xl"
-      >
-        Start Quiz
-      </motion.button> */}
+        <SelectTime />
       </motion.div>
     </div>
   );

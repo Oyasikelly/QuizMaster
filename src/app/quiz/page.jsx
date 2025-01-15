@@ -16,6 +16,16 @@ const questions = [
     options: ["Oxygen", "Gold", "Osmium", "Ozone"],
     correctAnswer: "Oxygen",
   },
+  {
+    question: "Who led the Israelites out of Egypt?",
+    options: ["Abraham", "Moses", "David", "Joshua"],
+    correctAnswer: "Moses",
+  },
+  {
+    question: "Where was Jesus born?",
+    options: ["Jerusalem", "Nazareth", "Bethlehem", "Galilee"],
+    correctAnswer: "Bethlehem",
+  },
   // Add more questions here
 ];
 
@@ -40,13 +50,13 @@ const Quiz = () => {
 
   if (isQuizFinished) {
     return (
-      <div className="w-full max-w-2xl mx-auto text-center mt-10">
+      <div className="w-full h-screen flex flex-col justify-center items-center max-w-2xl mx-auto text-center mt-10">
         <h2 className="text-2xl font-bold text-gray-800">Quiz Finished!</h2>
         <p className="text-lg text-gray-600">
           You got {correctAnswers} out of {questions.length} correct!
         </p>
         <button
-          className="mt-4 py-2 px-6 bg-blue-500 text-white rounded shadow hover:bg-blue-600"
+          className="mt-4 w-fit py-2 px-6 bg-blue-500 text-white rounded shadow hover:bg-blue-600"
           onClick={() => window.location.reload()}
         >
           Restart Quiz
@@ -56,7 +66,7 @@ const Quiz = () => {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto flex flex-col items-center text-center">
+    <div className="w-full h-screen max-w-2xl mx-auto flex flex-col items-center justify-center text-center">
       <QuizQuestion
         question={questions[currentQuestionIndex].question}
         options={questions[currentQuestionIndex].options}

@@ -1,12 +1,9 @@
 "use client";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 
 // components
-import TimerAndQuestionSelection from "@/components/TimerAndQuestionSelection";
+import SelectTime from "../../../components/SelectTime";
 const TeenagersIntroduction = () => {
-  const router = useRouter();
-
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-600 to-blue-600 text-white p-4 pt-10">
       <motion.div
@@ -21,8 +18,7 @@ const TeenagersIntroduction = () => {
           from life experiences to Bible lessons, principles, and faith. Let's
           dive in and challenge your intellect!
         </p>
-
-        <TimerAndQuestionSelection />
+        <SelectTime />
       </motion.div>
     </div>
   );

@@ -1,5 +1,5 @@
 "use client";
-import { motion, time } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
@@ -18,20 +18,15 @@ const Categories = [
   },
 ];
 
-const TimerAndQuestionSelection = () => {
+export default function SelectTime() {
   const router = useRouter();
   const pathname = usePathname();
-  const [selectedTime, setSelectedTime] = useState(10); // Default to 10 minutes
-  //   const [selectedQuestions, setSelectedQuestions] = useState(10); // Default to 10 questions
+  const [selectedTime, setSelectedTime] = useState(10);
   const [time, setTime] = useState(10);
   const handleTimeSelection = (time) => {
     setSelectedTime(time);
     setTime(time);
   };
-
-  //   const handleQuestionsSelection = (questions) => {
-  //     setSelectedQuestions(questions);
-  //   };
 
   const handleStartQuiz = () => {
     // Find the selected category based on the current pathname
@@ -96,6 +91,4 @@ const TimerAndQuestionSelection = () => {
       </motion.div>
     </div>
   );
-};
-
-export default TimerAndQuestionSelection;
+}
