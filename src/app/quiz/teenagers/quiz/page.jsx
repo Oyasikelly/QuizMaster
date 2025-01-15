@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Quiz from "../../../../components/Quiz";
 
 const TeenagersQuiz = () => {
@@ -19,7 +20,13 @@ const TeenagersQuiz = () => {
     },
   ];
 
-  return <Quiz initialQuestions={initialQuestions} />;
+  return (
+    <Suspense
+      fallback={<div className="text-center text-white">Loading Quiz...</div>}
+    >
+      <Quiz initialQuestions={initialQuestions} />;
+    </Suspense>
+  );
 };
 
 export default TeenagersQuiz;

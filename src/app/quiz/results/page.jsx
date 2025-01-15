@@ -1,9 +1,18 @@
 "use client";
 
+import { Suspense } from "react";
 import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const AdultResults = () => {
+  return (
+    <Suspense fallback={<div>Loading results...</div>}>
+      <ResultsContent />
+    </Suspense>
+  );
+};
+
+const ResultsContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const correctAnswers = parseInt(searchParams.get("correct"), 10);

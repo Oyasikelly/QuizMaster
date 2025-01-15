@@ -1,8 +1,10 @@
 "use client";
+import { Suspense } from "react";
 import { motion } from "framer-motion";
 
 // components
 import SelectTime from "../../../components/SelectTime";
+
 const TeenagersIntroduction = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-600 to-blue-600 text-white p-4 pt-10">
@@ -18,7 +20,19 @@ const TeenagersIntroduction = () => {
           from life experiences to Bible lessons, principles, and faith. Let's
           dive in and challenge your intellect!
         </p>
-        <SelectTime />
+        <Suspense
+          fallback={
+            <div className="text-center text-white">Loading Quiz...</div>
+          }
+        >
+          {SelectTime ? (
+            <SelectTime />
+          ) : (
+            <div className="text-red-500">
+              Unable to load the timer component.
+            </div>
+          )}
+        </Suspense>
       </motion.div>
     </div>
   );

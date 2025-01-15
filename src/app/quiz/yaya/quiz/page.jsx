@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Quiz from "../../../../components/Quiz";
 const YAYAQuiz = () => {
   const initialQuestions = [
@@ -14,7 +15,13 @@ const YAYAQuiz = () => {
     // Add more questions here
   ];
 
-  return <Quiz initialQuestions={initialQuestions} />;
+  return (
+    <Suspense
+      fallback={<div className="text-center text-white">Loading Quiz...</div>}
+    >
+      <Quiz initialQuestions={initialQuestions} />
+    </Suspense>
+  );
 };
 
 export default YAYAQuiz;

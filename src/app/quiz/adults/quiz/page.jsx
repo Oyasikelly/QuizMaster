@@ -1,5 +1,6 @@
-// Original questions before shuffling
+"use client";
 
+import { Suspense } from "react";
 import Quiz from "../../../../components/Quiz";
 
 const AdultsQuiz = () => {
@@ -26,7 +27,11 @@ const AdultsQuiz = () => {
     },
   ];
 
-  return <Quiz initialQuestions={initialQuestions} />;
+  return (
+    <Suspense fallback={<div>Loading quiz...</div>}>
+      <Quiz initialQuestions={initialQuestions} />
+    </Suspense>
+  );
 };
 
 export default AdultsQuiz;

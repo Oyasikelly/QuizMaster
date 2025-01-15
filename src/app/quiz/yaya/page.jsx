@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 
 // components
 import SelectTime from "../../../components/SelectTime";
+import { Suspense } from "react";
+
 const YAYAIntroduction = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-600 to-blue-600 text-white p-4 pt-10">
@@ -18,8 +20,19 @@ const YAYAIntroduction = () => {
           from life experiences to Bible lessons, principles, and faith. Let's
           dive in and challenge your intellect!
         </p>
-
-        <SelectTime />
+        <Suspense
+          fallback={
+            <div className="text-center text-white">Loading Quiz...</div>
+          }
+        >
+          {SelectTime ? (
+            <SelectTime />
+          ) : (
+            <div className="text-red-500">
+              Failed to load the SelectTime component.
+            </div>
+          )}
+        </Suspense>
       </motion.div>
     </div>
   );
