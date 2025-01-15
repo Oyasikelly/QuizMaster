@@ -1,22 +1,27 @@
 "use client";
 
-import { Suspense } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-
-const AdultResults = () => {
-  return (
-    <Suspense fallback={<div>Loading results...</div>}>
-      <ResultsContent />
-    </Suspense>
-  );
-};
+import { motion } from "framer-motion";
 
 const ResultsContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const correctAnswers = parseInt(searchParams.get("correct"), 10);
   const totalQuestions = parseInt(searchParams.get("total"), 10);
+
+  const [answers, setAnswers] = useState([]);
+  const [questions, setQuestions] = useState([]);
+  const [showAnswers, setShowAnswers] = useState(false);
+
+  useEffect(() => {
+    const quizResults = localStorage.getItem("quizResults");
+    if (quizResults) {
+      const { answers, questions } = JSON.parse(quizResults);
+      setAnswers(answers);
+      setQuestions(questions);
+    }
+  }, []);
 
   const getPerformanceMessage = () => {
     const percentage = (correctAnswers / totalQuestions) * 100;
@@ -42,17 +47,49 @@ const ResultsContent = () => {
         <h2 className="text-2xl font-bold text-center text-green-500 mb-6">
           {getPerformanceMessage()}
         </h2>
+
+        <motion.button
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          onClick={() => setShowAnswers(!showAnswers)}
+          className="bg-blue-500 hover:bg-blue-700 text-white py-3 px-6 rounded-lg text-xl w-full mb-4"
+        >
+          {showAnswers ? "Hide Answers" : "See Answers"}
+        </motion.button>
+
+        {showAnswers && (
+          <div className="bg-gray-100 p-4 rounded-lg">
+            {questions.map((question, index) => (
+              <div key={index} className="mb-4">
+                <h3 className="font-bold">
+                  {index + 1}. {question.question}
+                </h3>
+                <p>
+                  <span className="font-semibold">Your Answer:</span>{" "}
+                  {answers[index] || "No answer selected"}
+                </p>
+                <p>
+                  <span className="font-semibold text-green-600">
+                    Correct Answer:
+                  </span>{" "}
+                  {question.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => router.push("/")}
           className="bg-purple-500 hover:bg-purple-700 text-white py-3 px-6 rounded-lg text-xl w-full"
         >
-          Try Again
+          Return to Home
         </motion.button>
       </motion.div>
     </div>
   );
 };
 
-export default AdultResults;
+export default ResultsContent;

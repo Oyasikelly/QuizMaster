@@ -1,0 +1,342 @@
+[
+  {
+    "question": "What is the smallest book in the Bible?",
+    "options": ["Obadiah", "Jude", "Philemon", "2 John"],
+    "answer": "Obadiah"
+  },
+  {
+    "question": "Who was the first king of Israel?",
+    "options": ["David", "Saul", "Solomon", "Samuel"],
+    "answer": "Saul"
+  },
+  {
+    "question": "What is the last book of the New Testament?",
+    "options": ["Hebrews", "James", "Jude", "Revelation"],
+    "answer": "Revelation"
+  },
+  {
+    "question": "How many days did God take to create the world?",
+    "options": ["6", "7", "8", "10"],
+    "answer": "6"
+  },
+  {
+    "question": "What is the longest chapter in the Bible?",
+    "options": ["Psalm 117", "Psalm 23", "Psalm 119", "Psalm 1"],
+    "answer": "Psalm 119"
+  },
+  {
+    "question": "Who interpreted Pharaoh's dream in Egypt?",
+    "options": ["Joseph", "Daniel", "Moses", "Aaron"],
+    "answer": "Joseph"
+  },
+  {
+    "question": "Which disciple denied Jesus three times?",
+    "options": ["Peter", "John", "Thomas", "Judas"],
+    "answer": "Peter"
+  },
+  {
+    "question": "In which book of the Bible is the fruit of the Spirit mentioned?",
+    "options": ["Ephesians", "Galatians", "Colossians", "Philippians"],
+    "answer": "Galatians"
+  },
+  {
+    "question": "What was the first miracle performed by Jesus?",
+    "options": [
+      "Healing the blind",
+      "Feeding the 5,000",
+      "Turning water into wine",
+      "Walking on water"
+    ],
+    "answer": "Turning water into wine"
+  },
+  {
+    "question": "Who was thrown into the lion’s den?",
+    "options": ["David", "Daniel", "Elijah", "Paul"],
+    "answer": "Daniel"
+  },
+  {
+    "question": "Who led the Israelites into the Promised Land?",
+    "options": ["Moses", "Joshua", "Aaron", "Caleb"],
+    "answer": "Joshua"
+  },
+  {
+    "question": "What is the Great Commission?",
+    "options": [
+      "Love one another",
+      "Make disciples of all nations",
+      "Keep the Sabbath holy",
+      "Pray without ceasing"
+    ],
+    "answer": "Make disciples of all nations"
+  },
+  {
+    "question": "What is the shortest verse in the Bible?",
+    "options": ["John 3:16", "Jesus wept.", "God is love.", "Fear not."],
+    "answer": "Jesus wept."
+  },
+  {
+    "question": "Who built the ark?",
+    "options": ["Moses", "Abraham", "Noah", "David"],
+    "answer": "Noah"
+  },
+  {
+    "question": "Who is known as the 'father of faith'?",
+    "options": ["Isaac", "Abraham", "Jacob", "Moses"],
+    "answer": "Abraham"
+  },
+  {
+    "question": "Which prophet was taken to heaven in a chariot of fire?",
+    "options": ["Elijah", "Elisha", "Isaiah", "Jeremiah"],
+    "answer": "Elijah"
+  },
+  {
+    "question": "What did God create on the fourth day?",
+    "options": [
+      "Animals",
+      "The sun, moon, and stars",
+      "Plants",
+      "The sky and sea"
+    ],
+    "answer": "The sun, moon, and stars"
+  },
+  {
+    "question": "What is the first commandment?",
+    "options": [
+      "You shall not murder.",
+      "You shall have no other gods before me.",
+      "Honor your father and mother.",
+      "Remember the Sabbath day."
+    ],
+    "answer": "You shall have no other gods before me."
+  },
+  {
+    "question": "Who was the strongest man in the Bible?",
+    "options": ["David", "Samson", "Goliath", "Absalom"],
+    "answer": "Samson"
+  },
+  {
+    "question": "Who betrayed Jesus for thirty pieces of silver?",
+    "options": ["Peter", "Judas Iscariot", "Thomas", "Simon"],
+    "answer": "Judas Iscariot"
+  },
+  {
+    "question": "How many plagues did God send on Egypt?",
+    "options": ["5", "7", "10", "12"],
+    "answer": "10"
+  },
+  {
+    "question": "What is the meaning of 'Emmanuel'?",
+    "options": [
+      "God with us",
+      "Savior",
+      "The Lord is my shepherd",
+      "Peace be with you"
+    ],
+    "answer": "God with us"
+  },
+  {
+    "question": "Who wrote most of the Psalms?",
+    "options": ["Solomon", "David", "Asaph", "Moses"],
+    "answer": "David"
+  },
+  {
+    "question": "Who was the first martyr in the Bible?",
+    "options": ["James", "John the Baptist", "Stephen", "Paul"],
+    "answer": "Stephen"
+  },
+  {
+    "question": "What are the first four books of the New Testament called?",
+    "options": ["Epistles", "Gospels", "Letters", "Revelations"],
+    "answer": "Gospels"
+  },
+  {
+    "question": "Who interpreted the writing on the wall for King Belshazzar?",
+    "options": ["Daniel", "Joseph", "Moses", "Elijah"],
+    "answer": "Daniel"
+  },
+  {
+    "question": "What did Jesus use to feed 5,000 men?",
+    "options": [
+      "5 loaves and 2 fish",
+      "7 loaves and 3 fish",
+      "5 loaves and 3 fish",
+      "7 loaves and 2 fish"
+    ],
+    "answer": "5 loaves and 2 fish"
+  },
+  {
+    "question": "Who was swallowed by a great fish?",
+    "options": ["Jonah", "Moses", "Elijah", "Daniel"],
+    "answer": "Jonah"
+  },
+  {
+    "question": "How many days and nights did Jesus fast in the wilderness?",
+    "options": ["30", "40", "20", "50"],
+    "answer": "40"
+  },
+  {
+    "question": "What did King Solomon ask God for?",
+    "options": ["Wealth", "Power", "Wisdom", "Long life"],
+    "answer": "Wisdom"
+  },
+  {
+    "question": "Who is known as the weeping prophet?",
+    "options": ["Isaiah", "Jeremiah", "Ezekiel", "Daniel"],
+    "answer": "Jeremiah"
+  },
+  {
+    "question": "What are the first three words of the Bible?",
+    "options": [
+      "In the beginning",
+      "God is love",
+      "Let there be",
+      "The Lord said"
+    ],
+    "answer": "In the beginning"
+  },
+  {
+    "question": "What is the main theme of the book of Proverbs?",
+    "options": ["Love", "Faith", "Wisdom", "Judgment"],
+    "answer": "Wisdom"
+  },
+  {
+    "question": "Who was the mother of Samuel, the prophet?",
+    "options": ["Hannah", "Sarah", "Rachel", "Rebekah"],
+    "answer": "Hannah"
+  },
+  {
+    "question": "How many books are there in the Bible?",
+    "options": ["39", "66", "73", "27"],
+    "answer": "66"
+  },
+  {
+    "question": "Which New Testament book is known as the 'Acts of the Apostles'?",
+    "options": ["Romans", "1 Corinthians", "Acts", "Hebrews"],
+    "answer": "Acts"
+  },
+  {
+    "question": "Who led the Israelites out of Egypt?",
+    "options": ["Abraham", "Joseph", "Moses", "Joshua"],
+    "answer": "Moses"
+  },
+  {
+    "question": "What was the name of the giant slain by David?",
+    "options": ["Saul", "Goliath", "Abner", "Haman"],
+    "answer": "Goliath"
+  },
+  {
+    "question": "What type of insect did John the Baptist eat in the wilderness?",
+    "options": ["Locusts", "Bees", "Grasshoppers", "Ants"],
+    "answer": "Locusts"
+  },
+  {
+    "question": "How many times did the Israelites march around Jericho before the walls fell?",
+    "options": ["3", "5", "7", "13"],
+    "answer": "13"
+  },
+  {
+    "question": "Who was the oldest man in the Bible?",
+    "options": ["Noah", "Methuselah", "Adam", "Enoch"],
+    "answer": "Methuselah"
+  },
+  {
+    "question": "What is the first book of the Bible?",
+    "options": ["Genesis", "Exodus", "Leviticus", "Deuteronomy"],
+    "answer": "Genesis"
+  },
+  {
+    "question": "Who was the wife of King Ahab known for her wickedness?",
+    "options": ["Jezebel", "Delilah", "Deborah", "Ruth"],
+    "answer": "Jezebel"
+  },
+  {
+    "question": "Who was the first person to see Jesus after His resurrection?",
+    "options": ["Peter", "John", "Mary Magdalene", "Thomas"],
+    "answer": "Mary Magdalene"
+  },
+  {
+    "question": "Which apostle is known as the 'doubting' disciple?",
+    "options": ["Peter", "John", "Thomas", "Andrew"],
+    "answer": "Thomas"
+  },
+  {
+    "question": "What was the name of the first man created by God?",
+    "options": ["Noah", "Adam", "Abraham", "Jacob"],
+    "answer": "Adam"
+  },
+  {
+    "question": "What is the name of the garden where Adam and Eve lived?",
+    "options": [
+      "Garden of Eden",
+      "Garden of Gethsemane",
+      "Garden of Peace",
+      "Garden of Hope"
+    ],
+    "answer": "Garden of Eden"
+  },
+  {
+    "question": "Which apostle was a tax collector before following Jesus?",
+    "options": ["Peter", "Matthew", "James", "Philip"],
+    "answer": "Matthew"
+  },
+  {
+    "question": "Which book in the Bible has the Ten Commandments?",
+    "options": ["Exodus", "Leviticus", "Numbers", "Deuteronomy"],
+    "answer": "Exodus"
+  },
+  {
+    "question": "What was the first plague God sent on Egypt?",
+    "options": ["Frogs", "Locusts", "Water turned to blood", "Darkness"],
+    "answer": "Water turned to blood"
+  },
+  {
+    "question": "Which disciple walked on water with Jesus?",
+    "options": ["Peter", "John", "James", "Andrew"],
+    "answer": "Peter"
+  },
+  {
+    "question": "How many people were on Noah's ark?",
+    "options": ["6", "8", "10", "12"],
+    "answer": "8"
+  },
+  {
+    "question": "Which book in the Bible talks about the armor of God?",
+    "options": ["Romans", "Ephesians", "Colossians", "1 Corinthians"],
+    "answer": "Ephesians"
+  },
+  {
+    "question": "What is the main theme of the book of Revelation?",
+    "options": ["Love", "Salvation", "End times", "Faith"],
+    "answer": "End times"
+  },
+  {
+    "question": "Who baptized Jesus?",
+    "options": ["Peter", "John the Baptist", "Andrew", "Philip"],
+    "answer": "John the Baptist"
+  },
+  {
+    "question": "What was the occupation of Zacchaeus?",
+    "options": ["Fisherman", "Tax collector", "Shepherd", "Carpenter"],
+    "answer": "Tax collector"
+  },
+  {
+    "question": "How many Psalms are in the Bible?",
+    "options": ["120", "150", "100", "140"],
+    "answer": "150"
+  },
+  {
+    "question": "Which Old Testament prophet was swallowed by a fish?",
+    "options": ["Jonah", "Elijah", "Daniel", "Hosea"],
+    "answer": "Jonah"
+  },
+  {
+    "question": "Who was the king during Daniel's time in the lion's den?",
+    "options": ["Nebuchadnezzar", "Belshazzar", "Darius", "Cyrus"],
+    "answer": "Darius"
+  },
+  {
+    "question": "How many tribes of Israel were there?",
+    "options": ["10", "11", "12", "13"],
+    "answer": "12"
+  }
+]

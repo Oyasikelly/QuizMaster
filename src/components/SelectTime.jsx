@@ -4,18 +4,9 @@ import { useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
 const Categories = [
-  {
-    name: "yaya",
-    pathname: "/quiz/yaya",
-  },
-  {
-    name: "adults",
-    pathname: "/quiz/adults",
-  },
-  {
-    name: "teenagers",
-    pathname: "/quiz/teenagers",
-  },
+  { name: "yaya", pathname: "/quiz/yaya" },
+  { name: "adults", pathname: "/quiz/adults" },
+  { name: "teenagers", pathname: "/quiz/teenagers" },
 ];
 
 export default function SelectTime() {
@@ -23,24 +14,27 @@ export default function SelectTime() {
   const pathname = usePathname();
   const [selectedTime, setSelectedTime] = useState(10);
   const [time, setTime] = useState(10);
+  const [selectedQuestions, setSelectedQuestions] = useState(5); // Default number of questions
+
   const handleTimeSelection = (time) => {
     setSelectedTime(time);
     setTime(time);
   };
 
+  const handleQuestionsSelection = (num) => {
+    setSelectedQuestions(num);
+  };
+
   const handleStartQuiz = () => {
-    // Find the selected category based on the current pathname
     const selectedCategory = Categories.find(
       (category) => pathname === category.pathname
     );
 
-    // Ensure a valid category is selected
     if (selectedCategory && selectedCategory.pathname) {
-      // Append '/results' to the selected category's pathname
       const resultsPath = `${selectedCategory.pathname}/quiz`;
-
-      // Navigate to the new path with query parameters
-      router.push(`${resultsPath}?time=${selectedTime}`);
+      router.push(
+        `${resultsPath}?time=${selectedTime}&questions=${selectedQuestions}`
+      );
     } else {
       console.error(
         "No matching category found for the current pathname:",
@@ -77,7 +71,22 @@ export default function SelectTime() {
             </div>
           </div>
           <div className="w-full md:w-1/2">
-            <p>The quiz time has been set for {time} minutes. Good luck!!</p>
+            <h3 className="text-lg md:text-xl mb-2">Number of Questions</h3>
+            <div className="grid grid-cols-3 gap-4 sm:gap-6">
+              {[5, 10, 15, 20].map((num) => (
+                <motion.button
+                  key={num}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => handleQuestionsSelection(num)}
+                  className={`${
+                    selectedQuestions === num ? "bg-yellow-500" : "bg-blue-500"
+                  } hover:bg-blue-700 text-white py-2 sm:py-3 px-4 sm:px-6 rounded-lg text-sm sm:text-base md:text-lg`}
+                >
+                  {num} Questions
+                </motion.button>
+              ))}
+            </div>
           </div>
         </div>
         <motion.button

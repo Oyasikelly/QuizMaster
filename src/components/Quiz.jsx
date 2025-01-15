@@ -26,6 +26,7 @@ const Quiz = ({ initialQuestions }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const userTime = parseInt(searchParams.get("time"), 10);
+  const numQuestions = parseInt(searchParams.get("questions"), 10);
 
   const [time, setTime] = useState(userTime * 60); // Time in seconds
   const [questions, setQuestions] = useState([]);
@@ -34,13 +35,15 @@ const Quiz = ({ initialQuestions }) => {
   const [timerRunning, setTimerRunning] = useState(true);
 
   useEffect(() => {
-    const shuffledQuestions = shuffleArray(initialQuestions).map((q) => ({
-      ...q,
-      options: shuffleArray(q.options),
-    }));
-    setQuestions(shuffledQuestions);
-    setAnswers(Array(shuffledQuestions.length).fill(null)); // Initialize answers
-  }, []);
+    const slicedQuestions = shuffleArray(initialQuestions)
+      .slice(0, numQuestions)
+      .map((q) => ({
+        ...q,
+        options: shuffleArray(q.options),
+      }));
+    setQuestions(slicedQuestions);
+    setAnswers(Array(slicedQuestions.length).fill(null));
+  }, [initialQuestions, numQuestions]);
 
   useEffect(() => {
     if (timerRunning && time > 0) {
@@ -74,35 +77,8 @@ const Quiz = ({ initialQuestions }) => {
       (answer, index) => answer === questions[index].answer
     ).length;
 
-    // router.push(
-    //   `/quiz/yaya/results?correct=${correctAnswersCount}&total=${questions.length}`
-    //   );
-
-    // Find the selected category based on the current pathname
-
-    // const selectedCategory = Categories.find(
-    //   (category) => pathname === category.pathname
-    // );
-
-    // console.log(
-    //   pathname,
-    //   Categories.map((cat) => cat.pathname)
-    // );
-    // // Ensure a valid category is selected
-    // if (selectedCategory && selectedCategory.pathname) {
-    //   // Append '/results' to the selected category's pathname
-    //   const resultsPath = `${selectedCategory.pathname}/results`;
-
-    //   // Navigate to the new path with query parameters
-    //   router.push(
-    //     `${resultsPath}?correct=${correctAnswersCount}&total=${questions.length}`
-    //   );
-    // } else {
-    //   console.error(
-    //     "No matching category found for the current pathname:",
-    //     pathname
-    //   );
-    // }
+    // Store the data in localStorage
+    localStorage.setItem("quizResults", JSON.stringify({ answers, questions }));
 
     router.push(
       `/quiz/results?correct=${correctAnswersCount}&total=${questions.length}`

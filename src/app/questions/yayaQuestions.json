@@ -1,0 +1,197 @@
+[
+  {
+    "question": "What is the Great Commission?",
+    "options": [
+      "To perform miracles",
+      "To preach the gospel to all nations",
+      "To build churches worldwide",
+      "To keep the commandments"
+    ],
+    "answer": "To preach the gospel to all nations"
+  },
+  {
+    "question": "Who was the youngest king in the Bible?",
+    "options": ["Josiah", "David", "Joash", "Solomon"],
+    "answer": "Joash"
+  },
+  {
+    "question": "What is the fruit of the Spirit according to Galatians 5:22-23?",
+    "options": [
+      "Faith, Hope, and Love",
+      "Love, Joy, Peace, Patience",
+      "Courage, Strength, and Wisdom",
+      "Obedience, Discipline, and Zeal"
+    ],
+    "answer": "Love, Joy, Peace, Patience"
+  },
+  {
+    "question": "Which book emphasizes that faith without works is dead?",
+    "options": ["James", "Hebrews", "Romans", "Ephesians"],
+    "answer": "James"
+  },
+  {
+    "question": "What was Paul's original name?",
+    "options": ["Peter", "Saul", "Barnabas", "Simon"],
+    "answer": "Saul"
+  },
+  {
+    "question": "Who was the first martyr in the New Testament?",
+    "options": ["Stephen", "Peter", "James", "Paul"],
+    "answer": "Stephen"
+  },
+  {
+    "question": "How many times should we forgive according to Jesus?",
+    "options": ["77 times", "7 times", "70 times 7", "Unlimited"],
+    "answer": "70 times 7"
+  },
+  {
+    "question": "Who was the first person to write about Jesus in the New Testament?",
+    "options": ["Matthew", "Mark", "John", "Luke"],
+    "answer": "Matthew"
+  },
+  {
+    "question": "What does 'Emmanuel' mean?",
+    "options": ["God with us", "Prince of Peace", "Savior", "The Lord is King"],
+    "answer": "God with us"
+  },
+  {
+    "question": "What is the meaning of the parable of the prodigal son?",
+    "options": [
+      "God rejoices when a sinner repents",
+      "God rewards those who work hard",
+      "Families should forgive each other",
+      "Obedience brings blessings"
+    ],
+    "answer": "God rejoices when a sinner repents"
+  },
+  {
+    "question": "What did Jesus say was the greatest commandment?",
+    "options": [
+      "Love the Lord your God with all your heart",
+      "Do not steal",
+      "Love your neighbor as yourself",
+      "Honor your parents"
+    ],
+    "answer": "Love the Lord your God with all your heart"
+  },
+  {
+    "question": "Who were the first disciples called by Jesus?",
+    "options": [
+      "James and John",
+      "Peter and Andrew",
+      "Philip and Bartholomew",
+      "Matthew and Thomas"
+    ],
+    "answer": "Peter and Andrew"
+  },
+  {
+    "question": "What was the first miracle Jesus performed?",
+    "options": [
+      "Healing a blind man",
+      "Raising Lazarus from the dead",
+      "Turning water into wine",
+      "Feeding the 5,000"
+    ],
+    "answer": "Turning water into wine"
+  },
+  {
+    "question": "What does 'Pentecost' mean?",
+    "options": [
+      "50 days after Passover",
+      "The coming of the Holy Spirit",
+      "The day Jesus ascended",
+      "A Jewish festival of harvest"
+    ],
+    "answer": "50 days after Passover"
+  },
+  {
+    "question": "Who was the first woman judge in Israel?",
+    "options": ["Deborah", "Esther", "Ruth", "Hannah"],
+    "answer": "Deborah"
+  },
+  {
+    "question": "What did God use to guide the Israelites in the wilderness?",
+    "options": [
+      "A star",
+      "A pillar of cloud and fire",
+      "Moses' staff",
+      "The Ark of the Covenant"
+    ],
+    "answer": "A pillar of cloud and fire"
+  },
+  {
+    "question": "Who interpreted King Nebuchadnezzar's dream?",
+    "options": ["Daniel", "Joseph", "Ezekiel", "Jeremiah"],
+    "answer": "Daniel"
+  },
+  {
+    "question": "What was the name of Abraham's first son?",
+    "options": ["Isaac", "Ishmael", "Jacob", "Esau"],
+    "answer": "Ishmael"
+  },
+  {
+    "question": "What is the meaning of the name 'Jesus'?",
+    "options": ["Messiah", "The Lord saves", "Anointed One", "Holy One"],
+    "answer": "The Lord saves"
+  },
+  {
+    "question": "Who wrote most of the Psalms?",
+    "options": ["David", "Solomon", "Asaph", "Moses"],
+    "answer": "David"
+  },
+  {
+    "question": "How many days did Jesus fast in the wilderness?",
+    "options": ["30 days", "40 days", "7 days", "21 days"],
+    "answer": "40 days"
+  },
+  {
+    "question": "Which Old Testament book contains the story of creation?",
+    "options": ["Genesis", "Exodus", "Leviticus", "Numbers"],
+    "answer": "Genesis"
+  },
+  {
+    "question": "Who was the man after God's own heart?",
+    "options": ["David", "Solomon", "Samuel", "Saul"],
+    "answer": "David"
+  },
+  {
+    "question": "How many disciples did Jesus have?",
+    "options": ["10", "11", "12", "13"],
+    "answer": "12"
+  },
+  {
+    "question": "What does Jesus refer to as the 'salt of the earth'?",
+    "options": ["Disciples", "Church", "Scriptures", "Priests"],
+    "answer": "Disciples"
+  },
+  {
+    "question": "What was the sign of God’s covenant with Noah?",
+    "options": ["Rainbow", "Fire", "Ark", "Sacrifice"],
+    "answer": "Rainbow"
+  },
+  {
+    "question": "Which prophet confronted King Ahab about his sins?",
+    "options": ["Elijah", "Elisha", "Isaiah", "Jeremiah"],
+    "answer": "Elijah"
+  },
+  {
+    "question": "Who replaced Judas Iscariot as a disciple?",
+    "options": ["Matthias", "Barnabas", "Paul", "Timothy"],
+    "answer": "Matthias"
+  },
+  {
+    "question": "Which Old Testament book is a love poem?",
+    "options": ["Psalms", "Ecclesiastes", "Song of Solomon", "Proverbs"],
+    "answer": "Song of Solomon"
+  },
+  {
+    "question": "How did God communicate with Moses at Mount Sinai?",
+    "options": [
+      "Through an angel",
+      "Through a cloud",
+      "Through a burning bush",
+      "Through lightning"
+    ],
+    "answer": "Through a burning bush"
+  }
+]
