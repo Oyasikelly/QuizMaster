@@ -2,29 +2,60 @@
 "use client";
 import { motion } from "framer-motion";
 import { useState, useEffect, Suspense } from "react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { supabase } from "../lib/supabase";
 
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
+const addQuizResult = async (resultData) => {
+  const { data, error } = await supabase
+    .from("quiz_results")
+    .upsert(resultData, {
+      onConflict: [
+        "quiz_id",
+        "correct_answers",
+        "total_questions",
+        "timestamp",
+      ],
+    });
+
+  if (error) {
+    console.error("Error adding quiz result:", error);
+  } else {
+    console.log("Quiz result added");
+  }
+
+  // const { updateData, updateError } = await supabase
+  //   .from("quiz_results")
+  //   .update(resultData)
+  //   .eq("quiz_id", resultData.quiz_id);
+
+  // if (updateError) {
+  //   console.error("Error adding quiz result:", error);
+  // } else {
+  //   console.log("Quiz result added");
+  // }
+};
+
 const Quiz = ({ initialQuestions }) => {
-  const Categories = [
-    {
-      name: "yaya",
-      pathname: "/quiz/yaya/quiz",
-    },
-    {
-      name: "adults",
-      pathname: "/quiz/adults/quiz",
-    },
-    {
-      name: "teenagers",
-      pathname: "/quiz/teenagers/quiz",
-    },
-  ];
+  // const Categories = [
+  //   {
+  //     name: "yaya",
+  //     pathname: "/quiz/yaya/quiz",
+  //   },
+  //   {
+  //     name: "adults",
+  //     pathname: "/quiz/adults/quiz",
+  //   },
+  //   {
+  //     name: "teenagers",
+  //     pathname: "/quiz/teenagers/quiz",
+  //   },
+  // ];
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const pathname = usePathname();
+  // const pathname = usePathname();
   const userTime = parseInt(searchParams.get("time"), 10);
   const numQuestions = parseInt(searchParams.get("questions"), 10);
 
@@ -71,7 +102,7 @@ const Quiz = ({ initialQuestions }) => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     setTimerRunning(false);
     const correctAnswersCount = answers.filter(
       (answer, index) => answer === questions[index].answer
@@ -79,6 +110,26 @@ const Quiz = ({ initialQuestions }) => {
 
     // Store the data in localStorage
     localStorage.setItem("quizResults", JSON.stringify({ answers, questions }));
+
+    const { data, error } = await supabase.auth.getUser();
+
+    const userId = data.user.id;
+    console.log(userId);
+
+    // Prepare the result data
+    const resultData = {
+      user_id: userId,
+      quiz_id: 1, // You can set quiz_id if you have different quiz types
+      correct_answers: correctAnswersCount,
+      total_questions: questions.length,
+      timestamp: new Date().toISOString(),
+    };
+
+    // insert results
+
+    await addQuizResult(resultData);
+    // update results
+    // await getUserQuizResults(userId);
 
     router.push(
       `/quiz/results?correct=${correctAnswersCount}&total=${questions.length}`

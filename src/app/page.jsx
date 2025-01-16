@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { FaBible, FaPeopleArrows, FaRegSmileWink } from "react-icons/fa"; // Importing icons
 import { Suspense } from "react";
 
+// components
+import LandingPage from "../components/LandingPage"
 const testimonials = [
   {
     quote:
