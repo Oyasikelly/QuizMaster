@@ -1,25 +1,30 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 
 const ResultsContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const correctAnswers = parseInt(searchParams.get("correct"), 10);
-  const totalQuestions = parseInt(searchParams.get("total"), 10);
+
+  const correctAnswers = parseInt(searchParams?.get("correct") || "0", 10);
+  const totalQuestions = parseInt(searchParams?.get("total") || "0", 10);
 
   const [answers, setAnswers] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [showAnswers, setShowAnswers] = useState(false);
 
   useEffect(() => {
-    const quizResults = localStorage.getItem("quizResults");
-    if (quizResults) {
-      const { answers, questions } = JSON.parse(quizResults);
-      setAnswers(answers);
-      setQuestions(questions);
+    try {
+      const quizResults = localStorage.getItem("quizResults");
+      if (quizResults) {
+        const { answers, questions } = JSON.parse(quizResults);
+        setAnswers(answers || []);
+        setQuestions(questions || []);
+      }
+    } catch (error) {
+      console.error("Error fetching quiz results:", error);
     }
   }, []);
 
@@ -92,4 +97,10 @@ const ResultsContent = () => {
   );
 };
 
-export default ResultsContent;
+const ResultsPage = () => (
+  <Suspense fallback={<div className="text-center text-white">Loading...</div>}>
+    <ResultsContent />
+  </Suspense>
+);
+
+export default ResultsPage;
