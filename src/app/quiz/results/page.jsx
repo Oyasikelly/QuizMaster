@@ -69,15 +69,21 @@ const ResultsContent = () => {
                 <h3 className="font-bold">
                   {index + 1}. {question.question}
                 </h3>
-                <p>
-                  <span className="font-semibold">Your Answer:</span>{" "}
-                  {answers[index] || "No answer selected"}
+                <p className="flex gap-2 items-center ">
+                  <span className="font-semibold">Your Answer:</span>
+                  <span
+                    className={`${
+                      answers[index] !== question.answer
+                        ? "text-red-500"
+                        : "text-green-500"
+                    } `}
+                  >
+                    {answers[index] || "No answer selected"}
+                  </span>
                 </p>
                 <p>
-                  <span className="font-semibold text-green-600">
-                    Correct Answer:
-                  </span>{" "}
-                  {question.answer}
+                  <span className="font-semibold">Correct Answer:</span>
+                  <span className="text-green-600">{question.answer}</span>
                 </p>
               </div>
             ))}

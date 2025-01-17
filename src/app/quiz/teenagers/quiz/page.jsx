@@ -24,7 +24,7 @@ const TeenagersQuiz = () => {
     <Suspense
       fallback={<div className="text-center text-white">Loading Quiz...</div>}
     >
-      <Quiz initialQuestions={teenagerQuestions} />;
+      <Quiz initialQuestions={teenagerQuestions} category={"Teenagers"} />;
     </Suspense>
   );
 };

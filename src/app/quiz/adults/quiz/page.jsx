@@ -29,7 +29,7 @@ const AdultsQuiz = () => {
 
   return (
     <Suspense fallback={<div>Loading quiz...</div>}>
-      <Quiz initialQuestions={adultsQuestions} />
+      <Quiz initialQuestions={adultsQuestions} category={"Adults"} />
     </Suspense>
   );
 };

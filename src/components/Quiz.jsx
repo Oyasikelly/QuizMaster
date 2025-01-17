@@ -11,33 +11,17 @@ const addQuizResult = async (resultData) => {
   const { data, error } = await supabase
     .from("quiz_results")
     .upsert(resultData, {
-      onConflict: [
-        "quiz_id",
-        "correct_answers",
-        "total_questions",
-        "timestamp",
-      ],
+      onConflict: ["user_id"], // Ensure user_id is the unique constraint in your table
     });
 
   if (error) {
-    console.error("Error adding quiz result:", error);
+    console.error("Error adding/updating quiz result:", error);
   } else {
-    console.log("Quiz result added");
+    console.log("Quiz result added/updated:", data);
   }
-
-  // const { updateData, updateError } = await supabase
-  //   .from("quiz_results")
-  //   .update(resultData)
-  //   .eq("quiz_id", resultData.quiz_id);
-
-  // if (updateError) {
-  //   console.error("Error adding quiz result:", error);
-  // } else {
-  //   console.log("Quiz result added");
-  // }
 };
 
-const Quiz = ({ initialQuestions }) => {
+const Quiz = ({ initialQuestions, category }) => {
   // const Categories = [
   //   {
   //     name: "yaya",
@@ -113,23 +97,23 @@ const Quiz = ({ initialQuestions }) => {
 
     const { data, error } = await supabase.auth.getUser();
 
-    const userId = data.user.id;
-    console.log(userId);
+    if (error) {
+      console.error("Error fetching user:", error);
+      return;
+    }
 
+    const userId = data.user.id;
+    console.log(data);
     // Prepare the result data
     const resultData = {
       user_id: userId,
-      quiz_id: 1, // You can set quiz_id if you have different quiz types
       correct_answers: correctAnswersCount,
       total_questions: questions.length,
       timestamp: new Date().toISOString(),
     };
 
-    // insert results
-
+    // Upsert quiz results
     await addQuizResult(resultData);
-    // update results
-    // await getUserQuizResults(userId);
 
     router.push(
       `/quiz/results?correct=${correctAnswersCount}&total=${questions.length}`
@@ -153,7 +137,9 @@ const Quiz = ({ initialQuestions }) => {
           transition={{ duration: 0.8 }}
           className="text-center mb-6"
         >
-          <h1 className="text-3xl md:text-4xl font-bold mb-6">YAYA Quiz</h1>
+          <h1 className="text-3xl md:text-4xl font-bold mb-6">
+            {category} Quiz
+          </h1>
           <p className="text-sm md:text-lg mb-4">
             Time Remaining: {formatTime(time)}
           </p>

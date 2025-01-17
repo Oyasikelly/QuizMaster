@@ -20,7 +20,7 @@ const YAYAQuiz = () => {
     <Suspense
       fallback={<div className="text-center text-white">Loading Quiz...</div>}
     >
-      <Quiz initialQuestions={yayaQuestions} />
+      <Quiz initialQuestions={yayaQuestions} category={"YAYA"} />
     </Suspense>
   );
 };

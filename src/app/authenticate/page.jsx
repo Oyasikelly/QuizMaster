@@ -9,6 +9,21 @@ import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabase";
 import LandingPage from "../../components/LandingPage";
 
+//update Users_id
+
+async function updateUserProfile(user_id) {
+  const { data, error } = await supabase
+    .from("users_profile")
+    .update("user_id", user_id)
+    .eq("id", user_id)
+    .select();
+
+  if (error) {
+    console.log(error);
+  } else {
+    console.log(data);
+  }
+}
 const nameOfClasses = ["wisdom", "adult", "holiness", "teenager"];
 const AuthPage = () => {
   const [showAuth, setShowAuth] = useState(false);
@@ -71,7 +86,7 @@ const AuthPage = () => {
         return;
       }
 
-      const { error: profileError } = await supabase
+      const { data: profileData, error: profileError } = await supabase
         .from("users_profile")
         .insert([
           {
@@ -79,6 +94,7 @@ const AuthPage = () => {
             name: name,
             denomination: denomination,
             class: classname,
+            user_id: profileData.user.id,
           },
         ]);
       if (profileError) {
@@ -119,6 +135,10 @@ const AuthPage = () => {
           email: email,
           password: password,
         });
+
+      const user_id = data.user.id;
+
+      await updateUserProfile(user_id);
       if (signInError) {
         setError(signInError.message);
         return;
