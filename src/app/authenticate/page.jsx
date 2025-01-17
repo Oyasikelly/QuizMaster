@@ -157,18 +157,23 @@ const AuthPage = () => {
       <LandingPage toggleAuthModal={toggleAuthModal} />
 
       {showAuth && (
-        <div className="fixed top-0 right-0 left-0 flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-indigo-500 text-white">
+        <div className="fixed inset-0 flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-indigo-500 text-white p-4">
           <motion.div
-            className="bg-white text-black p-8 rounded-lg shadow-lg w-full max-w-md"
+            className="bg-white text-black p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-sm md:max-w-md lg:max-w-lg"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <span onClick={toggleAuthModal} className="cursor-pointer">
-              ✕
-            </span>
+            <div className="flex justify-end mb-4">
+              <span
+                onClick={toggleAuthModal}
+                className="cursor-pointer text-gray-400 hover:text-gray-600 text-lg font-semibold"
+              >
+                ✕
+              </span>
+            </div>
 
-            <h2 className="text-2xl font-bold mb-6 text-center">
+            <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">
               {isSigningUp ? "Sign Up" : "Sign In"}
             </h2>
 
@@ -178,7 +183,7 @@ const AuthPage = () => {
             >
               {isSigningUp && (
                 <div className="flex flex-col gap-2">
-                  <label className="text-gray-600">Name</label>
+                  <label className="text-gray-600 text-sm">Name</label>
                   <div className="flex items-center gap-2 bg-gray-100 p-2 rounded-md shadow-sm">
                     <FaUser className="text-gray-400" />
                     <input
@@ -186,7 +191,7 @@ const AuthPage = () => {
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
-                      className="bg-transparent outline-none w-full"
+                      className="bg-transparent outline-none w-full text-sm"
                       placeholder="Enter your name"
                     />
                   </div>
@@ -194,7 +199,7 @@ const AuthPage = () => {
               )}
 
               <div className="flex flex-col gap-2">
-                <label className="text-gray-600">Email</label>
+                <label className="text-gray-600 text-sm">Email</label>
                 <div className="flex items-center gap-2 bg-gray-100 p-2 rounded-md shadow-sm">
                   <FaEnvelope className="text-gray-400" />
                   <input
@@ -202,14 +207,15 @@ const AuthPage = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
-                    className="bg-transparent outline-none w-full"
+                    className="bg-transparent outline-none w-full text-sm"
                     placeholder="Enter your email"
                   />
                 </div>
               </div>
+
               {formData.email && formData.name && (
                 <div className="flex flex-col gap-2">
-                  <label className="text-gray-600">Class name</label>
+                  <label className="text-gray-600 text-sm">Class Name</label>
                   <div className="flex items-center gap-2 bg-gray-100 p-2 rounded-md shadow-sm">
                     <SiGoogleclassroom className="text-gray-400" />
                     <input
@@ -217,15 +223,16 @@ const AuthPage = () => {
                       name="classname"
                       value={formData.classname.toLocaleLowerCase()}
                       onChange={handleChange}
-                      className="bg-transparent outline-none w-full"
-                      placeholder="Enter your classname"
+                      className="bg-transparent outline-none w-full text-sm"
+                      placeholder="Enter your class name"
                     />
                   </div>
                 </div>
               )}
+
               {formData.email && formData.name && formData.classname && (
                 <div className="flex flex-col gap-2">
-                  <label className="text-gray-600">Denomination</label>
+                  <label className="text-gray-600 text-sm">Denomination</label>
                   <div className="flex items-center gap-2 bg-gray-100 p-2 rounded-md shadow-sm">
                     <FaChurch className="text-gray-400" />
                     <input
@@ -233,14 +240,15 @@ const AuthPage = () => {
                       name="denomination"
                       value={formData.denomination}
                       onChange={handleChange}
-                      className="bg-transparent outline-none w-full"
+                      className="bg-transparent outline-none w-full text-sm"
                       placeholder="Enter your denomination"
                     />
                   </div>
                 </div>
               )}
+
               <div className="flex flex-col gap-2">
-                <label className="text-gray-600">Password</label>
+                <label className="text-gray-600 text-sm">Password</label>
                 <div className="flex items-center gap-2 bg-gray-100 p-2 rounded-md shadow-sm">
                   <FaLock className="text-gray-400" />
                   <input
@@ -248,7 +256,7 @@ const AuthPage = () => {
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
-                    className="bg-transparent outline-none w-full"
+                    className="bg-transparent outline-none w-full text-sm"
                     placeholder="Enter your password"
                   />
                 </div>
@@ -263,7 +271,7 @@ const AuthPage = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 type="submit"
-                className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-2 rounded-md shadow-md font-semibold"
+                className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-2 rounded-md shadow-md font-semibold text-sm"
               >
                 {isSigningUp ? "Sign Up" : "Sign In"}
               </motion.button>
@@ -275,7 +283,7 @@ const AuthPage = () => {
                 : "Don't have an account? "}
               <button
                 onClick={() => setIsSigningUp(!isSigningUp)}
-                className="text-blue-600 font-bold"
+                className="text-blue-600 font-bold hover:underline"
               >
                 {isSigningUp ? "Sign In" : "Sign Up"}
               </button>
