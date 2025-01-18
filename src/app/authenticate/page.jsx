@@ -11,19 +11,42 @@ import LandingPage from "../../components/LandingPage";
 
 //update Users_id
 
-async function updateUserProfile(user_id) {
+// async function updateUserProfile(user_id, user_email) {
+//   console.log(user_id, user_email);
+
+//   const { data, error } = await supabase
+//     .from("users_profile")
+//     .update("user_id", user_id)
+//     .eq("email", user_email)
+//     .select();
+
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log(data);
+//   }
+// }
+
+const updateUserProfile = async () => {
+  const { data: user, error: authError } = await supabase.auth.getUser();
+
+  if (authError || !user) {
+    console.error("Error fetching authenticated user:", authError);
+    return;
+  }
+
   const { data, error } = await supabase
     .from("users_profile")
-    .update("user_id", user_id)
-    .eq("id", user_id)
-    .select();
+    .update({ user_id: user.id }) // Example: Update last sign-in time
+    .eq("email", user.email);
 
   if (error) {
-    console.log(error);
+    console.error("Error updating user profile:", error);
   } else {
-    console.log(data);
+    console.log("User profile updated successfully:", data);
   }
-}
+};
+
 const nameOfClasses = ["wisdom", "adult", "holiness", "teenager"];
 const AuthPage = () => {
   const [showAuth, setShowAuth] = useState(false);
@@ -82,6 +105,7 @@ const AuthPage = () => {
         password: password,
       });
       if (signUpError) {
+        console.log(signUpError);
         setError(signUpError.message);
         return;
       }
@@ -94,10 +118,10 @@ const AuthPage = () => {
             name: name,
             denomination: denomination,
             class: classname,
-            user_id: profileData.user.id,
           },
         ]);
       if (profileError) {
+        console.log(profileError);
         setError(profileError.message);
         return;
       }
@@ -117,6 +141,7 @@ const AuthPage = () => {
       setIsSigningUp(false);
     } catch (err) {
       setError("An error occurred. Please try again.");
+      console.log(err);
     }
   };
 
@@ -137,8 +162,11 @@ const AuthPage = () => {
         });
 
       const user_id = data.user.id;
+      const user_email = data.user.email;
 
-      await updateUserProfile(user_id);
+      console.log(data);
+      await updateUserProfile();
+
       if (signInError) {
         setError(signInError.message);
         return;
