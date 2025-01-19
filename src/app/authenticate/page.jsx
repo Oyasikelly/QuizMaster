@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FaUser, FaEnvelope, FaLock, FaChurch } from "react-icons/fa";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { SiGoogleclassroom } from "react-icons/si";
 import { useRouter } from "next/navigation";
 
@@ -60,12 +61,16 @@ const AuthPage = () => {
   });
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const router = useRouter();
 
   const toggleAuthModal = () => {
     setShowAuth((prev) => !prev);
   };
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
+  };
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -252,7 +257,7 @@ const AuthPage = () => {
                       value={formData.classname.toLocaleLowerCase()}
                       onChange={handleChange}
                       className="bg-transparent outline-none w-full text-sm"
-                      placeholder="Enter your class name [wisdom,holiness,adult,teenger]"
+                      placeholder="Enter your class name [wisdom, holiness, adult, teenger]"
                     />
                   </div>
                 </div>
@@ -279,14 +284,26 @@ const AuthPage = () => {
                 <label className="text-gray-600 text-sm">Password</label>
                 <div className="flex items-center gap-2 bg-gray-100 p-2 rounded-md shadow-sm">
                   <FaLock className="text-gray-400" />
-                  <input
-                    type="password"
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="bg-transparent outline-none w-full text-sm"
-                    placeholder="Enter your password"
-                  />
+                  <div className="relative w-full">
+                    <input
+                      type={passwordVisible ? "text" : "password"}
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      className="bg-transparent outline-none w-full text-sm"
+                      placeholder="Enter your password"
+                    />
+                    <span
+                      onClick={togglePasswordVisibility}
+                      className="absolute right-0 top-1.5 text-gray-600 cursor-pointer"
+                    >
+                      {passwordVisible ? (
+                        <AiFillEyeInvisible size={20} />
+                      ) : (
+                        <AiFillEye size={20} />
+                      )}
+                    </span>
+                  </div>
                 </div>
               </div>
 
