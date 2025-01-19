@@ -257,7 +257,7 @@ const AuthPage = () => {
                       value={formData.classname.toLocaleLowerCase()}
                       onChange={handleChange}
                       className="bg-transparent outline-none w-full text-sm"
-                      placeholder="Enter your class name [wisdom, holiness, adult, teenger]"
+                      placeholder="Enter your class name [wisdom, holiness, adult, teenager]"
                     />
                   </div>
                 </div>
