@@ -5,6 +5,8 @@ import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
 
+// component
+import Successful from "../components/Successful";
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
 const addQuizResult = async (resultData) => {
@@ -48,6 +50,51 @@ const Quiz = ({ initialQuestions, category }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [timerRunning, setTimerRunning] = useState(true);
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  async function transferMultipleColumns(userEmail) {
+    try {
+      // Step 1: Fetch `id`, `email`, and `name` from the `users` table
+      const { data: usersData, error: usersError } = await supabase
+        .from("users_profile")
+        .select("email, name, class") // Select multiple columns
+        .eq("email", userEmail); // Example filter, adjust as needed
+
+      if (usersError) {
+        console.log(usersError);
+      }
+
+      if (!usersData || usersData.length === 0) {
+        console.log("No users found.");
+        return;
+      }
+
+      if (usersData) {
+        console.log(usersData);
+      }
+      // Step 2: Insert fetched data into the `profiles` table
+      const profilesData = usersData.map((user) => ({
+        email: user.email,
+        name: user.name,
+        class: user.class,
+        category: category,
+      }));
+
+      const { data: profilesInsertData, error: profilesError } = await supabase
+        .from("quiz_results")
+        .upsert(profilesData, {
+          onConflict: ["user_id"], // Ensure user_id is the unique constraint in your table
+        });
+
+      if (profilesError) {
+        console.log(profilesError);
+      }
+
+      console.log("Data successfully transferred:", profilesInsertData);
+    } catch (error) {
+      console.error("Error transferring data:", error.message);
+    }
+  }
 
   useEffect(() => {
     const slicedQuestions = shuffleArray(initialQuestions)
@@ -87,37 +134,50 @@ const Quiz = ({ initialQuestions, category }) => {
   };
 
   const handleSubmit = async () => {
-    setTimerRunning(false);
-    const correctAnswersCount = answers.filter(
-      (answer, index) => answer === questions[index].answer
-    ).length;
+    try {
+      setTimerRunning(false);
+      setShowSuccess(true);
+      const correctAnswersCount = answers.filter(
+        (answer, index) => answer === questions[index].answer
+      ).length;
 
-    // Store the data in localStorage
-    localStorage.setItem("quizResults", JSON.stringify({ answers, questions }));
+      // Store the data in localStorage
+      localStorage.setItem(
+        "quizResults",
+        JSON.stringify({ answers, questions })
+      );
 
-    const { data, error } = await supabase.auth.getUser();
+      const { data, error } = await supabase.auth.getUser();
 
-    if (error) {
-      console.error("Error fetching user:", error);
-      return;
+      if (error) {
+        console.error("Error fetching user:", error);
+        return;
+      }
+
+      const userId = data.user.id;
+      const userEmail = data.user.email;
+      console.log(data);
+      // Prepare the result data
+      const resultData = {
+        user_id: userId,
+        correct_answers: correctAnswersCount,
+        total_questions: questions.length,
+        timestamp: new Date().toISOString(),
+        // name:data.user.identities.
+      };
+
+      // Upsert quiz results
+      await addQuizResult(resultData);
+      await transferMultipleColumns(userEmail);
+
+      router.push(
+        `/quiz/results?correct=${correctAnswersCount}&total=${questions.length}`
+      );
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setShowSuccess(false);
     }
-
-    const userId = data.user.id;
-    console.log(data);
-    // Prepare the result data
-    const resultData = {
-      user_id: userId,
-      correct_answers: correctAnswersCount,
-      total_questions: questions.length,
-      timestamp: new Date().toISOString(),
-    };
-
-    // Upsert quiz results
-    await addQuizResult(resultData);
-
-    router.push(
-      `/quiz/results?correct=${correctAnswersCount}&total=${questions.length}`
-    );
   };
 
   const formatTime = (seconds) => {
@@ -128,8 +188,18 @@ const Quiz = ({ initialQuestions, category }) => {
 
   return (
     <Suspense
-      fallback={<div className="text-center text-white">Loading Quiz...</div>}
+      fallback={
+        <div className="relative text-center text-white">Loading Quiz...</div>
+      }
     >
+      {showSuccess && (
+        <div className="absolute w-full z-10 h-screen flex items-center justify-center top-0 right-0 left-0 bg-blue-500">
+          <Successful
+            message="Your form has been submitted successfully!"
+            onClose={() => setShowSuccess(false)}
+          />
+        </div>
+      )}
       <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-pink-500 to-purple-700 text-white p-4">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
