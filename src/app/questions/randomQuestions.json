@@ -1,0 +1,337 @@
+[
+  {
+    "question": "Where was Jesus born?",
+    "options": ["Jerusalem", "Nazareth", "Bethlehem", "Galilee"],
+    "correctAnswer": "Bethlehem"
+  },
+  {
+    "question": "Who was swallowed by a great fish?",
+    "options": ["Jonah", "Noah", "Moses", "Elijah"],
+    "correctAnswer": "Jonah"
+  },
+  {
+    "question": "What is the first book of the Bible?",
+    "options": ["Exodus", "Genesis", "Leviticus", "Numbers"],
+    "correctAnswer": "Genesis"
+  },
+  {
+    "question": "How many disciples did Jesus have?",
+    "options": ["10", "11", "12", "13"],
+    "correctAnswer": "12"
+  },
+  {
+    "question": "Who led the Israelites out of Egypt?",
+    "options": ["Moses", "Aaron", "Joshua", "Abraham"],
+    "correctAnswer": "Moses"
+  },
+  {
+    "question": "What was the first miracle performed by Jesus?",
+    "options": [
+      "Healing a blind man",
+      "Feeding 5,000 people",
+      "Turning water into wine",
+      "Walking on water"
+    ],
+    "correctAnswer": "Turning water into wine"
+  },
+  {
+    "question": "Who betrayed Jesus?",
+    "options": ["Peter", "Judas", "John", "Thomas"],
+    "correctAnswer": "Judas"
+  },
+  {
+    "question": "What is the shortest verse in the Bible?",
+    "options": [
+      "Jesus wept.",
+      "I am the way.",
+      "God is love.",
+      "Love one another."
+    ],
+    "correctAnswer": "Jesus wept."
+  },
+  {
+    "question": "Who built the ark?",
+    "options": ["Moses", "Noah", "Abraham", "David"],
+    "correctAnswer": "Noah"
+  },
+  {
+    "question": "Who was the strongest man in the Bible?",
+    "options": ["David", "Samson", "Saul", "Goliath"],
+    "correctAnswer": "Samson"
+  },
+  {
+    "question": "What did God create on the first day?",
+    "options": ["Sky", "Earth", "Light", "Animals"],
+    "correctAnswer": "Light"
+  },
+  {
+    "question": "Who was thrown into the lion's den?",
+    "options": ["Daniel", "David", "Solomon", "Elijah"],
+    "correctAnswer": "Daniel"
+  },
+  {
+    "question": "What did the Israelites eat in the wilderness?",
+    "options": ["Quail", "Manna", "Locusts", "Bread"],
+    "correctAnswer": "Manna"
+  },
+  {
+    "question": "Who is known as the father of faith?",
+    "options": ["Abraham", "Isaac", "Jacob", "Moses"],
+    "correctAnswer": "Abraham"
+  },
+  {
+    "question": "What is the last book of the Bible?",
+    "options": ["Revelation", "Jude", "Hebrews", "Acts"],
+    "correctAnswer": "Revelation"
+  },
+  {
+    "question": "Who killed Goliath?",
+    "options": ["Saul", "David", "Samuel", "Solomon"],
+    "correctAnswer": "David"
+  },
+  {
+    "question": "Who was the first king of Israel?",
+    "options": ["Saul", "David", "Solomon", "Samuel"],
+    "correctAnswer": "Saul"
+  },
+  {
+    "question": "How many plagues did God send on Egypt?",
+    "options": ["5", "7", "10", "12"],
+    "correctAnswer": "10"
+  },
+  {
+    "question": "What was the name of the first woman?",
+    "options": ["Mary", "Sarah", "Eve", "Hannah"],
+    "correctAnswer": "Eve"
+  },
+  {
+    "question": "What was the name of Jesus' mother?",
+    "options": ["Elizabeth", "Mary", "Martha", "Anna"],
+    "correctAnswer": "Mary"
+  },
+  {
+    "question": "Who is the author of the majority of the New Testament letters?",
+    "options": ["Peter", "Paul", "John", "James"],
+    "correctAnswer": "Paul"
+  },
+  {
+    "question": "Which disciple walked on water with Jesus?",
+    "options": ["John", "Peter", "James", "Thomas"],
+    "correctAnswer": "Peter"
+  },
+  {
+    "question": "What are the first three words of the Bible?",
+    "options": [
+      "Let there be",
+      "In the beginning",
+      "God created light",
+      "The heavens and"
+    ],
+    "correctAnswer": "In the beginning"
+  },
+  {
+    "question": "Who was the wisest man in the Bible?",
+    "options": ["Solomon", "David", "Moses", "Abraham"],
+    "correctAnswer": "Solomon"
+  },
+  {
+    "question": "What river did Jesus get baptized in?",
+    "options": ["Jordan", "Nile", "Euphrates", "Tigris"],
+    "correctAnswer": "Jordan"
+  },
+  {
+    "question": "How many books are in the Bible?",
+    "options": ["39", "66", "27", "73"],
+    "correctAnswer": "66"
+  },
+  {
+    "question": "Who was the first person to see Jesus after His resurrection?",
+    "options": ["Peter", "Mary Magdalene", "John", "Thomas"],
+    "correctAnswer": "Mary Magdalene"
+  },
+  {
+    "question": "Who was the oldest person in the Bible?",
+    "options": ["Noah", "Methuselah", "Adam", "Abraham"],
+    "correctAnswer": "Methuselah"
+  },
+  {
+    "question": "What did Jesus feed the 5,000 with?",
+    "options": [
+      "Two fishes and five loaves",
+      "Manna",
+      "Bread and wine",
+      "Quail and bread"
+    ],
+    "correctAnswer": "Two fishes and five loaves"
+  },
+  {
+    "question": "What is the greatest commandment?",
+    "options": [
+      "Love your neighbor as yourself",
+      "Love the Lord your God with all your heart",
+      "Do not steal",
+      "Honor your parents"
+    ],
+    "correctAnswer": "Love the Lord your God with all your heart"
+  },
+  {
+    "question": "Who was the first martyr in the New Testament?",
+    "options": ["Stephen", "James", "Peter", "John"],
+    "correctAnswer": "Stephen"
+  },
+  {
+    "question": "What was the name of the garden where Jesus prayed before His arrest?",
+    "options": ["Eden", "Gethsemane", "Bethany", "Nazareth"],
+    "correctAnswer": "Gethsemane"
+  },
+  {
+    "question": "Who wrote the book of Revelation?",
+    "options": ["Paul", "John", "Peter", "Luke"],
+    "correctAnswer": "John"
+  },
+  {
+    "question": "Who interpreted Pharaoh's dreams?",
+    "options": ["Joseph", "Daniel", "Moses", "Aaron"],
+    "correctAnswer": "Joseph"
+  },
+  {
+    "question": "What is the longest book in the Bible?",
+    "options": ["Psalms", "Isaiah", "Genesis", "Jeremiah"],
+    "correctAnswer": "Psalms"
+  },
+  {
+    "question": "What was the name of the tower built to reach heaven?",
+    "options": ["Babel", "Jericho", "Zion", "Siloam"],
+    "correctAnswer": "Babel"
+  },
+  {
+    "question": "Who baptized Jesus?",
+    "options": ["John the Baptist", "Peter", "Paul", "Andrew"],
+    "correctAnswer": "John the Baptist"
+  },
+  {
+    "question": "What was Paul's name before his conversion?",
+    "options": ["Saul", "Simon", "Philip", "James"],
+    "correctAnswer": "Saul"
+  },
+  {
+    "question": "What sea did Moses part?",
+    "options": ["Red Sea", "Dead Sea", "Sea of Galilee", "Mediterranean Sea"],
+    "correctAnswer": "Red Sea"
+  },
+  {
+    "question": "Who was thrown into the fiery furnace?",
+    "options": [
+      "Shadrach, Meshach, and Abednego",
+      "Daniel and his friends",
+      "Elijah and Elisha",
+      "Moses and Aaron"
+    ],
+    "correctAnswer": "Shadrach, Meshach, and Abednego"
+  },
+  {
+    "question": "What was the name of the man who took Jesus' body for burial?",
+    "options": ["Joseph of Arimathea", "Nicodemus", "Simon of Cyrene", "Peter"],
+    "correctAnswer": "Joseph of Arimathea"
+  },
+  {
+    "question": "What instrument did David play?",
+    "options": ["Harp", "Flute", "Trumpet", "Drum"],
+    "correctAnswer": "Harp"
+  },
+  {
+    "question": "What is the first commandment?",
+    "options": [
+      "You shall have no other gods before Me",
+      "Honor your father and mother",
+      "Do not steal",
+      "Do not kill"
+    ],
+    "correctAnswer": "You shall have no other gods before Me"
+  },
+  {
+    "question": "How many days did God take to create the world?",
+    "options": ["6", "7", "8", "10"],
+    "correctAnswer": "6"
+  },
+  {
+    "question": "What was the name of the mountain where Moses received the Ten Commandments?",
+    "options": ["Mount Sinai", "Mount Zion", "Mount Carmel", "Mount Hermon"],
+    "correctAnswer": "Mount Sinai"
+  },
+  {
+    "question": "Who was the mother of Samuel?",
+    "options": ["Hannah", "Ruth", "Esther", "Deborah"],
+    "correctAnswer": "Hannah"
+  },
+  {
+    "question": "How many times did Peter deny Jesus?",
+    "options": ["2", "3", "4", "5"],
+    "correctAnswer": "3"
+  },
+  {
+    "question": "Who was the first man created by God?",
+    "options": ["Adam", "Noah", "Abraham", "Moses"],
+    "correctAnswer": "Adam"
+  },
+  {
+    "question": "What was the name of the giant David defeated?",
+    "options": ["Goliath", "Saul", "Haman", "Laban"],
+    "correctAnswer": "Goliath"
+  },
+  {
+    "question": "How many books are in the Old Testament?",
+    "options": ["27", "39", "66", "73"],
+    "correctAnswer": "39"
+  },
+  {
+    "question": "What kind of bird did Noah send out from the ark first?",
+    "options": ["Raven", "Dove", "Sparrow", "Eagle"],
+    "correctAnswer": "Raven"
+  },
+  {
+    "question": "What was the name of Isaac's wife?",
+    "options": ["Rebecca", "Rachel", "Sarah", "Leah"],
+    "correctAnswer": "Rebecca"
+  },
+  {
+    "question": "What did God provide in the desert when the Israelites were thirsty?",
+    "options": ["Water from a rock", "Wine", "Milk", "Rain"],
+    "correctAnswer": "Water from a rock"
+  },
+  {
+    "question": "Who was the youngest son of Jacob?",
+    "options": ["Joseph", "Benjamin", "Judah", "Reuben"],
+    "correctAnswer": "Benjamin"
+  },
+  {
+    "question": "What language was most of the Old Testament written in?",
+    "options": ["Greek", "Hebrew", "Aramaic", "Latin"],
+    "correctAnswer": "Hebrew"
+  },
+  {
+    "question": "What animal tempted Eve in the Garden of Eden?",
+    "options": ["Snake", "Lion", "Frog", "Raven"],
+    "correctAnswer": "Snake"
+  },
+  {
+    "question": "What is another name for the Apostle Peter?",
+    "options": ["Cephas", "Paul", "Timothy", "James"],
+    "correctAnswer": "Cephas"
+  },
+  {
+    "question": "How many times did the Israelites march around Jericho?",
+    "options": ["1", "3", "7", "10"],
+    "correctAnswer": "7"
+  },
+  {
+    "question": "What is the name of the place where Jesus was crucified?",
+    "options": ["Golgotha", "Bethlehem", "Nazareth", "Jerusalem"],
+    "correctAnswer": "Golgotha"
+  },
+  {
+    "question": "Who wrote the book of Psalms?",
+    "options": ["David", "Solomon", "Moses", "Isaiah"],
+    "correctAnswer": "David"
+  }
+]
