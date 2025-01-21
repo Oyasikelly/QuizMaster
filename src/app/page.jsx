@@ -5,7 +5,7 @@ import { FaBible, FaPeopleArrows, FaRegSmileWink } from "react-icons/fa"; // Imp
 import { Suspense } from "react";
 
 // components
-import LandingPage from "../components/LandingPage"
+import Logout from "../components/Logout";
 const testimonials = [
   {
     quote:
@@ -54,6 +54,7 @@ export default function Home() {
         transition={{ duration: 1 }}
       >
         {/* Header */}
+        <Logout />
         <motion.header
           className="m-8"
           initial={{ y: -50, opacity: 0 }}
