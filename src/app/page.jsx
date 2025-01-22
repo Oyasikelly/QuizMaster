@@ -22,6 +22,7 @@ const testimonials = [
     name: "Samantha K.",
   },
 ];
+
 const categories = [
   {
     name: "Kingdom Seekers",
@@ -42,6 +43,7 @@ const categories = [
     color: "bg-purple-500 hover:bg-purple-600",
   },
 ];
+
 export default function Home() {
   return (
     <Suspense
