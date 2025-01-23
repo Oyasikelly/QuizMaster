@@ -61,11 +61,11 @@ const QuizQuestion = ({
           transition={{ duration: 0.5 }}
         >
           {selectedOption === correctAnswer ? (
-            <span className="text-green-500 flex items-center gap-2">
+            <span className="text-green-500 flex flex-col items-center gap-2">
               <FaCheckCircle /> Correct! Great job.
             </span>
           ) : (
-            <span className="text-red-500 flex items-center gap-2">
+            <span className="text-red-500 flex flex-col items-center gap-2">
               <FaTimesCircle /> Oops! The correct answer is:{" "}
               <span className="font-bold">{correctAnswer}</span>.
             </span>
