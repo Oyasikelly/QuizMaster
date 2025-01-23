@@ -4,33 +4,70 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { FiMail, FiSend } from "react-icons/fi";
 import { supabase } from "../lib/supabase";
+import { useRouter } from "next/navigation";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [errorMssg, setErrorMssg] = useState("");
   const [successful, setSuccessful] = useState(false);
+  const router = useRouter();
+  const secretKey = process.env.NEXT_PUBLIC_SECRETE_KEY; // Use a strong, secure key
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
 
-    const userEmail = localStorage.getItem("UserEmail");
-    console.log(userEmail);
-    const { data, error } = await supabase.auth.resetPasswordForEmail();
-    console.log(data);
-    // Simulate sending a password reset email (Replace with actual API call)
-    if (error) {
-      console.log(error);
-      setMessage("");
+    // Retrieve and verify the stored user information using getSecureItem
+    const user = getSecureItem("user", secretKey);
+    if (user) {
+      console.log("Retrieved secure user:", user.email);
+    } else {
+      setErrorMssg("User account not found, try to signUp");
+    }
+    if (email !== user.email) {
       setErrorMssg("Invalid user email, signUp to continue:");
     } else {
-      setTimeout(() => {
+      const { data, error } = await supabase.auth.resetPasswordForEmail(
+        user.email,
+        { redirectTo: `${window.location.href}resetpassword` }
+      );
+
+      console.log(data);
+      // Simulate sending a password reset email (Replace with actual API call)
+      if (error) {
+        console.log(error);
         setMessage("");
-      }, 2000);
-      setMessage("A password reset link has been sent to your email address.");
-      setEmail("");
+        setErrorMssg("Error occured, try again later!");
+      } else {
+        setTimeout(() => {
+          setMessage("");
+        }, 2000);
+        setMessage(
+          "A password reset link has been sent to your email address."
+        );
+        setTimeout(() => {
+          setEmail("");
+        }, 3000);
+        setErrorMssg("");
+        router.push("/authenticate/resetpassword");
+      }
     }
   };
+
+  function getSecureItem(key, secret) {
+    const item = localStorage.getItem(key);
+    if (!item) return null;
+
+    const { data, signature } = JSON.parse(item);
+
+    // Verify the signature
+    if (signature !== btoa(secret + data)) {
+      console.error("Data has been tampered with!");
+      return null;
+    }
+
+    return JSON.parse(data);
+  }
 
   return (
     <div className="flex items-center justify-center px-6 text-white">

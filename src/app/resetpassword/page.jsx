@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { supabase } from "../../../lib/supabase";
+import { supabase } from "../../lib/supabase";
 
 const UpdatePasswordForm = () => {
   const [password, setPassword] = useState("");
@@ -24,18 +24,16 @@ const UpdatePasswordForm = () => {
     }
 
     try {
-      const { error: updateError } = await supabase.auth.resetPasswordForEmail(
-        password,
-        {
-          redirectTo: `${window.location.href}/resetpassword`,
-        }
-      );
+      const { data, error: updateError } = await supabase.auth.updateUser({
+        password: password,
+      });
 
       if (updateError) {
         setError(updateError.message);
         return;
       }
 
+      console.log(data);
       setMessage("Your password has been updated successfully.");
       setError("");
       setPassword("");
@@ -87,7 +85,7 @@ const UpdatePasswordForm = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             type="submit"
-            className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white py-2 rounded-md shadow-md font-semibold text-sm"
+            className="bg-gradient-to-r from-green-500 to-blue-500 text-white py-2 rounded-md shadow-md font-semibold text-sm"
           >
             Update Password
           </motion.button>

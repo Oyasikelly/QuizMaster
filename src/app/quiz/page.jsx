@@ -1,39 +1,68 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
+import { motion } from "framer-motion";
 
-// components
+import questions from "../questions/randomQuestions.json";
+
+// component
 import QuizQuestion from "../../components/QuizQuestion";
-import RandomQuiz from "../questions";
-
 const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [correctAnswers, setCorrectAnswers] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState({});
   const [isQuizFinished, setIsQuizFinished] = useState(false);
 
   const handleAnswer = (selectedOption) => {
-    // Check if the answer is correct
-    if (selectedOption === RandomQuiz[currentQuestionIndex].correctAnswer) {
-      setCorrectAnswers(correctAnswers + 1);
-    }
+    setSelectedAnswers({
+      ...selectedAnswers,
+      [currentQuestionIndex]: selectedOption,
+    });
+  };
 
-    // Move to the next question or finish the quiz if it's the last question
+  const calculateScore = () => {
+    return questions.reduce((score, question, index) => {
+      return selectedAnswers[index] === question.correctAnswer
+        ? score + 1
+        : score;
+    }, 0);
+  };
+
+  const goToNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      setIsQuizFinished(true); // Quiz finished
+      setIsQuizFinished(true);
+    }
+  };
+
+  const goToPrevQuestion = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
     }
   };
 
   if (isQuizFinished) {
+    const score = calculateScore();
     return (
-      <div className="w-full h-screen flex flex-col justify-center items-center max-w-2xl mx-auto text-center mt-10">
-        <h2 className="text-2xl font-bold text-gray-800">Quiz Finished!</h2>
-        <p className="text-lg text-gray-600">
-          You got {correctAnswers} out of {RandomQuiz.length} correct!
-        </p>
+      <div className="w-full h-screen flex flex-col justify-center items-center bg-blue-50 text-center p-6">
+        <motion.h2
+          className="text-3xl font-bold text-gray-800 mb-4"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          Quiz Finished!
+        </motion.h2>
+        <motion.p
+          className="text-lg text-gray-600 mb-6"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          You scored <span className="text-blue-500 font-bold">{score}</span>{" "}
+          out of {questions.length}!
+        </motion.p>
         <button
-          className="mt-4 w-fit py-2 px-6 bg-blue-500 text-white rounded shadow hover:bg-blue-600"
+          className="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300"
           onClick={() => window.location.reload()}
         >
           Restart Quiz
@@ -43,14 +72,35 @@ const Quiz = () => {
   }
 
   return (
-    <div className="w-full h-screen max-w-2xl mx-auto flex flex-col items-center justify-center text-center">
+    <div className="w-full h-screen flex flex-col justify-center items-center bg-blue-50 p-6">
       <QuizQuestion
-        question={RandomQuiz[currentQuestionIndex].question}
-        options={RandomQuiz[currentQuestionIndex].options}
+        question={questions[currentQuestionIndex].question}
+        options={questions[currentQuestionIndex].options}
+        selectedOption={selectedAnswers[currentQuestionIndex]}
+        correctAnswer={questions[currentQuestionIndex].correctAnswer}
         onAnswer={handleAnswer}
       />
-      <div className="w-fit  bg-blue-500 text-white px-4 py-[0.5rem] mt-10 hover:bg-blue-600">
-        <Link href="/">Go to main menu</Link>
+
+      <div className="flex justify-between w-full max-w-2xl mt-8">
+        <button
+          className={`px-6 py-3 rounded-lg text-white ${
+            currentQuestionIndex === 0
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-500 hover:bg-blue-600"
+          }`}
+          onClick={goToPrevQuestion}
+          disabled={currentQuestionIndex === 0}
+        >
+          Previous
+        </button>
+        <button
+          className="px-6 py-3 rounded-lg bg-blue-500 text-white hover:bg-blue-600"
+          onClick={goToNextQuestion}
+        >
+          {currentQuestionIndex === questions.length - 1
+            ? "Finish Quiz"
+            : "Next"}
+        </button>
       </div>
     </div>
   );

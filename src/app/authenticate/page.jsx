@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import CryptoJS from "crypto-js";
 import { FaUser, FaEnvelope, FaLock, FaChurch } from "react-icons/fa";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { SiGoogleclassroom } from "react-icons/si";
@@ -167,58 +168,36 @@ const AuthPage = () => {
           password: password,
         });
 
-      const user_id = data.user.id;
-      const user_email = data.user.email;
-
-      // Store user email to local storage
-      // localStorage.setItem("UserEmail", user_email);
-
-      // Function to generate a signed token
-      function setSecureItem(key, value, secret) {
-        const data = JSON.stringify(value); // Convert value to JSON string
-        const signature = btoa(secret + data); // Base64 encode with a secret key
-        const signedData = { data, signature };
-        localStorage.setItem(key, JSON.stringify(signedData));
-      }
-
-      // Function to verify and retrieve the data
-      function getSecureItem(key, secret) {
-        const item = localStorage.getItem(key);
-        if (!item) return null;
-
-        const { data, signature } = JSON.parse(item);
-
-        // Verify the signature
-        if (signature !== btoa(secret + data)) {
-          console.error("Data has been tampered with!");
-          return null;
-        }
-
-        return JSON.parse(data);
-      }
-
-      // Usage
-      const secretKey = process.env.NEXT_PUPLIC_SECRETE_KEY; // Use a strong, secure key
-      setSecureItem("user", { email: user_email, role: "Admin" }, secretKey);
-
-      const user = getSecureItem("user", secretKey);
-      console.log(user); // { name: "userEmail", role: "Admin" }
-
-      console.log(data);
-      await updateUserProfile();
-
       if (signInError) {
         setError(signInError.message);
         return;
       }
 
-      setSuccessMessage(`Welcome back! Redirecting...`);
+      const user_id = data.user.id;
+      const user_email = data.user.email;
+
+      // Securely store user information using setSecureItem
+      const secretKey = process.env.NEXT_PUBLIC_SECRETE_KEY; // Use a strong, secure key
+      setSecureItem("user", { email: user_email, role: "Admin" }, secretKey);
+
+      await updateUserProfile();
+
+      setSuccessMessage("Welcome back! Redirecting...");
       setError("");
       router.push("/");
     } catch (err) {
       setError("An error occurred. Please try again.");
+      console.error(err);
     }
   };
+
+  // Helper functions
+  function setSecureItem(key, value, secret) {
+    const data = JSON.stringify(value); // Convert value to JSON string
+    const signature = btoa(secret + data); // Base64 encode with a secret key
+    const signedData = { data, signature };
+    localStorage.setItem(key, JSON.stringify(signedData));
+  }
 
   return (
     <div className="relative">

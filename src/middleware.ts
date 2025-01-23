@@ -4,11 +4,11 @@ import { NextRequest, NextResponse } from "next/server";
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
 
-  // const publicUrls = ["/reset"];
+  const publicUrls = ["/resetpassword"];
 
-  // if (publicUrls.includes(req.nextUrl.pathname)) {
-  //   return res;
-  // }
+  if (publicUrls.includes(req.nextUrl.pathname)) {
+    return res;
+  }
 
   const supabase = createMiddlewareClient({ req, res });
 
