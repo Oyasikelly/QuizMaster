@@ -30,9 +30,9 @@ const AdultIntroduction = ({ category }) => {
   return (
     <div className="flex flex-col items-center pt-10 min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 text-white px-4 sm:px-8 py-6">
       {/* Scrolling User Information */}
-      <div className="flex items-center gap-8 max-w-[80%] rounded-[0.5rem] overflow-hidden">
+      <div className="flex w-auto items-center gap-8 max-w-[80%] rounded-[0.5rem] overflow-hidden">
         <motion.div
-          className="w-fit overflow-hidden mb-6 rounded-lg shadow-lg"
+          className="w-auto overflow-hidden mb-6 rounded-lg shadow-lg"
           initial={{ x: "100%" }}
           animate={{ x: "-100%" }}
           transition={{
