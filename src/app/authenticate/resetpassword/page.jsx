@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useSearchParams } from "next/navigation"; // For accessing query parameters
 import { supabase } from "../../../lib/supabase";
 
 const UpdatePasswordForm = () => {
@@ -9,6 +10,18 @@ const UpdatePasswordForm = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const accessToken = searchParams.get("access_token");
+    if (accessToken) {
+      // Set the session for the user using the access token
+      supabase.auth.setSession({ access_token: accessToken });
+    } else {
+      setError("Invalid or missing token. Please check your reset link.");
+    }
+  }, [searchParams]);
 
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
