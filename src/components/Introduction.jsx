@@ -44,18 +44,18 @@ const AdultIntroduction = ({ category }) => {
           {userData.map((data, index) => (
             <div
               key={index}
-              className="flex items-center gap-4 px-6 py-2 text-white bg-black bg-opacity-20 rounded-lg shadow-md"
+              className="flex w-auto items-center gap-4 px-6 py-2 text-white bg-black bg-opacity-20 rounded-lg shadow-md"
             >
               <FaUser className="text-xl text-yellow-300" />
-              <span className="text-lg md:text-xl font-semibold">
+              <span className="w-auto text-lg md:text-xl font-semibold">
                 {data.name.toUpperCase()}
               </span>
               <FaGraduationCap className="text-lg text-yellow-300" />
-              <span className="text-lg md:text-xl">
+              <span className="w-auto text-lg md:text-xl">
                 {data.class.toUpperCase()}
               </span>
               <FaEnvelope className="text-lg text-yellow-300" />
-              <span className="text-sm md:text-lg">{data.email}</span>
+              <span className="w-auto text-sm md:text-lg">{data.email}</span>
             </div>
           ))}
         </motion.div>
