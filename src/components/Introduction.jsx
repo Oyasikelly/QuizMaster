@@ -32,7 +32,7 @@ const AdultIntroduction = ({ category }) => {
       {/* Scrolling User Information */}
       <div className="flex w-auto items-center gap-8 max-w-[80%] rounded-[0.5rem] overflow-hidden">
         <motion.div
-          className="w-auto overflow-hidden mb-6 rounded-lg shadow-lg"
+          className="w-auto overflow-hidden mb-6"
           initial={{ x: "100%" }}
           animate={{ x: "-100%" }}
           transition={{
@@ -44,18 +44,24 @@ const AdultIntroduction = ({ category }) => {
           {userData.map((data, index) => (
             <div
               key={index}
-              className="flex w-auto items-center gap-4 px-6 py-2 text-white bg-black bg-opacity-20 rounded-lg shadow-md"
+              className="flex flex-col w-auto items-center gap-2 lg:gap-4 px-6 py-2 text-white  bg-opacity-20 rounded-lg "
             >
-              <FaUser className="text-xl text-yellow-300" />
-              <span className="w-auto text-lg md:text-xl font-semibold">
-                {data.name.toUpperCase()}
-              </span>
-              <FaGraduationCap className="text-lg text-yellow-300" />
-              <span className="w-auto text-lg md:text-xl">
-                {data.class.toUpperCase()}
-              </span>
-              <FaEnvelope className="text-lg text-yellow-300" />
-              <span className="w-auto text-sm md:text-lg">{data.email}</span>
+              <div className="flex gap-2 lg:gap-4 items-center justify-start">
+                <FaUser className="text-xl text-yellow-300" />
+                <span className="w-auto text-lg md:text-xl font-semibold">
+                  {data.name.toUpperCase()}
+                </span>
+              </div>
+              <div className="flex gap-2 lg:gap-4 items-center justify-start">
+                <FaGraduationCap className="text-lg text-yellow-300" />
+                <span className="w-auto text-lg md:text-xl">
+                  {data.class.toUpperCase()}
+                </span>
+              </div>
+              <div className="flex gap-2 lg:gap-4 items-center justify-start">
+                <FaEnvelope className="text-lg text-yellow-300" />
+                <span className="w-auto text-sm md:text-lg">{data.email}</span>
+              </div>
             </div>
           ))}
         </motion.div>
