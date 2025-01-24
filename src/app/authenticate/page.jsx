@@ -66,8 +66,6 @@ const AuthPage = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const router = useRouter();
 
-
-  
   const toggleAuthModal = () => {
     setShowAuth((prev) => !prev);
   };
@@ -112,6 +110,9 @@ const AuthPage = () => {
       const { data, error: signUpError } = await supabase.auth.signUp({
         email: email,
         password: password,
+        options: {
+          emailRedirectTo: "/authenticate",
+        },
       });
       if (signUpError) {
         console.log(signUpError);
@@ -175,12 +176,8 @@ const AuthPage = () => {
         return;
       }
 
-      const user_id = data.user.id;
-      const user_email = data.user.email;
-
-      // Securely store user information using setSecureItem
-      const secretKey = process.env.NEXT_PUBLIC_SECRETE_KEY; // Use a strong, secure key
-      setSecureItem("user", { email: user_email, role: "Admin" }, secretKey);
+      // const user_id = data.user.id;
+      // const user_email = data.user.email;
 
       await updateUserProfile();
 
@@ -192,14 +189,6 @@ const AuthPage = () => {
       console.error(err);
     }
   };
-
-  // Helper functions
-  function setSecureItem(key, value, secret) {
-    const data = JSON.stringify(value); // Convert value to JSON string
-    const signature = btoa(secret + data); // Base64 encode with a secret key
-    const signedData = { data, signature };
-    localStorage.setItem(key, JSON.stringify(signedData));
-  }
 
   return (
     <div className="relative">
