@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import CryptoJS from "crypto-js";
 import { FaUser, FaEnvelope, FaLock, FaChurch } from "react-icons/fa";
@@ -66,6 +66,8 @@ const AuthPage = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const router = useRouter();
 
+
+  
   const toggleAuthModal = () => {
     setShowAuth((prev) => !prev);
   };

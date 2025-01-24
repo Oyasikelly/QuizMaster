@@ -14,60 +14,96 @@ const ForgotPassword = () => {
   const router = useRouter();
   const secretKey = process.env.NEXT_PUBLIC_SECRETE_KEY; // Use a strong, secure key
 
+  async function getUserByEmail() {}
+
   const handleForgotPassword = async (e) => {
     e.preventDefault();
 
-    // Retrieve and verify the stored user information using getSecureItem
-    const user = getSecureItem("user", secretKey);
-    if (user) {
-      console.log("Retrieved secure user:", user.email);
+    const { data, error } = await supabase
+      .from("users_profile")
+      .select("email");
+
+    if (data) {
+      console.log(data);
     } else {
-      setErrorMssg("User account not found, try to signUp");
+      console.error(error);
     }
-    if (email !== user.email) {
-      setErrorMssg("Invalid user email, signUp to continue:");
+
+    const userEmail = data.find((userEmail) => userEmail.email === email);
+    console.log(userEmail);
+    if (!userEmail === email) {
+      setTimeout(() => {
+        setErrorMssg("");
+      }, 2000);
+      setErrorMssg("User account not found, try to signUp");
     } else {
+      setTimeout(() => {
+        setMessage("");
+        setEmail("");
+      }, 2500);
+      setMessage("A password reset link has been sent to your email address.");
+      setErrorMssg("");
       const { data, error } = await supabase.auth.resetPasswordForEmail(
-        user.email,
+        userEmail.email,
         { redirectTo: `${window.location.href}resetpassword` }
       );
-
-      console.log(data);
-      // Simulate sending a password reset email (Replace with actual API call)
       if (error) {
-        console.log(error);
-        setMessage("");
-        setErrorMssg("Error occured, try again later!");
-      } else {
-        setTimeout(() => {
-          setMessage("");
-        }, 2000);
-        setMessage(
-          "A password reset link has been sent to your email address."
-        );
-        setTimeout(() => {
-          setEmail("");
-        }, 3000);
-        setErrorMssg("");
-        router.push("/authenticate/resetpassword");
+        console.error(error);
       }
+      // router.push("/authenticate/resetpassword");
     }
+
+    //   // Retrieve and verify the stored user information using getSecureItem
+    //   const user = getSecureItem("user", secretKey);
+    //   if (user) {
+    //     console.log("Retrieved secure user:", user.email);
+    //   } else {
+    //     setErrorMssg("User account not found, try to signUp");
+    //   }
+    //   if (email !== user.email) {
+    //     setErrorMssg("Invalid user email, signUp to continue:");
+    //   } else {
+    //     const { data, error } = await supabase.auth.resetPasswordForEmail(
+    //       user.email,
+    //       { redirectTo: `${window.location.href}resetpassword` }
+    //     );
+
+    //     console.log(data);
+    //     // Simulate sending a password reset email (Replace with actual API call)
+    //     if (error) {
+    //       console.log(error);
+    //       setMessage("");
+    //       setErrorMssg("Error occured, try again later!");
+    //     } else {
+    //       setTimeout(() => {
+    //         setMessage("");
+    //       }, 2000);
+    //       setMessage(
+    //         "A password reset link has been sent to your email address."
+    //       );
+    //       setTimeout(() => {
+    //         setEmail("");
+    //       }, 3000);
+    //       setErrorMssg("");
+    //       router.push("/authenticate/resetpassword");
+    //     }
+    //   }
+    // };
+
+    // function getSecureItem(key, secret) {
+    //   const item = localStorage.getItem(key);
+    //   if (!item) return null;
+
+    //   const { data, signature } = JSON.parse(item);
+
+    //   // Verify the signature
+    //   if (signature !== btoa(secret + data)) {
+    //     console.error("Data has been tampered with!");
+    //     return null;
+    //   }
+
+    //   return JSON.parse(data);
   };
-
-  function getSecureItem(key, secret) {
-    const item = localStorage.getItem(key);
-    if (!item) return null;
-
-    const { data, signature } = JSON.parse(item);
-
-    // Verify the signature
-    if (signature !== btoa(secret + data)) {
-      console.error("Data has been tampered with!");
-      return null;
-    }
-
-    return JSON.parse(data);
-  }
 
   return (
     <div className="flex items-center justify-center px-6 text-white">
