@@ -44,21 +44,21 @@ const AdultIntroduction = ({ category }) => {
           {userData.map((data, index) => (
             <div
               key={index}
-              className="flex flex-col w-auto items-center gap-2 lg:gap-4 px-6 py-2 text-white  bg-opacity-20 rounded-lg "
+              className="flex flex-col lg:flex-row w-auto items-center gap-6 px-6 py-2 text-white  bg-opacity-20 rounded-lg "
             >
-              <div className="flex gap-2 lg:gap-4 items-center justify-start">
+              <div className="flex gap-2 items-center justify-start">
                 <FaUser className="text-xl text-yellow-300" />
-                <span className="w-auto text-lg md:text-xl font-semibold">
+                <span className="w-auto text-xl sm:text-lg font-semibold">
                   {data.name.toUpperCase()}
                 </span>
               </div>
-              <div className="flex gap-2 lg:gap-4 items-center justify-start">
+              <div className="flex gap-2 items-center justify-start">
                 <FaGraduationCap className="text-lg text-yellow-300" />
                 <span className="w-auto text-lg md:text-xl">
                   {data.class.toUpperCase()}
                 </span>
               </div>
-              <div className="flex gap-2 lg:gap-4 items-center justify-start">
+              <div className="flex gap-2 items-center justify-start">
                 <FaEnvelope className="text-lg text-yellow-300" />
                 <span className="w-auto text-sm md:text-lg">{data.email}</span>
               </div>
