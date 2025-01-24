@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import CryptoJS from "crypto-js";
 import { FaUser, FaEnvelope, FaLock, FaChurch } from "react-icons/fa";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { SiGoogleclassroom } from "react-icons/si";
@@ -11,24 +10,9 @@ import { useRouter } from "next/navigation";
 import { supabase } from "../../lib/supabase";
 import LandingPage from "../../components/LandingPage";
 import ForgotPassword from "../../components/ForgotPassword";
-//update Users_id
 
-// async function updateUserProfile(user_id, user_email) {
-//   console.log(user_id, user_email);
 
-//   const { data, error } = await supabase
-//     .from("users_profile")
-//     .update("user_id", user_id)
-//     .eq("email", user_email)
-//     .select();
-
-//   if (error) {
-//     console.log(error);
-//   } else {
-//     console.log(data);
-//   }
-// }
-
+// Update user profile
 const updateUserProfile = async () => {
   const { data: user, error: authError } = await supabase.auth.getUser();
 
