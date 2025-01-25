@@ -23,6 +23,7 @@ const UpdatePasswordForm = ({ resetCode }) => {
       return;
     }
 
+    console.log(resetCode);
     try {
       const { data, error: updateError } = await supabase.auth.updateUser({
         password,
