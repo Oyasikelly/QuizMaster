@@ -40,6 +40,7 @@ const ForgotPassword = () => {
           "A password reset link has been sent to your email address."
         );
         setErrorMssg("");
+        router.refresh();
         const { data, error } = await supabase.auth.resetPasswordForEmail(
           userEmail.email,
           {
