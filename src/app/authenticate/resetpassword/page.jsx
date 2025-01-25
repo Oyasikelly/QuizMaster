@@ -1,111 +1,30 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { useSearchParams } from "next/navigation"; // For accessing query parameters
-import { supabase } from "../../../lib/supabase";
+import React, { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+import UpdatePasswordForm from "../../../components/UpdatePasswordForm";
 
-const UpdatePasswordForm = () => {
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+const ResetPasswordPage = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ResetPasswordContent />
+    </Suspense>
+  );
+};
 
+const ResetPasswordContent = () => {
   const searchParams = useSearchParams();
+  const code = searchParams.get("code"); // Extract the code from the URL
 
-  useEffect(() => {
-    const accessToken = searchParams.get("access_token");
-    if (accessToken) {
-      // Set the session for the user using the access token
-      supabase.auth.setSession({ access_token: accessToken });
-    } else {
-      setError("Invalid or missing token. Please check your reset link.");
-    }
-  }, [searchParams]);
-
-  const handlePasswordUpdate = async (e) => {
-    e.preventDefault();
-
-    if (!password || !confirmPassword) {
-      setError("Please fill in all fields.");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    try {
-      const { data, error: updateError } = await supabase.auth.updateUser({
-        password: password,
-      });
-
-      if (updateError) {
-        setError(updateError.message);
-        return;
-      }
-
-      console.log(data);
-      setMessage("Your password has been updated successfully.");
-      setError("");
-      setPassword("");
-      setConfirmPassword("");
-    } catch (err) {
-      setError("An error occurred. Please try again.");
-      console.log(err);
-    }
-  };
+  if (!code) {
+    return <div>Invalid or missing reset code.</div>;
+  }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-green-500 to-blue-500 text-white p-4">
-      <motion.div
-        className="bg-white text-black p-6 sm:p-8 rounded-lg shadow-lg w-full max-w-sm md:max-w-md lg:max-w-lg"
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">
-          Set New Password
-        </h2>
-        <form onSubmit={handlePasswordUpdate} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <label className="text-gray-600 text-sm">New Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="bg-gray-100 p-2 rounded-md shadow-sm text-sm outline-none"
-              placeholder="Enter new password"
-            />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <label className="text-gray-600 text-sm">Confirm Password</label>
-            <input
-              type="password"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              className="bg-gray-100 p-2 rounded-md shadow-sm text-sm outline-none"
-              placeholder="Confirm new password"
-            />
-          </div>
-
-          {error && <p className="text-red-500 text-sm">{error}</p>}
-          {message && <p className="text-green-500 text-sm">{message}</p>}
-
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            type="submit"
-            className="bg-gradient-to-r from-green-500 to-blue-500 text-white py-2 rounded-md shadow-md font-semibold text-sm"
-          >
-            Update Password
-          </motion.button>
-        </form>
-      </motion.div>
+    <div>
+      <UpdatePasswordForm resetCode={code} />
     </div>
   );
 };
 
-export default UpdatePasswordForm;
+export default ResetPasswordPage;
