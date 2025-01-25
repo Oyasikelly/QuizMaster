@@ -29,6 +29,9 @@ const UpdatePasswordForm = ({ resetCode }) => {
         access_token: resetCode, // Pass the code to Supabase
       });
 
+      if (data) {
+        console.log(data);
+      }
       if (updateError) {
         setError(updateError.message);
         return;
