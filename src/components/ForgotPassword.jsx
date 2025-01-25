@@ -4,14 +4,14 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { FiMail, FiSend } from "react-icons/fi";
 import { supabase } from "../lib/supabase";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [errorMssg, setErrorMssg] = useState("");
   const [successful, setSuccessful] = useState(false);
-  const router = useRouter();
+  // const router = useRouter();
   // const secretKey = process.env.NEXT_PUBLIC_SECRETE_KEY; // Use a strong, secure key
 
   const handleForgotPassword = async (e) => {
@@ -40,7 +40,6 @@ const ForgotPassword = () => {
           "A password reset link has been sent to your email address."
         );
         setErrorMssg("");
-        router.refresh();
         const { data, error } = await supabase.auth.resetPasswordForEmail(
           userEmail.email,
           {
