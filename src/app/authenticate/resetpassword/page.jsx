@@ -2,7 +2,7 @@
 
 import React, { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import UpdatePasswordForm from "../../../../components/UpdatePasswordForm";
+import UpdatePasswordForm from "../../../components/UpdatePasswordForm";
 
 const ResetPasswordPage = () => {
   return (
