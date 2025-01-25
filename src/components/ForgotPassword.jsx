@@ -12,9 +12,7 @@ const ForgotPassword = () => {
   const [errorMssg, setErrorMssg] = useState("");
   const [successful, setSuccessful] = useState(false);
   const router = useRouter();
-  const secretKey = process.env.NEXT_PUBLIC_SECRETE_KEY; // Use a strong, secure key
-
-  async function getUserByEmail() {}
+  // const secretKey = process.env.NEXT_PUBLIC_SECRETE_KEY; // Use a strong, secure key
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
@@ -25,36 +23,38 @@ const ForgotPassword = () => {
 
     if (data) {
       console.log(data);
+      console.log(email);
+      const userEmail = data.find((item) => email === item.email);
+      console.log(userEmail);
+      if (!userEmail) {
+        setTimeout(() => {
+          setErrorMssg("");
+        }, 2500);
+        setErrorMssg("User account not found, try to signUp");
+      } else {
+        setTimeout(() => {
+          setMessage("");
+          setEmail("");
+        }, 2500);
+        setMessage(
+          "A password reset link has been sent to your email address."
+        );
+        setErrorMssg("");
+        const { data, error } = await supabase.auth.resetPasswordForEmail(
+          userEmail.email,
+          {
+            redirectTo: `${window.location.href}/resetpassword`,
+          }
+        );
+        if (error) {
+          console.error(error);
+        }
+      }
     } else {
       console.error(error);
     }
 
-    const userEmail = data.find((userEmail) => userEmail.email === email);
-    console.log(userEmail);
-    if (!userEmail === email) {
-      setTimeout(() => {
-        setErrorMssg("");
-      }, 2000);
-      setErrorMssg("User account not found, try to signUp");
-    } else {
-      setTimeout(() => {
-        setMessage("");
-        setEmail("");
-      }, 2500);
-      setMessage("A password reset link has been sent to your email address.");
-      setErrorMssg("");
-      const { data, error } = await supabase.auth.resetPasswordForEmail(
-        userEmail.email,
-        {
-          redirectTo:
-            "https://quizmasterv1.vercel.app/authenticate/resetpassword",
-        }
-      );
-      if (error) {
-        console.error(error);
-      }
-      // router.push("/authenticate/resetpassword");
-    }
+    // router.push("/authenticate/resetpassword");
 
     //   // Retrieve and verify the stored user information using getSecureItem
     //   const user = getSecureItem("user", secretKey);
