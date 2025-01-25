@@ -27,7 +27,9 @@ const ResetPasswordContent = () => {
           </p>
           <div className="mt-6 flex justify-center">
             <button
-              onClick={() => (window.location.href = "/authenticate")}
+              onClick={() =>
+                (window.location.href = "/authenticate/forgotpassword")
+              }
               className="bg-red-500 text-white py-2 px-4 rounded-md shadow-md hover:bg-red-600 transition duration-300"
             >
               Request New Link
