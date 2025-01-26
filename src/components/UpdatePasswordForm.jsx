@@ -3,13 +3,15 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "../lib/supabase";
+import { useRouter } from "next/navigation";
 
 const UpdatePasswordForm = ({ resetCode }) => {
+  console.log(resetCode);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-
+  const router = useRouter();
   const handlePasswordUpdate = async (e) => {
     e.preventDefault();
 
@@ -31,6 +33,7 @@ const UpdatePasswordForm = ({ resetCode }) => {
       });
 
       if (data) {
+        router.push("/authenticate");
         console.log(data);
       }
       if (updateError) {

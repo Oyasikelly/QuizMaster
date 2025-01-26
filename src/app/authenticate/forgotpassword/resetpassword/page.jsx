@@ -1,20 +1,28 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import UpdatePasswordForm from "../../../components/UpdatePasswordForm";
+import UpdatePasswordForm from "../../../../components/UpdatePasswordForm";
 
 const ResetPasswordPage = () => {
+  const [code, setCode] = useState(null);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const code = searchParams.get("code"); // Extract the code from the URL
+    setCode(code);
+  }, []);
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <ResetPasswordContent />
+      <ResetPasswordContent code={code} />
     </Suspense>
   );
 };
 
-const ResetPasswordContent = () => {
-  const searchParams = useSearchParams();
-  const code = searchParams.get("code"); // Extract the code from the URL
+const ResetPasswordContent = ({ code }) => {
+  console.log(code);
+  // const searchParams = useSearchParams();
+  // const code = searchParams.get("code"); // Extract the code from the URL
 
   if (!code) {
     return (

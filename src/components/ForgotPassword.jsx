@@ -43,8 +43,8 @@ const ForgotPassword = () => {
         const { data, error } = await supabase.auth.resetPasswordForEmail(
           userEmail.email,
           {
-            redirectTo:
-              "https://quizmasterv1.vercel.app/authenticate/resetpassword",
+            redirectTo: `${window.location.href}/resetpassword`,
+            //               "https://quizmasterv1.vercel.app/authenticate/resetpassword",
           }
         );
         if (error) {
@@ -69,7 +69,6 @@ const ForgotPassword = () => {
     //   } else {
     //     const { data, error } = await supabase.auth.resetPasswordForEmail(
     //       user.email,
-    //       { redirectTo: `${window.location.href}resetpassword` }
     //     );
 
     //     console.log(data);
