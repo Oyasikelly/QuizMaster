@@ -6,7 +6,6 @@ import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
 
 const UpdatePasswordForm = ({ resetCode }) => {
-  console.log(resetCode);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
