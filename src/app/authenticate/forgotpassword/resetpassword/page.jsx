@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import UpdatePasswordForm from "../../../../components/UpdatePasswordForm";
 
