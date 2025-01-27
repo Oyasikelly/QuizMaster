@@ -9,7 +9,6 @@ import { useRouter } from "next/navigation";
 
 import { supabase } from "../../lib/supabase";
 import LandingPage from "../../components/LandingPage";
-import ForgotPassword from "../../components/ForgotPassword";
 
 // Update user profile
 const updateUserProfile = async () => {
