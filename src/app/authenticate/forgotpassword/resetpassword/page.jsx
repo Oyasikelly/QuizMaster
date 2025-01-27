@@ -5,21 +5,28 @@ import { useSearchParams } from "next/navigation";
 import UpdatePasswordForm from "../../../../components/UpdatePasswordForm";
 
 const ResetPasswordPage = () => {
-  const [code, setCode] = useState(null);
-  const searchParams = useSearchParams();
+  // const [code, setCode] = useState(null);
+  // const searchParams = useSearchParams();
 
-  useEffect(() => {
-    const code = searchParams.get("code"); // Extract the code from the URL
-    setCode(code);
-  }, []);
+  // useEffect(() => {
+  //   const code = searchParams?.get("code"); // Extract the code from the URL
+  //   setCode(code);
+  // }, [searchParams]);
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <ResetPasswordContent code={code} />
+      <ResetPasswordContent />
     </Suspense>
   );
 };
 
-const ResetPasswordContent = ({ code }) => {
+const ResetPasswordContent = () => {
+  const [code, setCode] = useState(null);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    const code = searchParams?.get("code"); // Extract the code from the URL
+    setCode(code);
+  }, [searchParams]);
   console.log(code);
   // const searchParams = useSearchParams();
   // const code = searchParams.get("code"); // Extract the code from the URL

@@ -43,7 +43,9 @@ const ForgotPassword = () => {
         const { data, error } = await supabase.auth.resetPasswordForEmail(
           userEmail.email,
           {
-            redirectTo: `${window.location.href}/resetpassword`,
+            redirectTo:
+              "https://quizmasterv1.vercel.app/authenticate/resetpassword",
+            // `${window.location.href}/resetpassword`,
             //               "https://quizmasterv1.vercel.app/authenticate/resetpassword",
           }
         );
