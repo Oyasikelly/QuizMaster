@@ -26,7 +26,7 @@ const ResetPasswordContent = () => {
   useEffect(() => {
     const code = searchParams?.get("code"); // Extract the code from the URL
     setCode(code);
-  }, [searchParams]);
+  }, []);
   console.log(code);
   // const searchParams = useSearchParams();
   // const code = searchParams.get("code"); // Extract the code from the URL
