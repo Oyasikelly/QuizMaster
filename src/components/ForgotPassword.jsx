@@ -17,6 +17,16 @@ const ForgotPassword = () => {
   const handleForgotPassword = async (e) => {
     e.preventDefault();
 
+    const { data: userdata, error: usererror } =
+      await supabase.auth.api.getUserByEmail(email);
+    if (usererror) {
+      console.log("Email not registered:", error.message);
+      // Notify user that the email doesn't exist
+    } else {
+      // Proceed with password reset
+      console.log(userdata);
+    }
+
     const { data, error } = await supabase
       .from("users_profile")
       .select("email");
