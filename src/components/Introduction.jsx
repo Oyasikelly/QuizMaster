@@ -8,9 +8,11 @@ import { FaUser, FaEnvelope, FaGraduationCap } from "react-icons/fa";
 // component
 import SelectTime from "../components/SelectTime";
 
-const AdultIntroduction = ({ category }) => {
+const Introduction = ({ category }) => {
   const [userData, setUserData] = useState([]);
-
+  const [name, setName] = useState({
+    name: "",
+  });
   useEffect(() => {
     async function getUser() {
       const { data, error } = await supabase.auth.getUser();
@@ -20,7 +22,15 @@ const AdultIntroduction = ({ category }) => {
         .select("email, name, class, denomination") // Select multiple columns
         .eq("email", user_email);
 
-      if (userData) setUserData(userData);
+      if (userData) {
+        setUserData(userData);
+
+        const [userName, ...others] = userData;
+        setName({
+          name: userName.name,
+        });
+        console.log(name);
+      }
       if (userError) console.error(userError);
     }
 
@@ -75,7 +85,7 @@ const AdultIntroduction = ({ category }) => {
         className="text-center max-w-4xl w-full"
       >
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4">
-          Welcome to <span className="text-yellow-400">{category} Quiz</span>
+          Welcome <span className="text-yellow-400">{name.name}</span>
         </h1>
         <p className="text-base md:text-lg lg:text-xl mb-6 leading-relaxed">
           This quiz tests your knowledge on various topics, from life
@@ -100,4 +110,4 @@ const AdultIntroduction = ({ category }) => {
   );
 };
 
-export default AdultIntroduction;
+export default Introduction;
