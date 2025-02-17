@@ -92,7 +92,7 @@ const AuthPage = () => {
         email: email,
         password: password,
         options: {
-          emailRedirectTo: "https://quizmasterv1.vercel.app/authenticate",
+          emailRedirectTo: "https://quizmasterrccg.vercel.app/authenticate",
         },
       });
       if (signUpError) {
