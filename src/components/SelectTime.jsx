@@ -84,7 +84,7 @@ export default function SelectTime() {
               <FaQuestionCircle /> Number of Questions
             </h3>
             <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
-              {[5, 10, 15, 20].map((num) => (
+              {[10, 20, 30, 40, 50, 60, 70, 80].map((num) => (
                 <motion.button
                   key={num}
                   whileHover={{ scale: 1.05 }}
