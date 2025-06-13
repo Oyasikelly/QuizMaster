@@ -1,5 +1,4 @@
 [
-<<<<<<< HEAD
 	{
 		"question": "…Christian has the identification mark of refining scriptural truths to accommodate culture.",
 		"options": [
@@ -724,1337 +723,1336 @@
 			"Praise & Giving"
 		],
 		"answer": "Ministry & Mission"
+	},
+
+	{
+		"question": "According to 1 John 4:10, how did God demonstrate His love for us?",
+		"options": [
+			"By giving us wealth and prosperity",
+			"By sending His Son as a propitiation for our sins",
+			"By making us rulers over nations",
+			"By giving us the Ten Commandments"
+		],
+		"answer": "By sending His Son as a propitiation for our sins"
+	},
+	{
+		"question": "Which Bible passage records Jesus’ response to the question about the greatest commandment?",
+		"options": [
+			"Mark 10:45-50",
+			"Matthew 22:35-40",
+			"Luke 15:1-10",
+			"John 3:16-20"
+		],
+		"answer": "Matthew 22:35-40"
+	},
+	{
+		"question": "What is the first and greatest commandment according to Jesus?",
+		"options": [
+			"Love your neighbor as yourself",
+			"Do not bear false witness",
+			"Love the Lord your God with all your heart, soul, and mind",
+			"Keep the Sabbath holy"
+		],
+		"answer": "Love the Lord your God with all your heart, soul, and mind"
+	},
+	{
+		"question": "Which commandment is the second greatest, according to Matthew 22:39?",
+		"options": [
+			"Love your neighbor as yourself",
+			"Do not steal",
+			"Honor your father and mother",
+			"Do not covet"
+		],
+		"answer": "Love your neighbor as yourself"
+	},
+	{
+		"question": "What did Jesus say the law and the prophets depend on?",
+		"options": [
+			"The love of money",
+			"Faith and miracles",
+			"The two greatest commandments",
+			"Obedience to the Sabbath"
+		],
+		"answer": "The two greatest commandments"
+	},
+	{
+		"question": "According to 1 John 4:8, what does the Bible say about love?",
+		"options": [
+			"Love is temporary",
+			"God is love",
+			"Love is based on emotions",
+			"Love is a weakness"
+		],
+		"answer": "God is love"
+	},
+	{
+		"question": "According to John 3:16, why did God send His Son into the world?",
+		"options": [
+			"To judge the world",
+			"To teach new laws",
+			"That whoever believes in Him should not perish but have eternal life",
+			"To establish an earthly kingdom"
+		],
+		"answer": "That whoever believes in Him should not perish but have eternal life"
+	},
+	{
+		"question": "What is a practical way to express love for God?",
+		"options": [
+			"By keeping His commandments",
+			"By seeking personal gain",
+			"By ignoring others’ needs",
+			"By only attending church on Sundays"
+		],
+		"answer": "By keeping His commandments"
+	},
+	{
+		"question": "According to 1 John 4:19, why do we love God?",
+		"options": [
+			"Because He first loved us",
+			"Because we fear Him",
+			"Because we want blessings",
+			"Because we have no choice"
+		],
+		"answer": "Because He first loved us"
+	},
+	{
+		"question": "How can we demonstrate our love for fellow humans?",
+		"options": [
+			"By helping only those who can repay us",
+			"By loving even our enemies",
+			"By loving only our friends",
+			"By judging others harshly"
+		],
+		"answer": "By loving even our enemies"
+	},
+	{
+		"question": "What does Romans 12:10 instruct believers to do?",
+		"options": [
+			"Hate their enemies",
+			"Love one another with brotherly affection",
+			"Focus only on personal success",
+			"Avoid strangers at all costs"
+		],
+		"answer": "Love one another with brotherly affection"
+	},
+	{
+		"question": "According to 1 John 4:20, what does the Bible say about those who claim to love God but hate their brother?",
+		"options": [
+			"They are true worshippers",
+			"They are liars",
+			"They are forgiven",
+			"They are blessed"
+		],
+		"answer": "They are liars"
+	},
+	{
+		"question": "How does Song of Solomon 8:7 describe love?",
+		"options": [
+			"As something that can be bought with money",
+			"As unquenchable and more valuable than possessions",
+			"As a temporary feeling",
+			"As a form of weakness"
+		],
+		"answer": "As unquenchable and more valuable than possessions"
+	},
+	{
+		"question": "What does John 14:15 say about those who love Jesus?",
+		"options": [
+			"They will perform miracles",
+			"They will keep His commandments",
+			"They will become wealthy",
+			"They will be immune to suffering"
+		],
+		"answer": "They will keep His commandments"
+	},
+	{
+		"question": "Which Bible verse emphasizes seeking God's kingdom first?",
+		"options": ["John 3:16", "Matthew 6:33", "Psalm 23:1", "Romans 8:28"],
+		"answer": "Matthew 6:33"
+	},
+	{
+		"question": "What does Luke 6:31 teach about love for others?",
+		"options": [
+			"Treat others as you want to be treated",
+			"Love only those who love you",
+			"Ignore those in need",
+			"Focus on your own needs first"
+		],
+		"answer": "Treat others as you want to be treated"
+	},
+	{
+		"question": "What should be our attitude toward those who do not deserve our love?",
+		"options": [
+			"Ignore them",
+			"Love them just as God loved us",
+			"Condemn them",
+			"Seek revenge"
+		],
+		"answer": "Love them just as God loved us"
+	},
+	{
+		"question": "How does Romans 5:8 demonstrate God's love?",
+		"options": [
+			"God loved us while we were still sinners",
+			"God only loves the righteous",
+			"God rewards only those who obey perfectly",
+			"God’s love depends on our good deeds"
+		],
+		"answer": "God loved us while we were still sinners"
+	},
+	{
+		"question": "What does 1 John 4:7 teach about love?",
+		"options": [
+			"Love comes from God",
+			"Love is a human invention",
+			"Love is unnecessary",
+			"Love should be conditional"
+		],
+		"answer": "Love comes from God"
+	},
+	{
+		"question": "According to Matthew 22:40, what do the law and the prophets depend on?",
+		"options": [
+			"Faith and prosperity",
+			"The two greatest commandments",
+			"Obedience to traditions",
+			"The Ten Commandments alone"
+		],
+		"answer": "The two greatest commandments"
+	},
+	{
+		"question": "What does the Bible say about making choices?",
+		"options": [
+			"God forces choices on us",
+			"We are free to make choices, but we bear the consequences",
+			"Choices have no effect on our destiny",
+			"We should not make choices at all"
+		],
+		"answer": "We are free to make choices, but we bear the consequences"
+	},
+	{
+		"question": "According to Deuteronomy 30:19, what does God set before us?",
+		"options": [
+			"Life and death, blessing and cursing",
+			"Success and failure",
+			"Love and hate",
+			"Riches and poverty"
+		],
+		"answer": "Life and death, blessing and cursing"
+	},
+	{
+		"question": "What mistake did Samson make regarding marriage?",
+		"options": [
+			"He married an Israelite",
+			"He married without his parents' consent",
+			"He married a Philistine woman",
+			"He remained single all his life"
+		],
+		"answer": "He married a Philistine woman"
+	},
+	{
+		"question": "Who was influenced by foreign wives to worship other gods?",
+		"options": ["David", "Solomon", "Elijah", "Moses"],
+		"answer": "Solomon"
+	},
+	{
+		"question": "What mistake did Lot make when choosing his dwelling place?",
+		"options": [
+			"He did not ask his family",
+			"He chose based on wealth, not spiritual values",
+			"He prayed before deciding",
+			"He built a temple first"
+		],
+		"answer": "He chose based on wealth, not spiritual values"
+	},
+	{
+		"question": "What was Amnon’s consequence for listening to his friend Jonadab?",
+		"options": [
+			"He was honored by David",
+			"He married Tamar",
+			"He was killed by Absalom",
+			"He became king"
+		],
+		"answer": "He was killed by Absalom"
+	},
+	{
+		"question": "Which Bible passage advises seeking godly counsel when making decisions?",
+		"options": ["Genesis 1:1", "Proverbs 15:22", "Psalm 23:1", "John 3:16"],
+		"answer": "Proverbs 15:22"
+	},
+	{
+		"question": "What does Proverbs 18:22 say about marriage?",
+		"options": [
+			"It is not necessary",
+			"Whoever finds a wife finds a good thing",
+			"Only pastors should marry",
+			"Marriage is for the rich"
+		],
+		"answer": "Whoever finds a wife finds a good thing"
+	},
+	{
+		"question": "What is an essential step in making the right marriage choice?",
+		"options": [
+			"Engaging the Holy Spirit",
+			"Following emotions only",
+			"Ignoring advice from others",
+			"Rushing into marriage"
+		],
+		"answer": "Engaging the Holy Spirit"
+	},
+	{
+		"question": "Which scripture states that God's presence must go with us?",
+		"options": ["Exodus 33:14-15", "Matthew 5:16", "Luke 6:38", "Romans 8:28"],
+		"answer": "Exodus 33:14-15"
+	},
+	{
+		"question": "According to John 10:27, whose voice should we listen to?",
+		"options": [
+			"Our parents only",
+			"Friends and neighbors",
+			"Strangers and critics",
+			"Jesus, the Good Shepherd"
+		],
+		"answer": "Jesus, the Good Shepherd"
+	},
+	{
+		"question": "What should guide our decisions according to Psalm 119:105?",
+		"options": [
+			"Dreams and visions",
+			"The word of God",
+			"The advice of unbelievers",
+			"Our emotions alone"
+		],
+		"answer": "The word of God"
+	},
+	{
+		"question": "What does Genesis 24:12 teach about choosing a spouse?",
+		"options": [
+			"Pray with sincerity of purpose",
+			"Use human wisdom alone",
+			"Rely on physical appearance",
+			"Ignore godly counsel"
+		],
+		"answer": "Pray with sincerity of purpose"
+	},
+	{
+		"question": "Which verse advises against being anxious in decision-making?",
+		"options": ["John 3:16", "Philippians 4:6", "Psalm 91:1", "Romans 12:2"],
+		"answer": "Philippians 4:6"
+	},
+	{
+		"question": "What should we do when we notice red flags in a relationship?",
+		"options": [
+			"Ignore them",
+			"Address them speedily",
+			"Make excuses for the person",
+			"Continue without concern"
+		],
+		"answer": "Address them speedily"
+	},
+	{
+		"question": "Which passage emphasizes not looking at outward appearances alone?",
+		"options": [
+			"1 Samuel 16:6-7",
+			"Judges 14:3",
+			"Proverbs 31:10",
+			"Matthew 6:33"
+		],
+		"answer": "1 Samuel 16:6-7"
+	},
+	{
+		"question": "What should a believer do before entering a relationship?",
+		"options": [
+			"Rely on personal emotions",
+			"Hear from God",
+			"Depend on physical attraction",
+			"Seek financial security first"
+		],
+		"answer": "Hear from God"
+	},
+	{
+		"question": "What does Mark 14:38 say about temptation?",
+		"options": [
+			"Ignore it",
+			"Pray and watch",
+			"Follow the world",
+			"Do whatever feels good"
+		],
+		"answer": "Pray and watch"
+	},
+	{
+		"question": "What happens when we make the wrong marital choice?",
+		"options": [
+			"We can simply walk away",
+			"It can affect our destiny",
+			"It has no consequences",
+			"God will force a change"
+		],
+		"answer": "It can affect our destiny"
+	},
+	{
+		"question": "What is the ultimate guidance for making the right choices?",
+		"options": [
+			"Personal preference",
+			"God's direction",
+			"Peer pressure",
+			"Social media opinions"
+		],
+		"answer": "God's direction"
+	},
+	{
+		"question": "According to Psalms 62:5, what should our expectation be from?",
+		"options": [
+			"Our hard work",
+			"Our connections",
+			"God alone",
+			"The government"
+		],
+		"answer": "God alone"
+	},
+	{
+		"question": "What is the 'waiting room' in a spiritual context?",
+		"options": [
+			"A place of seeking God's intervention",
+			"A church building",
+			"A time of punishment",
+			"A moment of complete inactivity"
+		],
+		"answer": "A place of seeking God's intervention"
+	},
+	{
+		"question": "Which of the following is NOT true about the 'waiting room'?",
+		"options": [
+			"Waiting is unavoidable",
+			"Waiting lasts forever",
+			"God can use the waiting period to test our faith",
+			"It is a time to prepare for the next phase"
+		],
+		"answer": "Waiting lasts forever"
+	},
+	{
+		"question": "According to Isaiah 40:31, what is one of the blessings of waiting on the Lord?",
+		"options": [
+			"Immediate success",
+			"Renewed strength",
+			"No difficulties",
+			"A life without trials"
+		],
+		"answer": "Renewed strength"
+	},
+	{
+		"question": "Which of these is an appropriate action while waiting on God?",
+		"options": [
+			"Complaining and losing hope",
+			"Trusting God's timing and plans",
+			"Taking shortcuts to speed things up",
+			"Giving up on prayers"
+		],
+		"answer": "Trusting God's timing and plans"
+	},
+	{
+		"question": "According to Hebrews 6:15, what is required to receive God's promises?",
+		"options": [
+			"Impatience",
+			"Doubt",
+			"Contentment and patience",
+			"Self-effort without God"
+		],
+		"answer": "Contentment and patience"
+	},
+	{
+		"question": "Why does God sometimes put people in the 'waiting room' against their will?",
+		"options": [
+			"To frustrate them",
+			"To allow them to change",
+			"To make life harder",
+			"To test their physical strength"
+		],
+		"answer": "To allow them to change"
+	},
+	{
+		"question": "What is a wrong way to handle waiting on God?",
+		"options": [
+			"Being thankful for what God will do",
+			"Going contrary to God's will to speed things up",
+			"Trusting God's direction",
+			"Praying and studying the Word"
+		],
+		"answer": "Going contrary to God's will to speed things up"
+	},
+	{
+		"question": "According to Romans 8:28, why should believers trust God during the waiting period?",
+		"options": [
+			"Because all things work together for good",
+			"Because life will be easy",
+			"Because challenges will never come",
+			"Because we should never expect trials"
+		],
+		"answer": "Because all things work together for good"
+	},
+	{
+		"question": "What is the correct response to being in God's waiting room?",
+		"options": [
+			"Seeking God in prayer and studying His word",
+			"Becoming discouraged and quitting",
+			"Taking matters into our own hands",
+			"Focusing only on the challenges"
+		],
+		"answer": "Seeking God in prayer and studying His word"
+	},
+	{
+		"question": "According to Proverbs 13:11, what happens to wealth gotten by vanity?",
+		"options": [
+			"It shall be diminished",
+			"It shall multiply",
+			"It shall be sustained",
+			"It shall be blessed"
+		],
+		"answer": "It shall be diminished"
+	},
+	{
+		"question": "In the parable of the talents (Matthew 25:14-18), what did the servant with five talents do?",
+		"options": [
+			"He hid the talents in the earth",
+			"He traded and gained five more talents",
+			"He gave the talents to another servant",
+			"He returned them to the master untouched"
+		],
+		"answer": "He traded and gained five more talents"
+	},
+	{
+		"question": "Which book of the Bible emphasizes saving for future needs?",
+		"options": [
+			"Genesis 41:34-36",
+			"Exodus 20:12",
+			"Matthew 5:16",
+			"Romans 8:28"
+		],
+		"answer": "Genesis 41:34-36"
+	},
+	{
+		"question": "Why should Christians avoid get-rich-quick schemes?",
+		"options": [
+			"Because they require a lot of capital",
+			"Because they do not require faith",
+			"Because they often lead to loss and dishonesty",
+			"Because they are hard to understand"
+		],
+		"answer": "Because they often lead to loss and dishonesty"
+	},
+	{
+		"question": "Which of the following is NOT a biblical principle for investment?",
+		"options": [
+			"Investing only in what you understand",
+			"Accumulating debt in the name of investment",
+			"Avoiding impulsive spending",
+			"Leaving an inheritance for future generations"
+		],
+		"answer": "Accumulating debt in the name of investment"
+	},
+	{
+		"question": "What is one of the benefits of investment?",
+		"options": [
+			"Instant wealth",
+			"Retirement security",
+			"Avoiding labor",
+			"Spending without planning"
+		],
+		"answer": "Retirement security"
+	},
+	{
+		"question": "Why should believers invest in their education and that of their children?",
+		"options": [
+			"To show off their wealth",
+			"To prepare for future opportunities",
+			"To make a name for themselves",
+			"To avoid working in the future"
+		],
+		"answer": "To prepare for future opportunities"
+	},
+	{
+		"question": "How does investing help beat inflation?",
+		"options": [
+			"By reducing spending",
+			"By keeping money in a safe place",
+			"By maintaining purchasing power",
+			"By giving money away"
+		],
+		"answer": "By maintaining purchasing power"
+	},
+	{
+		"question": "Which of the following is a recommended area for investment according to the lesson?",
+		"options": ["Gambling", "Real estate", "Ponzi schemes", "Lottery"],
+		"answer": "Real estate"
+	},
+	{
+		"question": "According to the lesson, why is it important to invest wisely?",
+		"options": [
+			"To build wealth for the future",
+			"To avoid working hard",
+			"To become famous",
+			"To rely on others for support"
+		],
+		"answer": "To build wealth for the future"
+	},
+	{
+		"question": "What is the memory verse for this lesson?",
+		"options": ["Proverbs 22:7", "2 Kings 4:1", "Luke 15:13", "Romans 13:8"],
+		"answer": "2 Kings 4:1"
+	},
+	{
+		"question": "Why did the widow cry to the Prophet Elisha?",
+		"options": [
+			"She was sick and needed healing",
+			"She was in debt and feared losing her sons to the creditor",
+			"She wanted a blessing for her household",
+			"She needed food for her family"
+		],
+		"answer": "She was in debt and feared losing her sons to the creditor"
+	},
+	{
+		"question": "What instruction did Prophet Elisha give to the widow?",
+		"options": [
+			"To borrow vessels and pour oil into them",
+			"To sell her land to pay the debt",
+			"To go and beg the creditor for more time",
+			"To take her sons and flee the land"
+		],
+		"answer": "To borrow vessels and pour oil into them"
+	},
+	{
+		"question": "What was the final instruction Prophet Elisha gave the widow?",
+		"options": [
+			"Use the oil to feed her family",
+			"Sell the oil, pay the debt, and live off the rest",
+			"Donate the oil to the temple",
+			"Give the creditor all the oil in exchange for freedom"
+		],
+		"answer": "Sell the oil, pay the debt, and live off the rest"
+	},
+	{
+		"question": "Which of the following is NOT a cause of debt mentioned in the lesson?",
+		"options": [
+			"Laziness",
+			"Unexpected emergencies",
+			"Giving to the poor",
+			"Impulse buying"
+		],
+		"answer": "Giving to the poor"
+	},
+	{
+		"question": "According to Proverbs 22:7, what does the Bible say about debt?",
+		"options": [
+			"The borrower is a servant to the lender",
+			"Debt is forbidden for believers",
+			"God will always cancel the debts of the righteous",
+			"Debt is necessary for financial growth"
+		],
+		"answer": "The borrower is a servant to the lender"
+	},
+	{
+		"question": "Which of these is NOT a recommended way to avoid debt?",
+		"options": [
+			"Spending compulsorily on wants",
+			"Developing a saving culture",
+			"Honoring God with tithes and offerings",
+			"Seeking financial counsel"
+		],
+		"answer": "Spending compulsorily on wants"
+	},
+	{
+		"question": "What should a believer already in debt do?",
+		"options": [
+			"Pray for divine intervention and seek wise counsel",
+			"Ignore creditors and trust God to cancel the debt",
+			"Take more loans to pay off the previous ones",
+			"Sell all personal belongings immediately"
+		],
+		"answer": "Pray for divine intervention and seek wise counsel"
+	},
+	{
+		"question": "Which Bible passage encourages believers to prepare a budget?",
+		"options": [
+			"Luke 14:28",
+			"Proverbs 3:9-10",
+			"1 Timothy 6:6",
+			"Proverbs 19:17"
+		],
+		"answer": "Luke 14:28"
+	},
+	{
+		"question": "According to the lesson, borrowing should only be considered in what case?",
+		"options": [
+			"When there is no other option available",
+			"In the case of a profitable venture",
+			"When a friend or relative asks for financial help",
+			"If one needs money for a special event"
+		],
+		"answer": "In the case of a profitable venture"
+	},
+	{
+		"question": "What is the definition of capacity according to the lesson?",
+		"options": [
+			"The ability to store information",
+			"An individual’s mental or physical ability to perform or produce",
+			"A measure of one’s knowledge only",
+			"The amount of time spent working"
+		],
+		"answer": "An individual’s mental or physical ability to perform or produce"
+	},
+	{
+		"question": "Which of the following is NOT a biblical example of someone who built capacity?",
+		"options": ["David", "Jephthah", "Solomon", "Stephen"],
+		"answer": "Solomon"
+	},
+	{
+		"question": "According to the lesson, which of these areas should one build capacity in?",
+		"options": [
+			"Knowledge base",
+			"Character",
+			"Time management",
+			"All of the above"
+		],
+		"answer": "All of the above"
+	},
+	{
+		"question": "Which Bible verse emphasizes the importance of studying to show oneself approved?",
+		"options": [
+			"2 Timothy 2:15",
+			"Luke 5:1-11",
+			"Numbers 13:30-33",
+			"James 1:19"
+		],
+		"answer": "2 Timothy 2:15"
+	},
+	{
+		"question": "Why is time management important in capacity building?",
+		"options": [
+			"Because time is a fragment of destiny",
+			"Because it allows you to sleep more",
+			"Because it guarantees instant success",
+			"Because it eliminates all struggles in life"
+		],
+		"answer": "Because time is a fragment of destiny"
+	},
+	{
+		"question": "How can one improve their prayer capacity?",
+		"options": [
+			"By praying consistently",
+			"By reading books only",
+			"By discussing prayers with friends",
+			"By attending church once a month"
+		],
+		"answer": "By praying consistently"
+	},
+	{
+		"question": "What did Joseph develop from interpreting dreams?",
+		"options": [
+			"The ability to lead a nation",
+			"The ability to write books",
+			"The ability to gather wealth",
+			"The ability to fight wars"
+		],
+		"answer": "The ability to lead a nation"
+	},
+	{
+		"question": "Which of these is NOT a way to build capacity?",
+		"options": [
+			"Learning from others",
+			"Managing time wisely",
+			"Isolating oneself from all people",
+			"Surrounding oneself with like-minded individuals"
+		],
+		"answer": "Isolating oneself from all people"
+	},
+	{
+		"question": "What should be one’s attitude towards prayer, according to Luke 18:1?",
+		"options": [
+			"Pray only when you feel like it",
+			"Pray regularly and persistently",
+			"Pray occasionally",
+			"Let others pray for you"
+		],
+		"answer": "Pray regularly and persistently"
+	},
+	{
+		"question": "According to Proverbs 13:20, what is the importance of association in capacity building?",
+		"options": [
+			"It helps one to build knowledge and growth",
+			"It is not necessary for development",
+			"It is only useful for socializing",
+			"It is a waste of time"
+		],
+		"answer": "It helps one to build knowledge and growth"
+	},
+	{
+		"question": "According to the lesson, borrowing should only be considered in what case?",
+		"options": [
+			"When there is no other option available",
+			"In the case of a profitable venture",
+			"When a friend or relative asks for financial help",
+			"If one needs money for a special event"
+		],
+		"answer": "In the case of a profitable venture"
+	},
+	{
+		"question": "Why should we praise God?",
+		"options": [
+			"Because He needs our praise",
+			"Because the angels do it",
+			"Because His attributes and works are sufficient reasons",
+			"Because it makes us feel good"
+		],
+		"answer": "Because His attributes and works are sufficient reasons"
+	},
+	{
+		"question": "Which of these is NOT a reason to praise God?",
+		"options": [
+			"His goodness and wonderful works",
+			"His righteousness",
+			"His jealousy and sovereignty",
+			"His ability to change His mind like man"
+		],
+		"answer": "His ability to change His mind like man"
+	},
+	{
+		"question": "What happens when we praise God sincerely?",
+		"options": [
+			"Our lives will be full of miracles and wonders",
+			"We will never face any difficulties",
+			"We will become famous among people",
+			"We will be immune to all temptations"
+		],
+		"answer": "Our lives will be full of miracles and wonders"
+	},
+	{
+		"question": "According to 2 Chronicles 20:22, what happened when Israel praised God?",
+		"options": [
+			"They lost the battle",
+			"Their enemies fought against themselves",
+			"God gave them a new king",
+			"Nothing special happened"
+		],
+		"answer": "Their enemies fought against themselves"
+	},
+	{
+		"question": "What must a person do to offer acceptable praise to God?",
+		"options": [
+			"Be a great singer",
+			"Confess and repent from sins",
+			"Attend church regularly",
+			"Memorize the entire book of Psalms"
+		],
+		"answer": "Confess and repent from sins"
+	},
+	{
+		"question": "What does John 4:23-24 emphasize about praise?",
+		"options": [
+			"Praise should be done loudly",
+			"Praise should be done in spirit and truth",
+			"Praise should be accompanied by instruments",
+			"Praise should be done only in a congregation"
+		],
+		"answer": "Praise should be done in spirit and truth"
+	},
+	{
+		"question": "According to Hebrews 13:15, what is praise considered as before God?",
+		"options": [
+			"A form of entertainment",
+			"An acceptable sacrifice",
+			"A performance for others to see",
+			"An optional activity for Christians"
+		],
+		"answer": "An acceptable sacrifice"
+	},
+	{
+		"question": "According to Psalm 67:6-7, what happens when people praise God?",
+		"options": [
+			"The earth yields increase and God blesses His people",
+			"The rain stops permanently",
+			"People become immune to sickness",
+			"Angels appear visibly"
+		],
+		"answer": "The earth yields increase and God blesses His people"
+	},
+	{
+		"question": "What is one key requirement for praise to be acceptable before God?",
+		"options": [
+			"Holiness and repentance",
+			"Singing skillfully",
+			"Using musical instruments",
+			"Loudness of voice"
+		],
+		"answer": "Holiness and repentance"
+	},
+	{
+		"question": "Fill in the blank: 'Let the people praise thee, O God; let all the people ______ thee.' (Psalm 67:3)",
+		"options": ["Worship", "Praise", "Adore", "Glorify"],
+		"answer": "Praise"
+	},
+	{
+		"question": "According to 1 John 2:15, what happens if a person loves the world?",
+		"options": [
+			"The love of the Father is not in them",
+			"They will be blessed with wealth",
+			"They will gain wisdom and understanding",
+			"They will have eternal life"
+		],
+		"answer": "The love of the Father is not in them"
+	},
+	{
+		"question": "What does 'the world' refer to in 1 John 2:15?",
+		"options": [
+			"The earth and all its beauty",
+			"The people living in the world",
+			"Satan’s operating system of deception and sin",
+			"The physical universe"
+		],
+		"answer": "Satan’s operating system of deception and sin"
+	},
+	{
+		"question": "Which of the following is NOT part of Satan’s 'world system'?",
+		"options": [
+			"Lust of the flesh",
+			"Lust of the eyes",
+			"Humility and righteousness",
+			"Pride of life"
+		],
+		"answer": "Humility and righteousness"
+	},
+	{
+		"question": "How does Satan use his world system to deceive people?",
+		"options": [
+			"Through love, peace, and righteousness",
+			"By offering attractive things like materialism, greed, and addictions",
+			"By encouraging people to study the Bible",
+			"Through prayer and fasting"
+		],
+		"answer": "By offering attractive things like materialism, greed, and addictions"
+	},
+	{
+		"question": "What will eventually happen to Satan’s world system according to 2 Peter 3:10?",
+		"options": [
+			"It will be blessed by God",
+			"It will be destroyed",
+			"It will become more powerful",
+			"It will remain forever"
+		],
+		"answer": "It will be destroyed"
+	},
+	{
+		"question": "Who is the King and Ruler of God's new world?",
+		"options": ["Moses", "Apostle Paul", "Jesus Christ", "Archangel Michael"],
+		"answer": "Jesus Christ"
+	},
+	{
+		"question": "What happens when a person surrenders to Jesus Christ?",
+		"options": [
+			"They remain in Satan’s world system",
+			"They are transferred into the kingdom of God’s dear Son",
+			"They become rulers in Satan’s kingdom",
+			"They are free to live however they want"
+		],
+		"answer": "They are transferred into the kingdom of God’s dear Son"
+	},
+	{
+		"question": "According to James 4:4, what does friendship with the world make a person?",
+		"options": [
+			"A friend of God",
+			"A wise person",
+			"An enemy of God",
+			"A spiritual leader"
+		],
+		"answer": "An enemy of God"
+	},
+	{
+		"question": "Which of these is an example of Satan’s 'world system'?",
+		"options": [
+			"Contentment",
+			"Pride and selfishness",
+			"Holiness",
+			"Love for God"
+		],
+		"answer": "Pride and selfishness"
+	},
+	{
+		"question": "What should believers do to avoid being influenced by the world system?",
+		"options": [
+			"Follow God’s Word and live righteously",
+			"Seek wealth and fame at all costs",
+			"Participate in everything the world offers",
+			"Avoid prayer and fasting"
+		],
+		"answer": "Follow God’s Word and live righteously"
+	},
+	{
+		"question": "What does 1 Corinthians 6:19 say about our bodies?",
+		"options": [
+			"Our bodies belong to us alone",
+			"Our bodies are the temple of the Holy Ghost",
+			"Our bodies have no spiritual significance",
+			"Our bodies should be used for personal pleasure"
+		],
+		"answer": "Our bodies are the temple of the Holy Ghost"
+	},
+	{
+		"question": "Which of the following is NOT a form of sexual perversion?",
+		"options": ["Homosexuality", "Bestiality", "Celibacy", "Incest"],
+		"answer": "Celibacy"
+	},
+	{
+		"question": "What led to the destruction of the people of Sodom according to Genesis 19:4-5, 12-13?",
+		"options": [
+			"Their greed and love for money",
+			"Their abominable sexual acts",
+			"Their refusal to build a temple for God",
+			"Their mistreatment of foreigners"
+		],
+		"answer": "Their abominable sexual acts"
+	},
+	{
+		"question": "According to 1 Corinthians 6:18, what should believers do regarding fornication?",
+		"options": [
+			"Ignore it",
+			"Engage in it cautiously",
+			"Flee from it",
+			"Consider it as a minor sin"
+		],
+		"answer": "Flee from it"
+	},
+	{
+		"question": "Which of the following is a consequence of indulging in sexual vices?",
+		"options": [
+			"Spiritual growth and blessings",
+			"Strange sicknesses and diseases",
+			"A stronger relationship with God",
+			"A life free from any struggles"
+		],
+		"answer": "Strange sicknesses and diseases"
+	},
+	{
+		"question": "What is one way to overcome sexual vices?",
+		"options": [
+			"Confess your sins to God",
+			"Keep struggling in silence",
+			"Surround yourself with worldly influences",
+			"Engage in more sexual activities"
+		],
+		"answer": "Confess your sins to God"
+	},
+	{
+		"question": "Which of the following Bible passages speaks against homosexuality?",
+		"options": ["Genesis 4:1", "Romans 1:26-27", "Psalm 51:3", "John 3:16"],
+		"answer": "Romans 1:26-27"
+	},
+	{
+		"question": "What should be done to avoid falling into sexual sin?",
+		"options": [
+			"Meditate on God's Word and practice self-control",
+			"Spend more time watching immoral content",
+			"Ignore spiritual disciplines",
+			"Isolate yourself from godly counsel"
+		],
+		"answer": "Meditate on God's Word and practice self-control"
+	},
+	{
+		"question": "Which of the following describes pornography?",
+		"options": [
+			"A means of fulfilling God's purpose",
+			"A display of erotic materials designed to provoke sexual lust",
+			"A way to strengthen Christian marriages",
+			"A normal and acceptable form of entertainment"
+		],
+		"answer": "A display of erotic materials designed to provoke sexual lust"
+	},
+	{
+		"question": "What does Proverbs 11:14 suggest as a way to overcome sexual vices?",
+		"options": [
+			"Seeking godly counsel",
+			"Relying only on personal strength",
+			"Ignoring the issue",
+			"Keeping struggles secret"
+		],
+		"answer": "Seeking godly counsel"
+	},
+	{
+		"question": "What does the Bible warn us to stay away from in relation to gambling?",
+		"options": [
+			"Hard work and diligence",
+			"The love of money",
+			"Generous giving",
+			"Saving for the future"
+		],
+		"answer": "The love of money"
+	},
+	{
+		"question": "How does gambling differ from lot casting in the Bible?",
+		"options": [
+			"Lot casting was used for divine guidance, while gambling is for personal gain",
+			"Both are forms of entertainment",
+			"Gambling is a way to test faith, while lot casting is just a game",
+			"Lot casting and gambling are exactly the same"
+		],
+		"answer": "Lot casting was used for divine guidance, while gambling is for personal gain"
+	},
+	{
+		"question": "What does 1 Timothy 6:10 say is the root of all evil?",
+		"options": ["Poverty", "The love of money", "Hard work", "Luck"],
+		"answer": "The love of money"
+	},
+	{
+		"question": "What often happens to those who engage in get-rich-quick schemes?",
+		"options": [
+			"They become financially stable",
+			"They lose everything",
+			"They gain divine favor",
+			"They become more responsible"
+		],
+		"answer": "They lose everything"
+	},
+	{
+		"question": "According to Proverbs 13:11, what happens to wealth gained through gambling?",
+		"options": [
+			"It lasts forever",
+			"It grows and prospers",
+			"It diminishes over time",
+			"It guarantees financial security"
+		],
+		"answer": "It diminishes over time"
+	},
+	{
+		"question": "Why does God want believers to avoid gambling?",
+		"options": [
+			"Because it is a guaranteed way to lose money",
+			"Because it promotes greed and covetousness",
+			"Because only unbelievers gamble",
+			"Because it is a modern-day invention"
+		],
+		"answer": "Because it promotes greed and covetousness"
+	},
+	{
+		"question": "What does Matthew 6:33 instruct believers to seek first?",
+		"options": [
+			"Financial stability",
+			"The kingdom of God and His righteousness",
+			"Personal success",
+			"Wealth and prosperity"
+		],
+		"answer": "The kingdom of God and His righteousness"
+	},
+	{
+		"question": "What should a believer do instead of gambling?",
+		"options": [
+			"Trust God and work hard",
+			"Invest all money in lotteries",
+			"Borrow money and try to double it",
+			"Look for shortcuts to wealth"
+		],
+		"answer": "Trust God and work hard"
+	},
+	{
+		"question": "What can a believer do to overcome gambling addiction?",
+		"options": [
+			"Seek professional counseling and accountability",
+			"Continue gambling until they win",
+			"Pray and keep playing responsibly",
+			"Ignore the problem and hope it goes away"
+		],
+		"answer": "Seek professional counseling and accountability"
+	},
+	{
+		"question": "What is the biblical alternative to gambling for financial increase?",
+		"options": [
+			"Hard work and diligence",
+			"Luck and chance",
+			"Betting wisely",
+			"Investing in lottery tickets"
+		],
+		"answer": "Hard work and diligence"
+	},
+	{
+		"question": "What does 'Karpos Pneuma' mean?",
+		"options": [
+			"The gifts of the Holy Spirit",
+			"The fruit of the Holy Spirit",
+			"The power of the Holy Spirit",
+			"The presence of the Holy Spirit"
+		],
+		"answer": "The fruit of the Holy Spirit"
+	},
+	{
+		"question": "According to Galatians 5:22-23, which of the following is NOT a component of the fruit of the Spirit?",
+		"options": ["Love", "Joy", "Wisdom", "Temperance"],
+		"answer": "Wisdom"
+	},
+	{
+		"question": "What does joy as a fruit of the Spirit represent?",
+		"options": [
+			"A temporary feeling of happiness",
+			"Inner comfort in challenges and contentment in scarcity",
+			"Worldly pleasures and entertainment",
+			"A reward for good deeds"
+		],
+		"answer": "Inner comfort in challenges and contentment in scarcity"
+	},
+	{
+		"question": "Which component of the fruit of the Spirit helps believers bear long with others without murmuring?",
+		"options": ["Faith", "Peace", "Longsuffering", "Goodness"],
+		"answer": "Longsuffering"
+	},
+	{
+		"question": "What does meekness as a fruit of the Spirit mean?",
+		"options": [
+			"The ability to take revenge",
+			"The grace to suffer injuries without feeling a spirit of revenge",
+			"Being timid and avoiding conflicts",
+			"Showing strength and dominance in all situations"
+		],
+		"answer": "The grace to suffer injuries without feeling a spirit of revenge"
+	},
+	{
+		"question": "According to John 15:4, how can believers bear the fruit of the Spirit?",
+		"options": [
+			"By trying to be morally upright",
+			"By abiding in Christ",
+			"By performing religious rituals",
+			"By striving to please people"
+		],
+		"answer": "By abiding in Christ"
+	},
+	{
+		"question": "What is required to walk in the Spirit according to Galatians 5:16?",
+		"options": [
+			"Fasting regularly",
+			"Living a sinless life",
+			"Avoiding worldly contamination and obeying the Spirit",
+			"Attending church services daily"
+		],
+		"answer": "Avoiding worldly contamination and obeying the Spirit"
+	},
+	{
+		"question": "What is the ultimate purpose of the fruit of the Spirit in a believer’s life?",
+		"options": [
+			"To demonstrate power and miracles",
+			"To become prosperous and successful",
+			"To reflect the character of Christ",
+			"To gain favor from people"
+		],
+		"answer": "To reflect the character of Christ"
+	},
+	{
+		"question": "Which of these practical steps can help believers bear the fruit of the Spirit?",
+		"options": [
+			"Being dead to the world and its lusts",
+			"Engaging in religious debates",
+			"Avoiding all unbelievers",
+			"Focusing only on personal achievements"
+		],
+		"answer": "Being dead to the world and its lusts"
+	},
+	{
+		"question": "According to Matthew 12:33, how is a believer recognized?",
+		"options": [
+			"By the number of miracles they perform",
+			"By their church attendance",
+			"By the fruit of the Spirit they bear",
+			"By how much they give to charity"
+		],
+		"answer": "By the fruit of the Spirit they bear"
+	},
+	{
+		"question": "According to Ecclesiastes 7:9, where does anger rest?",
+		"options": [
+			"In the heart of the righteous",
+			"In the bosom of fools",
+			"In the minds of the wise",
+			"In the hands of the wicked"
+		],
+		"answer": "In the bosom of fools"
+	},
+	{
+		"question": "What does Ephesians 4:26 instruct about anger?",
+		"options": [
+			"Be angry and let it control you",
+			"Do not be angry at all",
+			"Be angry but do not sin",
+			"Express anger freely without restraint"
+		],
+		"answer": "Be angry but do not sin"
+	},
+	{
+		"question": "Which of the following is NOT a trigger of anger?",
+		"options": [
+			"Hatred and frustration",
+			"Quick temper",
+			"Love and patience",
+			"Hasty judgments"
+		],
+		"answer": "Love and patience"
+	},
+	{
+		"question": "What can anger lead to if not controlled?",
+		"options": [
+			"Murder and altered destinies",
+			"A successful career",
+			"Increased wisdom",
+			"Closer relationships"
+		],
+		"answer": "Murder and altered destinies"
+	},
+	{
+		"question": "Which Bible verse advises being slow to speak as a way to manage anger?",
+		"options": ["Proverbs 29:22", "James 1:19", "Genesis 49:6", "Psalm 37:8"],
+		"answer": "James 1:19"
+	},
+	{
+		"question": "According to Proverbs 15:1, how should we respond to anger?",
+		"options": [
+			"With a soft and gentle answer",
+			"By ignoring the person",
+			"By raising our voice",
+			"By confronting with harsh words"
+		],
+		"answer": "With a soft and gentle answer"
+	},
+	{
+		"question": "What does Colossians 3:8 instruct believers to do with anger?",
+		"options": [
+			"Hold onto it until justice is served",
+			"Express it openly",
+			"Put it off completely",
+			"Suppress it without addressing it"
+		],
+		"answer": "Put it off completely"
+	},
+	{
+		"question": "Which of these is a recommended way to subdue anger?",
+		"options": [
+			"Walking away from an angry person or scene",
+			"Confronting the person immediately",
+			"Shouting to express emotions",
+			"Keeping anger bottled up"
+		],
+		"answer": "Walking away from an angry person or scene"
+	},
+	{
+		"question": "Why is anger termed 'temporary madness'?",
+		"options": [
+			"Because it makes people lose their ability to reason",
+			"Because it does not last long",
+			"Because it is unpredictable",
+			"Because it is a rare emotion"
+		],
+		"answer": "Because it makes people lose their ability to reason"
+	},
+	{
+		"question": "What does Galatians 5:22-23 say about controlling anger?",
+		"options": [
+			"We have the Spirit of self-control",
+			"Anger should be expressed at all times",
+			"Only certain people can control anger",
+			"God does not help in anger management"
+		],
+		"answer": "We have the Spirit of self-control"
 	}
-=======
-  {
-    "question": "According to 1 John 4:10, how did God demonstrate His love for us?",
-    "options": [
-      "By giving us wealth and prosperity",
-      "By sending His Son as a propitiation for our sins",
-      "By making us rulers over nations",
-      "By giving us the Ten Commandments"
-    ],
-    "answer": "By sending His Son as a propitiation for our sins"
-  },
-  {
-    "question": "Which Bible passage records Jesus’ response to the question about the greatest commandment?",
-    "options": [
-      "Mark 10:45-50",
-      "Matthew 22:35-40",
-      "Luke 15:1-10",
-      "John 3:16-20"
-    ],
-    "answer": "Matthew 22:35-40"
-  },
-  {
-    "question": "What is the first and greatest commandment according to Jesus?",
-    "options": [
-      "Love your neighbor as yourself",
-      "Do not bear false witness",
-      "Love the Lord your God with all your heart, soul, and mind",
-      "Keep the Sabbath holy"
-    ],
-    "answer": "Love the Lord your God with all your heart, soul, and mind"
-  },
-  {
-    "question": "Which commandment is the second greatest, according to Matthew 22:39?",
-    "options": [
-      "Love your neighbor as yourself",
-      "Do not steal",
-      "Honor your father and mother",
-      "Do not covet"
-    ],
-    "answer": "Love your neighbor as yourself"
-  },
-  {
-    "question": "What did Jesus say the law and the prophets depend on?",
-    "options": [
-      "The love of money",
-      "Faith and miracles",
-      "The two greatest commandments",
-      "Obedience to the Sabbath"
-    ],
-    "answer": "The two greatest commandments"
-  },
-  {
-    "question": "According to 1 John 4:8, what does the Bible say about love?",
-    "options": [
-      "Love is temporary",
-      "God is love",
-      "Love is based on emotions",
-      "Love is a weakness"
-    ],
-    "answer": "God is love"
-  },
-  {
-    "question": "According to John 3:16, why did God send His Son into the world?",
-    "options": [
-      "To judge the world",
-      "To teach new laws",
-      "That whoever believes in Him should not perish but have eternal life",
-      "To establish an earthly kingdom"
-    ],
-    "answer": "That whoever believes in Him should not perish but have eternal life"
-  },
-  {
-    "question": "What is a practical way to express love for God?",
-    "options": [
-      "By keeping His commandments",
-      "By seeking personal gain",
-      "By ignoring others’ needs",
-      "By only attending church on Sundays"
-    ],
-    "answer": "By keeping His commandments"
-  },
-  {
-    "question": "According to 1 John 4:19, why do we love God?",
-    "options": [
-      "Because He first loved us",
-      "Because we fear Him",
-      "Because we want blessings",
-      "Because we have no choice"
-    ],
-    "answer": "Because He first loved us"
-  },
-  {
-    "question": "How can we demonstrate our love for fellow humans?",
-    "options": [
-      "By helping only those who can repay us",
-      "By loving even our enemies",
-      "By loving only our friends",
-      "By judging others harshly"
-    ],
-    "answer": "By loving even our enemies"
-  },
-  {
-    "question": "What does Romans 12:10 instruct believers to do?",
-    "options": [
-      "Hate their enemies",
-      "Love one another with brotherly affection",
-      "Focus only on personal success",
-      "Avoid strangers at all costs"
-    ],
-    "answer": "Love one another with brotherly affection"
-  },
-  {
-    "question": "According to 1 John 4:20, what does the Bible say about those who claim to love God but hate their brother?",
-    "options": [
-      "They are true worshippers",
-      "They are liars",
-      "They are forgiven",
-      "They are blessed"
-    ],
-    "answer": "They are liars"
-  },
-  {
-    "question": "How does Song of Solomon 8:7 describe love?",
-    "options": [
-      "As something that can be bought with money",
-      "As unquenchable and more valuable than possessions",
-      "As a temporary feeling",
-      "As a form of weakness"
-    ],
-    "answer": "As unquenchable and more valuable than possessions"
-  },
-  {
-    "question": "What does John 14:15 say about those who love Jesus?",
-    "options": [
-      "They will perform miracles",
-      "They will keep His commandments",
-      "They will become wealthy",
-      "They will be immune to suffering"
-    ],
-    "answer": "They will keep His commandments"
-  },
-  {
-    "question": "Which Bible verse emphasizes seeking God's kingdom first?",
-    "options": ["John 3:16", "Matthew 6:33", "Psalm 23:1", "Romans 8:28"],
-    "answer": "Matthew 6:33"
-  },
-  {
-    "question": "What does Luke 6:31 teach about love for others?",
-    "options": [
-      "Treat others as you want to be treated",
-      "Love only those who love you",
-      "Ignore those in need",
-      "Focus on your own needs first"
-    ],
-    "answer": "Treat others as you want to be treated"
-  },
-  {
-    "question": "What should be our attitude toward those who do not deserve our love?",
-    "options": [
-      "Ignore them",
-      "Love them just as God loved us",
-      "Condemn them",
-      "Seek revenge"
-    ],
-    "answer": "Love them just as God loved us"
-  },
-  {
-    "question": "How does Romans 5:8 demonstrate God's love?",
-    "options": [
-      "God loved us while we were still sinners",
-      "God only loves the righteous",
-      "God rewards only those who obey perfectly",
-      "God’s love depends on our good deeds"
-    ],
-    "answer": "God loved us while we were still sinners"
-  },
-  {
-    "question": "What does 1 John 4:7 teach about love?",
-    "options": [
-      "Love comes from God",
-      "Love is a human invention",
-      "Love is unnecessary",
-      "Love should be conditional"
-    ],
-    "answer": "Love comes from God"
-  },
-  {
-    "question": "According to Matthew 22:40, what do the law and the prophets depend on?",
-    "options": [
-      "Faith and prosperity",
-      "The two greatest commandments",
-      "Obedience to traditions",
-      "The Ten Commandments alone"
-    ],
-    "answer": "The two greatest commandments"
-  },
-  {
-    "question": "What does the Bible say about making choices?",
-    "options": [
-      "God forces choices on us",
-      "We are free to make choices, but we bear the consequences",
-      "Choices have no effect on our destiny",
-      "We should not make choices at all"
-    ],
-    "answer": "We are free to make choices, but we bear the consequences"
-  },
-  {
-    "question": "According to Deuteronomy 30:19, what does God set before us?",
-    "options": [
-      "Life and death, blessing and cursing",
-      "Success and failure",
-      "Love and hate",
-      "Riches and poverty"
-    ],
-    "answer": "Life and death, blessing and cursing"
-  },
-  {
-    "question": "What mistake did Samson make regarding marriage?",
-    "options": [
-      "He married an Israelite",
-      "He married without his parents' consent",
-      "He married a Philistine woman",
-      "He remained single all his life"
-    ],
-    "answer": "He married a Philistine woman"
-  },
-  {
-    "question": "Who was influenced by foreign wives to worship other gods?",
-    "options": ["David", "Solomon", "Elijah", "Moses"],
-    "answer": "Solomon"
-  },
-  {
-    "question": "What mistake did Lot make when choosing his dwelling place?",
-    "options": [
-      "He did not ask his family",
-      "He chose based on wealth, not spiritual values",
-      "He prayed before deciding",
-      "He built a temple first"
-    ],
-    "answer": "He chose based on wealth, not spiritual values"
-  },
-  {
-    "question": "What was Amnon’s consequence for listening to his friend Jonadab?",
-    "options": [
-      "He was honored by David",
-      "He married Tamar",
-      "He was killed by Absalom",
-      "He became king"
-    ],
-    "answer": "He was killed by Absalom"
-  },
-  {
-    "question": "Which Bible passage advises seeking godly counsel when making decisions?",
-    "options": ["Genesis 1:1", "Proverbs 15:22", "Psalm 23:1", "John 3:16"],
-    "answer": "Proverbs 15:22"
-  },
-  {
-    "question": "What does Proverbs 18:22 say about marriage?",
-    "options": [
-      "It is not necessary",
-      "Whoever finds a wife finds a good thing",
-      "Only pastors should marry",
-      "Marriage is for the rich"
-    ],
-    "answer": "Whoever finds a wife finds a good thing"
-  },
-  {
-    "question": "What is an essential step in making the right marriage choice?",
-    "options": [
-      "Engaging the Holy Spirit",
-      "Following emotions only",
-      "Ignoring advice from others",
-      "Rushing into marriage"
-    ],
-    "answer": "Engaging the Holy Spirit"
-  },
-  {
-    "question": "Which scripture states that God's presence must go with us?",
-    "options": ["Exodus 33:14-15", "Matthew 5:16", "Luke 6:38", "Romans 8:28"],
-    "answer": "Exodus 33:14-15"
-  },
-  {
-    "question": "According to John 10:27, whose voice should we listen to?",
-    "options": [
-      "Our parents only",
-      "Friends and neighbors",
-      "Strangers and critics",
-      "Jesus, the Good Shepherd"
-    ],
-    "answer": "Jesus, the Good Shepherd"
-  },
-  {
-    "question": "What should guide our decisions according to Psalm 119:105?",
-    "options": [
-      "Dreams and visions",
-      "The word of God",
-      "The advice of unbelievers",
-      "Our emotions alone"
-    ],
-    "answer": "The word of God"
-  },
-  {
-    "question": "What does Genesis 24:12 teach about choosing a spouse?",
-    "options": [
-      "Pray with sincerity of purpose",
-      "Use human wisdom alone",
-      "Rely on physical appearance",
-      "Ignore godly counsel"
-    ],
-    "answer": "Pray with sincerity of purpose"
-  },
-  {
-    "question": "Which verse advises against being anxious in decision-making?",
-    "options": ["John 3:16", "Philippians 4:6", "Psalm 91:1", "Romans 12:2"],
-    "answer": "Philippians 4:6"
-  },
-  {
-    "question": "What should we do when we notice red flags in a relationship?",
-    "options": [
-      "Ignore them",
-      "Address them speedily",
-      "Make excuses for the person",
-      "Continue without concern"
-    ],
-    "answer": "Address them speedily"
-  },
-  {
-    "question": "Which passage emphasizes not looking at outward appearances alone?",
-    "options": [
-      "1 Samuel 16:6-7",
-      "Judges 14:3",
-      "Proverbs 31:10",
-      "Matthew 6:33"
-    ],
-    "answer": "1 Samuel 16:6-7"
-  },
-  {
-    "question": "What should a believer do before entering a relationship?",
-    "options": [
-      "Rely on personal emotions",
-      "Hear from God",
-      "Depend on physical attraction",
-      "Seek financial security first"
-    ],
-    "answer": "Hear from God"
-  },
-  {
-    "question": "What does Mark 14:38 say about temptation?",
-    "options": [
-      "Ignore it",
-      "Pray and watch",
-      "Follow the world",
-      "Do whatever feels good"
-    ],
-    "answer": "Pray and watch"
-  },
-  {
-    "question": "What happens when we make the wrong marital choice?",
-    "options": [
-      "We can simply walk away",
-      "It can affect our destiny",
-      "It has no consequences",
-      "God will force a change"
-    ],
-    "answer": "It can affect our destiny"
-  },
-  {
-    "question": "What is the ultimate guidance for making the right choices?",
-    "options": [
-      "Personal preference",
-      "God's direction",
-      "Peer pressure",
-      "Social media opinions"
-    ],
-    "answer": "God's direction"
-  },
-  {
-    "question": "According to Psalms 62:5, what should our expectation be from?",
-    "options": [
-      "Our hard work",
-      "Our connections",
-      "God alone",
-      "The government"
-    ],
-    "answer": "God alone"
-  },
-  {
-    "question": "What is the 'waiting room' in a spiritual context?",
-    "options": [
-      "A place of seeking God's intervention",
-      "A church building",
-      "A time of punishment",
-      "A moment of complete inactivity"
-    ],
-    "answer": "A place of seeking God's intervention"
-  },
-  {
-    "question": "Which of the following is NOT true about the 'waiting room'?",
-    "options": [
-      "Waiting is unavoidable",
-      "Waiting lasts forever",
-      "God can use the waiting period to test our faith",
-      "It is a time to prepare for the next phase"
-    ],
-    "answer": "Waiting lasts forever"
-  },
-  {
-    "question": "According to Isaiah 40:31, what is one of the blessings of waiting on the Lord?",
-    "options": [
-      "Immediate success",
-      "Renewed strength",
-      "No difficulties",
-      "A life without trials"
-    ],
-    "answer": "Renewed strength"
-  },
-  {
-    "question": "Which of these is an appropriate action while waiting on God?",
-    "options": [
-      "Complaining and losing hope",
-      "Trusting God's timing and plans",
-      "Taking shortcuts to speed things up",
-      "Giving up on prayers"
-    ],
-    "answer": "Trusting God's timing and plans"
-  },
-  {
-    "question": "According to Hebrews 6:15, what is required to receive God's promises?",
-    "options": [
-      "Impatience",
-      "Doubt",
-      "Contentment and patience",
-      "Self-effort without God"
-    ],
-    "answer": "Contentment and patience"
-  },
-  {
-    "question": "Why does God sometimes put people in the 'waiting room' against their will?",
-    "options": [
-      "To frustrate them",
-      "To allow them to change",
-      "To make life harder",
-      "To test their physical strength"
-    ],
-    "answer": "To allow them to change"
-  },
-  {
-    "question": "What is a wrong way to handle waiting on God?",
-    "options": [
-      "Being thankful for what God will do",
-      "Going contrary to God's will to speed things up",
-      "Trusting God's direction",
-      "Praying and studying the Word"
-    ],
-    "answer": "Going contrary to God's will to speed things up"
-  },
-  {
-    "question": "According to Romans 8:28, why should believers trust God during the waiting period?",
-    "options": [
-      "Because all things work together for good",
-      "Because life will be easy",
-      "Because challenges will never come",
-      "Because we should never expect trials"
-    ],
-    "answer": "Because all things work together for good"
-  },
-  {
-    "question": "What is the correct response to being in God's waiting room?",
-    "options": [
-      "Seeking God in prayer and studying His word",
-      "Becoming discouraged and quitting",
-      "Taking matters into our own hands",
-      "Focusing only on the challenges"
-    ],
-    "answer": "Seeking God in prayer and studying His word"
-  },
-  {
-    "question": "According to Proverbs 13:11, what happens to wealth gotten by vanity?",
-    "options": [
-      "It shall be diminished",
-      "It shall multiply",
-      "It shall be sustained",
-      "It shall be blessed"
-    ],
-    "answer": "It shall be diminished"
-  },
-  {
-    "question": "In the parable of the talents (Matthew 25:14-18), what did the servant with five talents do?",
-    "options": [
-      "He hid the talents in the earth",
-      "He traded and gained five more talents",
-      "He gave the talents to another servant",
-      "He returned them to the master untouched"
-    ],
-    "answer": "He traded and gained five more talents"
-  },
-  {
-    "question": "Which book of the Bible emphasizes saving for future needs?",
-    "options": [
-      "Genesis 41:34-36",
-      "Exodus 20:12",
-      "Matthew 5:16",
-      "Romans 8:28"
-    ],
-    "answer": "Genesis 41:34-36"
-  },
-  {
-    "question": "Why should Christians avoid get-rich-quick schemes?",
-    "options": [
-      "Because they require a lot of capital",
-      "Because they do not require faith",
-      "Because they often lead to loss and dishonesty",
-      "Because they are hard to understand"
-    ],
-    "answer": "Because they often lead to loss and dishonesty"
-  },
-  {
-    "question": "Which of the following is NOT a biblical principle for investment?",
-    "options": [
-      "Investing only in what you understand",
-      "Accumulating debt in the name of investment",
-      "Avoiding impulsive spending",
-      "Leaving an inheritance for future generations"
-    ],
-    "answer": "Accumulating debt in the name of investment"
-  },
-  {
-    "question": "What is one of the benefits of investment?",
-    "options": [
-      "Instant wealth",
-      "Retirement security",
-      "Avoiding labor",
-      "Spending without planning"
-    ],
-    "answer": "Retirement security"
-  },
-  {
-    "question": "Why should believers invest in their education and that of their children?",
-    "options": [
-      "To show off their wealth",
-      "To prepare for future opportunities",
-      "To make a name for themselves",
-      "To avoid working in the future"
-    ],
-    "answer": "To prepare for future opportunities"
-  },
-  {
-    "question": "How does investing help beat inflation?",
-    "options": [
-      "By reducing spending",
-      "By keeping money in a safe place",
-      "By maintaining purchasing power",
-      "By giving money away"
-    ],
-    "answer": "By maintaining purchasing power"
-  },
-  {
-    "question": "Which of the following is a recommended area for investment according to the lesson?",
-    "options": ["Gambling", "Real estate", "Ponzi schemes", "Lottery"],
-    "answer": "Real estate"
-  },
-  {
-    "question": "According to the lesson, why is it important to invest wisely?",
-    "options": [
-      "To build wealth for the future",
-      "To avoid working hard",
-      "To become famous",
-      "To rely on others for support"
-    ],
-    "answer": "To build wealth for the future"
-  },
-  {
-    "question": "What is the memory verse for this lesson?",
-    "options": ["Proverbs 22:7", "2 Kings 4:1", "Luke 15:13", "Romans 13:8"],
-    "answer": "2 Kings 4:1"
-  },
-  {
-    "question": "Why did the widow cry to the Prophet Elisha?",
-    "options": [
-      "She was sick and needed healing",
-      "She was in debt and feared losing her sons to the creditor",
-      "She wanted a blessing for her household",
-      "She needed food for her family"
-    ],
-    "answer": "She was in debt and feared losing her sons to the creditor"
-  },
-  {
-    "question": "What instruction did Prophet Elisha give to the widow?",
-    "options": [
-      "To borrow vessels and pour oil into them",
-      "To sell her land to pay the debt",
-      "To go and beg the creditor for more time",
-      "To take her sons and flee the land"
-    ],
-    "answer": "To borrow vessels and pour oil into them"
-  },
-  {
-    "question": "What was the final instruction Prophet Elisha gave the widow?",
-    "options": [
-      "Use the oil to feed her family",
-      "Sell the oil, pay the debt, and live off the rest",
-      "Donate the oil to the temple",
-      "Give the creditor all the oil in exchange for freedom"
-    ],
-    "answer": "Sell the oil, pay the debt, and live off the rest"
-  },
-  {
-    "question": "Which of the following is NOT a cause of debt mentioned in the lesson?",
-    "options": [
-      "Laziness",
-      "Unexpected emergencies",
-      "Giving to the poor",
-      "Impulse buying"
-    ],
-    "answer": "Giving to the poor"
-  },
-  {
-    "question": "According to Proverbs 22:7, what does the Bible say about debt?",
-    "options": [
-      "The borrower is a servant to the lender",
-      "Debt is forbidden for believers",
-      "God will always cancel the debts of the righteous",
-      "Debt is necessary for financial growth"
-    ],
-    "answer": "The borrower is a servant to the lender"
-  },
-  {
-    "question": "Which of these is NOT a recommended way to avoid debt?",
-    "options": [
-      "Spending compulsorily on wants",
-      "Developing a saving culture",
-      "Honoring God with tithes and offerings",
-      "Seeking financial counsel"
-    ],
-    "answer": "Spending compulsorily on wants"
-  },
-  {
-    "question": "What should a believer already in debt do?",
-    "options": [
-      "Pray for divine intervention and seek wise counsel",
-      "Ignore creditors and trust God to cancel the debt",
-      "Take more loans to pay off the previous ones",
-      "Sell all personal belongings immediately"
-    ],
-    "answer": "Pray for divine intervention and seek wise counsel"
-  },
-  {
-    "question": "Which Bible passage encourages believers to prepare a budget?",
-    "options": [
-      "Luke 14:28",
-      "Proverbs 3:9-10",
-      "1 Timothy 6:6",
-      "Proverbs 19:17"
-    ],
-    "answer": "Luke 14:28"
-  },
-  {
-    "question": "According to the lesson, borrowing should only be considered in what case?",
-    "options": [
-      "When there is no other option available",
-      "In the case of a profitable venture",
-      "When a friend or relative asks for financial help",
-      "If one needs money for a special event"
-    ],
-    "answer": "In the case of a profitable venture"
-  },
-  {
-    "question": "What is the definition of capacity according to the lesson?",
-    "options": [
-      "The ability to store information",
-      "An individual’s mental or physical ability to perform or produce",
-      "A measure of one’s knowledge only",
-      "The amount of time spent working"
-    ],
-    "answer": "An individual’s mental or physical ability to perform or produce"
-  },
-  {
-    "question": "Which of the following is NOT a biblical example of someone who built capacity?",
-    "options": ["David", "Jephthah", "Solomon", "Stephen"],
-    "answer": "Solomon"
-  },
-  {
-    "question": "According to the lesson, which of these areas should one build capacity in?",
-    "options": [
-      "Knowledge base",
-      "Character",
-      "Time management",
-      "All of the above"
-    ],
-    "answer": "All of the above"
-  },
-  {
-    "question": "Which Bible verse emphasizes the importance of studying to show oneself approved?",
-    "options": [
-      "2 Timothy 2:15",
-      "Luke 5:1-11",
-      "Numbers 13:30-33",
-      "James 1:19"
-    ],
-    "answer": "2 Timothy 2:15"
-  },
-  {
-    "question": "Why is time management important in capacity building?",
-    "options": [
-      "Because time is a fragment of destiny",
-      "Because it allows you to sleep more",
-      "Because it guarantees instant success",
-      "Because it eliminates all struggles in life"
-    ],
-    "answer": "Because time is a fragment of destiny"
-  },
-  {
-    "question": "How can one improve their prayer capacity?",
-    "options": [
-      "By praying consistently",
-      "By reading books only",
-      "By discussing prayers with friends",
-      "By attending church once a month"
-    ],
-    "answer": "By praying consistently"
-  },
-  {
-    "question": "What did Joseph develop from interpreting dreams?",
-    "options": [
-      "The ability to lead a nation",
-      "The ability to write books",
-      "The ability to gather wealth",
-      "The ability to fight wars"
-    ],
-    "answer": "The ability to lead a nation"
-  },
-  {
-    "question": "Which of these is NOT a way to build capacity?",
-    "options": [
-      "Learning from others",
-      "Managing time wisely",
-      "Isolating oneself from all people",
-      "Surrounding oneself with like-minded individuals"
-    ],
-    "answer": "Isolating oneself from all people"
-  },
-  {
-    "question": "What should be one’s attitude towards prayer, according to Luke 18:1?",
-    "options": [
-      "Pray only when you feel like it",
-      "Pray regularly and persistently",
-      "Pray occasionally",
-      "Let others pray for you"
-    ],
-    "answer": "Pray regularly and persistently"
-  },
-  {
-    "question": "According to Proverbs 13:20, what is the importance of association in capacity building?",
-    "options": [
-      "It helps one to build knowledge and growth",
-      "It is not necessary for development",
-      "It is only useful for socializing",
-      "It is a waste of time"
-    ],
-    "answer": "It helps one to build knowledge and growth"
-  },
-  {
-    "question": "According to the lesson, borrowing should only be considered in what case?",
-    "options": [
-      "When there is no other option available",
-      "In the case of a profitable venture",
-      "When a friend or relative asks for financial help",
-      "If one needs money for a special event"
-    ],
-    "answer": "In the case of a profitable venture"
-  },
-  {
-    "question": "Why should we praise God?",
-    "options": [
-      "Because He needs our praise",
-      "Because the angels do it",
-      "Because His attributes and works are sufficient reasons",
-      "Because it makes us feel good"
-    ],
-    "answer": "Because His attributes and works are sufficient reasons"
-  },
-  {
-    "question": "Which of these is NOT a reason to praise God?",
-    "options": [
-      "His goodness and wonderful works",
-      "His righteousness",
-      "His jealousy and sovereignty",
-      "His ability to change His mind like man"
-    ],
-    "answer": "His ability to change His mind like man"
-  },
-  {
-    "question": "What happens when we praise God sincerely?",
-    "options": [
-      "Our lives will be full of miracles and wonders",
-      "We will never face any difficulties",
-      "We will become famous among people",
-      "We will be immune to all temptations"
-    ],
-    "answer": "Our lives will be full of miracles and wonders"
-  },
-  {
-    "question": "According to 2 Chronicles 20:22, what happened when Israel praised God?",
-    "options": [
-      "They lost the battle",
-      "Their enemies fought against themselves",
-      "God gave them a new king",
-      "Nothing special happened"
-    ],
-    "answer": "Their enemies fought against themselves"
-  },
-  {
-    "question": "What must a person do to offer acceptable praise to God?",
-    "options": [
-      "Be a great singer",
-      "Confess and repent from sins",
-      "Attend church regularly",
-      "Memorize the entire book of Psalms"
-    ],
-    "answer": "Confess and repent from sins"
-  },
-  {
-    "question": "What does John 4:23-24 emphasize about praise?",
-    "options": [
-      "Praise should be done loudly",
-      "Praise should be done in spirit and truth",
-      "Praise should be accompanied by instruments",
-      "Praise should be done only in a congregation"
-    ],
-    "answer": "Praise should be done in spirit and truth"
-  },
-  {
-    "question": "According to Hebrews 13:15, what is praise considered as before God?",
-    "options": [
-      "A form of entertainment",
-      "An acceptable sacrifice",
-      "A performance for others to see",
-      "An optional activity for Christians"
-    ],
-    "answer": "An acceptable sacrifice"
-  },
-  {
-    "question": "According to Psalm 67:6-7, what happens when people praise God?",
-    "options": [
-      "The earth yields increase and God blesses His people",
-      "The rain stops permanently",
-      "People become immune to sickness",
-      "Angels appear visibly"
-    ],
-    "answer": "The earth yields increase and God blesses His people"
-  },
-  {
-    "question": "What is one key requirement for praise to be acceptable before God?",
-    "options": [
-      "Holiness and repentance",
-      "Singing skillfully",
-      "Using musical instruments",
-      "Loudness of voice"
-    ],
-    "answer": "Holiness and repentance"
-  },
-  {
-    "question": "Fill in the blank: 'Let the people praise thee, O God; let all the people ______ thee.' (Psalm 67:3)",
-    "options": ["Worship", "Praise", "Adore", "Glorify"],
-    "answer": "Praise"
-  },
-  {
-    "question": "According to 1 John 2:15, what happens if a person loves the world?",
-    "options": [
-      "The love of the Father is not in them",
-      "They will be blessed with wealth",
-      "They will gain wisdom and understanding",
-      "They will have eternal life"
-    ],
-    "answer": "The love of the Father is not in them"
-  },
-  {
-    "question": "What does 'the world' refer to in 1 John 2:15?",
-    "options": [
-      "The earth and all its beauty",
-      "The people living in the world",
-      "Satan’s operating system of deception and sin",
-      "The physical universe"
-    ],
-    "answer": "Satan’s operating system of deception and sin"
-  },
-  {
-    "question": "Which of the following is NOT part of Satan’s 'world system'?",
-    "options": [
-      "Lust of the flesh",
-      "Lust of the eyes",
-      "Humility and righteousness",
-      "Pride of life"
-    ],
-    "answer": "Humility and righteousness"
-  },
-  {
-    "question": "How does Satan use his world system to deceive people?",
-    "options": [
-      "Through love, peace, and righteousness",
-      "By offering attractive things like materialism, greed, and addictions",
-      "By encouraging people to study the Bible",
-      "Through prayer and fasting"
-    ],
-    "answer": "By offering attractive things like materialism, greed, and addictions"
-  },
-  {
-    "question": "What will eventually happen to Satan’s world system according to 2 Peter 3:10?",
-    "options": [
-      "It will be blessed by God",
-      "It will be destroyed",
-      "It will become more powerful",
-      "It will remain forever"
-    ],
-    "answer": "It will be destroyed"
-  },
-  {
-    "question": "Who is the King and Ruler of God's new world?",
-    "options": ["Moses", "Apostle Paul", "Jesus Christ", "Archangel Michael"],
-    "answer": "Jesus Christ"
-  },
-  {
-    "question": "What happens when a person surrenders to Jesus Christ?",
-    "options": [
-      "They remain in Satan’s world system",
-      "They are transferred into the kingdom of God’s dear Son",
-      "They become rulers in Satan’s kingdom",
-      "They are free to live however they want"
-    ],
-    "answer": "They are transferred into the kingdom of God’s dear Son"
-  },
-  {
-    "question": "According to James 4:4, what does friendship with the world make a person?",
-    "options": [
-      "A friend of God",
-      "A wise person",
-      "An enemy of God",
-      "A spiritual leader"
-    ],
-    "answer": "An enemy of God"
-  },
-  {
-    "question": "Which of these is an example of Satan’s 'world system'?",
-    "options": [
-      "Contentment",
-      "Pride and selfishness",
-      "Holiness",
-      "Love for God"
-    ],
-    "answer": "Pride and selfishness"
-  },
-  {
-    "question": "What should believers do to avoid being influenced by the world system?",
-    "options": [
-      "Follow God’s Word and live righteously",
-      "Seek wealth and fame at all costs",
-      "Participate in everything the world offers",
-      "Avoid prayer and fasting"
-    ],
-    "answer": "Follow God’s Word and live righteously"
-  },
-  {
-    "question": "What does 1 Corinthians 6:19 say about our bodies?",
-    "options": [
-      "Our bodies belong to us alone",
-      "Our bodies are the temple of the Holy Ghost",
-      "Our bodies have no spiritual significance",
-      "Our bodies should be used for personal pleasure"
-    ],
-    "answer": "Our bodies are the temple of the Holy Ghost"
-  },
-  {
-    "question": "Which of the following is NOT a form of sexual perversion?",
-    "options": ["Homosexuality", "Bestiality", "Celibacy", "Incest"],
-    "answer": "Celibacy"
-  },
-  {
-    "question": "What led to the destruction of the people of Sodom according to Genesis 19:4-5, 12-13?",
-    "options": [
-      "Their greed and love for money",
-      "Their abominable sexual acts",
-      "Their refusal to build a temple for God",
-      "Their mistreatment of foreigners"
-    ],
-    "answer": "Their abominable sexual acts"
-  },
-  {
-    "question": "According to 1 Corinthians 6:18, what should believers do regarding fornication?",
-    "options": [
-      "Ignore it",
-      "Engage in it cautiously",
-      "Flee from it",
-      "Consider it as a minor sin"
-    ],
-    "answer": "Flee from it"
-  },
-  {
-    "question": "Which of the following is a consequence of indulging in sexual vices?",
-    "options": [
-      "Spiritual growth and blessings",
-      "Strange sicknesses and diseases",
-      "A stronger relationship with God",
-      "A life free from any struggles"
-    ],
-    "answer": "Strange sicknesses and diseases"
-  },
-  {
-    "question": "What is one way to overcome sexual vices?",
-    "options": [
-      "Confess your sins to God",
-      "Keep struggling in silence",
-      "Surround yourself with worldly influences",
-      "Engage in more sexual activities"
-    ],
-    "answer": "Confess your sins to God"
-  },
-  {
-    "question": "Which of the following Bible passages speaks against homosexuality?",
-    "options": ["Genesis 4:1", "Romans 1:26-27", "Psalm 51:3", "John 3:16"],
-    "answer": "Romans 1:26-27"
-  },
-  {
-    "question": "What should be done to avoid falling into sexual sin?",
-    "options": [
-      "Meditate on God's Word and practice self-control",
-      "Spend more time watching immoral content",
-      "Ignore spiritual disciplines",
-      "Isolate yourself from godly counsel"
-    ],
-    "answer": "Meditate on God's Word and practice self-control"
-  },
-  {
-    "question": "Which of the following describes pornography?",
-    "options": [
-      "A means of fulfilling God's purpose",
-      "A display of erotic materials designed to provoke sexual lust",
-      "A way to strengthen Christian marriages",
-      "A normal and acceptable form of entertainment"
-    ],
-    "answer": "A display of erotic materials designed to provoke sexual lust"
-  },
-  {
-    "question": "What does Proverbs 11:14 suggest as a way to overcome sexual vices?",
-    "options": [
-      "Seeking godly counsel",
-      "Relying only on personal strength",
-      "Ignoring the issue",
-      "Keeping struggles secret"
-    ],
-    "answer": "Seeking godly counsel"
-  },
-  {
-    "question": "What does the Bible warn us to stay away from in relation to gambling?",
-    "options": [
-      "Hard work and diligence",
-      "The love of money",
-      "Generous giving",
-      "Saving for the future"
-    ],
-    "answer": "The love of money"
-  },
-  {
-    "question": "How does gambling differ from lot casting in the Bible?",
-    "options": [
-      "Lot casting was used for divine guidance, while gambling is for personal gain",
-      "Both are forms of entertainment",
-      "Gambling is a way to test faith, while lot casting is just a game",
-      "Lot casting and gambling are exactly the same"
-    ],
-    "answer": "Lot casting was used for divine guidance, while gambling is for personal gain"
-  },
-  {
-    "question": "What does 1 Timothy 6:10 say is the root of all evil?",
-    "options": ["Poverty", "The love of money", "Hard work", "Luck"],
-    "answer": "The love of money"
-  },
-  {
-    "question": "What often happens to those who engage in get-rich-quick schemes?",
-    "options": [
-      "They become financially stable",
-      "They lose everything",
-      "They gain divine favor",
-      "They become more responsible"
-    ],
-    "answer": "They lose everything"
-  },
-  {
-    "question": "According to Proverbs 13:11, what happens to wealth gained through gambling?",
-    "options": [
-      "It lasts forever",
-      "It grows and prospers",
-      "It diminishes over time",
-      "It guarantees financial security"
-    ],
-    "answer": "It diminishes over time"
-  },
-  {
-    "question": "Why does God want believers to avoid gambling?",
-    "options": [
-      "Because it is a guaranteed way to lose money",
-      "Because it promotes greed and covetousness",
-      "Because only unbelievers gamble",
-      "Because it is a modern-day invention"
-    ],
-    "answer": "Because it promotes greed and covetousness"
-  },
-  {
-    "question": "What does Matthew 6:33 instruct believers to seek first?",
-    "options": [
-      "Financial stability",
-      "The kingdom of God and His righteousness",
-      "Personal success",
-      "Wealth and prosperity"
-    ],
-    "answer": "The kingdom of God and His righteousness"
-  },
-  {
-    "question": "What should a believer do instead of gambling?",
-    "options": [
-      "Trust God and work hard",
-      "Invest all money in lotteries",
-      "Borrow money and try to double it",
-      "Look for shortcuts to wealth"
-    ],
-    "answer": "Trust God and work hard"
-  },
-  {
-    "question": "What can a believer do to overcome gambling addiction?",
-    "options": [
-      "Seek professional counseling and accountability",
-      "Continue gambling until they win",
-      "Pray and keep playing responsibly",
-      "Ignore the problem and hope it goes away"
-    ],
-    "answer": "Seek professional counseling and accountability"
-  },
-  {
-    "question": "What is the biblical alternative to gambling for financial increase?",
-    "options": [
-      "Hard work and diligence",
-      "Luck and chance",
-      "Betting wisely",
-      "Investing in lottery tickets"
-    ],
-    "answer": "Hard work and diligence"
-  },
-  {
-    "question": "What does 'Karpos Pneuma' mean?",
-    "options": [
-      "The gifts of the Holy Spirit",
-      "The fruit of the Holy Spirit",
-      "The power of the Holy Spirit",
-      "The presence of the Holy Spirit"
-    ],
-    "answer": "The fruit of the Holy Spirit"
-  },
-  {
-    "question": "According to Galatians 5:22-23, which of the following is NOT a component of the fruit of the Spirit?",
-    "options": ["Love", "Joy", "Wisdom", "Temperance"],
-    "answer": "Wisdom"
-  },
-  {
-    "question": "What does joy as a fruit of the Spirit represent?",
-    "options": [
-      "A temporary feeling of happiness",
-      "Inner comfort in challenges and contentment in scarcity",
-      "Worldly pleasures and entertainment",
-      "A reward for good deeds"
-    ],
-    "answer": "Inner comfort in challenges and contentment in scarcity"
-  },
-  {
-    "question": "Which component of the fruit of the Spirit helps believers bear long with others without murmuring?",
-    "options": ["Faith", "Peace", "Longsuffering", "Goodness"],
-    "answer": "Longsuffering"
-  },
-  {
-    "question": "What does meekness as a fruit of the Spirit mean?",
-    "options": [
-      "The ability to take revenge",
-      "The grace to suffer injuries without feeling a spirit of revenge",
-      "Being timid and avoiding conflicts",
-      "Showing strength and dominance in all situations"
-    ],
-    "answer": "The grace to suffer injuries without feeling a spirit of revenge"
-  },
-  {
-    "question": "According to John 15:4, how can believers bear the fruit of the Spirit?",
-    "options": [
-      "By trying to be morally upright",
-      "By abiding in Christ",
-      "By performing religious rituals",
-      "By striving to please people"
-    ],
-    "answer": "By abiding in Christ"
-  },
-  {
-    "question": "What is required to walk in the Spirit according to Galatians 5:16?",
-    "options": [
-      "Fasting regularly",
-      "Living a sinless life",
-      "Avoiding worldly contamination and obeying the Spirit",
-      "Attending church services daily"
-    ],
-    "answer": "Avoiding worldly contamination and obeying the Spirit"
-  },
-  {
-    "question": "What is the ultimate purpose of the fruit of the Spirit in a believer’s life?",
-    "options": [
-      "To demonstrate power and miracles",
-      "To become prosperous and successful",
-      "To reflect the character of Christ",
-      "To gain favor from people"
-    ],
-    "answer": "To reflect the character of Christ"
-  },
-  {
-    "question": "Which of these practical steps can help believers bear the fruit of the Spirit?",
-    "options": [
-      "Being dead to the world and its lusts",
-      "Engaging in religious debates",
-      "Avoiding all unbelievers",
-      "Focusing only on personal achievements"
-    ],
-    "answer": "Being dead to the world and its lusts"
-  },
-  {
-    "question": "According to Matthew 12:33, how is a believer recognized?",
-    "options": [
-      "By the number of miracles they perform",
-      "By their church attendance",
-      "By the fruit of the Spirit they bear",
-      "By how much they give to charity"
-    ],
-    "answer": "By the fruit of the Spirit they bear"
-  },
-  {
-    "question": "According to Ecclesiastes 7:9, where does anger rest?",
-    "options": [
-      "In the heart of the righteous",
-      "In the bosom of fools",
-      "In the minds of the wise",
-      "In the hands of the wicked"
-    ],
-    "answer": "In the bosom of fools"
-  },
-  {
-    "question": "What does Ephesians 4:26 instruct about anger?",
-    "options": [
-      "Be angry and let it control you",
-      "Do not be angry at all",
-      "Be angry but do not sin",
-      "Express anger freely without restraint"
-    ],
-    "answer": "Be angry but do not sin"
-  },
-  {
-    "question": "Which of the following is NOT a trigger of anger?",
-    "options": [
-      "Hatred and frustration",
-      "Quick temper",
-      "Love and patience",
-      "Hasty judgments"
-    ],
-    "answer": "Love and patience"
-  },
-  {
-    "question": "What can anger lead to if not controlled?",
-    "options": [
-      "Murder and altered destinies",
-      "A successful career",
-      "Increased wisdom",
-      "Closer relationships"
-    ],
-    "answer": "Murder and altered destinies"
-  },
-  {
-    "question": "Which Bible verse advises being slow to speak as a way to manage anger?",
-    "options": ["Proverbs 29:22", "James 1:19", "Genesis 49:6", "Psalm 37:8"],
-    "answer": "James 1:19"
-  },
-  {
-    "question": "According to Proverbs 15:1, how should we respond to anger?",
-    "options": [
-      "With a soft and gentle answer",
-      "By ignoring the person",
-      "By raising our voice",
-      "By confronting with harsh words"
-    ],
-    "answer": "With a soft and gentle answer"
-  },
-  {
-    "question": "What does Colossians 3:8 instruct believers to do with anger?",
-    "options": [
-      "Hold onto it until justice is served",
-      "Express it openly",
-      "Put it off completely",
-      "Suppress it without addressing it"
-    ],
-    "answer": "Put it off completely"
-  },
-  {
-    "question": "Which of these is a recommended way to subdue anger?",
-    "options": [
-      "Walking away from an angry person or scene",
-      "Confronting the person immediately",
-      "Shouting to express emotions",
-      "Keeping anger bottled up"
-    ],
-    "answer": "Walking away from an angry person or scene"
-  },
-  {
-    "question": "Why is anger termed 'temporary madness'?",
-    "options": [
-      "Because it makes people lose their ability to reason",
-      "Because it does not last long",
-      "Because it is unpredictable",
-      "Because it is a rare emotion"
-    ],
-    "answer": "Because it makes people lose their ability to reason"
-  },
-  {
-    "question": "What does Galatians 5:22-23 say about controlling anger?",
-    "options": [
-      "We have the Spirit of self-control",
-      "Anger should be expressed at all times",
-      "Only certain people can control anger",
-      "God does not help in anger management"
-    ],
-    "answer": "We have the Spirit of self-control"
-  }
->>>>>>> 0e934d21ad94e66e6138fcae4d125f451ddc0886
 ]
