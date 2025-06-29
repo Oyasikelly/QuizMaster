@@ -18,6 +18,7 @@ import {
 	Shield,
 	Heart,
 } from "lucide-react";
+import { FaUser, FaEnvelope, FaGraduationCap } from "react-icons/fa";
 import Footer from "../components/Footer";
 
 export default function HomePage() {
@@ -145,40 +146,42 @@ export default function HomePage() {
 				<div className="max-w-7xl mx-auto flex justify-between items-center">
 					{/* Scrolling User Information */}
 					<div className="relative z-10 flex w-auto items-center gap-8 max-w-[80%] rounded-2xl overflow-hidden">
-						<motion.div
-							className="w-auto overflow-hidden mb-6"
-							initial={{ x: "100%" }}
-							animate={{ x: "-100%" }}
-							transition={{
-								duration: 15,
-								repeat: Infinity,
-								ease: "linear",
-							}}>
-							{userData.map((data, index) => (
-								<div
-									key={index}
-									className="flex flex-col lg:flex-row w-auto items-center gap-6 px-6 py-4 text-gray-800 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl m-2">
-									<div className="flex gap-2 items-center justify-start">
-										<FaUser className="text-xl text-blue-500" />
-										<span className="w-auto text-xl sm:text-lg font-semibold text-gray-800">
-											{data.name.toUpperCase()}
-										</span>
+						{userData && userData.length > 0 && (
+							<motion.div
+								className="w-auto overflow-hidden mb-6"
+								initial={{ x: "100%" }}
+								animate={{ x: "-100%" }}
+								transition={{
+									duration: 15,
+									repeat: Infinity,
+									ease: "linear",
+								}}>
+								{userData.map((data, index) => (
+									<div
+										key={index}
+										className="flex flex-col lg:flex-row w-auto items-center gap-6 px-6 py-4 text-gray-800 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl m-2">
+										<div className="flex gap-2 items-center justify-start">
+											<FaUser className="text-xl text-blue-500" />
+											<span className="w-auto text-xl sm:text-lg font-semibold text-gray-800">
+												{data?.name?.toUpperCase() || "User"}
+											</span>
+										</div>
+										<div className="flex gap-2 items-center justify-start">
+											<FaGraduationCap className="text-lg text-blue-500" />
+											<span className="w-auto text-lg md:text-xl text-gray-800">
+												{data?.class?.toUpperCase() || "Class"}
+											</span>
+										</div>
+										<div className="flex gap-2 items-center justify-start">
+											<FaEnvelope className="text-lg text-blue-500" />
+											<span className="w-auto text-sm md:text-lg text-gray-700">
+												{data?.email || "email@example.com"}
+											</span>
+										</div>
 									</div>
-									<div className="flex gap-2 items-center justify-start">
-										<FaGraduationCap className="text-lg text-blue-500" />
-										<span className="w-auto text-lg md:text-xl text-gray-800">
-											{data.class.toUpperCase()}
-										</span>
-									</div>
-									<div className="flex gap-2 items-center justify-start">
-										<FaEnvelope className="text-lg text-blue-500" />
-										<span className="w-auto text-sm md:text-lg text-gray-700">
-											{data.email}
-										</span>
-									</div>
-								</div>
-							))}
-						</motion.div>
+								))}
+							</motion.div>
+						)}
 					</div>
 					<motion.div
 						initial={{ opacity: 0, x: -20 }}
