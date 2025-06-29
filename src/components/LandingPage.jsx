@@ -98,16 +98,16 @@ const LandingPage = ({ toggleAuthModal }) => {
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
 			{/* Navigation */}
-			<nav className="relative z-50 px-6 py-4">
+			<nav className="relative z-50 px-4 sm:px-6 py-3 sm:py-4">
 				<div className="max-w-7xl mx-auto flex justify-between items-center">
 					<motion.div
 						initial={{ opacity: 0, x: -20 }}
 						animate={{ opacity: 1, x: 0 }}
 						className="flex items-center space-x-2">
-						<div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-							<Brain className="w-6 h-6 text-white" />
+						<div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+							<Brain className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
 						</div>
-						<span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+						<span className="text-lg sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
 							QuizMaster
 						</span>
 					</motion.div>
@@ -115,10 +115,10 @@ const LandingPage = ({ toggleAuthModal }) => {
 					<motion.div
 						initial={{ opacity: 0, x: 20 }}
 						animate={{ opacity: 1, x: 0 }}
-						className="flex items-center space-x-4">
+						className="flex items-center space-x-2 sm:space-x-4">
 						<button
 							onClick={toggleAuthModal}
-							className="px-6 py-2 bg-white/80 backdrop-blur-sm rounded-full text-gray-700 hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl">
+							className="px-4 py-2 sm:px-6 sm:py-2 bg-white/80 backdrop-blur-sm rounded-full text-gray-700 hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base">
 							Get Started
 						</button>
 					</motion.div>
