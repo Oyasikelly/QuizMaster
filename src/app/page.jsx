@@ -159,7 +159,7 @@ export default function HomePage() {
 								{userData.map((data, index) => (
 									<div
 										key={index}
-										className="flex flex-col lg:flex-row w-auto items-center gap-6 px-6 py-4 text-gray-800 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl m-2">
+										className="flex flex-row w-auto items-center gap-6 px-6 py-4 text-gray-800 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl m-2">
 										<div className="flex gap-2 items-center justify-start">
 											<FaUser className="text-xl text-blue-500" />
 											<span className="w-auto text-xl sm:text-lg font-semibold text-gray-800">
