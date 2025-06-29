@@ -9,105 +9,77 @@ import { FaUser, FaEnvelope, FaGraduationCap } from "react-icons/fa";
 import SelectTime from "../components/SelectTime";
 
 const Introduction = ({ category }) => {
-  const [userData, setUserData] = useState([]);
-  const [name, setName] = useState({
-    name: "",
-  });
-  useEffect(() => {
-    async function getUser() {
-      const { data, error } = await supabase.auth.getUser();
-      const user_email = data?.user?.email;
-      const { data: userData, error: userError } = await supabase
-        .from("users_profile")
-        .select("email, name, class, denomination") // Select multiple columns
-        .eq("email", user_email);
+	const [userData, setUserData] = useState([]);
+	const [name, setName] = useState({
+		name: "",
+	});
+	useEffect(() => {
+		async function getUser() {
+			const { data, error } = await supabase.auth.getUser();
+			const user_email = data?.user?.email;
+			const { data: userData, error: userError } = await supabase
+				.from("users_profile")
+				.select("email, name, class, denomination") // Select multiple columns
+				.eq("email", user_email);
 
-      if (userData) {
-        setUserData(userData);
+			if (userData) {
+				setUserData(userData);
 
-        const [userName, ...others] = userData;
-        setName({
-          name: userName.name,
-        });
-        console.log(name);
-      }
-      if (userError) console.error(userError);
-    }
+				const [userName, ...others] = userData;
+				setName({
+					name: userName.name,
+				});
+				console.log(name);
+			}
+			if (userError) console.error(userError);
+		}
 
-    getUser();
-  }, []);
+		getUser();
+	}, []);
 
-  return (
-    <div className="flex flex-col items-center pt-10 min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 text-white px-4 sm:px-8 py-6">
-      {/* Scrolling User Information */}
-      <div className="flex w-auto items-center gap-8 max-w-[80%] rounded-[0.5rem] overflow-hidden">
-        <motion.div
-          className="w-auto overflow-hidden mb-6"
-          initial={{ x: "100%" }}
-          animate={{ x: "-100%" }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        >
-          {userData.map((data, index) => (
-            <div
-              key={index}
-              className="flex flex-col lg:flex-row w-auto items-center gap-6 px-6 py-2 text-white  bg-opacity-20 rounded-lg "
-            >
-              <div className="flex gap-2 items-center justify-start">
-                <FaUser className="text-xl text-yellow-300" />
-                <span className="w-auto text-xl sm:text-lg font-semibold">
-                  {data.name.toUpperCase()}
-                </span>
-              </div>
-              <div className="flex gap-2 items-center justify-start">
-                <FaGraduationCap className="text-lg text-yellow-300" />
-                <span className="w-auto text-lg md:text-xl">
-                  {data.class.toUpperCase()}
-                </span>
-              </div>
-              <div className="flex gap-2 items-center justify-start">
-                <FaEnvelope className="text-lg text-yellow-300" />
-                <span className="w-auto text-sm md:text-lg">{data.email}</span>
-              </div>
-            </div>
-          ))}
-        </motion.div>
-      </div>
+	return (
+		<div className="flex flex-col items-center pt-10 pb-16 min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 text-gray-800 px-4 sm:px-8 py-6">
+			{/* Animated Background Elements */}
+			<div className="absolute inset-0 overflow-hidden">
+				<div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-3xl animate-pulse"></div>
+				<div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-r from-pink-400/20 to-orange-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+				<div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-r from-green-400/20 to-blue-400/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
+			</div>
 
-      {/* Main Content */}
-      <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="text-center max-w-4xl w-full"
-      >
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4">
-          Welcome <span className="text-yellow-400">{name.name}</span>
-        </h1>
-        <p className="text-base md:text-lg lg:text-xl mb-6 leading-relaxed">
-          This quiz tests your knowledge on various topics, from life
-          experiences to Bible lessons, principles, and faith. Challenge your
-          intellect and learn along the way!
-        </p>
-        <Suspense
-          fallback={
-            <div className="text-center text-white">Loading Quiz...</div>
-          }
-        >
-          {SelectTime ? (
-            <SelectTime />
-          ) : (
-            <div className="text-red-500">
-              Unable to load the timer component.
-            </div>
-          )}
-        </Suspense>
-      </motion.div>
-    </div>
-  );
+			{/* Main Content */}
+			<motion.div
+				initial={{ opacity: 0, y: 50 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.8 }}
+				className="relative z-10 text-center max-w-4xl w-full mt-8">
+				{/* <div className="bg-white/80 backdrop-blur-xl border border-white/50 rounded-3xl shadow-2xl p-8 mb-8"> */}
+				<h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+					Welcome <span className="text-blue-600">{name.name}</span>
+				</h1>
+				<p className="text-base md:text-lg lg:text-xl mb-6 leading-relaxed text-gray-700">
+					This quiz tests your knowledge on various topics, from life
+					experiences to Bible lessons, principles, and faith. Challenge your
+					intellect and learn along the way!
+				</p>
+				{/* </div> */}
+
+				<div className="bg-white/80 backdrop-blur-xl border border-white/50 rounded-3xl shadow-2xl p-8">
+					<Suspense
+						fallback={
+							<div className="text-center text-gray-600">Loading Quiz...</div>
+						}>
+						{SelectTime ? (
+							<SelectTime />
+						) : (
+							<div className="text-red-500">
+								Unable to load the timer component.
+							</div>
+						)}
+					</Suspense>
+				</div>
+			</motion.div>
+		</div>
+	);
 };
 
 export default Introduction;

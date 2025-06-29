@@ -20,9 +20,7 @@ const Quiz = () => {
 
 	const calculateScore = () => {
 		return questions.reduce((score, question, index) => {
-			return selectedAnswers[index] === question.correctAnswer
-				? score + 1
-				: score;
+			return selectedAnswers[index] === question.answer ? score + 1 : score;
 		}, 0);
 	};
 
@@ -74,7 +72,7 @@ const Quiz = () => {
 				question={questions[currentQuestionIndex].question}
 				options={questions[currentQuestionIndex].options}
 				selectedOption={selectedAnswers[currentQuestionIndex]}
-				correctAnswer={questions[currentQuestionIndex].correctAnswer}
+				correctAnswer={questions[currentQuestionIndex].answer}
 				onAnswer={handleAnswer}
 			/>
 

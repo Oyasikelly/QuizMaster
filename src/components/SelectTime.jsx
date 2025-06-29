@@ -55,25 +55,26 @@ export default function SelectTime() {
 				<div className="grid gap-8 mb-6">
 					{/* Select Time Section */}
 					<div className="text-center">
-						<h3 className="text-lg md:text-xl font-semibold mb-4 flex items-center justify-center gap-2">
-							<FaClock /> Select Time
+						<h3 className="text-lg md:text-xl font-semibold mb-4 flex items-center justify-center gap-2 text-gray-800">
+							<FaClock className="text-blue-500" /> Select Time
 						</h3>
 						<div className="grid grid-cols-3 sm:grid-cols-6 gap-4">
-							{[10, 20, 30, 40, 50, 60].map((time) => (
+							{[10, 20, 30, 40, 50, 60, 90, 120, 150, 180].map((time) => (
 								<motion.button
 									key={time}
-									whileHover={{ scale: time === 60 ? 1.05 : 1 }}
-									whileTap={{ scale: time === 60 ? 0.95 : 1 }}
-									onClick={() => time === 60 && handleTimeSelection(time)}
-									disabled={time !== 60}
-									className={`p-2 rounded-lg text-white transition duration-200 ${
-										time === 60
-											? selectedTime === time
-												? "bg-yellow-500"
-												: "bg-blue-500 hover:bg-blue-700 cursor-pointer"
-											: "bg-gray-400 opacity-50 cursor-not-allowed"
+									whileHover={{ scale: 1.05 }}
+									whileTap={{ scale: 0.95 }}
+									onClick={() => handleTimeSelection(time)}
+									className={`p-3 rounded-2xl text-white transition-all duration-200 font-medium ${
+										selectedTime === time
+											? "bg-gradient-to-r from-blue-500 to-purple-600 shadow-lg transform scale-105"
+											: "bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 cursor-pointer"
 									}`}>
-									{time} min
+									{time >= 60
+										? `${Math.floor(time / 60)}h ${
+												time % 60 > 0 ? (time % 60) + "m" : ""
+										  }`.trim()
+										: `${time} min`}
 								</motion.button>
 							))}
 						</div>
@@ -81,23 +82,20 @@ export default function SelectTime() {
 
 					{/* Select Questions Section */}
 					<div className="text-center">
-						<h3 className="text-lg md:text-xl font-semibold mb-4 flex items-center justify-center gap-2">
-							<FaQuestionCircle /> Number of Questions
+						<h3 className="text-lg md:text-xl font-semibold mb-4 flex items-center justify-center gap-2 text-gray-800">
+							<FaQuestionCircle className="text-blue-500" /> Number of Questions
 						</h3>
 						<div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
-							{[10, 20, 30, 40, 50, 60, 70, 80, 100].map((num) => (
+							{[10, 20, 30, 40, 50, 60, 70, 80, 100, 150, 200].map((num) => (
 								<motion.button
 									key={num}
-									whileHover={{ scale: num === 100 ? 1.05 : 1 }}
-									whileTap={{ scale: num === 100 ? 0.95 : 1 }}
-									onClick={() => num === 100 && handleQuestionsSelection(num)}
-									disabled={num !== 100}
-									className={`p-2 rounded-lg text-white transition duration-200 ${
-										num === 100
-											? selectedQuestions === num
-												? "bg-yellow-500"
-												: "bg-blue-500 hover:bg-blue-700 cursor-pointer"
-											: "bg-gray-400 opacity-50 cursor-not-allowed"
+									whileHover={{ scale: 1.05 }}
+									whileTap={{ scale: 0.95 }}
+									onClick={() => handleQuestionsSelection(num)}
+									className={`p-3 rounded-2xl text-white transition-all duration-200 font-medium ${
+										selectedQuestions === num
+											? "bg-gradient-to-r from-green-500 to-emerald-600 shadow-lg transform scale-105"
+											: "bg-gradient-to-r from-gray-400 to-gray-500 hover:from-gray-500 hover:to-gray-600 cursor-pointer"
 									}`}>
 									{num} Questions
 								</motion.button>
@@ -108,21 +106,11 @@ export default function SelectTime() {
 
 				{/* Start Quiz Button */}
 				<motion.button
-					whileHover={{
-						scale: selectedQuestions === 100 && selectedTime === 60 ? 1.05 : 1,
-					}}
-					whileTap={{
-						scale: selectedQuestions === 100 && selectedTime === 60 ? 0.95 : 1,
-					}}
+					whileHover={{ scale: 1.05 }}
+					whileTap={{ scale: 0.95 }}
 					onClick={handleStartQuiz}
-					disabled={selectedQuestions !== 100 || selectedTime !== 60}
-					className={`py-2 px-6 rounded-lg flex items-center justify-center gap-2 text-black transition-opacity duration-200
-    ${
-			selectedQuestions === 100 && selectedTime === 60
-				? "bg-yellow-500 hover:bg-yellow-600 cursor-pointer"
-				: "bg-yellow-500 opacity-50 cursor-not-allowed"
-		}`}>
-					<FaPlay /> Start Quiz
+					className="py-4 px-8 rounded-2xl flex items-center justify-center gap-3 text-white font-semibold text-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-xl hover:shadow-2xl transition-all duration-300">
+					<FaPlay className="text-sm" /> Start Quiz
 				</motion.button>
 			</motion.div>
 		</div>

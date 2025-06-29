@@ -62,7 +62,7 @@ export default function QuizInstructions() {
 						<li>Your results are safely stored with Supabase.</li>
 					</ul>
 				</section>
-
+				{/* 
 				<section>
 					<h2 className="text-2xl font-semibold text-red-600 mb-2">
 						Submission Window
@@ -71,7 +71,7 @@ export default function QuizInstructions() {
 						The quiz is available today from <strong>8:30 PM to 9:30 PM</strong>
 						. After 9:30 PM, submissions will be disabled — no exceptions.
 					</p>
-				</section>
+				</section> */}
 
 				<section>
 					<h2 className="text-2xl font-semibold text-green-600 mb-2">
