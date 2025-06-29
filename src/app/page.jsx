@@ -144,49 +144,10 @@ export default function HomePage() {
 			{/* Navigation */}
 			<nav className="relative z-50 px-6 py-4">
 				<div className="max-w-7xl mx-auto flex justify-between items-center">
-					{/* Scrolling User Information */}
-					<div className="relative z-10 flex w-auto items-center gap-8 max-w-[80%] rounded-2xl overflow-hidden">
-						{userData && userData.length > 0 && (
-							<motion.div
-								className="w-auto overflow-hidden mb-6"
-								initial={{ x: "100%" }}
-								animate={{ x: "-100%" }}
-								transition={{
-									duration: 15,
-									repeat: Infinity,
-									ease: "linear",
-								}}>
-								{userData.map((data, index) => (
-									<div
-										key={index}
-										className="flex flex-row w-auto items-center gap-6 px-6 py-4 text-gray-800 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl m-2">
-										<div className="flex gap-2 items-center justify-start">
-											<FaUser className="text-xl text-blue-500" />
-											<span className="w-auto text-xl sm:text-lg font-semibold text-gray-800">
-												{data?.name?.toUpperCase() || "User"}
-											</span>
-										</div>
-										<div className="flex gap-2 items-center justify-start">
-											<FaGraduationCap className="text-lg text-blue-500" />
-											<span className="w-auto text-lg md:text-xl text-gray-800">
-												{data?.class?.toUpperCase() || "Class"}
-											</span>
-										</div>
-										<div className="flex gap-2 items-center justify-start">
-											<FaEnvelope className="text-lg text-blue-500" />
-											<span className="w-auto text-sm md:text-lg text-gray-700">
-												{data?.email || "email@example.com"}
-											</span>
-										</div>
-									</div>
-								))}
-							</motion.div>
-						)}
-					</div>
 					<motion.div
 						initial={{ opacity: 0, x: -20 }}
 						animate={{ opacity: 1, x: 0 }}
-						className="flex items-center space-x-2">
+						className="flex items-center space-x-2 ">
 						<div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
 							<Brain className="w-6 h-6 text-white" />
 						</div>
@@ -207,6 +168,46 @@ export default function HomePage() {
 					</motion.div>
 				</div>
 			</nav>
+
+			{/* Scrolling User Information */}
+			<div className="relative z-10 flex w-auto items-center gap-8 max-w-[80%] rounded-2xl overflow-hidden">
+				{userData && userData.length > 0 && (
+					<motion.div
+						className="w-auto overflow-hidden mb-6"
+						initial={{ x: "100%" }}
+						animate={{ x: "-100%" }}
+						transition={{
+							duration: 15,
+							repeat: Infinity,
+							ease: "linear",
+						}}>
+						{userData.map((data, index) => (
+							<div
+								key={index}
+								className="flex flex-row w-auto items-center gap-6 px-6 py-4 text-gray-800 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl m-2">
+								<div className="flex gap-2 items-center justify-start">
+									<FaUser className="text-xl text-blue-500" />
+									<span className="w-auto text-xl sm:text-lg font-semibold text-gray-800">
+										{data?.name?.toUpperCase() || "User"}
+									</span>
+								</div>
+								<div className="flex gap-2 items-center justify-start">
+									<FaGraduationCap className="text-lg text-blue-500" />
+									<span className="w-auto text-lg md:text-xl text-gray-800">
+										{data?.class?.toUpperCase() || "Class"}
+									</span>
+								</div>
+								<div className="flex gap-2 items-center justify-start">
+									<FaEnvelope className="text-lg text-blue-500" />
+									<span className="w-auto text-sm md:text-lg text-gray-700">
+										{data?.email || "email@example.com"}
+									</span>
+								</div>
+							</div>
+						))}
+					</motion.div>
+				)}
+			</div>
 
 			{/* Hero Section */}
 			<section className="relative px-6 py-20 overflow-hidden">
