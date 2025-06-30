@@ -34,38 +34,34 @@ const Quiz = ({ initialQuestions, category }) => {
 	const [timerRunning, setTimerRunning] = useState(true);
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
-	async function transferMultipleColumns(userEmail) {
-		try {
-			const { data: usersData, error: usersError } = await supabase
-				.from("users_profile")
-				.select("email, name, class")
-				.eq("email", userEmail);
-
-			if (usersError) throw usersError;
-
-			if (!usersData || usersData.length === 0) {
-				console.log("No user profile found to transfer.");
-				return;
-			}
-
-			const profilesData = usersData.map((user) => ({
-				email: user.email,
-				name: user.name,
-				class: user.class,
-				category: category,
-			}));
-
-			const { error: profilesError } = await supabase
-				.from("quiz_results")
-				.upsert(profilesData, {
-					onConflict: ["user_id"],
-				});
-
-			if (profilesError) throw profilesError;
-		} catch (error) {
-			console.error("Error transferring data:", error.message);
+	// Define handlers in a scope accessible to both setup and cleanup
+	const handlePopState = () => {
+		window.history.pushState(null, "", window.location.href);
+	};
+	const handleBeforeUnload = (e) => {
+		if (isSubmitting) {
+			e.preventDefault();
+			e.returnValue =
+				"Quiz submission in progress. Please wait until it completes.";
+		} else {
+			e.preventDefault();
+			e.returnValue =
+				"Are you sure you want to leave? Your progress will be lost.";
 		}
-	}
+	};
+
+	const removeNavigationLock = () => {
+		window.removeEventListener("popstate", handlePopState);
+		window.removeEventListener("beforeunload", handleBeforeUnload);
+	};
+
+	useEffect(() => {
+		window.history.pushState(null, "", window.location.href);
+		window.addEventListener("popstate", handlePopState);
+		window.addEventListener("beforeunload", handleBeforeUnload);
+
+		return removeNavigationLock; // Cleanup on unmount
+	}, []);
 
 	useEffect(() => {
 		const slicedQuestions = shuffleArray(initialQuestions)
@@ -139,7 +135,9 @@ const Quiz = ({ initialQuestions, category }) => {
 			await addQuizResult(resultData);
 			await transferMultipleColumns(userEmail);
 
-			router.push(
+			removeNavigationLock(); // Manually clean up before navigating
+
+			router.replace(
 				`/quiz/results?correct=${correctAnswersCount}&total=${questions.length}`
 			);
 		} catch (err) {
@@ -153,6 +151,39 @@ const Quiz = ({ initialQuestions, category }) => {
 		const secs = seconds % 60;
 		return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
 	};
+
+	async function transferMultipleColumns(userEmail) {
+		try {
+			const { data: usersData, error: usersError } = await supabase
+				.from("users_profile")
+				.select("email, name, class")
+				.eq("email", userEmail);
+
+			if (usersError) throw usersError;
+
+			if (!usersData || usersData.length === 0) {
+				console.log("No user profile found to transfer.");
+				return;
+			}
+
+			const profilesData = usersData.map((user) => ({
+				email: user.email,
+				name: user.name,
+				class: user.class,
+				category: category,
+			}));
+
+			const { error: profilesError } = await supabase
+				.from("quiz_results")
+				.upsert(profilesData, {
+					onConflict: ["user_id"],
+				});
+
+			if (profilesError) throw profilesError;
+		} catch (error) {
+			console.error("Error transferring data:", error.message);
+		}
+	}
 
 	return (
 		<Suspense

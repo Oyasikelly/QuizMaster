@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import {
@@ -23,6 +23,34 @@ const ResultsContent = () => {
 	const [answers, setAnswers] = useState([]);
 	const [questions, setQuestions] = useState([]);
 	const [showAnswers, setShowAnswers] = useState(false);
+	const navLockActive = useRef(true);
+
+	useEffect(() => {
+		// Navigation lock
+		window.history.pushState(null, "", window.location.href);
+		const handlePopState = () => {
+			if (navLockActive.current)
+				window.history.pushState(null, "", window.location.href);
+		};
+		const handleBeforeUnload = (e) => {
+			if (navLockActive.current) {
+				e.preventDefault();
+				e.returnValue =
+					"You cannot reload or leave this page. Please use the Go to Home button.";
+			}
+		};
+		window.addEventListener("popstate", handlePopState);
+		window.addEventListener("beforeunload", handleBeforeUnload);
+		return () => {
+			window.removeEventListener("popstate", handlePopState);
+			window.removeEventListener("beforeunload", handleBeforeUnload);
+		};
+	}, []);
+
+	const handleGoHome = () => {
+		navLockActive.current = false;
+		router.push("/");
+	};
 
 	useEffect(() => {
 		try {
@@ -31,6 +59,7 @@ const ResultsContent = () => {
 				const { answers, questions } = JSON.parse(quizResults);
 				setAnswers(answers || []);
 				setQuestions(questions || []);
+				localStorage.removeItem("quizResults");
 			}
 		} catch (error) {
 			console.error("Error fetching quiz results:", error);
@@ -133,7 +162,7 @@ const ResultsContent = () => {
 					<motion.button
 						whileHover={{ scale: 1.02 }}
 						whileTap={{ scale: 0.98 }}
-						onClick={() => router.push("/")}
+						onClick={handleGoHome}
 						className="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white py-4 px-6 rounded-2xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-xl shadow-lg flex items-center justify-center space-x-3">
 						<FiHome className="w-5 h-5" />
 						<span>Return to Home</span>

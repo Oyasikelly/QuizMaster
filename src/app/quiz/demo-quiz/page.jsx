@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { FiLogOut } from "react-icons/fi";
 
 import questions from "../../questions/randomQuestions.json";
 
@@ -44,6 +45,19 @@ const Quiz = () => {
 		}
 	};
 
+	const handleExit = () => {
+		// Add a little animation delay for effect
+		const btn = document.getElementById("exit-demo-btn");
+		if (btn) {
+			btn.classList.add("animate-bounce");
+			setTimeout(() => {
+				window.location.href = "/";
+			}, 400);
+		} else {
+			window.location.href = "/";
+		}
+	};
+
 	if (isQuizFinished) {
 		const score = calculateScore();
 		return (
@@ -74,6 +88,16 @@ const Quiz = () => {
 
 	return (
 		<div className="w-full h-screen flex flex-col justify-center items-center bg-blue-50 p-6">
+			{/* Exit Demo Button */}
+			<button
+				id="exit-demo-btn"
+				className="fixed top-6 right-6 z-50 flex items-center gap-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-white font-bold shadow-xl backdrop-blur-lg border border-white/30 hover:scale-105 hover:shadow-2xl transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-blue-200"
+				onClick={handleExit}
+				style={{ boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)" }}>
+				<FiLogOut className="w-6 h-6 animate-pulse" />
+				<span className="hidden sm:inline">Exit Demo</span>
+			</button>
+
 			<QuizQuestion
 				question={questions[currentQuestionIndex].question}
 				options={questions[currentQuestionIndex].options}
