@@ -53,14 +53,17 @@ const Introduction = ({ category }) => {
 				transition={{ duration: 0.8 }}
 				className="relative z-10 text-center max-w-4xl w-full mt-8">
 				{/* <div className="bg-white/80 backdrop-blur-xl border border-white/50 rounded-3xl shadow-2xl p-8 mb-8"> */}
-				<h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-					Welcome <span className="text-blue-600">{name.name}</span>
+				<h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
+					Welcome{" "}
+					<span className="text-blue-600 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+						{name.name}
+					</span>
 				</h1>
-				<p className="text-base md:text-lg lg:text-xl mb-6 leading-relaxed text-gray-700">
+				{/* <p className="text-base md:text-lg lg:text-xl mb-6 leading-relaxed text-gray-700">
 					This quiz tests your knowledge on various topics, from life
 					experiences to Bible lessons, principles, and faith. Challenge your
 					intellect and learn along the way!
-				</p>
+				</p> */}
 				{/* </div> */}
 
 				<div className="bg-white/80 backdrop-blur-xl border border-white/50 rounded-3xl shadow-2xl p-8">

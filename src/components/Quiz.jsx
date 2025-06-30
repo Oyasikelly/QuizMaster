@@ -1,19 +1,17 @@
-// Original questions before shuffling
 "use client";
 import { motion } from "framer-motion";
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
+import { FiAward } from "react-icons/fi";
 
-// component
-import Successful from "../components/Successful";
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
 const addQuizResult = async (resultData) => {
 	const { data, error } = await supabase
 		.from("quiz_results")
 		.upsert(resultData, {
-			onConflict: ["user_id"], // Ensure user_id is the unique constraint in your table
+			onConflict: ["user_id"],
 		});
 
 	if (error) {
@@ -24,55 +22,32 @@ const addQuizResult = async (resultData) => {
 };
 
 const Quiz = ({ initialQuestions, category }) => {
-	// const Categories = [
-	//   {
-	//     name: "yaya",
-	//     pathname: "/quiz/yaya/quiz",
-	//   },
-	//   {
-	//     name: "adults",
-	//     pathname: "/quiz/adults/quiz",
-	//   },
-	//   {
-	//     name: "teenagers",
-	//     pathname: "/quiz/teenagers/quiz",
-	//   },
-	// ];
-
 	const router = useRouter();
 	const searchParams = useSearchParams();
-	// const pathname = usePathname();
 	const userTime = parseInt(searchParams.get("time"), 10);
 	const numQuestions = parseInt(searchParams.get("questions"), 10);
 
-	const [time, setTime] = useState(userTime * 60); // Time in seconds
+	const [time, setTime] = useState(userTime * 60);
 	const [questions, setQuestions] = useState([]);
 	const [currentQuestion, setCurrentQuestion] = useState(0);
 	const [answers, setAnswers] = useState([]);
 	const [timerRunning, setTimerRunning] = useState(true);
-	const [showSuccess, setShowSuccess] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	async function transferMultipleColumns(userEmail) {
 		try {
-			// Step 1: Fetch `id`, `email`, and `name` from the `users` table
 			const { data: usersData, error: usersError } = await supabase
 				.from("users_profile")
-				.select("email, name, class") // Select multiple columns
-				.eq("email", userEmail); // Example filter, adjust as needed
+				.select("email, name, class")
+				.eq("email", userEmail);
 
-			if (usersError) {
-				console.log(usersError);
-			}
+			if (usersError) throw usersError;
 
 			if (!usersData || usersData.length === 0) {
-				console.log("No users found.");
+				console.log("No user profile found to transfer.");
 				return;
 			}
 
-			if (usersData) {
-				console.log(usersData);
-			}
-			// Step 2: Insert fetched data into the `profiles` table
 			const profilesData = usersData.map((user) => ({
 				email: user.email,
 				name: user.name,
@@ -80,17 +55,13 @@ const Quiz = ({ initialQuestions, category }) => {
 				category: category,
 			}));
 
-			const { data: profilesInsertData, error: profilesError } = await supabase
+			const { error: profilesError } = await supabase
 				.from("quiz_results")
 				.upsert(profilesData, {
-					onConflict: ["user_id"], // Ensure user_id is the unique constraint in your table
+					onConflict: ["user_id"],
 				});
 
-			if (profilesError) {
-				console.log(profilesError);
-			}
-
-			console.log("Data successfully transferred:", profilesInsertData);
+			if (profilesError) throw profilesError;
 		} catch (error) {
 			console.error("Error transferring data:", error.message);
 		}
@@ -134,14 +105,14 @@ const Quiz = ({ initialQuestions, category }) => {
 	};
 
 	const handleSubmit = async () => {
+		setIsSubmitting(true);
+		setTimerRunning(false);
+
 		try {
-			setTimerRunning(false);
-			setShowSuccess(true);
 			const correctAnswersCount = answers.filter(
 				(answer, index) => answer === questions[index].answer
 			).length;
 
-			// Store the data in localStorage
 			localStorage.setItem(
 				"quizResults",
 				JSON.stringify({ answers, questions })
@@ -151,22 +122,20 @@ const Quiz = ({ initialQuestions, category }) => {
 
 			if (error) {
 				console.error("Error fetching user:", error);
+				setIsSubmitting(false);
 				return;
 			}
 
 			const userId = data.user.id;
 			const userEmail = data.user.email;
-			console.log(data);
-			// Prepare the result data
+
 			const resultData = {
 				user_id: userId,
 				correct_answers: correctAnswersCount,
 				total_questions: questions.length,
 				timestamp: new Date().toISOString(),
-				// name:data.user.identities.
 			};
 
-			// Upsert quiz results
 			await addQuizResult(resultData);
 			await transferMultipleColumns(userEmail);
 
@@ -174,9 +143,8 @@ const Quiz = ({ initialQuestions, category }) => {
 				`/quiz/results?correct=${correctAnswersCount}&total=${questions.length}`
 			);
 		} catch (err) {
-			console.log(err);
-		} finally {
-			setShowSuccess(false);
+			console.log("An error occurred during submission:", err);
+			setIsSubmitting(false);
 		}
 	};
 
@@ -189,84 +157,122 @@ const Quiz = ({ initialQuestions, category }) => {
 	return (
 		<Suspense
 			fallback={
-				<div className="relative text-center text-white">Loading Quiz...</div>
+				<div className="relative flex items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+					<motion.div
+						initial={{ opacity: 0, scale: 0.8 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{ duration: 0.5 }}
+						className="flex flex-col items-center justify-center gap-6 bg-white/80 rounded-3xl shadow-2xl p-10 border border-white/50">
+						<div className="w-20 h-20 rounded-full bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-spin-slow flex items-center justify-center shadow-xl">
+							<span className="text-white text-3xl animate-pulse font-bold">
+								Q
+							</span>
+						</div>
+						<p className="text-gray-700 text-xl font-bold tracking-wide animate-pulse">
+							Loading Quiz...
+						</p>
+					</motion.div>
+				</div>
 			}>
-			{showSuccess && (
-				<div className="absolute w-full z-10 h-screen flex items-center justify-center top-0 right-0 left-0 bg-blue-500">
-					<Successful
-						message="Your form has been submitted successfully!"
-						onClose={() => setShowSuccess(false)}
-					/>
+			{isSubmitting && (
+				<div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm">
+					<motion.div
+						initial={{ opacity: 0, scale: 0.8 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{ duration: 0.5 }}
+						className="flex flex-col items-center justify-center gap-6 bg-white rounded-3xl shadow-2xl p-10 border border-gray-200">
+						<div className="w-20 h-20 rounded-full bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-spin-slow flex items-center justify-center shadow-xl">
+							<FiAward className="text-white text-3xl animate-pulse" />
+						</div>
+						<p className="text-gray-700 text-xl font-bold tracking-wide animate-pulse">
+							Calculating Your Score...
+						</p>
+					</motion.div>
 				</div>
 			)}
-			<div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-pink-500 to-purple-700 text-white p-4">
+			<div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-4">
 				<motion.div
-					initial={{ opacity: 0, y: -50 }}
+					initial={{ opacity: 0, y: -40 }}
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8 }}
-					className="text-center mb-6">
-					<h1 className="text-3xl md:text-4xl font-bold mb-6">
+					className="w-full max-w-2xl mx-auto text-center mb-8">
+					<h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
 						{category} Quiz
 					</h1>
-					<p className="text-sm md:text-lg mb-4">
-						Time Remaining: {formatTime(time)}
-					</p>
-					<div className="bg-gray-200 h-2 w-full rounded-full mb-6">
-						<div
-							style={{ width: `${(time / (userTime * 60)) * 100}%` }}
-							className="bg-green-500 h-full rounded-full"></div>
+					<div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-4">
+						<div className="flex items-center gap-2 text-lg text-gray-700 bg-white/80 rounded-xl px-4 py-2 shadow border border-white/50">
+							<span className="font-semibold">Time Left:</span>
+							<span className="font-mono text-blue-600">
+								{formatTime(time)}
+							</span>
+						</div>
+						<div className="flex items-center gap-2 text-lg text-gray-700 bg-white/80 rounded-xl px-4 py-2 shadow border border-white/50">
+							<span className="font-semibold">Question:</span>
+							<span className="font-mono text-purple-600">
+								{currentQuestion + 1} / {questions.length}
+							</span>
+						</div>
 					</div>
-					<p className="text-sm md:text-lg mb-4">
-						Question {currentQuestion + 1} of {questions.length}
-					</p>
+					<div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden mb-4">
+						<motion.div
+							initial={{ width: 0 }}
+							animate={{ width: `${(time / (userTime * 60)) * 100}%` }}
+							transition={{ duration: 0.5 }}
+							className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full"
+						/>
+					</div>
 				</motion.div>
 				<motion.div
-					initial={{ scale: 0.8, opacity: 0 }}
+					initial={{ scale: 0.95, opacity: 0 }}
 					animate={{ scale: 1, opacity: 1 }}
 					transition={{ duration: 0.6 }}
-					className="bg-white text-black rounded-lg shadow-lg p-4 md:p-6 w-full max-w-sm md:max-w-lg">
+					className="w-full max-w-2xl bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border border-white/50">
 					{questions.length > 0 && (
 						<>
-							<h2 className="text-lg text-center md:text-2xl font-bold mb-4">
+							<h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
 								{questions[currentQuestion].question}
 							</h2>
-							<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+							<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
 								{questions[currentQuestion].options.map((option, index) => (
 									<motion.button
 										key={index}
-										whileHover={{ scale: 1.05 }}
-										whileTap={{ scale: 0.95 }}
+										whileHover={{ scale: 1.04 }}
+										whileTap={{ scale: 0.97 }}
 										onClick={() => handleAnswer(option)}
-										className={`py-2 px-4 rounded-lg text-sm md:text-base ${
-											answers[currentQuestion] === option
-												? "bg-green-500 text-white"
-												: "bg-blue-500 hover:bg-blue-700 text-white"
-										}`}>
+										className={`py-3 px-4 rounded-2xl text-base font-medium transition-all duration-200 border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
+											${
+												answers[currentQuestion] === option
+													? "bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg"
+													: "bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700"
+											}
+										`}>
 										{option}
 									</motion.button>
 								))}
 							</div>
-							<div className="mt-6 flex justify-between">
+							<div className="flex justify-between items-center mt-4 gap-4">
 								<button
 									onClick={handlePrev}
 									disabled={currentQuestion <= 0}
-									className={`py-2 px-4 rounded-lg text-sm md:text-base ${
-										currentQuestion <= 0
-											? "bg-gray-400 cursor-not-allowed"
-											: "bg-gray-500 hover:bg-gray-700 text-white"
-									}`}>
+									className={`py-2 px-6 rounded-full text-base font-semibold transition-all duration-200
+										${
+											currentQuestion <= 0
+												? "bg-gray-300 text-gray-400 cursor-not-allowed"
+												: "bg-gradient-to-r from-gray-500 to-gray-700 text-white hover:from-gray-600 hover:to-gray-800 shadow"
+										}
+									`}>
 									Prev
 								</button>
 								{currentQuestion < questions.length - 1 ? (
 									<button
 										onClick={handleNext}
-										className="bg-gray-500 hover:bg-gray-700 text-white py-2 px-4 rounded-lg text-sm md:text-base">
+										className="py-2 px-6 rounded-full text-base font-semibold bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 shadow transition-all duration-200">
 										Next
 									</button>
 								) : (
 									<button
 										onClick={handleSubmit}
-										className="bg-red-500 hover:bg-red-700 text-white py-2 px-4 rounded-lg text-sm md:text-base">
+										className="py-2 px-6 rounded-full text-base font-semibold bg-gradient-to-r from-pink-500 to-red-600 text-white hover:from-pink-600 hover:to-red-700 shadow transition-all duration-200">
 										Submit
 									</button>
 								)}

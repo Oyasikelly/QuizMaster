@@ -66,14 +66,14 @@ export default function HomePage() {
 	}, []);
 
 	const quizCategories = [
-		{
-			title: "Teenagers",
-			description: "Perfect for young minds exploring the world",
-			icon: <Users className="w-8 h-8" />,
-			color: "from-pink-500 to-purple-600",
-			bgColor: "bg-gradient-to-br from-pink-50 to-purple-50",
-			href: "/quiz/teenagers",
-		},
+		// {
+		// 	title: "Teenagers",
+		// 	description: "Perfect for young minds exploring the world",
+		// 	icon: <Users className="w-8 h-8" />,
+		// 	color: "from-pink-500 to-purple-600",
+		// 	bgColor: "bg-gradient-to-br from-pink-50 to-purple-50",
+		// 	href: "/quiz/teenagers",
+		// },
 		{
 			title: "Adults",
 			description: "Comprehensive knowledge for mature learners",
@@ -170,7 +170,7 @@ export default function HomePage() {
 			</nav>
 
 			{/* Scrolling User Information */}
-			<div className="relative z-10 flex w-auto items-center gap-8 max-w-[80%] rounded-2xl overflow-hidden">
+			{/* <div className="relative z-10 flex w-auto items-center gap-8 max-w-[80%] rounded-2xl overflow-hidden">
 				{userData && userData.length > 0 && (
 					<motion.div
 						className="w-auto overflow-hidden mb-6"
@@ -207,7 +207,7 @@ export default function HomePage() {
 						))}
 					</motion.div>
 				)}
-			</div>
+			</div> */}
 
 			{/* Hero Section */}
 			<section className="relative px-6 py-20 overflow-hidden">
@@ -224,14 +224,14 @@ export default function HomePage() {
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.8 }}
 						className="relative z-10">
-						<h1 className="text-6xl md:text-8xl font-bold mb-6">
+						{/* <h1 className="text-6xl md:text-8xl font-bold mb-6">
 							<span className="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
 								Quiz
 							</span>
 							<span className="bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
 								Master
 							</span>
-						</h1>
+						</h1> */}
 
 						<motion.div
 							key={currentTextIndex}
@@ -239,7 +239,7 @@ export default function HomePage() {
 							animate={{ opacity: 1, y: 0 }}
 							exit={{ opacity: 0, y: -20 }}
 							transition={{ duration: 0.5 }}
-							className="text-2xl md:text-3xl font-medium text-gray-600 mb-8">
+							className="text-2xl md:text-3xl font-medium text-gray-600 mb-8 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
 							{animatedTexts[currentTextIndex]}
 						</motion.div>
 
