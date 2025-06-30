@@ -166,8 +166,8 @@ const LandingPage = ({ toggleAuthModal }) => {
 							learning platform.
 						</p>
 
-						<div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-							<motion.div
+						<div className="flex flex-col gap-4 justify-center items-center">
+							{/* <motion.div
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}>
 								<button
@@ -176,15 +176,17 @@ const LandingPage = ({ toggleAuthModal }) => {
 									<span>Get Started</span>
 									<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
 								</button>
-							</motion.div>
+							</motion.div> */}
 
 							<motion.div
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}>
-								<button className="px-8 py-4 bg-white/80 backdrop-blur-sm text-gray-700 rounded-full text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center space-x-2">
-									<Play className="w-5 h-5" />
-									<span>Watch Demo</span>
-								</button>
+								<Link href="/quiz/demo-quiz">
+									<button className="px-8 py-4 bg-white/80 backdrop-blur-sm text-gray-700 rounded-full text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center space-x-2">
+										<Play className="w-5 h-5" />
+										<span>Start Demo</span>
+									</button>
+								</Link>
 							</motion.div>
 						</div>
 					</motion.div>

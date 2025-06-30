@@ -293,7 +293,7 @@ export default function HomePage() {
 						</p>
 					</motion.div>
 
-					<div className="grid md:grid-cols-3 gap-8">
+					<div className="grid md:grid-cols-2 gap-8">
 						{quizCategories.map((category, index) => (
 							<motion.div
 								key={category.title}
@@ -310,11 +310,11 @@ export default function HomePage() {
 											{category.icon}
 										</div>
 										<h3 className="text-2xl font-bold text-gray-800 mb-4">
-											{category.title}
+											{category.title.toUpperCase()}
 										</h3>
-										<p className="text-gray-600 mb-6 leading-relaxed">
+										{/* <p className="text-gray-600 mb-6 leading-relaxed">
 											{category.description}
-										</p>
+										</p> */}
 										<div className="flex items-center text-blue-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
 											<span>Explore</span>
 											<ArrowRight className="w-4 h-4 ml-2" />
@@ -416,7 +416,7 @@ export default function HomePage() {
 			</section>
 
 			{/* CTA Section */}
-			<section className="px-6 py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
+			{/* <section className="px-6 py-20 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600">
 				<div className="max-w-4xl mx-auto text-center">
 					<motion.div
 						initial={{ opacity: 0, y: 30 }}
@@ -442,7 +442,7 @@ export default function HomePage() {
 						</motion.div>
 					</motion.div>
 				</div>
-			</section>
+			</section> */}
 
 			{/* Footer */}
 			<Footer />
