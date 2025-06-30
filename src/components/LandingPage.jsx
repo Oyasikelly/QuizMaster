@@ -22,6 +22,7 @@ import {
 } from "lucide-react";
 import QuizInstructions from "./QuizInstruction";
 import Footer from "./Footer";
+import Link from "next/link";
 
 const quotes = [
 	{
