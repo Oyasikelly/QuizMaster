@@ -1,7 +1,14 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
-import { FaUser, FaEnvelope, FaLock, FaChurch } from "react-icons/fa";
+import {
+	FaUser,
+	FaEnvelope,
+	FaLock,
+	FaChurch,
+	FaEye,
+	FaEyeSlash,
+} from "react-icons/fa";
 import Footer from "../../components/Footer";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -21,6 +28,7 @@ const nameOfClasses = ["wisdom", "adult", "holiness", "teenager"];
 const AuthPage = () => {
 	const [showAuth, setShowAuth] = useState(false);
 	const [isSigningUp, setIsSigningUp] = useState(true);
+	const [showPassword, setShowPassword] = useState(false);
 	const [formData, setFormData] = useState({
 		name: "",
 		email: "",
@@ -350,7 +358,7 @@ const AuthPage = () => {
 											<div className="flex items-center bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 focus-within:bg-white focus-within:border-blue-400 focus-within:shadow-xl focus-within:scale-105">
 												<FaLock className="w-5 h-5 text-blue-500 mr-3 group-focus-within:text-blue-600 transition-colors" />
 												<input
-													type="password"
+													type={showPassword ? "text" : "password"}
 													name="password"
 													value={formData.password}
 													onChange={handleChange}
@@ -358,6 +366,16 @@ const AuthPage = () => {
 													placeholder="Enter your password"
 													autoComplete="off"
 												/>
+												<button
+													type="button"
+													onClick={() => setShowPassword(!showPassword)}
+													className="text-gray-500 hover:text-gray-700 focus:outline-none">
+													{showPassword ? (
+														<FaEyeSlash className="w-4 h-4" />
+													) : (
+														<FaEye className="w-4 h-4" />
+													)}
+												</button>
 											</div>
 										</div>
 									</motion.div>

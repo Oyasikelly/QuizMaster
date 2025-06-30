@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { FaUser, FaEnvelope, FaGraduationCap } from "react-icons/fa";
 import Footer from "../components/Footer";
+import MenuBar from "../components/MenuBar";
 
 export default function HomePage() {
 	const [currentTextIndex, setCurrentTextIndex] = useState(0);
@@ -141,6 +142,7 @@ export default function HomePage() {
 
 	return (
 		<div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+			<MenuBar />
 			{/* Navigation */}
 			<nav className="relative z-50 px-6 py-4">
 				<div className="max-w-7xl mx-auto flex justify-between items-center">
