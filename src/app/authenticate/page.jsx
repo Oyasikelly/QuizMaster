@@ -244,7 +244,7 @@ const AuthPage = () => {
 													<input
 														type="text"
 														name="name"
-														value={formData.name.trim()}
+														value={formData.name}
 														onChange={handleChange}
 														className="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-500 text-sm font-medium"
 														placeholder="Enter your full name"
