@@ -22,7 +22,7 @@ import {
 import { supabase } from "../../lib/supabase";
 import LandingPage from "../../components/LandingPage";
 
-const nameOfClasses = ["yaya", "adult"];
+const nameOfClasses = ["yaya", "adult", "adults"];
 
 const AuthPage = () => {
 	const [showAuth, setShowAuth] = useState(false);
@@ -301,7 +301,9 @@ const AuthPage = () => {
 													<input
 														type="text"
 														name="classname"
-														value={formData.classname.trim()}
+														value={formData.classname
+															.trim()
+															.toLocaleLowerCase()}
 														onChange={handleChange}
 														className="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-500 text-sm font-medium"
 														placeholder="Enter class name. e.g, YAYA or Adult"
