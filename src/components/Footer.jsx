@@ -11,8 +11,32 @@ export default function Footer() {
 						</div>
 						<span className="text-xl font-bold text-gray-800">QuizMaster</span>
 					</div>
-					<p className="text-gray-600 self-center text-center md:text-right">
-						© 2024 QuizMaster. All rights reserved. Developed with ❤️ by Kelly.
+					<p className="text-gray-700 self-center text-center md:text-right text-sm md:text-base leading-relaxed">
+						<span className="block mb-1">
+							&copy; 2024{" "}
+							<span className="font-bold text-blue-700">QuizMaster</span>. All
+							rights reserved.
+						</span>
+						<span className="block mb-1">
+							Developed by{" "}
+							<span className="font-semibold text-purple-600">
+								Kelscode Agency
+							</span>
+						</span>
+						<span className="block">
+							Contact:&nbsp;
+							<a
+								href="mailto:oyasikelly28@gmail.com"
+								className="text-blue-600 hover:underline font-medium transition-colors">
+								oyasikelly28@gmail.com
+							</a>
+							&nbsp;|&nbsp;
+							<a
+								href="tel:+2349068318254"
+								className="text-blue-600 hover:underline font-medium transition-colors">
+								+234 9068 318 254
+							</a>
+						</span>
 					</p>
 				</div>
 			</div>

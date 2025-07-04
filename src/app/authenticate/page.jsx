@@ -9,7 +9,6 @@ import {
 	FaEye,
 	FaEyeSlash,
 } from "react-icons/fa";
-import Footer from "../../components/Footer";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
@@ -23,7 +22,7 @@ import {
 import { supabase } from "../../lib/supabase";
 import LandingPage from "../../components/LandingPage";
 
-const nameOfClasses = ["wisdom", "adult", "holiness", "teenager"];
+const nameOfClasses = ["yaya", "adult"];
 
 const AuthPage = () => {
 	const [showAuth, setShowAuth] = useState(false);
@@ -234,18 +233,18 @@ const AuthPage = () => {
 											animate={{ opacity: 1, x: 0 }}
 											transition={{ duration: 0.5, delay: 0.3 }}
 											className="space-y-2">
-											<label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+											{/* <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
 												<FaUser className="w-4 h-4 text-blue-500" />
 												Full Name
 												<span className="text-red-500">*</span>
-											</label>
+											</label> */}
 											<div className="group relative">
 												<div className="flex items-center bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 focus-within:bg-white focus-within:border-blue-400 focus-within:shadow-xl focus-within:scale-105">
 													<FaUser className="w-5 h-5 text-blue-500 mr-3 group-focus-within:text-blue-600 transition-colors" />
 													<input
 														type="text"
 														name="name"
-														value={formData.name}
+														value={formData.name.trim()}
 														onChange={handleChange}
 														className="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-500 text-sm font-medium"
 														placeholder="Enter your full name"
@@ -264,18 +263,18 @@ const AuthPage = () => {
 											delay: isSigningUp ? 0.4 : 0.3,
 										}}
 										className="space-y-2">
-										<label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+										{/* <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
 											<FaEnvelope className="w-4 h-4 text-blue-500" />
 											Email Address
 											<span className="text-red-500">*</span>
-										</label>
+										</label> */}
 										<div className="group relative">
 											<div className="flex items-center bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 focus-within:bg-white focus-within:border-blue-400 focus-within:shadow-xl focus-within:scale-105">
 												<FaEnvelope className="w-5 h-5 text-blue-500 mr-3 group-focus-within:text-blue-600 transition-colors" />
 												<input
 													type="email"
 													name="email"
-													value={formData.email}
+													value={formData.email.trim()}
 													onChange={handleChange}
 													className="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-500 text-sm font-medium"
 													placeholder="Enter your email address"
@@ -291,21 +290,21 @@ const AuthPage = () => {
 											animate={{ opacity: 1, x: 0 }}
 											transition={{ duration: 0.5, delay: 0.5 }}
 											className="space-y-2">
-											<label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+											{/* <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
 												<FaUser className="w-4 h-4 text-blue-500" />
 												Class Name
 												<span className="text-red-500">*</span>
-											</label>
+											</label> */}
 											<div className="group relative">
 												<div className="flex items-center bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 focus-within:bg-white focus-within:border-blue-400 focus-within:shadow-xl focus-within:scale-105">
 													<FaUser className="w-5 h-5 text-blue-500 mr-3 group-focus-within:text-blue-600 transition-colors" />
 													<input
 														type="text"
 														name="classname"
-														value={formData.classname}
+														value={formData.classname.trim()}
 														onChange={handleChange}
 														className="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-500 text-sm font-medium"
-														placeholder="wisdom, holiness, adult, teenager"
+														placeholder="Enter class name. e.g, YAYA or Adult"
 														autoComplete="off"
 													/>
 												</div>
@@ -319,18 +318,18 @@ const AuthPage = () => {
 											animate={{ opacity: 1, x: 0 }}
 											transition={{ duration: 0.5, delay: 0.6 }}
 											className="space-y-2">
-											<label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+											{/* <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
 												<FaChurch className="w-4 h-4 text-blue-500" />
 												Denomination
 												<span className="text-red-500">*</span>
-											</label>
+											</label> */}
 											<div className="group relative">
 												<div className="flex items-center bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 focus-within:bg-white focus-within:border-blue-400 focus-within:shadow-xl focus-within:scale-105">
 													<FaChurch className="w-5 h-5 text-blue-500 mr-3 group-focus-within:text-blue-600 transition-colors" />
 													<input
 														type="text"
 														name="denomination"
-														value={formData.denomination}
+														value={formData.denomination.trim().toUpperCase()}
 														onChange={handleChange}
 														className="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-500 text-sm font-medium"
 														placeholder="Enter your denomination"
@@ -349,11 +348,11 @@ const AuthPage = () => {
 											delay: isSigningUp ? 0.7 : 0.4,
 										}}
 										className="space-y-2">
-										<label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+										{/* <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
 											<FaLock className="w-4 h-4 text-blue-500" />
 											Password
 											<span className="text-red-500">*</span>
-										</label>
+										</label> */}
 										<div className="group relative">
 											<div className="flex items-center bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 focus-within:bg-white focus-within:border-blue-400 focus-within:shadow-xl focus-within:scale-105">
 												<FaLock className="w-5 h-5 text-blue-500 mr-3 group-focus-within:text-blue-600 transition-colors" />

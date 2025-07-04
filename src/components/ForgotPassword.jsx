@@ -9,7 +9,6 @@ const ForgotPassword = () => {
 	const [email, setEmail] = useState("");
 	const [message, setMessage] = useState("");
 	const [errorMssg, setErrorMssg] = useState("");
-	// const [successful, setSuccessful] = useState(false);
 
 	const handleForgotPassword = async (e) => {
 		e.preventDefault();
@@ -53,19 +52,12 @@ const ForgotPassword = () => {
 	};
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 flex items-center justify-center px-4 sm:px-6 py-8">
-			{/* Animated Background Elements */}
-			<div className="absolute inset-0 overflow-hidden">
-				<div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-3xl animate-pulse"></div>
-				<div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-r from-pink-400/20 to-orange-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-				<div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-r from-green-400/20 to-blue-400/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
-			</div>
-
+		<div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 relative px-4 py-8">
 			<motion.div
 				initial={{ scale: 0.9, opacity: 0, y: 20 }}
 				animate={{ scale: 1, opacity: 1, y: 0 }}
 				transition={{ duration: 0.8, ease: "easeInOut" }}
-				className="relative z-10 bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 w-full max-w-lg border border-white/50">
+				className="w-full max-w-md mx-auto bg-white/90 rounded-3xl shadow-2xl p-8 border border-white/60">
 				{/* Header */}
 				<motion.div
 					initial={{ y: -20, opacity: 0 }}
@@ -160,12 +152,6 @@ const ForgotPassword = () => {
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					transition={{ duration: 0.6, delay: 0.3 }}>
-					<div className="flex items-center justify-center space-x-4 text-gray-500 mb-6">
-						<div className="w-12 h-px bg-gray-300"></div>
-						<span className="text-sm font-medium">or</span>
-						<div className="w-12 h-px bg-gray-300"></div>
-					</div>
-
 					<a
 						href="/authenticate"
 						className="inline-flex items-center space-x-3 text-blue-600 hover:text-blue-700 font-semibold transition-colors duration-300 group text-lg">
