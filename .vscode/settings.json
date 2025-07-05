@@ -1,0 +1,21 @@
+{
+	"typescript.preferences.includePackageJsonAutoImports": "on",
+	"typescript.suggest.autoImports": true,
+	"typescript.preferences.importModuleSpecifier": "relative",
+	"typescript.validate.enable": false,
+	"typescript.preferences.includeCompletionsForModuleExports": true,
+	"typescript.preferences.includeCompletionsWithSnippetText": true,
+	"typescript.preferences.includeCompletionsWithInsertText": true,
+	"typescript.preferences.includeCompletionsWithClassMemberSnippets": true,
+	"typescript.preferences.includeCompletionsWithObjectLiteralMethodSnippets": true,
+	"typescript.preferences.includeCompletionsWithFunctionParameterSnippets": true,
+	"files.associations": {
+		"supabase/functions/**/*.ts": "typescript"
+	},
+	"[typescript]": {
+		"typescript.validate.enable": false
+	},
+	"[javascript]": {
+		"typescript.validate.enable": false
+	}
+}

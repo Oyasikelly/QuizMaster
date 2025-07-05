@@ -1,0 +1,27 @@
+{
+	"folders": [
+		{
+			"name": "Next.js App",
+			"path": "."
+		},
+		{
+			"name": "Supabase Functions",
+			"path": "./supabase/functions"
+		}
+	],
+	"settings": {
+		"typescript.validate.enable": true,
+		"typescript.preferences.includePackageJsonAutoImports": "on",
+		"typescript.suggest.autoImports": true,
+		"typescript.preferences.importModuleSpecifier": "relative",
+		"files.associations": {
+			"supabase/functions/**/*.ts": "typescript"
+		},
+		"typescript.preferences.includeCompletionsForModuleExports": true,
+		"typescript.preferences.includeCompletionsWithSnippetText": true,
+		"typescript.preferences.includeCompletionsWithInsertText": true,
+		"typescript.preferences.includeCompletionsWithClassMemberSnippets": true,
+		"typescript.preferences.includeCompletionsWithObjectLiteralMethodSnippets": true,
+		"typescript.preferences.includeCompletionsWithFunctionParameterSnippets": true
+	}
+}

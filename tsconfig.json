@@ -26,5 +26,5 @@
 		"**/*.tsx",
 		"src/components/QuizInstruction.jsx"
 	],
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules", "supabase/**/*"]
 }
