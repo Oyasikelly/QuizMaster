@@ -20,7 +20,13 @@ export async function middleware(req: NextRequest) {
 	const { pathname } = req.nextUrl;
 
 	// Exclude certain paths from authentication
-	const excludedPaths = ["/authenticate", "/favicon.ico", "/api", "/_next"];
+	const excludedPaths = [
+		"/authenticate",
+		"/favicon.ico",
+		"/api",
+		"/_next",
+		"/demo-quiz",
+	];
 	if (excludedPaths.some((path) => pathname.startsWith(path))) {
 		// If user is authenticated and tries to access /authenticate, redirect to home
 		if (pathname.startsWith("/authenticate") && session) {
