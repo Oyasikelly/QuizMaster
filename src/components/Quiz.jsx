@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
-import { FiAward } from "react-icons/fi";
+import { FiAward, FiLock } from "react-icons/fi";
+import { isRealQuizActive } from "../lib/quiz-config";
 
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
@@ -26,6 +27,20 @@ const Quiz = ({ initialQuestions, category }) => {
 	const searchParams = useSearchParams();
 	const userTime = parseInt(searchParams.get("time"), 10);
 	const numQuestions = parseInt(searchParams.get("questions"), 10);
+	const [isRealQuiz, setIsRealQuiz] = useState(false);
+
+	useEffect(() => {
+		const checkQuizMode = async () => {
+			try {
+				const isReal = await isRealQuizActive(supabase);
+				setIsRealQuiz(isReal);
+			} catch (error) {
+				console.error("Error checking quiz mode:", error);
+				setIsRealQuiz(false);
+			}
+		};
+		checkQuizMode();
+	}, []);
 
 	const [time, setTime] = useState(userTime * 60);
 	const [questions, setQuestions] = useState([]);
@@ -227,9 +242,19 @@ const Quiz = ({ initialQuestions, category }) => {
 					animate={{ opacity: 1, y: 0 }}
 					transition={{ duration: 0.8 }}
 					className="w-full max-w-2xl mx-auto text-center mb-8">
-					<h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-						{category} Quiz
-					</h1>
+					<div className="flex items-center justify-center gap-3 mb-4">
+						<h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+							{category} Quiz
+						</h1>
+						{isRealQuiz && (
+							<div className="flex items-center gap-2 px-3 py-1 bg-red-100 border border-red-300 rounded-full">
+								<FiLock className="text-red-500 text-sm" />
+								<span className="text-red-700 text-sm font-semibold">
+									Real Quiz
+								</span>
+							</div>
+						)}
+					</div>
 					<div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-4">
 						<div className="flex items-center gap-2 text-lg text-gray-700 bg-white/80 rounded-xl px-4 py-2 shadow border border-white/50">
 							<span className="font-semibold">Time Left:</span>

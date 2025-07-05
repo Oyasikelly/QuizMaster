@@ -301,9 +301,7 @@ const AuthPage = () => {
 													<input
 														type="text"
 														name="classname"
-														value={formData.classname
-															.trim()
-															.toLocaleLowerCase()}
+														value={formData.classname.trim().toUpperCase()}
 														onChange={handleChange}
 														className="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-500 text-sm font-medium"
 														placeholder="Enter class name. e.g, YAYA or Adult"
