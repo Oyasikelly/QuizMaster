@@ -11,7 +11,7 @@ const addQuizResult = async (resultData) => {
 	const { data, error } = await supabase
 		.from("quiz_results")
 		.upsert(resultData, {
-			onConflict: ["user_id"],
+			onConflict: ["student_id"],
 		});
 
 	if (error) {
@@ -122,12 +122,12 @@ const Quiz = ({ initialQuestions, category }) => {
 				return;
 			}
 
-			const userId = data.user.id;
+			const student_id = data.user.id;
 			const userEmail = data.user.email;
 
 			const resultData = {
-				user_id: userId,
-				correct_answers: correctAnswersCount,
+				student_id: student_id,
+				score: correctAnswersCount,
 				total_questions: questions.length,
 				timestamp: new Date().toISOString(),
 			};
@@ -176,7 +176,7 @@ const Quiz = ({ initialQuestions, category }) => {
 			const { error: profilesError } = await supabase
 				.from("quiz_results")
 				.upsert(profilesData, {
-					onConflict: ["user_id"],
+					onConflict: ["student_id"],
 				});
 
 			if (profilesError) throw profilesError;
