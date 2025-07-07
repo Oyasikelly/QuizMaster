@@ -5,9 +5,12 @@ import {
 	FaUser,
 	FaEnvelope,
 	FaLock,
-	FaChurch,
 	FaEye,
 	FaEyeSlash,
+	FaCrown,
+	FaGraduationCap,
+	FaKey,
+	FaBuilding,
 } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -17,21 +20,23 @@ import {
 	ArrowRight,
 	CheckCircle,
 	Sparkles,
+	Shield,
 } from "lucide-react";
 
 import { supabase } from "../../lib/supabase";
 import LandingPage from "../../components/LandingPage";
 
-const nameOfClasses = ["yaya", "adult", "adults"];
-
 const AuthPage = () => {
 	const [showAuth, setShowAuth] = useState(false);
 	const [isSigningUp, setIsSigningUp] = useState(true);
 	const [showPassword, setShowPassword] = useState(false);
+	const [showAdminCode, setShowAdminCode] = useState(false);
 	const [formData, setFormData] = useState({
 		name: "",
 		email: "",
 		password: "",
+		role: "student", // Default role
+		adminCode: "",
 		classname: "",
 		denomination: "",
 	});
@@ -39,6 +44,9 @@ const AuthPage = () => {
 	const [successMessage, setSuccessMessage] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const router = useRouter();
+
+	// Admin invite code (you can change this or make it environment variable)
+	const ADMIN_INVITE_CODE = "ADMIN2024";
 
 	const toggleAuthModal = useCallback(() => {
 		setShowAuth((prev) => !prev);
@@ -50,23 +58,33 @@ const AuthPage = () => {
 			...prev,
 			[name]: value,
 		}));
+
+		// Show admin code field when admin role is selected
+		if (name === "role") {
+			setShowAdminCode(value === "admin");
+		}
 	}, []);
 
 	const handleSubmit = useCallback(
 		async (e) => {
 			e.preventDefault();
 			setIsLoading(true);
+			setError("");
 
 			if (isSigningUp) {
-				const { name, email, password, classname, denomination } = formData;
+				const {
+					name,
+					email,
+					password,
+					role,
+					adminCode,
+					classname,
+					denomination,
+				} = formData;
 
-				if (!name || !email || !password || !classname || !denomination) {
-					setError("All fields are required.");
-					setIsLoading(false);
-					return;
-				}
-				if (!nameOfClasses.includes(classname)) {
-					setError("Invalid class name");
+				// Validation
+				if (!name || !email || !password) {
+					setError("Name, email, and password are required.");
 					setIsLoading(false);
 					return;
 				}
@@ -83,7 +101,28 @@ const AuthPage = () => {
 					return;
 				}
 
+				// Admin role validation
+				if (role === "admin") {
+					if (!adminCode || adminCode !== ADMIN_INVITE_CODE) {
+						setError(
+							"Invalid admin invite code. Please contact your administrator."
+						);
+						setIsLoading(false);
+						return;
+					}
+				}
+
+				// Student role validation
+				if (role === "student") {
+					if (!classname || !denomination) {
+						setError("Class and denomination are required for students.");
+						setIsLoading(false);
+						return;
+					}
+				}
+
 				try {
+					// Sign up with Supabase Auth
 					const { data, error: signUpError } = await supabase.auth.signUp({
 						email: email,
 						password: password,
@@ -91,22 +130,27 @@ const AuthPage = () => {
 							emailRedirectTo: "https://quizmasterrccg.vercel.app/authenticate",
 						},
 					});
+
 					if (signUpError) {
 						setError(signUpError.message);
 						setIsLoading(false);
 						return;
 					}
 
+					// Insert user profile with role
 					const { error: profileError } = await supabase
 						.from("users_profile")
 						.insert([
 							{
+								id: data.user?.id,
 								email: email,
 								name: name,
-								denomination: denomination,
-								class: classname,
+								role: role,
+								denomination: denomination || null,
+								class: classname || null,
 							},
 						]);
+
 					if (profileError) {
 						setError(profileError.message);
 						setIsLoading(false);
@@ -119,9 +163,12 @@ const AuthPage = () => {
 						name: "",
 						email: "",
 						password: "",
+						role: "student",
+						adminCode: "",
 						classname: "",
 						denomination: "",
 					});
+					setShowAdminCode(false);
 					setIsSigningUp(false);
 					setIsLoading(false);
 				} catch (err) {
@@ -129,6 +176,7 @@ const AuthPage = () => {
 					setIsLoading(false);
 				}
 			} else {
+				// Login logic
 				const { email, password } = formData;
 
 				if (!email || !password) {
@@ -150,10 +198,29 @@ const AuthPage = () => {
 						return;
 					}
 
+					// Fetch user role and redirect accordingly
+					const { data: userProfile, error: profileError } = await supabase
+						.from("users_profile")
+						.select("role")
+						.eq("id", data.user.id)
+						.single();
+
+					if (profileError) {
+						setError("Error fetching user profile.");
+						setIsLoading(false);
+						return;
+					}
+
 					setSuccessMessage("Welcome back! Redirecting...");
 					setError("");
 					setIsLoading(false);
-					router.push("/");
+
+					// Redirect based on role
+					if (userProfile.role === "admin") {
+						router.push("/admin/dashboard");
+					} else {
+						router.push("/student/home");
+					}
 				} catch (err) {
 					setError("An error occurred. Please try again.");
 					setIsLoading(false);
@@ -173,9 +240,8 @@ const AuthPage = () => {
 
 			{showAuth && (
 				<div className="fixed inset-0 z-50 flex items-center justify-center min-h-screen p-4">
-					{/* Enhanced Background with Animated Elements */}
+					{/* Enhanced Background */}
 					<div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-						{/* Animated Background Elements */}
 						<div className="absolute top-20 left-10 w-72 h-72 bg-gradient-to-r from-blue-400/20 to-purple-400/20 rounded-full blur-3xl animate-pulse"></div>
 						<div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-r from-pink-400/20 to-orange-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
 						<div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-r from-green-400/20 to-blue-400/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
@@ -188,276 +254,371 @@ const AuthPage = () => {
 							animate={{ opacity: 1, scale: 1, y: 0 }}
 							transition={{ duration: 0.5 }}
 							className="bg-white/80 backdrop-blur-xl border border-white/50 rounded-3xl shadow-2xl overflow-hidden my-8 relative">
-							{/* Decorative Elements */}
 							<div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400"></div>
 							<div className="absolute top-4 right-4 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
 							<div className="absolute bottom-4 left-4 w-2 h-2 bg-green-400 rounded-full animate-ping delay-1000"></div>
 
 							<div className="relative p-6 sm:p-8 pb-4">
-								{/* Enhanced Close Button */}
+								{/* Close Button */}
 								<motion.button
 									onClick={toggleAuthModal}
 									whileHover={{ scale: 1.1, rotate: 90 }}
 									whileTap={{ scale: 0.9 }}
-									className="absolute top-4 right-4 w-12 h-12 bg-red-500/20 backdrop-blur-sm rounded-full flex items-center justify-center text-red-600 hover:bg-red-500/30 transition-all duration-300 border border-red-300/30 hover:border-red-400/50 group">
-									<XCircle className="w-6 h-6 group-hover:scale-110 transition-transform" />
-									<span className="sr-only">Cancel</span>
+									className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors">
+									<XCircle size={24} />
 								</motion.button>
 
-								{/* Enhanced Header */}
-								<motion.div
-									initial={{ opacity: 0, y: -20 }}
-									animate={{ opacity: 1, y: 0 }}
-									transition={{ duration: 0.6, delay: 0.1 }}
-									className="text-center mb-8">
-									<h2 className="text-2xl sm:text-3xl font-bold text-gray-800 mb-3 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+								{/* Header */}
+								<div className="text-center mb-8">
+									<motion.div
+										initial={{ scale: 0 }}
+										animate={{ scale: 1 }}
+										transition={{ delay: 0.2 }}
+										className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+										<Brain
+											className="text-white"
+											size={32}
+										/>
+									</motion.div>
+									<h2 className="text-2xl font-bold text-gray-800 mb-2">
 										{isSigningUp ? "Join QuizMaster" : "Welcome Back"}
 									</h2>
-									<p className="text-gray-600 text-sm font-medium">
+									<p className="text-gray-600">
 										{isSigningUp
-											? "Create your account and start learning"
+											? "Create your account to start learning"
 											: "Sign in to continue your journey"}
 									</p>
-								</motion.div>
+								</div>
 
-								{/* Enhanced Form */}
-								<motion.form
-									initial={{ opacity: 0, y: 20 }}
-									animate={{ opacity: 1, y: 0 }}
-									transition={{ duration: 0.6, delay: 0.2 }}
+								{/* Form */}
+								<form
 									onSubmit={handleSubmit}
 									className="space-y-4">
+									{/* Role Selection (Sign Up Only) */}
 									{isSigningUp && (
 										<motion.div
-											initial={{ opacity: 0, x: -20 }}
-											animate={{ opacity: 1, x: 0 }}
-											transition={{ duration: 0.5, delay: 0.3 }}
-											className="space-y-2">
-											{/* <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-												<FaUser className="w-4 h-4 text-blue-500" />
-												Full Name
-												<span className="text-red-500">*</span>
-											</label> */}
-											<div className="group relative">
-												<div className="flex items-center bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 focus-within:bg-white focus-within:border-blue-400 focus-within:shadow-xl focus-within:scale-105">
-													<FaUser className="w-5 h-5 text-blue-500 mr-3 group-focus-within:text-blue-600 transition-colors" />
+											initial={{ opacity: 0, y: 20 }}
+											animate={{ opacity: 1, y: 0 }}
+											transition={{ delay: 0.3 }}
+											className="space-y-3">
+											<label className="block text-sm font-medium text-gray-700 mb-2">
+												Select Role
+											</label>
+											<div className="grid grid-cols-2 gap-3">
+												<label className="relative cursor-pointer">
 													<input
-														type="text"
-														name="name"
-														value={formData.name}
+														type="radio"
+														name="role"
+														value="student"
+														checked={formData.role === "student"}
 														onChange={handleChange}
-														className="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-500 text-sm font-medium"
-														placeholder="Enter your full name"
-														autoComplete="off"
+														className="sr-only"
 													/>
-												</div>
+													<div
+														className={`p-4 rounded-xl border-2 transition-all ${
+															formData.role === "student"
+																? "border-blue-500 bg-blue-50"
+																: "border-gray-200 bg-white hover:border-gray-300"
+														}`}>
+														<div className="flex items-center space-x-3">
+															<FaGraduationCap
+																className={`text-xl ${
+																	formData.role === "student"
+																		? "text-blue-600"
+																		: "text-gray-400"
+																}`}
+															/>
+															<div>
+																<div className="font-medium text-gray-900">
+																	Student
+																</div>
+																<div className="text-sm text-gray-500">
+																	Take quizzes and learn
+																</div>
+															</div>
+														</div>
+													</div>
+												</label>
+												<label className="relative cursor-pointer">
+													<input
+														type="radio"
+														name="role"
+														value="admin"
+														checked={formData.role === "admin"}
+														onChange={handleChange}
+														className="sr-only"
+													/>
+													<div
+														className={`p-4 rounded-xl border-2 transition-all ${
+															formData.role === "admin"
+																? "border-purple-500 bg-purple-50"
+																: "border-gray-200 bg-white hover:border-gray-300"
+														}`}>
+														<div className="flex items-center space-x-3">
+															<FaCrown
+																className={`text-xl ${
+																	formData.role === "admin"
+																		? "text-purple-600"
+																		: "text-gray-400"
+																}`}
+															/>
+															<div>
+																<div className="font-medium text-gray-900">
+																	Admin
+																</div>
+																<div className="text-sm text-gray-500">
+																	Manage and monitor
+																</div>
+															</div>
+														</div>
+													</div>
+												</label>
 											</div>
 										</motion.div>
 									)}
 
-									<motion.div
-										initial={{ opacity: 0, x: -20 }}
-										animate={{ opacity: 1, x: 0 }}
-										transition={{
-											duration: 0.5,
-											delay: isSigningUp ? 0.4 : 0.3,
-										}}
-										className="space-y-2">
-										{/* <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-											<FaEnvelope className="w-4 h-4 text-blue-500" />
-											Email Address
-											<span className="text-red-500">*</span>
-										</label> */}
-										<div className="group relative">
-											<div className="flex items-center bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 focus-within:bg-white focus-within:border-blue-400 focus-within:shadow-xl focus-within:scale-105">
-												<FaEnvelope className="w-5 h-5 text-blue-500 mr-3 group-focus-within:text-blue-600 transition-colors" />
+									{/* Name Field (Sign Up Only) */}
+									{isSigningUp && (
+										<motion.div
+											initial={{ opacity: 0, y: 20 }}
+											animate={{ opacity: 1, y: 0 }}
+											transition={{ delay: 0.4 }}
+											className="relative">
+											<label className="block text-sm font-medium text-gray-700 mb-2">
+												Full Name
+											</label>
+											<div className="relative">
+												<FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
 												<input
-													type="email"
-													name="email"
-													value={formData.email.trim()}
+													type="text"
+													name="name"
+													value={formData.name}
 													onChange={handleChange}
-													className="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-500 text-sm font-medium"
-													placeholder="Enter your email address"
-													autoComplete="off"
+													className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+													placeholder="Enter your full name"
 												/>
 											</div>
+										</motion.div>
+									)}
+
+									{/* Email Field */}
+									<motion.div
+										initial={{ opacity: 0, y: 20 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ delay: isSigningUp ? 0.5 : 0.3 }}
+										className="relative">
+										<label className="block text-sm font-medium text-gray-700 mb-2">
+											Email Address
+										</label>
+										<div className="relative">
+											<FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+											<input
+												type="email"
+												name="email"
+												value={formData.email}
+												onChange={handleChange}
+												className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+												placeholder="Enter your email"
+											/>
 										</div>
 									</motion.div>
 
-									{isSigningUp && (
+									{/* Password Field */}
+									<motion.div
+										initial={{ opacity: 0, y: 20 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ delay: isSigningUp ? 0.6 : 0.4 }}
+										className="relative">
+										<label className="block text-sm font-medium text-gray-700 mb-2">
+											Password
+										</label>
+										<div className="relative">
+											<FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+											<input
+												type={showPassword ? "text" : "password"}
+												name="password"
+												value={formData.password}
+												onChange={handleChange}
+												className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+												placeholder="Enter your password"
+											/>
+											<button
+												type="button"
+												onClick={() => setShowPassword(!showPassword)}
+												className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+												{showPassword ? <FaEyeSlash /> : <FaEye />}
+											</button>
+										</div>
+									</motion.div>
+
+									{/* Admin Code Field (Sign Up Only) */}
+									{isSigningUp && showAdminCode && (
 										<motion.div
-											initial={{ opacity: 0, x: -20 }}
-											animate={{ opacity: 1, x: 0 }}
-											transition={{ duration: 0.5, delay: 0.5 }}
-											className="space-y-2">
-											{/* <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-												<FaUser className="w-4 h-4 text-blue-500" />
-												Class Name
-												<span className="text-red-500">*</span>
-											</label> */}
-											<div className="group relative">
-												<div className="flex items-center bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 focus-within:bg-white focus-within:border-blue-400 focus-within:shadow-xl focus-within:scale-105">
-													<FaUser className="w-5 h-5 text-blue-500 mr-3 group-focus-within:text-blue-600 transition-colors" />
-													<input
-														type="text"
-														name="classname"
-														value={formData.classname.trim().toLowerCase()}
-														onChange={handleChange}
-														className="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-500 text-sm font-medium"
-														placeholder="Enter class name. e.g, YAYA or Adult"
-														autoComplete="off"
-													/>
-												</div>
+											initial={{ opacity: 0, y: 20 }}
+											animate={{ opacity: 1, y: 0 }}
+											transition={{ delay: 0.7 }}
+											className="relative">
+											<label className="block text-sm font-medium text-gray-700 mb-2">
+												Admin Invite Code
+											</label>
+											<div className="relative">
+												<FaKey className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+												<input
+													type="text"
+													name="adminCode"
+													value={formData.adminCode}
+													onChange={handleChange}
+													className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+													placeholder="Enter admin invite code"
+												/>
 											</div>
+											<p className="text-xs text-gray-500 mt-1">
+												Contact your administrator for the invite code
+											</p>
 										</motion.div>
 									)}
 
-									{isSigningUp && (
-										<motion.div
-											initial={{ opacity: 0, x: -20 }}
-											animate={{ opacity: 1, x: 0 }}
-											transition={{ duration: 0.5, delay: 0.6 }}
-											className="space-y-2">
-											{/* <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-												<FaChurch className="w-4 h-4 text-blue-500" />
-												Denomination
-												<span className="text-red-500">*</span>
-											</label> */}
-											<div className="group relative">
-												<div className="flex items-center bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 focus-within:bg-white focus-within:border-blue-400 focus-within:shadow-xl focus-within:scale-105">
-													<FaChurch className="w-5 h-5 text-blue-500 mr-3 group-focus-within:text-blue-600 transition-colors" />
+									{/* Student-specific fields (Sign Up Only) */}
+									{isSigningUp && formData.role === "student" && (
+										<>
+											{/* Class Field */}
+											<motion.div
+												initial={{ opacity: 0, y: 20 }}
+												animate={{ opacity: 1, y: 0 }}
+												transition={{ delay: 0.7 }}
+												className="relative">
+												<label className="block text-sm font-medium text-gray-700 mb-2">
+													Class
+												</label>
+												<select
+													name="classname"
+													value={formData.classname}
+													onChange={handleChange}
+													className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+													<option value="">Select your class</option>
+													<option value="yaya">Yaya</option>
+													<option value="adult">Adult</option>
+													<option value="adults">Adults</option>
+												</select>
+											</motion.div>
+
+											{/* Denomination Field */}
+											<motion.div
+												initial={{ opacity: 0, y: 20 }}
+												animate={{ opacity: 1, y: 0 }}
+												transition={{ delay: 0.8 }}
+												className="relative">
+												<label className="block text-sm font-medium text-gray-700 mb-2">
+													Denomination
+												</label>
+												<div className="relative">
+													<FaBuilding className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
 													<input
 														type="text"
 														name="denomination"
-														value={formData.denomination.trim().toUpperCase()}
+														value={formData.denomination}
 														onChange={handleChange}
-														className="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-500 text-sm font-medium"
+														className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
 														placeholder="Enter your denomination"
-														autoComplete="off"
 													/>
 												</div>
-											</div>
-										</motion.div>
+											</motion.div>
+										</>
 									)}
 
-									<motion.div
-										initial={{ opacity: 0, x: -20 }}
-										animate={{ opacity: 1, x: 0 }}
-										transition={{
-											duration: 0.5,
-											delay: isSigningUp ? 0.7 : 0.4,
-										}}
-										className="space-y-2">
-										{/* <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-											<FaLock className="w-4 h-4 text-blue-500" />
-											Password
-											<span className="text-red-500">*</span>
-										</label> */}
-										<div className="group relative">
-											<div className="flex items-center bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 focus-within:bg-white focus-within:border-blue-400 focus-within:shadow-xl focus-within:scale-105">
-												<FaLock className="w-5 h-5 text-blue-500 mr-3 group-focus-within:text-blue-600 transition-colors" />
-												<input
-													type={showPassword ? "text" : "password"}
-													name="password"
-													value={formData.password}
-													onChange={handleChange}
-													className="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-500 text-sm font-medium"
-													placeholder="Enter your password"
-													autoComplete="off"
-												/>
-												<button
-													type="button"
-													onClick={() => setShowPassword(!showPassword)}
-													className="text-gray-500 hover:text-gray-700 focus:outline-none">
-													{showPassword ? (
-														<FaEyeSlash className="w-4 h-4" />
-													) : (
-														<FaEye className="w-4 h-4" />
-													)}
-												</button>
-											</div>
-										</div>
-									</motion.div>
-
+									{/* Error Message */}
 									{error && (
 										<motion.div
-											initial={{ opacity: 0, scale: 0.9 }}
-											animate={{ opacity: 1, scale: 1 }}
-											className="flex items-center gap-3 p-4 bg-red-50 border border-red-200 rounded-2xl text-red-700 text-sm">
-											<XCircle className="w-5 h-5 flex-shrink-0 text-red-500" />
-											{error}
+											initial={{ opacity: 0, y: -10 }}
+											animate={{ opacity: 1, y: 0 }}
+											className="flex items-center space-x-2 p-3 bg-red-50 border border-red-200 rounded-xl text-red-700">
+											<XCircle size={16} />
+											<span className="text-sm">{error}</span>
 										</motion.div>
 									)}
 
+									{/* Success Message */}
 									{successMessage && (
 										<motion.div
-											initial={{ opacity: 0, scale: 0.9 }}
-											animate={{ opacity: 1, scale: 1 }}
-											className="flex items-center gap-3 p-4 bg-green-50 border border-green-200 rounded-2xl text-green-700 text-sm">
-											<CheckCircle className="w-5 h-5 flex-shrink-0 text-green-500" />
-											{successMessage}
+											initial={{ opacity: 0, y: -10 }}
+											animate={{ opacity: 1, y: 0 }}
+											className="flex items-center space-x-2 p-3 bg-green-50 border border-green-200 rounded-xl text-green-700">
+											<CheckCircle size={16} />
+											<span className="text-sm">{successMessage}</span>
 										</motion.div>
 									)}
 
+									{/* Submit Button */}
 									<motion.button
 										type="submit"
 										disabled={isLoading}
 										whileHover={{ scale: 1.02 }}
 										whileTap={{ scale: 0.98 }}
-										className="w-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white py-4 rounded-2xl font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed relative overflow-hidden group">
-										<div className="absolute inset-0 bg-gradient-to-r from-blue-400/50 to-purple-400/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+										className={`w-full py-3 px-6 rounded-xl font-medium text-white transition-all ${
+											isLoading
+												? "bg-gray-400 cursor-not-allowed"
+												: "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+										} flex items-center justify-center space-x-2`}>
 										{isLoading ? (
 											<>
-												<div className="w-6 h-6 border-2 border-white/30 border-t-white rounded-full animate-spin relative z-10"></div>
-												<span className="relative z-10">
-													{isSigningUp
-														? "Creating Account..."
-														: "Signing In..."}
-												</span>
+												<div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+												<span>Processing...</span>
 											</>
 										) : (
 											<>
-												<span className="relative z-10">
+												<span>
 													{isSigningUp ? "Create Account" : "Sign In"}
 												</span>
-												<ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform" />
+												<ArrowRight size={16} />
 											</>
 										)}
 									</motion.button>
-								</motion.form>
-							</div>
+								</form>
 
-							{/* Enhanced Footer */}
-							<motion.div
-								initial={{ opacity: 0, y: 20 }}
-								animate={{ opacity: 1, y: 0 }}
-								transition={{ duration: 0.6, delay: 0.8 }}
-								className="px-6 sm:px-8 pb-6 space-y-4 bg-white rounded-b-3xl">
-								<div className="text-center">
-									<p className="text-gray-600 text-sm">
-										{isSigningUp
-											? "Already have an account? "
-											: "Don't have an account? "}
-										<button
-											onClick={() => {
-												setIsSigningUp(!isSigningUp);
-												setError("");
-												setSuccessMessage("");
-											}}
-											className="text-blue-600 font-semibold hover:text-blue-700 transition-colors duration-300 underline decoration-blue-400 decoration-2 underline-offset-4 hover:decoration-blue-500">
-											{isSigningUp ? "Sign In" : "Sign Up"}
-										</button>
-									</p>
-								</div>
-
-								<div className="text-center">
+								{/* Toggle Auth Mode */}
+								<motion.div
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									transition={{ delay: 0.9 }}
+									className="text-center mt-6">
 									<button
-										onClick={toForgottenPage}
-										className="text-gray-500 text-sm hover:text-gray-700 transition-colors duration-300 underline decoration-gray-400 decoration-1 underline-offset-4 hover:decoration-gray-600">
-										Forgot your password?
+										onClick={() => {
+											setIsSigningUp(!isSigningUp);
+											setError("");
+											setSuccessMessage("");
+											setFormData({
+												name: "",
+												email: "",
+												password: "",
+												role: "student",
+												adminCode: "",
+												classname: "",
+												denomination: "",
+											});
+											setShowAdminCode(false);
+										}}
+										className="text-blue-600 hover:text-blue-700 font-medium transition-colors">
+										{isSigningUp
+											? "Already have an account? Sign In"
+											: "Don't have an account? Sign Up"}
 									</button>
-								</div>
-							</motion.div>
+								</motion.div>
+
+								{/* Forgot Password Link */}
+								{!isSigningUp && (
+									<motion.div
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										transition={{ delay: 1.0 }}
+										className="text-center mt-4">
+										<button
+											onClick={toForgottenPage}
+											className="text-gray-600 hover:text-gray-700 text-sm transition-colors">
+											Forgot your password?
+										</button>
+									</motion.div>
+								)}
+							</div>
 						</motion.div>
 					</div>
 				</div>

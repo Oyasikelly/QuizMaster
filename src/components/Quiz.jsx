@@ -7,20 +7,6 @@ import { FiAward } from "react-icons/fi";
 
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
-const addQuizResult = async (resultData) => {
-	const { data, error } = await supabase
-		.from("quiz_results")
-		.upsert(resultData, {
-			onConflict: ["student_id"],
-		});
-
-	if (error) {
-		console.error("Error adding/updating quiz result:", error);
-	} else {
-		console.log("Quiz result added/updated:", data);
-	}
-};
-
 const Quiz = ({ initialQuestions, category }) => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
@@ -125,17 +111,37 @@ const Quiz = ({ initialQuestions, category }) => {
 			const student_id = data.user.id;
 			const userEmail = data.user.email;
 
+			// Get extra profile info
+			const { data: usersData, error: usersError } = await supabase
+				.from("users_profile")
+				.select("email, name, class")
+				.eq("email", userEmail);
+
+			if (usersError) throw usersError;
+
+			const userProfile = usersData && usersData[0];
+
 			const resultData = {
 				student_id: student_id,
+				email: userProfile?.email,
+				name: userProfile?.name,
+				class: userProfile?.class,
+				category: category,
 				score: correctAnswersCount,
 				total_questions: questions.length,
 				timestamp: new Date().toISOString(),
 			};
 
-			await addQuizResult(resultData);
-			await transferMultipleColumns(userEmail);
+			// Upsert with student_id and timestamp as conflict target
+			const { error: upsertError } = await supabase
+				.from("quiz_results")
+				.upsert(resultData, { onConflict: ["student_id", "timestamp"] });
 
-			removeNavigationLock(); // Manually clean up before navigating
+			if (upsertError) {
+				console.error("Error adding/updating quiz result:", upsertError);
+			}
+
+			removeNavigationLock();
 
 			router.replace(
 				`/quiz/results?correct=${correctAnswersCount}&total=${questions.length}`
@@ -151,39 +157,6 @@ const Quiz = ({ initialQuestions, category }) => {
 		const secs = seconds % 60;
 		return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
 	};
-
-	async function transferMultipleColumns(userEmail) {
-		try {
-			const { data: usersData, error: usersError } = await supabase
-				.from("users_profile")
-				.select("email, name, class")
-				.eq("email", userEmail);
-
-			if (usersError) throw usersError;
-
-			if (!usersData || usersData.length === 0) {
-				console.log("No user profile found to transfer.");
-				return;
-			}
-
-			const profilesData = usersData.map((user) => ({
-				email: user.email,
-				name: user.name,
-				class: user.class,
-				category: category,
-			}));
-
-			const { error: profilesError } = await supabase
-				.from("quiz_results")
-				.upsert(profilesData, {
-					onConflict: ["student_id"],
-				});
-
-			if (profilesError) throw profilesError;
-		} catch (error) {
-			console.error("Error transferring data:", error.message);
-		}
-	}
 
 	return (
 		<Suspense

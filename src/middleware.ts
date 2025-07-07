@@ -3,51 +3,66 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function middleware(req: NextRequest) {
 	const res = NextResponse.next();
-
-	const publicUrls = ["/resetpassword"];
-
-	if (publicUrls.includes(req.nextUrl.pathname)) {
-		return res;
-	}
-
 	const supabase = createMiddlewareClient({ req, res });
 
-	// Get the session from Supabase
+	// Get the current user
 	const {
-		data: { session },
-	} = await supabase.auth.getSession();
+		data: { user },
+	} = await supabase.auth.getUser();
 
-	const { pathname } = req.nextUrl;
-
-	// Exclude certain paths from authentication
-	const excludedPaths = [
-		"/authenticate",
-		"/favicon.ico",
-		"/api",
-		"/_next",
-		"/demo-quiz",
-	];
-	if (excludedPaths.some((path) => pathname.startsWith(path))) {
-		// If user is authenticated and tries to access /authenticate, redirect to home
-		if (pathname.startsWith("/authenticate") && session) {
-			const homeUrl = req.nextUrl.clone();
-			homeUrl.pathname = "/";
-			return NextResponse.redirect(homeUrl);
+	// Check if user is authenticated
+	if (!user) {
+		// Redirect to login if accessing protected routes
+		if (
+			req.nextUrl.pathname.startsWith("/admin") ||
+			req.nextUrl.pathname.startsWith("/student")
+		) {
+			return NextResponse.redirect(new URL("/authenticate", req.url));
 		}
 		return res;
 	}
 
-	// Redirect unauthenticated users to the authentication page
-	if (!session) {
-		const redirectUrl = req.nextUrl.clone();
-		redirectUrl.pathname = "/authenticate";
-		return NextResponse.redirect(redirectUrl);
+	// For admin routes, check if user is admin
+	if (req.nextUrl.pathname.startsWith("/admin")) {
+		try {
+			const { data: profile } = await supabase
+				.from("users_profile")
+				.select("role")
+				.eq("id", user.id)
+				.single();
+
+			if (!profile || profile.role !== "admin") {
+				// Redirect to access denied or home page
+				return NextResponse.redirect(new URL("/", req.url));
+			}
+		} catch (error) {
+			console.error("Error checking admin role:", error);
+			return NextResponse.redirect(new URL("/", req.url));
+		}
 	}
 
-	// Allow authenticated users to access their requested route
+	// For student routes, check if user is student
+	if (req.nextUrl.pathname.startsWith("/student")) {
+		try {
+			const { data: profile } = await supabase
+				.from("users_profile")
+				.select("role")
+				.eq("id", user.id)
+				.single();
+
+			if (!profile || profile.role !== "student") {
+				// Redirect to access denied or home page
+				return NextResponse.redirect(new URL("/", req.url));
+			}
+		} catch (error) {
+			console.error("Error checking student role:", error);
+			return NextResponse.redirect(new URL("/", req.url));
+		}
+	}
+
 	return res;
 }
 
 export const config = {
-	matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+	matcher: ["/admin/:path*", "/student/:path*", "/authenticate/:path*"],
 };
