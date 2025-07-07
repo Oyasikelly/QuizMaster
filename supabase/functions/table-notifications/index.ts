@@ -37,9 +37,9 @@ const corsHeaders = {
 
 interface QuizResult {
 	student_id: string;
-	quiz_id: string;
 	score: number;
-	submitted_at: string;
+	total_questions: number;
+	timestamp: string;
 }
 
 interface UserProfile {
@@ -141,18 +141,18 @@ async function handleQuizResult(data: QuizResult, operation: string) {
 	if (operation === "INSERT") {
 		// New quiz result submitted
 		console.log(
-			`New quiz result: Student ${data.student_id} scored ${data.score} on quiz ${data.quiz_id}`
+			`New quiz result: Student ${data.student_id} scored ${data.score}/${
+				data.total_questions
+			} (${Math.round((data.score / data.total_questions) * 100)}%)`
 		);
 	} else if (operation === "UPDATE") {
 		// Quiz result updated
 		console.log(
-			`Quiz result updated: Student ${data.student_id} on quiz ${data.quiz_id}`
+			`Quiz result updated: Student ${data.student_id} scored ${data.score}/${data.total_questions}`
 		);
 	} else if (operation === "DELETE") {
 		// Quiz result deleted
-		console.log(
-			`Quiz result deleted: Student ${data.student_id} on quiz ${data.quiz_id}`
-		);
+		console.log(`Quiz result deleted: Student ${data.student_id}`);
 	}
 }
 
@@ -178,37 +178,124 @@ async function handleUserProfile(data: UserProfile, operation: string) {
 // Send email notification
 async function sendEmailNotification(update: TableUpdate) {
 	try {
-		// You can integrate with email services like:
-		// - SendGrid
-		// - Mailgun
-		// - AWS SES
-		// - Resend
+		const resendApiKey = Deno.env.get("RESEND_API_KEY");
 
-		const emailData = {
-			to: "admin@yourdomain.com", // Replace with your admin email
-			subject: `${update.table_name} ${update.operation} Notification`,
-			body: `
-				Table: ${update.table_name}
-				Operation: ${update.operation}
-				Data: ${JSON.stringify(update.data, null, 2)}
-				Time: ${new Date().toISOString()}
-			`,
-		};
+		if (!resendApiKey) {
+			console.error("RESEND_API_KEY not found in environment variables");
+			return;
+		}
 
-		console.log("Email notification data:", emailData);
+		// Create Supabase client for database queries
+		const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+		const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+		const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-		// Example: Send email using a service
-		// const response = await fetch('https://api.resend.com/emails', {
-		//   method: 'POST',
-		//   headers: {
-		//     'Authorization': `Bearer ${Deno.env.get('RESEND_API_KEY')}`,
-		//     'Content-Type': 'application/json'
-		//   },
-		//   body: JSON.stringify(emailData)
-		// });
+		// Prepare email content based on table and operation
+		let subject = "";
+		let htmlContent = "";
 
-		// For now, just log the email data
-		console.log("Email notification would be sent:", emailData);
+		if (update.table_name === "quiz_results") {
+			const quizData = update.data as QuizResult;
+
+			// Fetch user's name from the database
+			let userName = "Unknown User";
+			try {
+				const { data: userData, error } = await supabase
+					.from("users_profile")
+					.select("name, email")
+					.eq("id", quizData.student_id)
+					.single();
+
+				if (!error && userData) {
+					userName = userData.name || userData.email || "Unknown User";
+				}
+			} catch (error) {
+				console.log("Could not fetch user name, using default");
+			}
+
+			subject = `Quiz Result ${update.operation} - ${userName}`;
+			htmlContent = `
+				<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+					<h2 style="color: #2563eb;">🎯 Quiz Result ${update.operation}</h2>
+					<div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+						<h3 style="color: #1e293b; margin-top: 0;">Student Details:</h3>
+						<ul style="color: #475569;">
+							<li><strong>👤 Student Name:</strong> ${userName}</li>
+							<li><strong>🆔 Student ID:</strong> ${quizData.student_id}</li>
+							<li><strong>📊 Score:</strong> ${quizData.score}/${
+				quizData.total_questions
+			}</li>
+							<li><strong>📈 Percentage:</strong> ${Math.round(
+								(quizData.score / quizData.total_questions) * 100
+							)}%</li>
+							<li><strong>⏰ Submitted:</strong> ${new Date(
+								quizData.timestamp
+							).toLocaleString()}</li>
+						</ul>
+					</div>
+					<div style="background-color: #f0f9ff; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #2563eb;">
+						<h4 style="color: #1e40af; margin-top: 0;">📋 Performance Summary</h4>
+						<p style="color: #1e40af; margin-bottom: 0;">
+							${userName} completed a quiz with ${quizData.score} correct answers out of ${
+				quizData.total_questions
+			} questions.
+						</p>
+					</div>
+					<p style="color: #64748b; font-size: 14px;">
+						This notification was sent automatically when a student completed a quiz.
+					</p>
+				</div>
+			`;
+		} else if (update.table_name === "users_profile") {
+			const userData = update.data as UserProfile;
+			subject = `User Profile ${update.operation} - ${
+				userData.name || userData.email
+			}`;
+			htmlContent = `
+				<div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+					<h2 style="color: #2563eb;">👤 User Profile ${update.operation}</h2>
+					<div style="background-color: #f8fafc; padding: 20px; border-radius: 8px; margin: 20px 0;">
+						<h3 style="color: #1e293b; margin-top: 0;">User Details:</h3>
+						<ul style="color: #475569;">
+							<li><strong>🆔 User ID:</strong> ${userData.id}</li>
+							<li><strong>👤 Name:</strong> ${userData.name || "N/A"}</li>
+							<li><strong>📧 Email:</strong> ${userData.email || "N/A"}</li>
+							<li><strong>⏰ Updated:</strong> ${
+								userData.updated_at
+									? new Date(userData.updated_at).toLocaleString()
+									: "N/A"
+							}</li>
+						</ul>
+					</div>
+					<p style="color: #64748b; font-size: 14px;">
+						This notification was sent automatically when a user profile was updated.
+					</p>
+				</div>
+			`;
+		}
+
+		// Send email using Resend API
+		const response = await fetch("https://api.resend.com/emails", {
+			method: "POST",
+			headers: {
+				Authorization: `Bearer ${resendApiKey}`,
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				from: "QuizMaster <onboarding@resend.dev>", // Using sandbox domain (no verification needed)
+				to: ["quizmasterofficial2024@gmail.com"], // Admin email for notifications
+				subject: subject,
+				html: htmlContent,
+			}),
+		});
+
+		if (!response.ok) {
+			const errorData = await response.text();
+			console.error("Resend API error:", response.status, errorData);
+		} else {
+			const result = await response.json();
+			console.log("Email sent successfully:", result);
+		}
 	} catch (error) {
 		console.error("Email notification error:", error);
 	}

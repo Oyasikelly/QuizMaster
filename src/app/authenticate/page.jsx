@@ -454,23 +454,30 @@ const AuthPage = () => {
 									{/* Admin Code Field (Sign Up Only) */}
 									{isSigningUp && showAdminCode && (
 										<motion.div
-											initial={{ opacity: 0, y: 20 }}
-											animate={{ opacity: 1, y: 0 }}
-											transition={{ delay: 0.7 }}
-											className="relative">
-											<label className="block text-sm font-medium text-gray-700 mb-2">
-												Admin Invite Code
-											</label>
-											<div className="relative">
-												<FaKey className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-												<input
-													type="text"
-													name="adminCode"
-													value={formData.adminCode}
-													onChange={handleChange}
-													className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-													placeholder="Enter admin invite code"
-												/>
+											initial={{ opacity: 0, x: -20 }}
+											animate={{ opacity: 1, x: 0 }}
+											transition={{ duration: 0.5, delay: 0.5 }}
+											className="space-y-2">
+											{/* <label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+												<FaUser className="w-4 h-4 text-blue-500" />
+												Class Name
+												<span className="text-red-500">*</span>
+											</label> */}
+											<div className="group relative">
+												<div className="flex items-center bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200/50 rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 focus-within:bg-white focus-within:border-blue-400 focus-within:shadow-xl focus-within:scale-105">
+													<FaUser className="w-5 h-5 text-blue-500 mr-3 group-focus-within:text-blue-600 transition-colors" />
+													<input
+														type="text"
+														name="classname"
+														value={formData.classname
+															.trim()
+															.toLocaleLowerCase()}
+														onChange={handleChange}
+														className="flex-1 bg-transparent outline-none text-gray-800 placeholder-gray-500 text-sm font-medium"
+														placeholder="Enter class name. e.g, YAYA or Adult"
+														autoComplete="off"
+													/>
+												</div>
 											</div>
 											<p className="text-xs text-gray-500 mt-1">
 												Contact your administrator for the invite code
