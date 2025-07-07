@@ -2,7 +2,19 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { FaClock, FaPlay, FaQuestionCircle } from "react-icons/fa";
+import {
+	FaClock,
+	FaPlay,
+	FaQuestionCircle,
+	FaExclamationTriangle,
+} from "react-icons/fa";
+import { FiLock } from "react-icons/fi";
+import { supabase } from "../lib/supabase";
+import {
+	isRealQuizActive,
+	hasUserTakenRealQuiz,
+	getQuizSettings,
+} from "../lib/quiz-config";
 
 const timeCategories = {
 	Quick: [10, 20, 30],
@@ -24,12 +36,102 @@ export default function SelectTime() {
 	const [selectedTime, setSelectedTime] = useState(0);
 	const [selectedQuestions, setSelectedQuestions] = useState(0);
 	const [loading, setLoading] = useState(false);
+	const [quizState, setQuizState] = useState({
+		isRealQuiz: false,
+		hasTakenQuiz: false,
+		canTakeQuiz: true,
+		message: "",
+	});
+	const [user, setUser] = useState(null);
 
 	// Remove loading overlay if returning from quiz page
 	useEffect(() => {
 		if (typeof window !== "undefined") {
 			window.localStorage.removeItem("quizPageMounted");
 		}
+	}, []);
+
+	// Check quiz state and user authentication
+	useEffect(() => {
+		const checkQuizState = async () => {
+			try {
+				console.log("🔍 Starting quiz state check...");
+
+				// Get current user
+				const {
+					data: { user },
+				} = await supabase.auth.getUser();
+				console.log("👤 Current user:", user ? user.id : "No user");
+				setUser(user);
+
+				if (!user) {
+					console.log("❌ No user logged in");
+					setQuizState({
+						isRealQuiz: false,
+						hasTakenQuiz: false,
+						canTakeQuiz: false,
+						message: "Please log in to take the quiz",
+					});
+					return;
+				}
+
+				// Debug: Check current time
+				const now = new Date();
+				console.log("🕐 Current time:", now.toISOString());
+				console.log("🕐 Current time (local):", now.toString());
+
+				console.log("🔍 Checking if real quiz is active...");
+				const isReal = await isRealQuizActive(supabase);
+				console.log("🔒 Is Real Quiz Active:", isReal);
+
+				console.log("🔍 Checking if user has taken quiz...");
+				const hasTaken = await hasUserTakenRealQuiz(supabase, user.id);
+				console.log("📝 Has User Taken Quiz:", hasTaken);
+
+				if (isReal && hasTaken) {
+					console.log("🎯 Setting: Already taken real quiz");
+					setQuizState({
+						isRealQuiz: true,
+						hasTakenQuiz: true,
+						canTakeQuiz: false,
+						message:
+							"You have already taken the real quiz. Practice mode will be available after the quiz period ends.",
+					});
+				} else if (isReal) {
+					console.log("🎯 Setting: Real quiz mode");
+					setQuizState({
+						isRealQuiz: true,
+						hasTakenQuiz: false,
+						canTakeQuiz: true,
+						message: "Real Quiz Mode: 1 hour, 100 questions",
+					});
+					// Set fixed values for real quiz
+					setSelectedTime(60);
+					setSelectedQuestions(100);
+				} else {
+					console.log("🎯 Setting: Practice mode");
+					setQuizState({
+						isRealQuiz: false,
+						hasTakenQuiz: false,
+						canTakeQuiz: true,
+						message: "Practice Mode: Customize your quiz",
+					});
+					// Set default practice values
+					setSelectedTime(30);
+					setSelectedQuestions(20);
+				}
+			} catch (error) {
+				console.error("Error checking quiz state:", error);
+				setQuizState({
+					isRealQuiz: false,
+					hasTakenQuiz: false,
+					canTakeQuiz: false,
+					message: "Error loading quiz settings",
+				});
+			}
+		};
+
+		checkQuizState();
 	}, []);
 
 	// Listen for quiz page mount event
@@ -63,7 +165,8 @@ export default function SelectTime() {
 			? `${Math.floor(min / 60)}h ${min % 60 ? (min % 60) + "m" : ""}`.trim()
 			: `${min} min`;
 
-	const canStart = selectedTime > 0 && selectedQuestions > 0;
+	const canStart =
+		selectedTime > 0 && selectedQuestions > 0 && quizState.canTakeQuiz;
 
 	return (
 		<div className="flex flex-col items-center w-full p-6 relative">
@@ -89,6 +192,44 @@ export default function SelectTime() {
 				animate={{ opacity: 1, y: 0 }}
 				transition={{ duration: 0.6 }}
 				className="w-full max-w-4xl space-y-10">
+				{/* Quiz State Banner */}
+				<motion.div
+					initial={{ opacity: 0, y: -20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ duration: 0.6, delay: 0.1 }}
+					className={`text-center p-4 rounded-2xl border-2 ${
+						quizState.isRealQuiz
+							? "bg-gradient-to-r from-red-50 to-orange-50 border-red-200"
+							: "bg-gradient-to-r from-green-50 to-blue-50 border-green-200"
+					}`}>
+					<div className="flex items-center justify-center gap-2 mb-2">
+						{quizState.isRealQuiz ? (
+							<>
+								<FiLock className="text-red-500" />
+								<span className="font-bold text-red-700">Real Quiz Mode</span>
+							</>
+						) : (
+							<>
+								<FaPlay className="text-green-500" />
+								<span className="font-bold text-green-700">Practice Mode</span>
+							</>
+						)}
+					</div>
+					<p className="text-sm text-gray-600">{quizState.message}</p>
+
+					{quizState.hasTakenQuiz && (
+						<div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+							<div className="flex items-center gap-2 text-yellow-700">
+								<FaExclamationTriangle />
+								<span className="font-semibold">Quiz Already Taken</span>
+							</div>
+							<p className="text-xs text-yellow-600 mt-1">
+								You have already completed the real quiz. Practice mode will be
+								available after the quiz period ends.
+							</p>
+						</div>
+					)}
+				</motion.div>
 				{/* Select Time */}
 				<div className="text-center space-y-4">
 					<h3 className="text-base font-semibold flex items-center justify-center gap-2 text-gray-800">
@@ -122,7 +263,8 @@ export default function SelectTime() {
 					{/* Custom Time Slider */}
 					<div className="flex flex-col items-center mt-4 space-y-1">
 						<label className="text-sm text-gray-600">
-							Custom: {formatTime(selectedTime)}
+							{quizState.isRealQuiz ? "Fixed: " : "Custom: "}
+							{formatTime(selectedTime)}
 						</label>
 						<input
 							type="range"
@@ -131,8 +273,18 @@ export default function SelectTime() {
 							step={5}
 							value={selectedTime}
 							onChange={(e) => setSelectedTime(Number(e.target.value))}
-							className="w-2/3 md:w-1/3 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent"
+							disabled={quizState.isRealQuiz}
+							className={`w-2/3 md:w-1/3 ${
+								quizState.isRealQuiz
+									? "opacity-50 cursor-not-allowed"
+									: "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent"
+							}`}
 						/>
+						{quizState.isRealQuiz && (
+							<p className="text-xs text-red-600">
+								Time is fixed for real quiz
+							</p>
+						)}
 					</div>
 				</div>
 
@@ -161,7 +313,8 @@ export default function SelectTime() {
 					{/* Optional Slider */}
 					<div className="flex flex-col items-center space-y-1">
 						<label className="text-sm text-gray-600">
-							Custom: {selectedQuestions} Questions
+							{quizState.isRealQuiz ? "Fixed: " : "Custom: "}
+							{selectedQuestions} Questions
 						</label>
 						<input
 							type="range"
@@ -170,8 +323,18 @@ export default function SelectTime() {
 							step={5}
 							value={selectedQuestions}
 							onChange={(e) => setSelectedQuestions(Number(e.target.value))}
-							className="w-2/3 md:w-1/3 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent"
+							disabled={quizState.isRealQuiz}
+							className={`w-2/3 md:w-1/3 ${
+								quizState.isRealQuiz
+									? "opacity-50 cursor-not-allowed"
+									: "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent"
+							}`}
 						/>
+						{quizState.isRealQuiz && (
+							<p className="text-xs text-red-600">
+								Questions are fixed for real quiz
+							</p>
+						)}
 					</div>
 				</div>
 
@@ -182,10 +345,17 @@ export default function SelectTime() {
 						whileTap={canStart ? { scale: 0.95 } : {}}
 						onClick={canStart ? handleStartQuiz : undefined}
 						disabled={!canStart}
-						className={`py-4 px-8 rounded-full flex items-center justify-center gap-3 text-white font-semibold text-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 shadow-xl transition-all duration-300 ${
-							!canStart ? "opacity-50 cursor-not-allowed" : ""
-						}`}>
-						<FaPlay className="text-sm" /> Start Quiz
+						className={`py-4 px-8 rounded-full flex items-center justify-center gap-3 text-white font-semibold text-lg shadow-xl transition-all duration-300 ${
+							quizState.isRealQuiz
+								? "bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-600 hover:to-orange-700"
+								: "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+						} ${!canStart ? "opacity-50 cursor-not-allowed" : ""}`}>
+						{quizState.isRealQuiz ? (
+							<FiLock className="text-sm" />
+						) : (
+							<FaPlay className="text-sm" />
+						)}
+						{quizState.isRealQuiz ? "Start Real Quiz" : "Start Practice Quiz"}
 					</motion.button>
 				</div>
 			</motion.div>
