@@ -73,4 +73,23 @@
 	.scrollbar-hide::-webkit-scrollbar {
 		display: none; /* Safari and Chrome */
 	}
+
+	/* Custom styled scrollbar for modal content */
+	.custom-scrollbar::-webkit-scrollbar {
+		width: 6px;
+		background: transparent;
+	}
+	.custom-scrollbar::-webkit-scrollbar-thumb {
+		background: #c4b5fd; /* purple-200 */
+		border-radius: 8px;
+	}
+	.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+		background: #a78bfa; /* purple-400 */
+	}
+
+	/* For Firefox */
+	.custom-scrollbar {
+		scrollbar-width: thin;
+		scrollbar-color: #c4b5fd transparent;
+	}
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { supabase } from "../lib/supabase";
 import { motion } from "framer-motion";
@@ -17,8 +17,21 @@ import {
 	Zap,
 	Shield,
 	Heart,
+	XCircle,
+	CheckCircle,
+	Sparkles,
 } from "lucide-react";
-import { FaUser, FaEnvelope, FaGraduationCap } from "react-icons/fa";
+import {
+	FaUser,
+	FaEnvelope,
+	FaGraduationCap,
+	FaLock,
+	FaEye,
+	FaEyeSlash,
+	FaCrown,
+	FaKey,
+	FaBuilding,
+} from "react-icons/fa";
 import Footer from "../components/Footer";
 import MenuBar from "../components/MenuBar";
 
@@ -28,6 +41,24 @@ export default function HomePage() {
 	const [name, setName] = useState({
 		name: "",
 	});
+
+	// Authentication modal state
+	const [showAuth, setShowAuth] = useState(false);
+	const [isSigningUp, setIsSigningUp] = useState(true);
+	const [showPassword, setShowPassword] = useState(false);
+	const [showAdminCode, setShowAdminCode] = useState(false);
+	const [formData, setFormData] = useState({
+		name: "",
+		email: "",
+		password: "",
+		role: "student", // Default role
+		adminCode: "",
+		classname: "",
+		denomination: "",
+	});
+	const [error, setError] = useState("");
+	const [successMessage, setSuccessMessage] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 	const animatedTexts = [
 		"Master Your Knowledge",
 		"Challenge Your Mind",
@@ -37,26 +68,97 @@ export default function HomePage() {
 
 	useEffect(() => {
 		async function getUser() {
-			const { data, error } = await supabase.auth.getUser();
-			const user_email = data?.user?.email;
-			const { data: userData, error: userError } = await supabase
-				.from("users_profile")
-				.select("email, name, class, denomination") // Select multiple columns
-				.eq("email", user_email);
+			try {
+				// First check if there's an active session
+				const {
+					data: { session },
+					error: sessionError,
+				} = await supabase.auth.getSession();
 
-			if (userData) {
-				setUserData(userData);
+				if (sessionError) {
+					console.error("Error getting session:", sessionError);
+					return;
+				}
 
-				const [userName, ...others] = userData;
-				setName({
-					name: userName.name,
-				});
-				console.log(name);
+				// If no session exists, user is not logged in
+				if (!session) {
+					console.log("No active session found");
+					return;
+				}
+
+				const { data, error } = await supabase.auth.getUser();
+				if (error) {
+					console.error("Error getting user:", error);
+					return;
+				}
+
+				const user_email = data?.user?.email;
+				if (!user_email) {
+					console.log("No user email found");
+					return;
+				}
+
+				const { data: userData, error: userError } = await supabase
+					.from("users_profile")
+					.select("email, name, class, denomination")
+					.eq("email", user_email);
+
+				if (userError) {
+					console.error("Error fetching user data:", userError);
+					return;
+				}
+
+				if (userData && userData.length > 0) {
+					setUserData(userData);
+					const userName = userData[0]; // Get the first user
+					if (userName && userName.name) {
+						setName({
+							name: userName.name,
+						});
+						console.log("User name set:", userName.name);
+					}
+				}
+			} catch (error) {
+				console.error("Error in getUser function:", error);
 			}
-			if (userError) console.error(userError);
 		}
 
 		getUser();
+
+		// Set up auth state listener
+		const {
+			data: { subscription },
+		} = supabase.auth.onAuthStateChange(async (event, session) => {
+			console.log("Auth state changed:", event, session?.user?.email);
+
+			if (event === "SIGNED_IN" && session) {
+				// User signed in, fetch their data
+				const user_email = session.user.email;
+				if (user_email) {
+					const { data: userData, error: userError } = await supabase
+						.from("users_profile")
+						.select("email, name, class, denomination")
+						.eq("email", user_email);
+
+					if (!userError && userData && userData.length > 0) {
+						setUserData(userData);
+						const userName = userData[0];
+						if (userName && userName.name) {
+							setName({ name: userName.name });
+							console.log("User signed in:", userName.name);
+						}
+					}
+				}
+			} else if (event === "SIGNED_OUT") {
+				// User signed out, clear data
+				setUserData([]);
+				setName({ name: "" });
+				console.log("User signed out");
+			}
+		});
+
+		// Cleanup subscription on unmount
+		return () => subscription.unsubscribe();
 	}, []);
 
 	useEffect(() => {
@@ -65,6 +167,188 @@ export default function HomePage() {
 		}, 3000);
 		return () => clearInterval(interval);
 	}, []);
+
+	const toggleAuthModal = useCallback(() => {
+		console.log("Toggle auth modal clicked!");
+		setShowAuth((prev) => !prev);
+	}, []);
+
+	const handleChange = useCallback((e) => {
+		const { name, value } = e.target;
+		setFormData((prev) => ({
+			...prev,
+			[name]: value,
+		}));
+
+		// Show admin code field when admin role is selected
+		if (name === "role") {
+			setShowAdminCode(value === "admin");
+		}
+	}, []);
+
+	const handleSubmit = useCallback(
+		async (e) => {
+			e.preventDefault();
+			setIsLoading(true);
+			setError("");
+
+			if (isSigningUp) {
+				const {
+					name,
+					email,
+					password,
+					role,
+					adminCode,
+					classname,
+					denomination,
+				} = formData;
+
+				// Validation
+				if (!name || !email || !password) {
+					setError("Name, email, and password are required.");
+					setIsLoading(false);
+					return;
+				}
+
+				if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+					setError("Invalid email format.");
+					setIsLoading(false);
+					return;
+				}
+
+				if (password.length < 6) {
+					setError("Password must be at least 6 characters.");
+					setIsLoading(false);
+					return;
+				}
+
+				// Admin role validation
+				if (role === "admin") {
+					if (
+						!adminCode ||
+						adminCode !== process.env.NEXT_PUBLIC_ADMIN_INVITE_CODE
+					) {
+						setError(
+							"Invalid admin invite code. Please contact your administrator."
+						);
+						setIsLoading(false);
+						return;
+					}
+				}
+
+				// Student role validation
+				if (role === "student") {
+					if (!classname || !denomination) {
+						setError("Class and denomination are required for students.");
+						setIsLoading(false);
+						return;
+					}
+				}
+
+				try {
+					// Sign up with Supabase Auth
+					const { data, error: signUpError } = await supabase.auth.signUp({
+						email: email,
+						password: password,
+						options: {
+							emailRedirectTo: "https://quizmasterrccg.vercel.app/authenticate",
+						},
+					});
+
+					if (signUpError) {
+						setError(signUpError.message);
+						setIsLoading(false);
+						return;
+					}
+
+					// Insert user profile with role
+					const { error: profileError } = await supabase
+						.from("users_profile")
+						.insert([
+							{
+								id: data.user?.id,
+								email: email,
+								name: name,
+								role: role,
+								denomination: denomination || null,
+								class: classname || null,
+							},
+						]);
+
+					if (profileError) {
+						setError(profileError.message);
+						setIsLoading(false);
+						return;
+					}
+
+					setSuccessMessage("Sign up successful! Please log in.");
+					setError("");
+					setFormData({
+						name: "",
+						email: "",
+						password: "",
+						role: "student",
+						adminCode: "",
+						classname: "",
+						denomination: "",
+					});
+					setShowAdminCode(false);
+					setIsSigningUp(false);
+					setIsLoading(false);
+				} catch (err) {
+					setError("An error occurred. Please try again.");
+					setIsLoading(false);
+				}
+			} else {
+				// Login logic
+				const { email, password } = formData;
+
+				if (!email || !password) {
+					setError("Email and password are required.");
+					setIsLoading(false);
+					return;
+				}
+
+				try {
+					const { data, error: signInError } =
+						await supabase.auth.signInWithPassword({
+							email: email,
+							password: password,
+						});
+
+					if (signInError) {
+						setError(signInError.message);
+						setIsLoading(false);
+						return;
+					}
+
+					// Get user profile to determine role and name
+					const { data: profile } = await supabase
+						.from("users_profile")
+						.select("role, name, email, class, denomination")
+						.eq("id", data.user.id)
+						.single();
+
+					// Set user data for display
+					if (profile) {
+						setUserData([profile]);
+						setName({ name: profile.name });
+					}
+
+					// Redirect based on role
+					if (profile?.role === "admin") {
+						window.location.href = "/admin/dashboard";
+					} else {
+						window.location.href = "/student/dashboard";
+					}
+				} catch (err) {
+					setError("An error occurred. Please try again.");
+					setIsLoading(false);
+				}
+			}
+		},
+		[formData, isSigningUp]
+	);
 
 	const quizCategories = [
 		// {
@@ -158,16 +442,36 @@ export default function HomePage() {
 						</span>
 					</motion.div>
 
-					{/* <motion.div
+					<motion.div
 						initial={{ opacity: 0, x: 20 }}
 						animate={{ opacity: 1, x: 0 }}
 						className="flex items-center space-x-4">
-						<Link
-							href="/authenticate"
-							className="px-6 py-2 bg-white/80 backdrop-blur-sm rounded-full text-gray-700 hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl">
-							Get Started
-						</Link>
-					</motion.div> */}
+						{name.name && (
+							<div className="flex items-center space-x-3">
+								<div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+									<span className="text-white text-sm font-medium">
+										{name.name.charAt(0).toUpperCase()}
+									</span>
+								</div>
+								<div className="text-right">
+									<p className="text-sm font-medium text-gray-900">
+										Welcome back,
+									</p>
+									<p className="text-sm text-gray-600">{name.name}</p>
+								</div>
+								<button
+									onClick={async () => {
+										await supabase.auth.signOut();
+										setName({ name: "" });
+										setUserData([]);
+										window.location.reload();
+									}}
+									className="px-3 py-1 text-xs text-gray-500 hover:text-gray-700 transition-colors">
+									Sign Out
+								</button>
+							</div>
+						)}
+					</motion.div>
 				</div>
 			</nav>
 
@@ -252,16 +556,16 @@ export default function HomePage() {
 						</p>
 
 						<div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-							{/* <motion.div
+							<motion.div
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}>
-								<Link
-									href="/authenticate"
+								<button
+									onClick={toggleAuthModal}
 									className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center space-x-2">
 									<span>Start Your Journey</span>
 									<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-								</Link>
-							</motion.div> */}
+								</button>
+							</motion.div>
 
 							<motion.div
 								whileHover={{ scale: 1.05 }}
@@ -431,23 +735,333 @@ export default function HomePage() {
 							Join our community of learners and start your journey towards
 							knowledge mastery today
 						</p>
-
-						<motion.div
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}>
-							<Link
-								href="/authenticate"
-								className="inline-flex items-center space-x-2 px-8 py-4 bg-white text-blue-600 rounded-full text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300">
-								<span>Get Started Now</span>
-								<ArrowRight className="w-5 h-5" />
-							</Link>
-						</motion.div>
 					</motion.div>
 				</div>
 			</section> */}
 
 			{/* Footer */}
 			<Footer />
+
+			{/* Authentication Modal */}
+			{showAuth && (
+				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+					<div className="bg-white rounded-3xl max-w-md w-full max-h-[90vh] overflow-y-auto">
+						{/* Modal Header */}
+						<div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+							<div className="flex items-center space-x-3">
+								<div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+									<Sparkles className="w-6 h-6 text-white" />
+								</div>
+								<div>
+									<h2 className="text-xl font-semibold text-gray-900">
+										{isSigningUp ? "Create Account" : "Welcome Back"}
+									</h2>
+									<p className="text-sm text-gray-500">
+										{isSigningUp
+											? "Join QuizMaster and start your learning journey"
+											: "Sign in to continue your progress"}
+									</p>
+								</div>
+							</div>
+							<button
+								onClick={toggleAuthModal}
+								className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+								<XCircle size={20} />
+							</button>
+						</div>
+
+						{/* Modal Content */}
+						<div className="p-6">
+							<form
+								onSubmit={handleSubmit}
+								className="space-y-4">
+								{/* Role Selection (Sign Up Only) */}
+								{isSigningUp && (
+									<motion.div
+										initial={{ opacity: 0, y: 20 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ delay: 0.1 }}
+										className="relative">
+										<label className="block text-sm font-medium text-gray-700 mb-2">
+											I am a...
+										</label>
+										<div className="grid grid-cols-2 gap-3">
+											<label className="relative">
+												<input
+													type="radio"
+													name="role"
+													value="student"
+													checked={formData.role === "student"}
+													onChange={handleChange}
+													className="sr-only peer"
+												/>
+												<div className="p-4 border-2 border-gray-200 rounded-xl cursor-pointer peer-checked:border-blue-500 peer-checked:bg-blue-50 transition-all">
+													<div className="flex items-center space-x-3">
+														<FaGraduationCap className="text-blue-500" />
+														<div>
+															<p className="font-medium text-gray-900">
+																Student
+															</p>
+															<p className="text-xs text-gray-500">
+																Take quizzes & learn
+															</p>
+														</div>
+													</div>
+												</div>
+											</label>
+											<label className="relative">
+												<input
+													type="radio"
+													name="role"
+													value="admin"
+													checked={formData.role === "admin"}
+													onChange={handleChange}
+													className="sr-only peer"
+												/>
+												<div className="p-4 border-2 border-gray-200 rounded-xl cursor-pointer peer-checked:border-purple-500 peer-checked:bg-purple-50 transition-all">
+													<div className="flex items-center space-x-3">
+														<FaCrown className="text-purple-500" />
+														<div>
+															<p className="font-medium text-gray-900">Admin</p>
+															<p className="text-xs text-gray-500">
+																Manage & monitor
+															</p>
+														</div>
+													</div>
+												</div>
+											</label>
+										</div>
+									</motion.div>
+								)}
+
+								{/* Name Field (Sign Up Only) */}
+								{isSigningUp && (
+									<motion.div
+										initial={{ opacity: 0, y: 20 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ delay: 0.2 }}
+										className="relative">
+										<label className="block text-sm font-medium text-gray-700 mb-2">
+											Full Name
+										</label>
+										<div className="relative">
+											<FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+											<input
+												type="text"
+												name="name"
+												value={formData.name}
+												onChange={handleChange}
+												className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+												placeholder="Enter your full name"
+											/>
+										</div>
+									</motion.div>
+								)}
+
+								{/* Email Field */}
+								<motion.div
+									initial={{ opacity: 0, y: 20 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ delay: isSigningUp ? 0.3 : 0.1 }}
+									className="relative">
+									<label className="block text-sm font-medium text-gray-700 mb-2">
+										Email Address
+									</label>
+									<div className="relative">
+										<FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+										<input
+											type="email"
+											name="email"
+											value={formData.email}
+											onChange={handleChange}
+											className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+											placeholder="Enter your email"
+										/>
+									</div>
+								</motion.div>
+
+								{/* Password Field */}
+								<motion.div
+									initial={{ opacity: 0, y: 20 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ delay: isSigningUp ? 0.4 : 0.2 }}
+									className="relative">
+									<label className="block text-sm font-medium text-gray-700 mb-2">
+										Password
+									</label>
+									<div className="relative">
+										<FaLock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+										<input
+											type={showPassword ? "text" : "password"}
+											name="password"
+											value={formData.password}
+											onChange={handleChange}
+											className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+											placeholder="Enter your password"
+										/>
+										<button
+											type="button"
+											onClick={() => setShowPassword(!showPassword)}
+											className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600">
+											{showPassword ? <FaEyeSlash /> : <FaEye />}
+										</button>
+									</div>
+								</motion.div>
+
+								{/* Admin Code Field (Sign Up Only) */}
+								{isSigningUp && showAdminCode && (
+									<motion.div
+										initial={{ opacity: 0, y: 20 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ delay: 0.5 }}
+										className="relative">
+										<label className="block text-sm font-medium text-gray-700 mb-2">
+											Admin Invite Code
+										</label>
+										<div className="relative">
+											<FaKey className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+											<input
+												type="text"
+												name="adminCode"
+												value={formData.adminCode}
+												onChange={handleChange}
+												className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+												placeholder="Enter admin invite code"
+											/>
+										</div>
+										<p className="text-xs text-gray-500 mt-1">
+											Contact your administrator for the invite code
+										</p>
+									</motion.div>
+								)}
+
+								{/* Student-specific fields (Sign Up Only) */}
+								{isSigningUp && formData.role === "student" && (
+									<>
+										{/* Class Field */}
+										<motion.div
+											initial={{ opacity: 0, y: 20 }}
+											animate={{ opacity: 1, y: 0 }}
+											transition={{ delay: 0.5 }}
+											className="relative">
+											<label className="block text-sm font-medium text-gray-700 mb-2">
+												Class
+											</label>
+											<select
+												name="classname"
+												value={formData.classname}
+												onChange={handleChange}
+												className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+												<option value="">Select your class</option>
+												<option value="yaya">Yaya</option>
+												<option value="adult">Adult</option>
+												<option value="adults">Adults</option>
+											</select>
+										</motion.div>
+
+										{/* Denomination Field */}
+										<motion.div
+											initial={{ opacity: 0, y: 20 }}
+											animate={{ opacity: 1, y: 0 }}
+											transition={{ delay: 0.6 }}
+											className="relative">
+											<label className="block text-sm font-medium text-gray-700 mb-2">
+												Denomination
+											</label>
+											<div className="relative">
+												<FaBuilding className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+												<input
+													type="text"
+													name="denomination"
+													value={formData.denomination}
+													onChange={handleChange}
+													className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+													placeholder="Enter your denomination"
+												/>
+											</div>
+										</motion.div>
+									</>
+								)}
+
+								{/* Error Message */}
+								{error && (
+									<motion.div
+										initial={{ opacity: 0, y: -10 }}
+										animate={{ opacity: 1, y: 0 }}
+										className="flex items-center space-x-2 p-3 bg-red-50 border border-red-200 rounded-xl text-red-700">
+										<XCircle size={16} />
+										<span className="text-sm">{error}</span>
+									</motion.div>
+								)}
+
+								{/* Success Message */}
+								{successMessage && (
+									<motion.div
+										initial={{ opacity: 0, y: -10 }}
+										animate={{ opacity: 1, y: 0 }}
+										className="flex items-center space-x-2 p-3 bg-green-50 border border-green-200 rounded-xl text-green-700">
+										<CheckCircle size={16} />
+										<span className="text-sm">{successMessage}</span>
+									</motion.div>
+								)}
+
+								{/* Submit Button */}
+								<motion.button
+									type="submit"
+									disabled={isLoading}
+									whileHover={{ scale: 1.02 }}
+									whileTap={{ scale: 0.98 }}
+									className={`w-full py-3 px-6 rounded-xl font-medium text-white transition-all ${
+										isLoading
+											? "bg-gray-400 cursor-not-allowed"
+											: "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+									} flex items-center justify-center space-x-2`}>
+									{isLoading ? (
+										<>
+											<div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+											<span>Processing...</span>
+										</>
+									) : (
+										<>
+											<span>{isSigningUp ? "Create Account" : "Sign In"}</span>
+											<ArrowRight size={16} />
+										</>
+									)}
+								</motion.button>
+							</form>
+
+							{/* Toggle Auth Mode */}
+							<motion.div
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								transition={{ delay: 0.7 }}
+								className="text-center mt-6">
+								<button
+									onClick={() => {
+										setIsSigningUp(!isSigningUp);
+										setError("");
+										setSuccessMessage("");
+										setFormData({
+											name: "",
+											email: "",
+											password: "",
+											role: "student",
+											adminCode: "",
+											classname: "",
+											denomination: "",
+										});
+										setShowAdminCode(false);
+									}}
+									className="text-blue-600 hover:text-blue-700 font-medium transition-colors">
+									{isSigningUp
+										? "Already have an account? Sign In"
+										: "Don't have an account? Sign Up"}
+								</button>
+							</motion.div>
+						</div>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }
