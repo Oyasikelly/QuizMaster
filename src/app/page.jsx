@@ -556,7 +556,7 @@ export default function HomePage() {
 						</p>
 
 						<div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-							<motion.div
+							{/* <motion.div
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}>
 								<button
@@ -565,7 +565,7 @@ export default function HomePage() {
 									<span>Start Your Journey</span>
 									<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
 								</button>
-							</motion.div>
+							</motion.div> */}
 
 							<motion.div
 								whileHover={{ scale: 1.05 }}
