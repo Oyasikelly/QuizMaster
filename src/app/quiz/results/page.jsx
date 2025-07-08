@@ -49,7 +49,7 @@ const ResultsContent = () => {
 
 	const handleGoHome = () => {
 		navLockActive.current = false;
-		router.push("/");
+		router.push("/student/home");
 	};
 
 	useEffect(() => {

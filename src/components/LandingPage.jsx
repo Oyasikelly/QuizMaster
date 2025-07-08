@@ -4,25 +4,17 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
 	Brain,
-	Trophy,
-	Clock,
 	Users,
 	Star,
 	ArrowRight,
 	Play,
 	BookOpen,
 	Target,
-	Zap,
-	Shield,
 	Heart,
-	Sparkles,
-	Globe,
-	Lightbulb,
-	GraduationCap,
 } from "lucide-react";
-import QuizInstructions from "./QuizInstruction";
 import Footer from "./Footer";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const quotes = [
 	{
@@ -80,14 +72,16 @@ const features = [
 	},
 ];
 
-const LandingPage = ({ toggleAuthModal }) => {
+const animatedTexts = [
+	"Deepen Your Faith",
+	"Connect with Community",
+	"Learn & Grow Together",
+	"Test Your Knowledge",
+];
+
+const LandingPage = () => {
 	const [currentTextIndex, setCurrentTextIndex] = useState(0);
-	const animatedTexts = [
-		"Deepen Your Faith",
-		"Connect with Community",
-		"Learn & Grow Together",
-		"Test Your Knowledge",
-	];
+	const router = useRouter();
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -112,13 +106,12 @@ const LandingPage = ({ toggleAuthModal }) => {
 							QuizMaster
 						</span>
 					</motion.div>
-
 					<motion.div
 						initial={{ opacity: 0, x: 20 }}
 						animate={{ opacity: 1, x: 0 }}
 						className="flex items-center space-x-2 sm:space-x-4">
 						<button
-							onClick={toggleAuthModal}
+							onClick={() => router.push("/authenticate")}
 							className="px-4 py-2 sm:px-6 sm:py-2 bg-white/80 backdrop-blur-sm rounded-full text-gray-700 hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base">
 							Get Started
 						</button>
@@ -135,7 +128,6 @@ const LandingPage = ({ toggleAuthModal }) => {
 						<div className="absolute top-40 right-20 w-96 h-96 bg-gradient-to-r from-pink-400/20 to-orange-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
 						<div className="absolute bottom-20 left-1/3 w-80 h-80 bg-gradient-to-r from-green-400/20 to-blue-400/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
 					</div>
-
 					<motion.div
 						initial={{ opacity: 0, y: 30 }}
 						animate={{ opacity: 1, y: 0 }}
@@ -150,7 +142,6 @@ const LandingPage = ({ toggleAuthModal }) => {
 								Quiz Platform
 							</span>
 						</h1>
-
 						<motion.div
 							key={currentTextIndex}
 							initial={{ opacity: 0, y: 20 }}
@@ -160,25 +151,12 @@ const LandingPage = ({ toggleAuthModal }) => {
 							className="text-2xl md:text-3xl font-medium text-gray-600 mb-8">
 							{animatedTexts[currentTextIndex]}
 						</motion.div>
-
 						<p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
 							Test your biblical knowledge, connect with fellow believers, and
 							grow in faith while having fun. Experience the ultimate Christian
 							learning platform.
 						</p>
-
 						<div className="flex flex-col gap-4 justify-center items-center">
-							{/* <motion.div
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}>
-								<button
-									onClick={toggleAuthModal}
-									className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300 flex items-center space-x-2">
-									<span>Get Started</span>
-									<ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-								</button>
-							</motion.div> */}
-
 							<motion.div
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}>
@@ -210,7 +188,6 @@ const LandingPage = ({ toggleAuthModal }) => {
 							innovative features
 						</p>
 					</motion.div>
-
 					<div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
 						{features.map((feature, index) => (
 							<motion.div
@@ -255,7 +232,6 @@ const LandingPage = ({ toggleAuthModal }) => {
 							faith with QuizMaster
 						</p>
 					</motion.div>
-
 					<div className="grid md:grid-cols-3 gap-8">
 						{quotes.map((testimonial, index) => (
 							<motion.div
@@ -265,7 +241,7 @@ const LandingPage = ({ toggleAuthModal }) => {
 								transition={{ duration: 0.6, delay: index * 0.2 }}
 								className="bg-white/80 backdrop-blur-sm p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/50 h-80 w-full flex flex-col justify-between">
 								<div className="flex items-center mb-4">
-									{[...Array(testimonial.rating)].map((_, i) => (
+									{Array.from({ length: testimonial.rating }).map((_, i) => (
 										<Star
 											key={i}
 											className="w-5 h-5 text-yellow-400 fill-current"
@@ -301,24 +277,20 @@ const LandingPage = ({ toggleAuthModal }) => {
 							Join our community of believers and start your journey towards
 							spiritual growth today
 						</p>
-
 						<motion.div
 							whileHover={{ scale: 1.05 }}
 							whileTap={{ scale: 0.95 }}>
 							<button
-								onClick={toggleAuthModal}
+								onClick={() => router.push("/authenticate")}
 								className="inline-flex items-center space-x-2 px-8 py-4 bg-white text-blue-600 rounded-full text-lg font-semibold shadow-xl hover:shadow-2xl transition-all duration-300">
 								<span>Join Now</span>
 								<ArrowRight className="w-5 h-5" />
 							</button>
 						</motion.div>
-
-						<div className="mt-16">{/* <QuizInstructions /> */}</div>
 					</motion.div>
 				</div>
 			</section>
 
-			{/* Footer */}
 			<Footer />
 		</div>
 	);
