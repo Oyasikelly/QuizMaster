@@ -35,6 +35,8 @@ import {
 	FaHistory,
 	FaExclamationTriangle,
 	FaInfoCircle,
+	FaBars,
+	FaClose,
 } from "react-icons/fa";
 
 const AdminSettings = () => {
@@ -55,7 +57,34 @@ const AdminSettings = () => {
 		quizTimeLimit: 30,
 		showResultsImmediately: true,
 	});
+	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const router = useRouter();
+
+	// Sidebar links (Settings highlighted)
+	const sidebarLinks = [
+		{
+			label: "Dashboard",
+			icon: <FaTrophy />,
+			onClick: () => router.push("/admin/dashboard"),
+		},
+		{
+			label: "Student Management",
+			icon: <FaUsers />,
+			onClick: () => setActiveTab("students"),
+		},
+		{
+			label: "Analytics",
+			icon: <FaChartBar />,
+			onClick: () => setActiveTab("analytics"),
+		},
+		{
+			label: "Settings",
+			icon: <FaCog />,
+			onClick: () => setActiveTab("system"),
+			active: true,
+		},
+		{ label: "Logout", icon: <FaSignOutAlt />, onClick: handleSignOut },
+	];
 
 	useEffect(() => {
 		const getUser = async () => {
@@ -260,293 +289,322 @@ const AdminSettings = () => {
 	}
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100">
-			{/* Header */}
-			<header className="bg-white shadow-sm border-b">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="flex justify-between items-center py-4">
-						<div className="flex items-center space-x-3">
-							<div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
-								<FaCog className="text-white" />
-							</div>
-							<div>
-								<h1 className="text-xl font-semibold text-gray-900">
-									Admin Settings
-								</h1>
-								<p className="text-sm text-gray-500">Manage system and users</p>
-							</div>
+		<div className="min-h-screen overflow-hidden scrollbar-hide flex bg-gradient-to-br from-purple-50 to-indigo-100">
+			{/* Sidebar */}
+			<aside
+				className={`fixed z-30 inset-y-0 left-0 w-64 bg-white shadow-lg transform ${
+					sidebarOpen ? "translate-x-0" : "-translate-x-full"
+				} transition-transform duration-200 ease-in-out md:relative md:translate-x-0 md:w-56 md:block`}>
+				<div className="flex items-center justify-between px-6 py-4 border-b">
+					<div className="flex items-center space-x-2">
+						<div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
+							<FaUser className="text-white" />
 						</div>
-						<div className="flex items-center space-x-4">
-							<button
-								onClick={() => router.push("/admin/dashboard")}
-								className="px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
-								Back to Dashboard
-							</button>
-							<button
-								onClick={handleSignOut}
-								className="flex items-center space-x-2 px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
-								<FaSignOutAlt />
-								<span>Sign Out</span>
-							</button>
-						</div>
+						<span className="font-bold text-lg text-gray-800">Admin</span>
 					</div>
+					<button
+						className="md:hidden p-2"
+						onClick={() => setSidebarOpen(false)}>
+						<FaClose size={20} />
+					</button>
 				</div>
-			</header>
+				<nav className="mt-6 space-y-2 px-4">
+					{sidebarLinks.map((link, idx) => (
+						<button
+							key={link.label}
+							onClick={() => {
+								link.onClick();
+								setSidebarOpen(false);
+							}}
+							className={`flex items-center w-full px-4 py-3 rounded-lg text-gray-700 hover:bg-purple-100 transition-colors font-medium gap-3 ${
+								link.active ? "bg-purple-100 text-purple-700" : ""
+							}`}>
+							{link.icon}
+							<span>{link.label}</span>
+						</button>
+					))}
+				</nav>
+			</aside>
+
+			{/* Overlay for mobile sidebar */}
+			{sidebarOpen && (
+				<div
+					className="fixed inset-0 z-20 bg-black bg-opacity-30 md:hidden"
+					onClick={() => setSidebarOpen(false)}></div>
+			)}
 
 			{/* Main Content */}
-			<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-				{/* Tab Navigation */}
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					className="bg-white rounded-xl shadow-lg p-6 mb-8">
-					<div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
-						<button
-							onClick={() => setActiveTab("students")}
-							className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
-								activeTab === "students"
-									? "bg-white text-purple-600 shadow-sm"
-									: "text-gray-600 hover:text-gray-900"
-							}`}>
-							<FaUsers className="inline mr-2" />
-							Student Management
-						</button>
-						<button
-							onClick={() => setActiveTab("analytics")}
-							className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
-								activeTab === "analytics"
-									? "bg-white text-purple-600 shadow-sm"
-									: "text-gray-600 hover:text-gray-900"
-							}`}>
-							<FaChartBar className="inline mr-2" />
-							Quiz Analytics
-						</button>
-						<button
-							onClick={() => setActiveTab("system")}
-							className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
-								activeTab === "system"
-									? "bg-white text-purple-600 shadow-sm"
-									: "text-gray-600 hover:text-gray-900"
-							}`}>
-							<FaShieldAlt className="inline mr-2" />
-							System Settings
-						</button>
+			<div className="flex-1 flex flex-col max-w-screen min-h-screen md:ml-4">
+				{/* Topbar for mobile */}
+				<header className="bg-white shadow-sm border-b md:hidden flex items-center justify-between px-4 py-3">
+					<button
+						className="p-1"
+						onClick={() => setSidebarOpen(true)}>
+						<FaBars size={22} />
+					</button>
+					<div className="flex items-center w-auto space-x-2">
+						<div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
+							<FaUser className="text-white" />
+						</div>
+						<span className="font-semibold text-gray-800">{user?.name}</span>
 					</div>
-				</motion.div>
+				</header>
 
-				{/* Student Management Tab */}
-				{activeTab === "students" && <StudentManagement />}
-
-				{/* Quiz Analytics Tab */}
-				{activeTab === "analytics" && <QuizAnalytics />}
-
-				{/* System Settings Tab */}
-				{activeTab === "system" && (
+				<main className="flex-1 max-w-7xl mx-auto w-screen lg:w-full px-2 sm:px-4 lg:px-8 py-8 overflow-x-hidden">
+					{/* Tab Navigation */}
 					<motion.div
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
-						className="space-y-6">
-						{/* General Settings */}
-						<div className="bg-white rounded-xl shadow-lg p-6">
-							<h3 className="text-lg font-semibold text-gray-900 mb-4">
-								General Settings
-							</h3>
-							<div className="space-y-4">
-								<div className="flex items-center justify-between">
-									<div>
-										<label className="text-sm font-medium text-gray-700">
-											Allow Student Registration
-										</label>
-										<p className="text-xs text-gray-500">
-											Enable new students to register
-										</p>
-									</div>
-									<label className="relative inline-flex items-center cursor-pointer">
-										<input
-											type="checkbox"
-											checked={systemSettings.allowStudentRegistration}
-											onChange={(e) =>
-												setSystemSettings({
-													...systemSettings,
-													allowStudentRegistration: e.target.checked,
-												})
-											}
-											className="sr-only peer"
-										/>
-										<div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-									</label>
-								</div>
-
-								<div className="flex items-center justify-between">
-									<div>
-										<label className="text-sm font-medium text-gray-700">
-											Require Email Verification
-										</label>
-										<p className="text-xs text-gray-500">
-											Students must verify their email before accessing quizzes
-										</p>
-									</div>
-									<label className="relative inline-flex items-center cursor-pointer">
-										<input
-											type="checkbox"
-											checked={systemSettings.requireEmailVerification}
-											onChange={(e) =>
-												setSystemSettings({
-													...systemSettings,
-													requireEmailVerification: e.target.checked,
-												})
-											}
-											className="sr-only peer"
-										/>
-										<div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-									</label>
-								</div>
-
-								<div className="flex items-center justify-between">
-									<div>
-										<label className="text-sm font-medium text-gray-700">
-											Show Results Immediately
-										</label>
-										<p className="text-xs text-gray-500">
-											Display quiz results right after completion
-										</p>
-									</div>
-									<label className="relative inline-flex items-center cursor-pointer">
-										<input
-											type="checkbox"
-											checked={systemSettings.showResultsImmediately}
-											onChange={(e) =>
-												setSystemSettings({
-													...systemSettings,
-													showResultsImmediately: e.target.checked,
-												})
-											}
-											className="sr-only peer"
-										/>
-										<div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-									</label>
-								</div>
-							</div>
-						</div>
-
-						{/* Quiz Settings */}
-						<div className="bg-white rounded-xl shadow-lg p-6">
-							<h3 className="text-lg font-semibold text-gray-900 mb-4">
-								Quiz Settings
-							</h3>
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								<div>
-									<label className="block text-sm font-medium text-gray-700 mb-2">
-										Maximum Quiz Attempts
-									</label>
-									<input
-										type="number"
-										value={systemSettings.maxQuizAttempts}
-										onChange={(e) =>
-											setSystemSettings({
-												...systemSettings,
-												maxQuizAttempts: parseInt(e.target.value),
-											})
-										}
-										className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-										min="1"
-										max="10"
-									/>
-								</div>
-								<div>
-									<label className="block text-sm font-medium text-gray-700 mb-2">
-										Quiz Time Limit (minutes)
-									</label>
-									<input
-										type="number"
-										value={systemSettings.quizTimeLimit}
-										onChange={(e) =>
-											setSystemSettings({
-												...systemSettings,
-												quizTimeLimit: parseInt(e.target.value),
-											})
-										}
-										className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-										min="5"
-										max="120"
-									/>
-								</div>
-							</div>
-						</div>
-
-						{/* Admin Settings */}
-						<div className="bg-white rounded-xl shadow-lg p-6">
-							<h3 className="text-lg font-semibold text-gray-900 mb-4">
-								Admin Settings
-							</h3>
-							<div className="space-y-4">
-								<div>
-									<label className="block text-sm font-medium text-gray-700 mb-2">
-										Admin Invite Code
-									</label>
-									<div className="flex space-x-2">
-										<input
-											type="text"
-											value={adminCode}
-											onChange={(e) => setAdminCode(e.target.value)}
-											className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-											placeholder="Enter admin invite code"
-										/>
-										<button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
-											<FaKey className="inline mr-2" />
-											Update
-										</button>
-									</div>
-									<p className="text-xs text-gray-500 mt-1">
-										This code is required for new admin registrations
-									</p>
-								</div>
-							</div>
-						</div>
-
-						{/* Save Settings Button */}
-						<div className="flex justify-end">
+						className="bg-white rounded-xl shadow-lg p-6 mb-8">
+						<div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
 							<button
-								onClick={handleUpdateSystemSettings}
-								className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center space-x-2">
-								<FaSave className="inline" />
-								<span>Save Settings</span>
+								onClick={() => setActiveTab("students")}
+								className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+									activeTab === "students"
+										? "bg-white text-purple-600 shadow-sm"
+										: "text-gray-600 hover:text-gray-900"
+								}`}>
+								<FaUsers className="inline mr-2" />
+								Student Management
+							</button>
+							<button
+								onClick={() => setActiveTab("analytics")}
+								className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+									activeTab === "analytics"
+										? "bg-white text-purple-600 shadow-sm"
+										: "text-gray-600 hover:text-gray-900"
+								}`}>
+								<FaChartBar className="inline mr-2" />
+								Quiz Analytics
+							</button>
+							<button
+								onClick={() => setActiveTab("system")}
+								className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+									activeTab === "system"
+										? "bg-white text-purple-600 shadow-sm"
+										: "text-gray-600 hover:text-gray-900"
+								}`}>
+								<FaShieldAlt className="inline mr-2" />
+								System Settings
 							</button>
 						</div>
 					</motion.div>
-				)}
-			</main>
 
-			{/* Delete Confirmation Modal */}
-			{showDeleteModal && (
-				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-					<div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
-						<div className="flex items-center space-x-3 mb-4">
-							<FaExclamationTriangle className="text-red-500 text-xl" />
-							<h3 className="text-lg font-semibold text-gray-900">
-								Delete Student
-							</h3>
-						</div>
-						<p className="text-gray-600 mb-6">
-							Are you sure you want to delete{" "}
-							<strong>{studentToDelete?.name}</strong>? This action cannot be
-							undone and will also delete all their quiz results.
-						</p>
-						<div className="flex space-x-3">
-							<button
-								onClick={() => setShowDeleteModal(false)}
-								className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-								Cancel
-							</button>
-							<button
-								onClick={handleDeleteStudent}
-								className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
-								Delete
-							</button>
+					{/* Student Management Tab */}
+					{activeTab === "students" && <StudentManagement />}
+
+					{/* Quiz Analytics Tab */}
+					{activeTab === "analytics" && <QuizAnalytics />}
+
+					{/* System Settings Tab */}
+					{activeTab === "system" && (
+						<motion.div
+							initial={{ opacity: 0, y: 20 }}
+							animate={{ opacity: 1, y: 0 }}
+							className="space-y-6">
+							{/* General Settings */}
+							<div className="bg-white rounded-xl shadow-lg p-6">
+								<h3 className="text-lg font-semibold text-gray-900 mb-4">
+									General Settings
+								</h3>
+								<div className="space-y-4">
+									<div className="flex items-center justify-between">
+										<div>
+											<label className="text-sm font-medium text-gray-700">
+												Allow Student Registration
+											</label>
+											<p className="text-xs text-gray-500">
+												Enable new students to register
+											</p>
+										</div>
+										<label className="relative inline-flex items-center cursor-pointer">
+											<input
+												type="checkbox"
+												checked={systemSettings.allowStudentRegistration}
+												onChange={(e) =>
+													setSystemSettings({
+														...systemSettings,
+														allowStudentRegistration: e.target.checked,
+													})
+												}
+												className="sr-only peer"
+											/>
+											<div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+										</label>
+									</div>
+
+									<div className="flex items-center justify-between">
+										<div>
+											<label className="text-sm font-medium text-gray-700">
+												Require Email Verification
+											</label>
+											<p className="text-xs text-gray-500">
+												Students must verify their email before accessing
+												quizzes
+											</p>
+										</div>
+										<label className="relative inline-flex items-center cursor-pointer">
+											<input
+												type="checkbox"
+												checked={systemSettings.requireEmailVerification}
+												onChange={(e) =>
+													setSystemSettings({
+														...systemSettings,
+														requireEmailVerification: e.target.checked,
+													})
+												}
+												className="sr-only peer"
+											/>
+											<div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+										</label>
+									</div>
+
+									<div className="flex items-center justify-between">
+										<div>
+											<label className="text-sm font-medium text-gray-700">
+												Show Results Immediately
+											</label>
+											<p className="text-xs text-gray-500">
+												Display quiz results right after completion
+											</p>
+										</div>
+										<label className="relative inline-flex items-center cursor-pointer">
+											<input
+												type="checkbox"
+												checked={systemSettings.showResultsImmediately}
+												onChange={(e) =>
+													setSystemSettings({
+														...systemSettings,
+														showResultsImmediately: e.target.checked,
+													})
+												}
+												className="sr-only peer"
+											/>
+											<div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+										</label>
+									</div>
+								</div>
+							</div>
+
+							{/* Quiz Settings */}
+							<div className="bg-white rounded-xl shadow-lg p-6">
+								<h3 className="text-lg font-semibold text-gray-900 mb-4">
+									Quiz Settings
+								</h3>
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+									<div>
+										<label className="block text-sm font-medium text-gray-700 mb-2">
+											Maximum Quiz Attempts
+										</label>
+										<input
+											type="number"
+											value={systemSettings.maxQuizAttempts}
+											onChange={(e) =>
+												setSystemSettings({
+													...systemSettings,
+													maxQuizAttempts: parseInt(e.target.value),
+												})
+											}
+											className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+											min="1"
+											max="10"
+										/>
+									</div>
+									<div>
+										<label className="block text-sm font-medium text-gray-700 mb-2">
+											Quiz Time Limit (minutes)
+										</label>
+										<input
+											type="number"
+											value={systemSettings.quizTimeLimit}
+											onChange={(e) =>
+												setSystemSettings({
+													...systemSettings,
+													quizTimeLimit: parseInt(e.target.value),
+												})
+											}
+											className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+											min="5"
+											max="120"
+										/>
+									</div>
+								</div>
+							</div>
+
+							{/* Admin Settings */}
+							<div className="bg-white rounded-xl shadow-lg p-6">
+								<h3 className="text-lg font-semibold text-gray-900 mb-4">
+									Admin Settings
+								</h3>
+								<div className="space-y-4">
+									<div>
+										<label className="block text-sm font-medium text-gray-700 mb-2">
+											Admin Invite Code
+										</label>
+										<div className="flex space-x-2">
+											<input
+												type="text"
+												value={adminCode}
+												onChange={(e) => setAdminCode(e.target.value)}
+												className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+												placeholder="Enter admin invite code"
+											/>
+											<button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+												<FaKey className="inline mr-2" />
+												Update
+											</button>
+										</div>
+										<p className="text-xs text-gray-500 mt-1">
+											This code is required for new admin registrations
+										</p>
+									</div>
+								</div>
+							</div>
+
+							{/* Save Settings Button */}
+							<div className="flex justify-end">
+								<button
+									onClick={handleUpdateSystemSettings}
+									className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center space-x-2">
+									<FaSave className="inline" />
+									<span>Save Settings</span>
+								</button>
+							</div>
+						</motion.div>
+					)}
+				</main>
+
+				{/* Delete Confirmation Modal */}
+				{showDeleteModal && (
+					<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+						<div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+							<div className="flex items-center space-x-3 mb-4">
+								<FaExclamationTriangle className="text-red-500 text-xl" />
+								<h3 className="text-lg font-semibold text-gray-900">
+									Delete Student
+								</h3>
+							</div>
+							<p className="text-gray-600 mb-6">
+								Are you sure you want to delete{" "}
+								<strong>{studentToDelete?.name}</strong>? This action cannot be
+								undone and will also delete all their quiz results.
+							</p>
+							<div className="flex space-x-3">
+								<button
+									onClick={() => setShowDeleteModal(false)}
+									className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+									Cancel
+								</button>
+								<button
+									onClick={handleDeleteStudent}
+									className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+									Delete
+								</button>
+							</div>
 						</div>
 					</div>
-				</div>
-			)}
+				)}
+			</div>
 		</div>
 	);
 };
