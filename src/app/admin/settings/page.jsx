@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { supabase } from "../../../lib/supabase";
@@ -12,32 +12,29 @@ import {
 	FaUsers,
 	FaChartBar,
 	FaTrophy,
-	FaClipboardList,
 	FaCog,
-	FaBell,
-	FaDownload,
-	FaSearch,
-	FaFilter,
-	FaEye,
-	FaEdit,
-	FaTrash,
-	FaCheck,
-	FaTimes,
-	FaSave,
-	FaUndo,
-	FaUserEdit,
-	FaUserTimes,
-	FaUserCheck,
 	FaShieldAlt,
 	FaKey,
-	FaDatabase,
-	FaChartLine,
-	FaHistory,
-	FaExclamationTriangle,
-	FaInfoCircle,
+	FaSave,
 	FaBars,
-	FaClose,
+	FaTimes,
+	FaExclamationTriangle,
 } from "react-icons/fa";
+
+const SIDEBAR_LINKS = [
+	{ label: "Dashboard", icon: <FaTrophy />, route: "/admin/dashboard" },
+	{ label: "Student Management", icon: <FaUsers />, tab: "students" },
+	{ label: "Analytics", icon: <FaChartBar />, tab: "analytics" },
+	{ label: "Settings", icon: <FaCog />, tab: "system", active: true },
+];
+
+const DEFAULT_SYSTEM_SETTINGS = {
+	allowStudentRegistration: true,
+	requireEmailVerification: true,
+	maxQuizAttempts: 3,
+	quizTimeLimit: 30,
+	showResultsImmediately: true,
+};
 
 const AdminSettings = () => {
 	const [user, setUser] = useState(null);
@@ -50,64 +47,44 @@ const AdminSettings = () => {
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [studentToDelete, setStudentToDelete] = useState(null);
 	const [adminCode, setAdminCode] = useState("ADMIN2024");
-	const [systemSettings, setSystemSettings] = useState({
-		allowStudentRegistration: true,
-		requireEmailVerification: true,
-		maxQuizAttempts: 3,
-		quizTimeLimit: 30,
-		showResultsImmediately: true,
-	});
+	const [systemSettings, setSystemSettings] = useState(DEFAULT_SYSTEM_SETTINGS);
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const router = useRouter();
 
-	// Sidebar links (Settings highlighted)
-	const sidebarLinks = [
-		{
-			label: "Dashboard",
-			icon: <FaTrophy />,
-			onClick: () => router.push("/admin/dashboard"),
-		},
-		{
-			label: "Student Management",
-			icon: <FaUsers />,
-			onClick: () => setActiveTab("students"),
-		},
-		{
-			label: "Analytics",
-			icon: <FaChartBar />,
-			onClick: () => setActiveTab("analytics"),
-		},
-		{
-			label: "Settings",
-			icon: <FaCog />,
-			onClick: () => setActiveTab("system"),
-			active: true,
-		},
-		{ label: "Logout", icon: <FaSignOutAlt />, onClick: handleSignOut },
-	];
+	// Sidebar links with handlers
+	const sidebarLinks = useMemo(
+		() =>
+			SIDEBAR_LINKS.map((link) => ({
+				...link,
+				onClick: () => {
+					if (link.route) router.push(link.route);
+					if (link.tab) setActiveTab(link.tab);
+				},
+			})).concat([
+				{
+					label: "Logout",
+					icon: <FaSignOutAlt />,
+					onClick: async () => {
+						await supabase.auth.signOut();
+						router.push("/");
+					},
+				},
+			]),
+		[router]
+	);
 
+	// Fetch user and data
 	useEffect(() => {
 		const getUser = async () => {
 			try {
-				// First check if there's an active session
 				const {
 					data: { session },
 					error: sessionError,
 				} = await supabase.auth.getSession();
-
-				if (sessionError) {
-					console.error("Error getting session:", sessionError);
+				if (sessionError || !session) {
 					router.push("/authenticate");
 					return;
 				}
-
-				// If no session exists, user is not logged in
-				if (!session) {
-					console.log("No active session found");
-					router.push("/authenticate");
-					return;
-				}
-
 				const {
 					data: { user },
 				} = await supabase.auth.getUser();
@@ -115,23 +92,18 @@ const AdminSettings = () => {
 					router.push("/authenticate");
 					return;
 				}
-
-				// Check if user is actually an admin
 				const { data: profile } = await supabase
 					.from("users_profile")
 					.select("role, name, email")
 					.eq("id", user.id)
 					.single();
-
 				if (profile?.role !== "admin") {
 					router.push("/authenticate");
 					return;
 				}
-
 				setUser({ ...user, ...profile });
-				loadData();
+				await loadData();
 			} catch (error) {
-				console.error("Error fetching user:", error);
 				router.push("/authenticate");
 			} finally {
 				setLoading(false);
@@ -140,63 +112,42 @@ const AdminSettings = () => {
 
 		getUser();
 
-		// Set up auth state listener
 		const {
 			data: { subscription },
-		} = supabase.auth.onAuthStateChange(async (event, session) => {
-			console.log("Auth state changed:", event, session?.user?.email);
-
-			if (event === "SIGNED_OUT") {
-				// User signed out, redirect to authenticate
-				router.push("/authenticate");
-			}
+		} = supabase.auth.onAuthStateChange((event) => {
+			if (event === "SIGNED_OUT") router.push("/authenticate");
 		});
 
-		// Cleanup subscription on unmount
 		return () => subscription.unsubscribe();
 	}, [router]);
 
-	const loadData = async () => {
+	// Load students and quiz results
+	const loadData = useCallback(async () => {
 		try {
-			// Load students with their quiz submission counts
-			const { data: studentsData } = await supabase
+			const { data: studentsData = [] } = await supabase
 				.from("users_profile")
 				.select("*")
 				.eq("role", "student");
-
-			// Load quiz results to calculate submission counts
-			const { data: quizData } = await supabase
+			const { data: quizData = [] } = await supabase
 				.from("quiz_results")
 				.select("*");
-
-			// Calculate submission counts for each student
-			const studentsWithCounts =
-				studentsData?.map((student) => {
-					const submissionCount =
-						quizData?.filter((result) => result.student_id === student.id)
-							.length || 0;
-					return { ...student, submissionCount };
-				}) || [];
-
+			const studentsWithCounts = studentsData.map((student) => ({
+				...student,
+				submissionCount: quizData.filter((r) => r.student_id === student.id)
+					.length,
+			}));
 			setStudents(studentsWithCounts);
-			setQuizResults(quizData || []);
+			setQuizResults(quizData);
 		} catch (error) {
-			console.error("Error loading data:", error);
+			// Optionally handle error
 		}
-	};
+	}, []);
 
-	const handleSignOut = async () => {
-		await supabase.auth.signOut();
-		router.push("/");
-	};
-
-	const handleEditStudent = (student) => {
-		setEditingStudent({ ...student });
-	};
+	// Student edit/save/delete handlers
+	const handleEditStudent = (student) => setEditingStudent({ ...student });
 
 	const handleSaveStudent = async () => {
 		if (!editingStudent) return;
-
 		try {
 			const { error } = await supabase
 				.from("users_profile")
@@ -207,75 +158,59 @@ const AdminSettings = () => {
 					denomination: editingStudent.denomination,
 				})
 				.eq("id", editingStudent.id);
-
 			if (error) {
 				alert("Error updating student: " + error.message);
 				return;
 			}
-
-			// Update local state
-			setStudents(
-				students.map((student) =>
-					student.id === editingStudent.id ? editingStudent : student
-				)
+			setStudents((prev) =>
+				prev.map((s) => (s.id === editingStudent.id ? editingStudent : s))
 			);
 			setEditingStudent(null);
 			alert("Student updated successfully!");
-		} catch (error) {
-			console.error("Error updating student:", error);
+		} catch {
 			alert("Error updating student");
 		}
 	};
 
 	const handleDeleteStudent = async () => {
 		if (!studentToDelete) return;
-
 		try {
-			// First delete all quiz results for this student
-			const { error: quizError } = await supabase
+			await supabase
 				.from("quiz_results")
 				.delete()
 				.eq("student_id", studentToDelete.id);
-
-			if (quizError) {
-				console.error("Error deleting quiz results:", quizError);
-			}
-
-			// Then delete the student profile
 			const { error } = await supabase
 				.from("users_profile")
 				.delete()
 				.eq("id", studentToDelete.id);
-
 			if (error) {
 				alert("Error deleting student: " + error.message);
 				return;
 			}
-
-			// Update local state
-			setStudents(
-				students.filter((student) => student.id !== studentToDelete.id)
-			);
+			setStudents((prev) => prev.filter((s) => s.id !== studentToDelete.id));
 			setStudentToDelete(null);
 			setShowDeleteModal(false);
 			alert("Student deleted successfully!");
-		} catch (error) {
-			console.error("Error deleting student:", error);
+		} catch {
 			alert("Error deleting student");
 		}
 	};
 
 	const handleUpdateSystemSettings = async () => {
-		// In a real app, you'd save these to a settings table
+		// In a real app, save to DB
 		alert("System settings updated successfully!");
 	};
 
-	const filteredStudents = students.filter((student) => {
-		const matchesSearch =
-			student.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			student.email?.toLowerCase().includes(searchTerm.toLowerCase());
-		return matchesSearch;
-	});
+	// Filtered students (for search, if needed)
+	const filteredStudents = useMemo(
+		() =>
+			students.filter(
+				(student) =>
+					student.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+					student.email?.toLowerCase().includes(searchTerm.toLowerCase())
+			),
+		[students, searchTerm]
+	);
 
 	if (loading) {
 		return (
@@ -305,11 +240,11 @@ const AdminSettings = () => {
 					<button
 						className="md:hidden p-2"
 						onClick={() => setSidebarOpen(false)}>
-						<FaClose size={20} />
+						<FaTimes size={20} />
 					</button>
 				</div>
 				<nav className="mt-6 space-y-2 px-4">
-					{sidebarLinks.map((link, idx) => (
+					{sidebarLinks.map((link) => (
 						<button
 							key={link.label}
 							onClick={() => {
@@ -408,81 +343,39 @@ const AdminSettings = () => {
 									General Settings
 								</h3>
 								<div className="space-y-4">
-									<div className="flex items-center justify-between">
-										<div>
-											<label className="text-sm font-medium text-gray-700">
-												Allow Student Registration
-											</label>
-											<p className="text-xs text-gray-500">
-												Enable new students to register
-											</p>
-										</div>
-										<label className="relative inline-flex items-center cursor-pointer">
-											<input
-												type="checkbox"
-												checked={systemSettings.allowStudentRegistration}
-												onChange={(e) =>
-													setSystemSettings({
-														...systemSettings,
-														allowStudentRegistration: e.target.checked,
-													})
-												}
-												className="sr-only peer"
-											/>
-											<div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-										</label>
-									</div>
-
-									<div className="flex items-center justify-between">
-										<div>
-											<label className="text-sm font-medium text-gray-700">
-												Require Email Verification
-											</label>
-											<p className="text-xs text-gray-500">
-												Students must verify their email before accessing
-												quizzes
-											</p>
-										</div>
-										<label className="relative inline-flex items-center cursor-pointer">
-											<input
-												type="checkbox"
-												checked={systemSettings.requireEmailVerification}
-												onChange={(e) =>
-													setSystemSettings({
-														...systemSettings,
-														requireEmailVerification: e.target.checked,
-													})
-												}
-												className="sr-only peer"
-											/>
-											<div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-										</label>
-									</div>
-
-									<div className="flex items-center justify-between">
-										<div>
-											<label className="text-sm font-medium text-gray-700">
-												Show Results Immediately
-											</label>
-											<p className="text-xs text-gray-500">
-												Display quiz results right after completion
-											</p>
-										</div>
-										<label className="relative inline-flex items-center cursor-pointer">
-											<input
-												type="checkbox"
-												checked={systemSettings.showResultsImmediately}
-												onChange={(e) =>
-													setSystemSettings({
-														...systemSettings,
-														showResultsImmediately: e.target.checked,
-													})
-												}
-												className="sr-only peer"
-											/>
-											<div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-										</label>
-									</div>
+									<SettingSwitch
+										label="Allow Student Registration"
+										description="Enable new students to register"
+										checked={systemSettings.allowStudentRegistration}
+										onChange={(checked) =>
+											setSystemSettings((s) => ({
+												...s,
+												allowStudentRegistration: checked,
+											}))
+										}
+									/>
+									<SettingSwitch
+										label="Require Email Verification"
+										description="Students must verify their email before accessing quizzes"
+										checked={systemSettings.requireEmailVerification}
+										onChange={(checked) =>
+											setSystemSettings((s) => ({
+												...s,
+												requireEmailVerification: checked,
+											}))
+										}
+									/>
+									<SettingSwitch
+										label="Show Results Immediately"
+										description="Display quiz results right after completion"
+										checked={systemSettings.showResultsImmediately}
+										onChange={(checked) =>
+											setSystemSettings((s) => ({
+												...s,
+												showResultsImmediately: checked,
+											}))
+										}
+									/>
 								</div>
 							</div>
 
@@ -492,42 +385,30 @@ const AdminSettings = () => {
 									Quiz Settings
 								</h3>
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-									<div>
-										<label className="block text-sm font-medium text-gray-700 mb-2">
-											Maximum Quiz Attempts
-										</label>
-										<input
-											type="number"
-											value={systemSettings.maxQuizAttempts}
-											onChange={(e) =>
-												setSystemSettings({
-													...systemSettings,
-													maxQuizAttempts: parseInt(e.target.value),
-												})
-											}
-											className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-											min="1"
-											max="10"
-										/>
-									</div>
-									<div>
-										<label className="block text-sm font-medium text-gray-700 mb-2">
-											Quiz Time Limit (minutes)
-										</label>
-										<input
-											type="number"
-											value={systemSettings.quizTimeLimit}
-											onChange={(e) =>
-												setSystemSettings({
-													...systemSettings,
-													quizTimeLimit: parseInt(e.target.value),
-												})
-											}
-											className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-											min="5"
-											max="120"
-										/>
-									</div>
+									<SettingNumberInput
+										label="Maximum Quiz Attempts"
+										value={systemSettings.maxQuizAttempts}
+										min={1}
+										max={10}
+										onChange={(val) =>
+											setSystemSettings((s) => ({
+												...s,
+												maxQuizAttempts: val,
+											}))
+										}
+									/>
+									<SettingNumberInput
+										label="Quiz Time Limit (minutes)"
+										value={systemSettings.quizTimeLimit}
+										min={5}
+										max={120}
+										onChange={(val) =>
+											setSystemSettings((s) => ({
+												...s,
+												quizTimeLimit: val,
+											}))
+										}
+									/>
 								</div>
 							</div>
 
@@ -576,37 +457,87 @@ const AdminSettings = () => {
 
 				{/* Delete Confirmation Modal */}
 				{showDeleteModal && (
-					<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-						<div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
-							<div className="flex items-center space-x-3 mb-4">
-								<FaExclamationTriangle className="text-red-500 text-xl" />
-								<h3 className="text-lg font-semibold text-gray-900">
-									Delete Student
-								</h3>
-							</div>
-							<p className="text-gray-600 mb-6">
-								Are you sure you want to delete{" "}
-								<strong>{studentToDelete?.name}</strong>? This action cannot be
-								undone and will also delete all their quiz results.
-							</p>
-							<div className="flex space-x-3">
-								<button
-									onClick={() => setShowDeleteModal(false)}
-									className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-									Cancel
-								</button>
-								<button
-									onClick={handleDeleteStudent}
-									className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
-									Delete
-								</button>
-							</div>
-						</div>
-					</div>
+					<DeleteModal
+						student={studentToDelete}
+						onCancel={() => setShowDeleteModal(false)}
+						onDelete={handleDeleteStudent}
+					/>
 				)}
 			</div>
 		</div>
 	);
 };
+
+// Reusable switch component for settings
+function SettingSwitch({ label, description, checked, onChange }) {
+	return (
+		<div className="flex items-center justify-between">
+			<div>
+				<label className="text-sm font-medium text-gray-700">{label}</label>
+				<p className="text-xs text-gray-500">{description}</p>
+			</div>
+			<label className="relative inline-flex items-center cursor-pointer">
+				<input
+					type="checkbox"
+					checked={checked}
+					onChange={(e) => onChange(e.target.checked)}
+					className="sr-only peer"
+				/>
+				<div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+			</label>
+		</div>
+	);
+}
+
+// Reusable number input for settings
+function SettingNumberInput({ label, value, min, max, onChange }) {
+	return (
+		<div>
+			<label className="block text-sm font-medium text-gray-700 mb-2">
+				{label}
+			</label>
+			<input
+				type="number"
+				value={value}
+				onChange={(e) => onChange(parseInt(e.target.value) || min)}
+				className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+				min={min}
+				max={max}
+			/>
+		</div>
+	);
+}
+
+// Delete confirmation modal
+function DeleteModal({ student, onCancel, onDelete }) {
+	return (
+		<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+			<div className="bg-white rounded-xl p-6 max-w-md w-full mx-4">
+				<div className="flex items-center space-x-3 mb-4">
+					<FaExclamationTriangle className="text-red-500 text-xl" />
+					<h3 className="text-lg font-semibold text-gray-900">
+						Delete Student
+					</h3>
+				</div>
+				<p className="text-gray-600 mb-6">
+					Are you sure you want to delete <strong>{student?.name}</strong>? This
+					action cannot be undone and will also delete all their quiz results.
+				</p>
+				<div className="flex space-x-3">
+					<button
+						onClick={onCancel}
+						className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
+						Cancel
+					</button>
+					<button
+						onClick={onDelete}
+						className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+						Delete
+					</button>
+				</div>
+			</div>
+		</div>
+	);
+}
 
 export default AdminSettings;

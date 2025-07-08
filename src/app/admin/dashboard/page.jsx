@@ -24,7 +24,6 @@ import {
 	FaTimes,
 	FaHistory,
 	FaBars,
-	FaTimes as FaClose,
 } from "react-icons/fa";
 import {
 	PieChart,
@@ -415,7 +414,7 @@ const AdminDashboard = () => {
 					<button
 						className="md:hidden p-2"
 						onClick={() => setSidebarOpen(false)}>
-						<FaClose size={20} />
+						<FaTimes size={20} />
 					</button>
 				</div>
 				<nav className="mt-6 space-y-2 px-4">
