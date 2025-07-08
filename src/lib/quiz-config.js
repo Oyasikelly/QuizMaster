@@ -39,6 +39,7 @@ export const getQuizSettingsFromDB = async (supabase) => {
 			PRACTICE: {
 				time: 30,
 				questions: 20,
+				enabled: data.practice_mode || false, // New field for practice mode control
 			},
 		};
 
@@ -58,6 +59,7 @@ export const getQuizSettingsFromDB = async (supabase) => {
 			PRACTICE: {
 				time: 30,
 				questions: 20,
+				enabled: false, // Default to false (strict quiz mode)
 			},
 		};
 	}
@@ -90,6 +92,20 @@ export const isRealQuizActive = async (supabase) => {
 	} catch (error) {
 		console.error("Error checking quiz status:", error);
 		return false;
+	}
+};
+
+// Check if practice mode is enabled
+export const isPracticeModeEnabled = async (supabase) => {
+	try {
+		console.log("🔍 Checking if practice mode is enabled...");
+		const settings = await getQuizSettingsFromDB(supabase);
+
+		console.log("🎯 Practice mode setting:", settings.PRACTICE.enabled);
+		return settings.PRACTICE.enabled;
+	} catch (error) {
+		console.error("Error checking practice mode:", error);
+		return false; // Default to false (strict quiz mode)
 	}
 };
 

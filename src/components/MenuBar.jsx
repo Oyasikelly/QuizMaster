@@ -15,6 +15,7 @@ import {
 import { FaUserCircle } from "react-icons/fa";
 import { supabase } from "../lib/supabase";
 import { Button } from "./ui/enhanced-button";
+import { useRouter } from "next/navigation";
 
 // Helper for performance color/icon
 const getPerformanceColor = (percent) => {
@@ -35,7 +36,11 @@ const DESKTOP_MENU = [
 		icon: <Bot className="w-6 h-6" />,
 		label: "Chat with AI coming soon..",
 	},
-	{ href: null, icon: <User className="w-6 h-6" />, label: "Profile" },
+	{
+		href: "/student/profile",
+		icon: <User className="w-6 h-6" />,
+		label: "Profile",
+	},
 	{
 		href: null,
 		icon: <BarChart2 className="w-6 h-6 text-purple-500" />,
@@ -57,6 +62,7 @@ export default function MenuBar() {
 	const [open, setOpen] = useState(false);
 	const [hovered, setHovered] = useState(null);
 	const [isLoggingOut, setIsLoggingOut] = useState(false);
+	const router = useRouter();
 
 	// Close mobile menu when screen size changes to desktop
 	useEffect(() => {
@@ -125,6 +131,21 @@ export default function MenuBar() {
 		}
 	};
 
+	// Handle navigation
+	const handleNavigation = (href) => {
+		if (href) {
+			router.push(href);
+			setOpen(false);
+		}
+	};
+
+	// Handle home navigation based on user class
+	const handleHomeNavigation = () => {
+		router.push("/student/home");
+
+		setOpen(false);
+	};
+
 	// Side menu animation variants (for mobile)
 	const sideVariants = {
 		closed: { x: "100%", opacity: 0 },
@@ -173,13 +194,20 @@ export default function MenuBar() {
 								aria-label={item.label}>
 								{item.icon}
 							</button>
-						) : (
-							<a
-								href={item.href}
+						) : item.label === "Home" ? (
+							<button
+								onClick={handleHomeNavigation}
 								className="p-2 rounded-full hover:bg-blue-100 transition flex items-center justify-center"
 								aria-label={item.label}>
 								{item.icon}
-							</a>
+							</button>
+						) : (
+							<button
+								onClick={() => handleNavigation(item.href)}
+								className="p-2 rounded-full hover:bg-blue-100 transition flex items-center justify-center"
+								aria-label={item.label}>
+								{item.icon}
+							</button>
 						)}
 						{/* Animated label popout */}
 						<AnimatePresence>
@@ -259,17 +287,20 @@ export default function MenuBar() {
 						<nav className="flex flex-col gap-3 mb-8">
 							<DrawerNavLink
 								href="/"
-								icon={<Home className="w-5 h-5" />}>
+								icon={<Home className="w-5 h-5" />}
+								onClick={handleHomeNavigation}>
 								Home
 							</DrawerNavLink>
 							<DrawerNavLink
 								href="/"
-								icon={<Bot className="w-5 h-5" />}>
-								Chat with AI coming out soon..{" "}
+								icon={<Bot className="w-5 h-5" />}
+								onClick={() => handleNavigation("/")}>
+								Chat with AI coming out soon..
 							</DrawerNavLink>
 							<DrawerNavLink
-								href="/"
-								icon={<User className="w-5 h-5" />}>
+								href="/student/profile"
+								icon={<User className="w-5 h-5" />}
+								onClick={() => handleNavigation("/student/profile")}>
 								Profile
 							</DrawerNavLink>
 						</nav>
@@ -479,13 +510,13 @@ export default function MenuBar() {
 }
 
 // Drawer nav link
-function DrawerNavLink({ href, icon, children }) {
+function DrawerNavLink({ href, icon, children, onClick }) {
 	return (
-		<a
-			href={href}
-			className="flex items-center gap-2 px-4 py-3 rounded-xl text-gray-700 font-semibold hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100 transition-all duration-200 text-base">
+		<button
+			onClick={onClick}
+			className="flex items-center gap-2 px-4 py-3 rounded-xl text-gray-700 font-semibold hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100 transition-all duration-200 text-base w-full text-left">
 			{icon}
 			<span>{children}</span>
-		</a>
+		</button>
 	);
 }

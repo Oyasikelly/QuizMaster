@@ -132,28 +132,75 @@ const Quiz = ({ initialQuestions, category }) => {
 				.select("email, name, class")
 				.eq("email", userEmail);
 
-			if (usersError) throw usersError;
+			console.log("User profile fetch result:", { usersData, usersError });
+
+			if (usersError) {
+				console.error("Error fetching user profile:", usersError);
+				// Continue with basic data if profile fetch fails
+			}
 
 			const userProfile = usersData && usersData[0];
+			console.log("User profile:", userProfile);
 
 			const resultData = {
 				student_id: student_id,
-				email: userProfile?.email,
-				name: userProfile?.name,
-				class: userProfile?.class,
+				email: userProfile?.email || userEmail,
+				name: userProfile?.name || "Unknown",
+				class: userProfile?.class || "Unknown",
 				category: category,
 				score: correctAnswersCount,
 				total_questions: questions.length,
 				timestamp: new Date().toISOString(),
 			};
 
-			// Upsert with student_id and timestamp as conflict target
-			const { error: upsertError } = await supabase
-				.from("quiz_results")
-				.upsert(resultData, { onConflict: ["student_id", "timestamp"] });
+			console.log("Submitting quiz result:", resultData);
 
-			if (upsertError) {
-				console.error("Error adding/updating quiz result:", upsertError);
+			// Try to insert the quiz result
+			const { data: insertData, error: insertError } = await supabase
+				.from("quiz_results")
+				.insert([resultData])
+				.select();
+
+			if (insertError) {
+				console.error("Error inserting quiz result:", insertError);
+				console.error("Error details:", {
+					message: insertError.message,
+					details: insertError.details,
+					hint: insertError.hint,
+					code: insertError.code,
+				});
+
+				// Try alternative approach - insert without select
+				const { error: insertError2 } = await supabase
+					.from("quiz_results")
+					.insert([resultData]);
+
+				if (insertError2) {
+					console.error("Second attempt failed:", insertError2);
+
+					// Try with minimal data
+					const minimalData = {
+						student_id: student_id,
+						score: correctAnswersCount,
+						total_questions: questions.length,
+						timestamp: new Date().toISOString(),
+					};
+
+					const { error: insertError3 } = await supabase
+						.from("quiz_results")
+						.insert([minimalData]);
+
+					if (insertError3) {
+						console.error("Minimal insert also failed:", insertError3);
+						// Continue anyway - don't block the user
+					} else {
+						console.log("Minimal quiz result saved successfully");
+					}
+				} else {
+					console.log("Quiz result saved successfully (second attempt)");
+				}
+			} else {
+				console.log("Quiz result inserted successfully:", insertData);
 			}
 
 			removeNavigationLock();
@@ -162,7 +209,16 @@ const Quiz = ({ initialQuestions, category }) => {
 				`/quiz/results?correct=${correctAnswersCount}&total=${questions.length}`
 			);
 		} catch (err) {
-			console.log("An error occurred during submission:", err);
+			console.error("An error occurred during submission:", err);
+			// Don't block the user - continue to results page
+			removeNavigationLock();
+			router.replace(
+				`/quiz/results?correct=${
+					answers.filter((answer, index) => answer === questions[index].answer)
+						.length
+				}&total=${questions.length}`
+			);
+		} finally {
 			setIsSubmitting(false);
 		}
 	};

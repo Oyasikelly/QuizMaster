@@ -11,6 +11,8 @@ import {
 	FaQuestionCircle,
 	FaLock,
 	FaUnlock,
+	FaPlay,
+	FaStop,
 } from "react-icons/fa";
 
 export default function QuizSettingsAdmin() {
@@ -20,6 +22,7 @@ export default function QuizSettingsAdmin() {
 		questions: 100,
 		start_time: "",
 		end_time: "",
+		practice_mode: false, // New field for practice mode
 	});
 	const [loading, setLoading] = useState(true);
 	const [saving, setSaving] = useState(false);
@@ -49,6 +52,7 @@ export default function QuizSettingsAdmin() {
 						end_time: data.end_time
 							? new Date(data.end_time).toISOString().slice(0, 16)
 							: "",
+						practice_mode: data.practice_mode || false, // Load practice mode setting
 					});
 				}
 			} catch (err) {
@@ -73,6 +77,7 @@ export default function QuizSettingsAdmin() {
 				questions: settings.questions,
 				start_time: settings.start_time,
 				end_time: settings.end_time,
+				practice_mode: settings.practice_mode, // Save practice mode setting
 			});
 
 			if (error) {
@@ -105,6 +110,7 @@ export default function QuizSettingsAdmin() {
 
 				<div className="bg-white rounded-lg shadow-lg p-6">
 					<div className="space-y-6">
+						{/* Real Quiz Mode Toggle */}
 						<div>
 							<label className="flex items-center space-x-2">
 								<input
@@ -117,6 +123,68 @@ export default function QuizSettingsAdmin() {
 								/>
 								<span className="font-semibold">Enable Real Quiz Mode</span>
 							</label>
+							<p className="text-sm text-gray-600 mt-1">
+								When enabled, students can take the real quiz during the
+								specified time period.
+							</p>
+						</div>
+
+						{/* Practice Mode Toggle */}
+						<div>
+							<label className="flex items-center space-x-2">
+								<input
+									type="checkbox"
+									checked={settings.practice_mode}
+									onChange={(e) =>
+										setSettings({
+											...settings,
+											practice_mode: e.target.checked,
+										})
+									}
+									className="rounded"
+								/>
+								<span className="font-semibold">Enable Practice Mode</span>
+							</label>
+							<p className="text-sm text-gray-600 mt-1">
+								When enabled, students can practice when real quiz is not
+								active. When disabled, only real quiz mode is available.
+							</p>
+						</div>
+
+						{/* Mode Status Display */}
+						<div className="p-4 bg-gray-50 rounded-lg">
+							<h4 className="font-semibold mb-2">Current Mode Status:</h4>
+							<div className="space-y-2">
+								<div className="flex items-center gap-2">
+									{settings.is_active ? (
+										<FaLock className="text-red-500" />
+									) : (
+										<FaUnlock className="text-gray-400" />
+									)}
+									<span
+										className={
+											settings.is_active ? "text-red-700" : "text-gray-600"
+										}>
+										Real Quiz: {settings.is_active ? "Enabled" : "Disabled"}
+									</span>
+								</div>
+								<div className="flex items-center gap-2">
+									{settings.practice_mode ? (
+										<FaPlay className="text-green-500" />
+									) : (
+										<FaStop className="text-gray-400" />
+									)}
+									<span
+										className={
+											settings.practice_mode
+												? "text-green-700"
+												: "text-gray-600"
+										}>
+										Practice Mode:{" "}
+										{settings.practice_mode ? "Enabled" : "Disabled"}
+									</span>
+								</div>
+							</div>
 						</div>
 
 						<div className="grid grid-cols-2 gap-4">

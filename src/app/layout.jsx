@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Head from "next/head";
+import { AuthProvider } from "../contexts/AuthContext";
+
 const geistSans = Geist({
 	variable: "--font-geist-sans",
 	subsets: ["latin"],
@@ -19,18 +20,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<Head>
-				<title>My App</title>
-				<link
-					rel="icon"
-					href="/QuizMaster_logo.jpg"
-					sizes="256x256"
-					type="image/x-icon"
-				/>
-			</Head>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-				{children}
+				<AuthProvider>{children}</AuthProvider>
 			</body>
 		</html>
 	);

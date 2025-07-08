@@ -14,6 +14,7 @@ import {
 	isRealQuizActive,
 	hasUserTakenRealQuiz,
 	getQuizSettings,
+	isPracticeModeEnabled,
 } from "../lib/quiz-config";
 
 const timeCategories = {
@@ -84,10 +85,15 @@ export default function SelectTime() {
 				const isReal = await isRealQuizActive(supabase);
 				console.log("🔒 Is Real Quiz Active:", isReal);
 
+				console.log("🔍 Checking if practice mode is enabled...");
+				const practiceEnabled = await isPracticeModeEnabled(supabase);
+				console.log("🎯 Practice Mode Enabled:", practiceEnabled);
+
 				console.log("🔍 Checking if user has taken quiz...");
 				const hasTaken = await hasUserTakenRealQuiz(supabase, user.id);
 				console.log("📝 Has User Taken Quiz:", hasTaken);
 
+				// New logic: Check if practice mode is enabled
 				if (isReal && hasTaken) {
 					console.log("🎯 Setting: Already taken real quiz");
 					setQuizState({
@@ -109,16 +115,31 @@ export default function SelectTime() {
 					setSelectedTime(60);
 					setSelectedQuestions(100);
 				} else {
-					console.log("🎯 Setting: Practice mode");
-					setQuizState({
-						isRealQuiz: false,
-						hasTakenQuiz: false,
-						canTakeQuiz: true,
-						message: "Practice Mode: Customize your quiz",
-					});
-					// Set default practice values
-					setSelectedTime(30);
-					setSelectedQuestions(20);
+					// Quiz is not active - check if practice mode is enabled
+					if (practiceEnabled) {
+						console.log("🎯 Setting: Practice mode (enabled by admin)");
+						setQuizState({
+							isRealQuiz: false,
+							hasTakenQuiz: false,
+							canTakeQuiz: true,
+							message: "Practice Mode: Customize your quiz",
+						});
+						// Set default practice values
+						setSelectedTime(30);
+						setSelectedQuestions(20);
+					} else {
+						console.log("🎯 Setting: Quiz mode only (practice disabled)");
+						setQuizState({
+							isRealQuiz: false,
+							hasTakenQuiz: false,
+							canTakeQuiz: false,
+							message:
+								"Quiz is currently not available. Please wait for the next quiz period.",
+						});
+						// Set default values but disable quiz
+						setSelectedTime(60);
+						setSelectedQuestions(100);
+					}
 				}
 			} catch (error) {
 				console.error("Error checking quiz state:", error);
@@ -200,7 +221,9 @@ export default function SelectTime() {
 					className={`text-center p-4 rounded-2xl border-2 ${
 						quizState.isRealQuiz
 							? "bg-gradient-to-r from-red-50 to-orange-50 border-red-200"
-							: "bg-gradient-to-r from-green-50 to-blue-50 border-green-200"
+							: quizState.canTakeQuiz
+							? "bg-gradient-to-r from-green-50 to-blue-50 border-green-200"
+							: "bg-gradient-to-r from-gray-50 to-gray-100 border-gray-200"
 					}`}>
 					<div className="flex items-center justify-center gap-2 mb-2">
 						{quizState.isRealQuiz ? (
@@ -208,10 +231,17 @@ export default function SelectTime() {
 								<FiLock className="text-red-500" />
 								<span className="font-bold text-red-700">Real Quiz Mode</span>
 							</>
-						) : (
+						) : quizState.canTakeQuiz ? (
 							<>
 								<FaPlay className="text-green-500" />
 								<span className="font-bold text-green-700">Practice Mode</span>
+							</>
+						) : (
+							<>
+								<FaExclamationTriangle className="text-gray-500" />
+								<span className="font-bold text-gray-700">
+									Quiz Unavailable
+								</span>
 							</>
 						)}
 					</div>
@@ -229,36 +259,25 @@ export default function SelectTime() {
 							</p>
 						</div>
 					)}
+
+					{!quizState.canTakeQuiz && !quizState.isRealQuiz && (
+						<div className="mt-3 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+							<div className="flex items-center gap-2 text-gray-700">
+								<FaExclamationTriangle />
+								<span className="font-semibold">Practice Mode Disabled</span>
+							</div>
+							<p className="text-xs text-gray-600 mt-1">
+								Practice mode is currently disabled by the administrator. Please
+								wait for the next quiz period.
+							</p>
+						</div>
+					)}
 				</motion.div>
 				{/* Select Time */}
 				<div className="text-center space-y-4">
 					<h3 className="text-base font-semibold flex items-center justify-center gap-2 text-gray-800">
 						<FaClock className="text-blue-500" /> Select Time
 					</h3>
-
-					{/* {Object.entries(timeCategories).map(([label, times]) => (
-						<div
-							key={label}
-							className="space-y-2">
-							<p className="text-sm text-gray-600 font-medium">{label}</p>
-							<div className="flex flex-wrap justify-center gap-3">
-								{times.map((time) => (
-									<motion.button
-										key={time}
-										whileHover={{ scale: 1.05 }}
-										whileTap={{ scale: 0.95 }}
-										onClick={() => setSelectedTime(time)}
-										className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-											selectedTime === time
-												? "bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md"
-												: "bg-gray-200 text-gray-800 hover:bg-gray-300"
-										}`}>
-										{formatTime(time)}
-									</motion.button>
-								))}
-							</div>
-						</div>
-					))} */}
 
 					{/* Custom Time Slider */}
 					<div className="flex flex-col items-center mt-4 space-y-1">
@@ -273,9 +292,9 @@ export default function SelectTime() {
 							step={5}
 							value={selectedTime}
 							onChange={(e) => setSelectedTime(Number(e.target.value))}
-							disabled={quizState.isRealQuiz}
+							disabled={quizState.isRealQuiz || !quizState.canTakeQuiz}
 							className={`w-2/3 md:w-1/3 ${
-								quizState.isRealQuiz
+								quizState.isRealQuiz || !quizState.canTakeQuiz
 									? "opacity-50 cursor-not-allowed"
 									: "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent"
 							}`}
@@ -283,6 +302,11 @@ export default function SelectTime() {
 						{quizState.isRealQuiz && (
 							<p className="text-xs text-red-600">
 								Time is fixed for real quiz
+							</p>
+						)}
+						{!quizState.canTakeQuiz && !quizState.isRealQuiz && (
+							<p className="text-xs text-gray-600">
+								Quiz is currently unavailable
 							</p>
 						)}
 					</div>
@@ -294,20 +318,7 @@ export default function SelectTime() {
 						<FaQuestionCircle className="text-blue-500" /> Number of Questions
 					</h3>
 					<div className="flex flex-wrap justify-center gap-3">
-						{/* {questionPresets.map((num) => (
-							<motion.button
-								key={num}
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
-								onClick={() => setSelectedQuestions(num)}
-								className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-									selectedQuestions === num
-										? "bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-md"
-										: "bg-gray-200 text-gray-800 hover:bg-gray-300"
-								}`}>
-								{num} Questions
-							</motion.button>
-						))} */}
+						{/* Question presets removed for simplicity */}
 					</div>
 
 					{/* Optional Slider */}
@@ -323,9 +334,9 @@ export default function SelectTime() {
 							step={5}
 							value={selectedQuestions}
 							onChange={(e) => setSelectedQuestions(Number(e.target.value))}
-							disabled={quizState.isRealQuiz}
+							disabled={quizState.isRealQuiz || !quizState.canTakeQuiz}
 							className={`w-2/3 md:w-1/3 ${
-								quizState.isRealQuiz
+								quizState.isRealQuiz || !quizState.canTakeQuiz
 									? "opacity-50 cursor-not-allowed"
 									: "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent"
 							}`}
@@ -333,6 +344,11 @@ export default function SelectTime() {
 						{quizState.isRealQuiz && (
 							<p className="text-xs text-red-600">
 								Questions are fixed for real quiz
+							</p>
+						)}
+						{!quizState.canTakeQuiz && !quizState.isRealQuiz && (
+							<p className="text-xs text-gray-600">
+								Quiz is currently unavailable
 							</p>
 						)}
 					</div>
@@ -348,14 +364,22 @@ export default function SelectTime() {
 						className={`py-4 px-8 rounded-full flex items-center justify-center gap-3 text-white font-semibold text-lg shadow-xl transition-all duration-300 ${
 							quizState.isRealQuiz
 								? "bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-600 hover:to-orange-700"
-								: "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+								: quizState.canTakeQuiz
+								? "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+								: "bg-gray-400 cursor-not-allowed"
 						} ${!canStart ? "opacity-50 cursor-not-allowed" : ""}`}>
 						{quizState.isRealQuiz ? (
 							<FiLock className="text-sm" />
-						) : (
+						) : quizState.canTakeQuiz ? (
 							<FaPlay className="text-sm" />
+						) : (
+							<FaExclamationTriangle className="text-sm" />
 						)}
-						{quizState.isRealQuiz ? "Start Real Quiz" : "Start Practice Quiz"}
+						{quizState.isRealQuiz
+							? "Start Real Quiz"
+							: quizState.canTakeQuiz
+							? "Start Practice Quiz"
+							: "Quiz Unavailable"}
 					</motion.button>
 				</div>
 			</motion.div>

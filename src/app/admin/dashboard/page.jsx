@@ -213,7 +213,7 @@ const AdminDashboard = () => {
 
 	const handleSignOut = async () => {
 		await supabase.auth.signOut();
-		router.push("/");
+		router.push("/authenticate");
 	};
 
 	const handleViewStudent = async (student) => {
