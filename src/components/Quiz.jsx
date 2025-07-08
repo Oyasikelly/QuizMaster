@@ -125,7 +125,7 @@ const Quiz = ({ initialQuestions, category }) => {
 
 			const student_id = data.user.id;
 			const userEmail = data.user.email;
-
+			console.log(student_id);
 			// Get extra profile info
 			const { data: usersData, error: usersError } = await supabase
 				.from("users_profile")
@@ -153,54 +153,18 @@ const Quiz = ({ initialQuestions, category }) => {
 				timestamp: new Date().toISOString(),
 			};
 
-			console.log("Submitting quiz result:", resultData);
+			console.log("Upserting quiz result:", resultData);
 
-			// Try to insert the quiz result
-			const { data: insertData, error: insertError } = await supabase
+			// Upsert quiz result based on student_id
+			const { data: upsertData, error: upsertError } = await supabase
 				.from("quiz_results")
-				.insert([resultData])
+				.upsert([resultData], { onConflict: ["student_id"] })
 				.select();
 
-			if (insertError) {
-				console.error("Error inserting quiz result:", insertError);
-				console.error("Error details:", {
-					message: insertError.message,
-					details: insertError.details,
-					hint: insertError.hint,
-					code: insertError.code,
-				});
-
-				// Try alternative approach - insert without select
-				const { error: insertError2 } = await supabase
-					.from("quiz_results")
-					.insert([resultData]);
-
-				if (insertError2) {
-					console.error("Second attempt failed:", insertError2);
-
-					// Try with minimal data
-					const minimalData = {
-						student_id: student_id,
-						score: correctAnswersCount,
-						total_questions: questions.length,
-						timestamp: new Date().toISOString(),
-					};
-
-					const { error: insertError3 } = await supabase
-						.from("quiz_results")
-						.insert([minimalData]);
-
-					if (insertError3) {
-						console.error("Minimal insert also failed:", insertError3);
-						// Continue anyway - don't block the user
-					} else {
-						console.log("Minimal quiz result saved successfully");
-					}
-				} else {
-					console.log("Quiz result saved successfully (second attempt)");
-				}
+			if (upsertError) {
+				console.error("Error upserting quiz result:", upsertError);
 			} else {
-				console.log("Quiz result inserted successfully:", insertData);
+				console.log("Quiz result upserted successfully:", upsertData);
 			}
 
 			removeNavigationLock();

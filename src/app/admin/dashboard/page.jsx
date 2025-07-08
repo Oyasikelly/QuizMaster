@@ -23,6 +23,8 @@ import {
 	FaCheck,
 	FaTimes,
 	FaHistory,
+	FaBars,
+	FaTimes as FaClose,
 } from "react-icons/fa";
 import {
 	PieChart,
@@ -54,6 +56,7 @@ const AdminDashboard = () => {
 	const [studentQuizResults, setStudentQuizResults] = useState([]);
 	const [showEditModal, setShowEditModal] = useState(false);
 	const [editingStudent, setEditingStudent] = useState(null);
+	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -353,6 +356,37 @@ const AdminDashboard = () => {
 		setEditingStudent(null);
 	};
 
+	// Sidebar links
+	const sidebarLinks = [
+		{
+			label: "Dashboard",
+			icon: <FaTrophy />,
+			onClick: () => router.push("/admin/dashboard"),
+		},
+		{
+			label: "Student Management",
+			icon: <FaUsers />,
+			onClick: () =>
+				document
+					.getElementById("student-management")
+					?.scrollIntoView({ behavior: "smooth" }),
+		},
+		{
+			label: "Analytics",
+			icon: <FaChartBar />,
+			onClick: () =>
+				document
+					.getElementById("analytics-section")
+					?.scrollIntoView({ behavior: "smooth" }),
+		},
+		{
+			label: "Settings",
+			icon: <FaCog />,
+			onClick: () => router.push("/admin/settings"),
+		},
+		{ label: "Logout", icon: <FaSignOutAlt />, onClick: handleSignOut },
+	];
+
 	if (loading) {
 		return (
 			<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center">
@@ -365,579 +399,829 @@ const AdminDashboard = () => {
 	}
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100">
-			{/* Header */}
-			<header className="bg-white shadow-sm border-b">
-				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="flex justify-between items-center py-4">
-						<div className="flex items-center space-x-3">
-							<div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
-								<FaUser className="text-white" />
-							</div>
-							<div>
-								<h1 className="text-xl font-semibold text-gray-900">
-									Admin Dashboard
-								</h1>
-								<p className="text-sm text-gray-500">Welcome, {user?.name}</p>
-							</div>
+		<div className="min-h-screen overflow-hidden scrollbar-hide flex bg-gradient-to-br from-purple-50 to-indigo-100">
+			{/* Sidebar */}
+			<aside
+				className={`fixed z-30 inset-y-0 left-0 w-64 bg-white shadow-lg transform ${
+					sidebarOpen ? "translate-x-0" : "-translate-x-full"
+				} transition-transform duration-200 ease-in-out md:relative md:translate-x-0 md:w-56 md:block`}>
+				<div className="flex items-center justify-between px-6 py-4 border-b">
+					<div className="flex items-center space-x-2">
+						<div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
+							<FaUser className="text-white" />
 						</div>
-						<div className="flex items-center space-x-4">
-							<button className="p-2 text-gray-600 hover:text-gray-800 transition-colors">
-								<FaBell size={20} />
-							</button>
-							<button
-								onClick={() => router.push("/admin/settings")}
-								className="p-2 text-gray-600 hover:text-gray-800 transition-colors">
-								<FaCog size={20} />
-							</button>
-							<button
-								onClick={handleSignOut}
-								className="flex items-center space-x-2 px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
-								<FaSignOutAlt />
-								<span>Sign Out</span>
-							</button>
-						</div>
+						<span className="font-bold text-lg text-gray-800">Admin</span>
 					</div>
+					<button
+						className="md:hidden p-2"
+						onClick={() => setSidebarOpen(false)}>
+						<FaClose size={20} />
+					</button>
 				</div>
-			</header>
+				<nav className="mt-6 space-y-2 px-4">
+					{sidebarLinks.map((link, idx) => (
+						<button
+							key={link.label}
+							onClick={() => {
+								link.onClick();
+								setSidebarOpen(false);
+							}}
+							className="flex items-center w-full px-4 py-3 rounded-lg text-gray-700 hover:bg-purple-100 transition-colors font-medium gap-3">
+							{link.icon}
+							<span>{link.label}</span>
+						</button>
+					))}
+				</nav>
+			</aside>
+
+			{/* Overlay for mobile sidebar */}
+			{sidebarOpen && (
+				<div
+					className="fixed inset-0 z-20 bg-black bg-opacity-30 md:hidden"
+					onClick={() => setSidebarOpen(false)}></div>
+			)}
 
 			{/* Main Content */}
-			<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-				{/* Stats Overview */}
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-					<div className="bg-white rounded-xl shadow-lg p-6">
-						<div className="flex items-center space-x-3">
-							<div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-								<FaUsers className="text-blue-600" />
-							</div>
-							<div>
-								<p className="text-sm text-gray-500">Total Students</p>
-								<p className="text-2xl font-bold text-gray-900">
-									{stats.totalStudents}
-								</p>
-							</div>
+			<div className="flex-1 flex flex-col max-w-screen min-h-screen md:ml-4">
+				{/* Topbar for mobile */}
+				<header className="bg-red-200  shadow-sm border-b md:hidden flex items-center justify-between px-4 py-3">
+					<button
+						className="p-1"
+						onClick={() => setSidebarOpen(true)}>
+						<FaBars size={22} />
+					</button>
+					<div className="flex items-center w-auto space-x-2">
+						<div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
+							<FaUser className="text-white" />
 						</div>
+						<span className="font-semibold text-gray-800">{user?.name}</span>
 					</div>
-					<div className="bg-white rounded-xl shadow-lg p-6">
-						<div className="flex items-center space-x-3">
-							<div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-								<FaClipboardList className="text-green-600" />
-							</div>
-							<div>
-								<p className="text-sm text-gray-500">Total Quizzes</p>
-								<p className="text-2xl font-bold text-gray-900">
-									{stats.totalQuizzes}
-								</p>
-							</div>
-						</div>
-					</div>
-					<div className="bg-white rounded-xl shadow-lg p-6">
-						<div className="flex items-center space-x-3">
-							<div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-								<FaChartBar className="text-purple-600" />
-							</div>
-							<div>
-								<p className="text-sm text-gray-500">Average Score</p>
-								<p className="text-2xl font-bold text-gray-900">
-									{stats.averageScore}%
-								</p>
-							</div>
-						</div>
-					</div>
-				</motion.div>
+				</header>
 
-				{/* Student Management */}
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.1 }}
-					className="bg-white rounded-xl shadow-lg p-6 mb-8">
-					<div className="flex justify-between items-center mb-6">
-						<h2 className="text-xl font-semibold text-gray-900">
-							Student Management
-						</h2>
-						<div className="flex space-x-2">
-							<div className="relative">
-								<FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-								<input
-									type="text"
-									placeholder="Search students..."
-									value={searchTerm}
-									onChange={(e) => setSearchTerm(e.target.value)}
-									className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-								/>
+				<main className="flex-1 max-w-7xl mx-auto w-screen lg:w-full px-2 sm:px-4 lg:px-8 py-8 overflow-x-hidden">
+					{/* Stats Overview */}
+					<motion.div
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 w-full max-w-full">
+						<div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-full overflow-x-auto">
+							<div className="flex items-center space-x-3">
+								<div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+									<FaUsers className="text-blue-600" />
+								</div>
+								<div>
+									<p className="text-sm text-gray-500">Total Students</p>
+									<p className="text-2xl font-bold text-gray-900">
+										{stats.totalStudents}
+									</p>
+								</div>
 							</div>
-							<select
-								value={filterRole}
-								onChange={(e) => setFilterRole(e.target.value)}
-								className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
-								<option value="all">All Roles</option>
-								<option value="student">Students</option>
-								<option value="admin">Admins</option>
-							</select>
 						</div>
-					</div>
+						<div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-full overflow-x-auto">
+							<div className="flex items-center space-x-3">
+								<div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+									<FaClipboardList className="text-green-600" />
+								</div>
+								<div>
+									<p className="text-sm text-gray-500">Total Quizzes</p>
+									<p className="text-2xl font-bold text-gray-900">
+										{stats.totalQuizzes}
+									</p>
+								</div>
+							</div>
+						</div>
+						<div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-full overflow-x-auto">
+							<div className="flex items-center space-x-3">
+								<div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+									<FaChartBar className="text-purple-600" />
+								</div>
+								<div>
+									<p className="text-sm text-gray-500">Average Score</p>
+									<p className="text-2xl font-bold text-gray-900">
+										{stats.averageScore}%
+									</p>
+								</div>
+							</div>
+						</div>
+					</motion.div>
 
-					<div className="overflow-x-auto">
-						<table className="w-full">
-							<thead>
-								<tr className="border-b border-gray-200">
-									<th className="text-left py-3 px-4 font-medium text-gray-900">
-										Name
-									</th>
-									<th className="text-left py-3 px-4 font-medium text-gray-900">
-										Email
-									</th>
-									<th className="text-left py-3 px-4 font-medium text-gray-900">
-										Class
-									</th>
-									<th className="text-left py-3 px-4 font-medium text-gray-900">
-										Quiz Submissions
-									</th>
-									<th className="text-left py-3 px-4 font-medium text-gray-900">
-										Avg Score
-									</th>
-									<th className="text-left py-3 px-4 font-medium text-gray-900">
-										Best
-									</th>
-									<th className="text-left py-3 px-4 font-medium text-gray-900">
-										Recent
-									</th>
-									<th className="text-left py-3 px-4 font-medium text-gray-900">
-										Actions
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								{sortedClasses.map((cls) => (
-									<React.Fragment key={cls}>
-										<tr key={`heading-${cls}`}>
-											<td
-												colSpan={8}
-												className="bg-purple-50 text-purple-700 font-bold py-2 px-4 text-lg">
-												{cls.charAt(0).toUpperCase() + cls.slice(1)}
-											</td>
-										</tr>
-										{groupedByClass[cls].map((student) => (
-											<tr
-												key={`${cls}-${student.id}`}
-												className="border-b border-gray-100 hover:bg-gray-50">
-												<td className="py-3 px-4">
-													<div className="flex items-center space-x-3">
-														<div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-															<span className="text-white text-sm font-medium">
-																{student.name?.charAt(0) || "U"}
+					{/* Student Management */}
+					<motion.div
+						id="student-management"
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ delay: 0.1 }}
+						className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-8 overflow-x-auto w-full max-w-full">
+						<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
+							<h2 className="text-xl font-semibold text-gray-900">
+								Student Management
+							</h2>
+							<div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+								<div className="relative w-full sm:w-auto">
+									<FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+									<input
+										type="text"
+										placeholder="Search students..."
+										value={searchTerm}
+										onChange={(e) => setSearchTerm(e.target.value)}
+										className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent w-full sm:w-64"
+									/>
+								</div>
+								<select
+									value={filterRole}
+									onChange={(e) => setFilterRole(e.target.value)}
+									className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent w-full sm:w-auto">
+									<option value="all">All Roles</option>
+									<option value="student">Students</option>
+									<option value="admin">Admins</option>
+								</select>
+							</div>
+						</div>
+
+						{/* Responsive Table or Cards */}
+						<div className="block w-full overflow-x-auto max-w-full">
+							<table className="hidden md:table w-full max-w-full">
+								<thead>
+									<tr className="border-b border-gray-200">
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Name
+										</th>
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Email
+										</th>
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Class
+										</th>
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Quiz Submissions
+										</th>
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Avg Score
+										</th>
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Best
+										</th>
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Recent
+										</th>
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Actions
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									{sortedClasses.map((cls) => (
+										<React.Fragment key={cls}>
+											<tr key={`heading-${cls}`}>
+												<td
+													colSpan={8}
+													className="bg-purple-50 text-purple-700 font-bold py-2 px-4 text-lg">
+													{cls.charAt(0).toUpperCase() + cls.slice(1)}
+												</td>
+											</tr>
+											{groupedByClass[cls].map((student) => (
+												<tr
+													key={`${cls}-${student.id}`}
+													className="border-b border-gray-100 hover:bg-gray-50">
+													<td className="py-3 px-4">
+														<div className="flex items-center space-x-3">
+															<div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+																<span className="text-white text-sm font-medium">
+																	{student.name?.charAt(0) || "U"}
+																</span>
+															</div>
+															<span className="font-medium text-gray-900">
+																{student.name}
 															</span>
 														</div>
-														<span className="font-medium text-gray-900">
-															{student.name}
+													</td>
+													<td className="py-3 px-4 text-gray-600">
+														{student.email}
+													</td>
+													<td className="py-3 px-4">
+														<span className="text-gray-600">
+															{student.class || "Not set"}
+														</span>
+													</td>
+													<td className="py-3 px-4">
+														<span className="flex items-center space-x-2">
+															<FaClipboardList className="text-blue-500" />
+															<span className="font-medium text-gray-900">
+																{student.submissionCount || 0}
+															</span>
+														</span>
+													</td>
+													<td className="py-3 px-4 text-blue-700 font-semibold">
+														{student.averageScore || 0}%
+													</td>
+													<td className="py-3 px-4 text-green-700 font-semibold">
+														{student.bestScore || 0}%
+													</td>
+													<td className="py-3 px-4 text-purple-700 font-semibold">
+														{student.recentScore || 0}%
+													</td>
+													<td className="py-3 px-4">
+														<div className="flex space-x-2">
+															<button
+																onClick={() => handleViewStudent(student)}
+																className="p-1 text-blue-600 hover:text-blue-800">
+																<FaEye size={14} />
+															</button>
+															<button
+																onClick={() => handleEditStudent(student)}
+																className="p-1 text-green-600 hover:text-green-800">
+																<FaEdit size={14} />
+															</button>
+															<button
+																onClick={() =>
+																	router.push(
+																		`/admin/settings?tab=students&delete=${student.id}`
+																	)
+																}
+																className="p-1 text-red-600 hover:text-red-800">
+																<FaTrash size={14} />
+															</button>
+														</div>
+													</td>
+												</tr>
+											))}
+										</React.Fragment>
+									))}
+								</tbody>
+							</table>
+
+							{/* Mobile Cards */}
+							<div className="md:hidden space-y-4 w-full max-w-full">
+								{sortedClasses.map((cls) => (
+									<div
+										key={cls}
+										className="mb-2 w-full max-w-full">
+										<div className="bg-purple-50 text-purple-700 font-bold py-2 px-4 text-lg rounded-t-lg">
+											{cls.charAt(0).toUpperCase() + cls.slice(1)}
+										</div>
+										{groupedByClass[cls].map((student) => (
+											<div
+												key={`${cls}-${student.id}`}
+												className="bg-white rounded-b-lg shadow border border-gray-100 p-4 mb-2 w-full max-w-full">
+												<div className="flex items-center space-x-3 mb-2">
+													<div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+														<span className="text-white text-sm font-medium">
+															{student.name?.charAt(0) || "U"}
 														</span>
 													</div>
+													<span className="font-medium text-gray-900">
+														{student.name}
+													</span>
+												</div>
+												<div className="text-gray-600 text-sm mb-1">
+													<b>Email:</b> {student.email}
+												</div>
+												<div className="text-gray-600 text-sm mb-1">
+													<b>Class:</b> {student.class || "Not set"}
+												</div>
+												<div className="flex flex-wrap gap-2 text-xs mb-2">
+													<span className="flex items-center gap-1 bg-blue-50 text-blue-700 px-2 py-1 rounded">
+														<FaClipboardList className="text-blue-500" />{" "}
+														{student.submissionCount || 0} submissions
+													</span>
+													<span className="bg-blue-100 text-blue-700 px-2 py-1 rounded">
+														Avg: {student.averageScore || 0}%
+													</span>
+													<span className="bg-green-100 text-green-700 px-2 py-1 rounded">
+														Best: {student.bestScore || 0}%
+													</span>
+													<span className="bg-purple-100 text-purple-700 px-2 py-1 rounded">
+														Recent: {student.recentScore || 0}%
+													</span>
+												</div>
+												<div className="flex space-x-2">
+													<button
+														onClick={() => handleViewStudent(student)}
+														className="p-1 text-blue-600 hover:text-blue-800">
+														<FaEye size={16} />
+													</button>
+													<button
+														onClick={() => handleEditStudent(student)}
+														className="p-1 text-green-600 hover:text-green-800">
+														<FaEdit size={16} />
+													</button>
+													<button
+														onClick={() =>
+															router.push(
+																`/admin/settings?tab=students&delete=${student.id}`
+															)
+														}
+														className="p-1 text-red-600 hover:text-red-800">
+														<FaTrash size={16} />
+													</button>
+												</div>
+											</div>
+										))}
+									</div>
+								))}
+							</div>
+						</div>
+					</motion.div>
+
+					{/* Quiz Results */}
+					<motion.div
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ delay: 0.2 }}
+						className="bg-white rounded-xl shadow-lg p-6 mb-8 w-full max-w-full overflow-x-auto">
+						<div className="flex justify-between items-center mb-6">
+							<h2 className="text-xl font-semibold text-gray-900">
+								Recent Quiz Results
+							</h2>
+							<button className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+								<FaDownload size={14} />
+								<span>Export</span>
+							</button>
+						</div>
+
+						<div className="overflow-x-auto w-full max-w-full">
+							<table className="w-full max-w-full">
+								<thead>
+									<tr className="border-b border-gray-200">
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Student
+										</th>
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Email
+										</th>
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Class
+										</th>
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Score
+										</th>
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Questions
+										</th>
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Date
+										</th>
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Actions
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									{quizResults.map((result) => {
+										const student = students.find(
+											(s) => s.email === result.email
+										);
+										return (
+											<tr
+												key={`${result.email}-${result.timestamp}`}
+												className="border-b border-gray-100 hover:bg-gray-50">
+												<td className="py-3 px-4 text-gray-900">
+													{student?.name || result.email}
 												</td>
 												<td className="py-3 px-4 text-gray-600">
-													{student.email}
+													{result.email}
+												</td>
+												<td className="py-3 px-4 text-gray-600">
+													{student?.class || "Not set"}
 												</td>
 												<td className="py-3 px-4">
-													<span className="text-gray-600">
-														{student.class || "Not set"}
+													<span
+														className={`px-2 py-1 rounded-full text-xs font-medium ${
+															result.score / result.total_questions >= 0.8
+																? "bg-green-100 text-green-800"
+																: result.score / result.total_questions >= 0.6
+																? "bg-yellow-100 text-yellow-800"
+																: "bg-red-100 text-red-800"
+														}`}>
+														{Math.round(
+															(result.score / result.total_questions) * 100
+														)}
+														%
 													</span>
 												</td>
-												<td className="py-3 px-4">
-													<span className="flex items-center space-x-2">
-														<FaClipboardList className="text-blue-500" />
-														<span className="font-medium text-gray-900">
-															{student.submissionCount || 0}
-														</span>
-													</span>
+												<td className="py-3 px-4 text-gray-600">
+													{result.score}/{result.total_questions}
 												</td>
-												<td className="py-3 px-4 text-blue-700 font-semibold">
-													{student.averageScore || 0}%
-												</td>
-												<td className="py-3 px-4 text-green-700 font-semibold">
-													{student.bestScore || 0}%
-												</td>
-												<td className="py-3 px-4 text-purple-700 font-semibold">
-													{student.recentScore || 0}%
+												<td className="py-3 px-4 text-gray-600">
+													{new Date(result.timestamp).toLocaleDateString()}
 												</td>
 												<td className="py-3 px-4">
-													<div className="flex space-x-2">
+													{student ? (
 														<button
 															onClick={() => handleViewStudent(student)}
 															className="p-1 text-blue-600 hover:text-blue-800">
 															<FaEye size={14} />
 														</button>
-														<button
-															onClick={() => handleEditStudent(student)}
-															className="p-1 text-green-600 hover:text-green-800">
-															<FaEdit size={14} />
-														</button>
-														<button
-															onClick={() =>
-																router.push(
-																	`/admin/settings?tab=students&delete=${student.id}`
-																)
-															}
-															className="p-1 text-red-600 hover:text-red-800">
-															<FaTrash size={14} />
-														</button>
-													</div>
+													) : null}
 												</td>
 											</tr>
-										))}
-									</React.Fragment>
-								))}
-							</tbody>
-						</table>
-					</div>
-				</motion.div>
-
-				{/* Quiz Results */}
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.2 }}
-					className="bg-white rounded-xl shadow-lg p-6 mb-8">
-					<div className="flex justify-between items-center mb-6">
-						<h2 className="text-xl font-semibold text-gray-900">
-							Recent Quiz Results
-						</h2>
-						<button className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
-							<FaDownload size={14} />
-							<span>Export</span>
-						</button>
-					</div>
-
-					<div className="overflow-x-auto">
-						<table className="w-full">
-							<thead>
-								<tr className="border-b border-gray-200">
-									<th className="text-left py-3 px-4 font-medium text-gray-900">
-										Student
-									</th>
-									<th className="text-left py-3 px-4 font-medium text-gray-900">
-										Email
-									</th>
-									<th className="text-left py-3 px-4 font-medium text-gray-900">
-										Class
-									</th>
-									<th className="text-left py-3 px-4 font-medium text-gray-900">
-										Score
-									</th>
-									<th className="text-left py-3 px-4 font-medium text-gray-900">
-										Questions
-									</th>
-									<th className="text-left py-3 px-4 font-medium text-gray-900">
-										Date
-									</th>
-									<th className="text-left py-3 px-4 font-medium text-gray-900">
-										Actions
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								{quizResults.map((result) => {
-									const student = students.find(
-										(s) => s.email === result.email
-									);
-									return (
-										<tr
-											key={`${result.email}-${result.timestamp}`}
-											className="border-b border-gray-100 hover:bg-gray-50">
-											<td className="py-3 px-4 text-gray-900">
-												{student?.name || result.email}
-											</td>
-											<td className="py-3 px-4 text-gray-600">
-												{result.email}
-											</td>
-											<td className="py-3 px-4 text-gray-600">
-												{student?.class || "Not set"}
-											</td>
-											<td className="py-3 px-4">
-												<span
-													className={`px-2 py-1 rounded-full text-xs font-medium ${
-														result.score / result.total_questions >= 0.8
-															? "bg-green-100 text-green-800"
-															: result.score / result.total_questions >= 0.6
-															? "bg-yellow-100 text-yellow-800"
-															: "bg-red-100 text-red-800"
-													}`}>
-													{Math.round(
-														(result.score / result.total_questions) * 100
-													)}
-													%
-												</span>
-											</td>
-											<td className="py-3 px-4 text-gray-600">
-												{result.score}/{result.total_questions}
-											</td>
-											<td className="py-3 px-4 text-gray-600">
-												{new Date(result.timestamp).toLocaleDateString()}
-											</td>
-											<td className="py-3 px-4">
-												{student ? (
-													<button
-														onClick={() => handleViewStudent(student)}
-														className="p-1 text-blue-600 hover:text-blue-800">
-														<FaEye size={14} />
-													</button>
-												) : null}
-											</td>
-										</tr>
-									);
-								})}
-							</tbody>
-						</table>
-					</div>
-				</motion.div>
-
-				{/* Analytics Charts Section - Enhanced */}
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.3 }}
-					className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-					{/* Performance Analytics Card */}
-					<div className="bg-white rounded-xl shadow-lg p-6 flex flex-col gap-6">
-						<h3 className="text-lg font-semibold text-gray-900 mb-2">
-							Performance Analytics
-						</h3>
-						{/* Pie Chart and Stats Summary */}
-						<div className="flex flex-col md:flex-row items-center gap-8">
-							{(() => {
-								// Example: Replace with real data as needed
-								const performanceCounts = {
-									Excellent: 3,
-									Good: 2,
-									"Needs Improvement": 1,
-								};
-								const pieData = Object.entries(performanceCounts)
-									.map(([name, value]) => ({ name, value }))
-									.filter((d) => d.value > 0);
-								const COLORS = ["#34d399", "#fbbf24", "#f87171"];
-								const stats = {
-									totalQuizzes: 6,
-									averageScore: 78,
-									bestScore: 95,
-									recentActivity: 2,
-									improvement: 8,
-								};
-								return (
-									<>
-										<div>
-											<PieChart
-												width={220}
-												height={180}>
-												<Pie
-													data={pieData}
-													dataKey="value"
-													nameKey="name"
-													cx="50%"
-													cy="50%"
-													outerRadius={60}
-													fill="#8884d8"
-													label
-													isAnimationActive={true}
-													animationDuration={1200}>
-													{pieData.map((entry, index) => (
-														<Cell
-															key={`cell-${index}`}
-															fill={COLORS[index % COLORS.length]}
-														/>
-													))}
-												</Pie>
-												<Tooltip />
-												<Legend />
-											</PieChart>
-										</div>
-										{/* Stats Summary */}
-										<div className="space-y-2 min-w-[180px]">
-											<div className="flex justify-between">
-												<span className="text-gray-600">Total Attempts:</span>
-												<span className="font-medium">
-													{stats.totalQuizzes}
-												</span>
-											</div>
-											<div className="flex justify-between">
-												<span className="text-gray-600">Average Score:</span>
-												<span className="font-medium">
-													{stats.averageScore}%
-												</span>
-											</div>
-											<div className="flex justify-between">
-												<span className="text-gray-600">Best Performance:</span>
-												<span className="font-medium text-green-600">
-													{stats.bestScore}%
-												</span>
-											</div>
-											<div className="flex justify-between">
-												<span className="text-gray-600">Recent Activity:</span>
-												<span className="font-medium">
-													{stats.recentActivity} quizzes (7 days)
-												</span>
-											</div>
-											<div className="flex justify-between">
-												<span className="text-gray-600">Improvement:</span>
-												<span
-													className={`font-medium ${
-														stats.improvement >= 0
-															? "text-green-600"
-															: "text-red-600"
-													}`}>
-													{stats.improvement >= 0 ? "+" : ""}
-													{stats.improvement}%
-												</span>
-											</div>
-										</div>
-									</>
-								);
-							})()}
-						</div>
-						{/* Badges/Achievements */}
-						<div className="mt-4 flex flex-wrap gap-2">
-							<span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">
-								10 Quizzes Completed
-							</span>
-							<span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold">
-								High Scorer
-							</span>
-							<span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold">
-								Most Improved
-							</span>
-						</div>
-						{/* Last Login/Activity */}
-						<div className="mt-2 text-sm text-gray-500">
-							Last login: 2024-05-10 &bull; Last activity: 2 days ago
-						</div>
-					</div>
-					{/* Quiz Activity Card */}
-					<div className="bg-white rounded-xl shadow-lg p-6 flex flex-col gap-6">
-						<h3 className="text-lg font-semibold text-gray-900 mb-2">
-							Quiz Activity
-						</h3>
-						{/* Recent Quiz Results Table */}
-						<div className="overflow-x-auto">
-							<table className="w-full text-sm border rounded-lg mb-4">
-								<thead>
-									<tr className="bg-gray-100">
-										<th className="py-2 px-3 text-left">Date</th>
-										<th className="py-2 px-3 text-left">Quiz</th>
-										<th className="py-2 px-3 text-left">Score</th>
-										<th className="py-2 px-3 text-left">Questions</th>
-										<th className="py-2 px-3 text-left">Status</th>
-										<th className="py-2 px-3 text-left">Performance</th>
-									</tr>
-								</thead>
-								<tbody>
-									{/* Example data, replace with real quiz results */}
-									<tr className="border-b hover:bg-gray-50">
-										<td className="py-2 px-3 text-gray-600">2024-05-10</td>
-										<td className="py-2 px-3 text-gray-600">Math Basics</td>
-										<td className="py-2 px-3">
-											<span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-												95%
-											</span>
-										</td>
-										<td className="py-2 px-3 text-gray-600">19/20</td>
-										<td className="py-2 px-3">
-											<span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
-												Excellent
-											</span>
-										</td>
-										<td className="py-2 px-3 text-lg">🏆</td>
-									</tr>
-									<tr className="border-b hover:bg-gray-50">
-										<td className="py-2 px-3 text-gray-600">2024-05-08</td>
-										<td className="py-2 px-3 text-gray-600">Science Quiz</td>
-										<td className="py-2 px-3">
-											<span className="px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-												72%
-											</span>
-										</td>
-										<td className="py-2 px-3 text-gray-600">13/18</td>
-										<td className="py-2 px-3">
-											<span className="px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-												Good
-											</span>
-										</td>
-										<td className="py-2 px-3 text-lg">👍</td>
-									</tr>
-									<tr className="border-b hover:bg-gray-50">
-										<td className="py-2 px-3 text-gray-600">2024-05-05</td>
-										<td className="py-2 px-3 text-gray-600">English Test</td>
-										<td className="py-2 px-3">
-											<span className="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-												55%
-											</span>
-										</td>
-										<td className="py-2 px-3 text-gray-600">11/20</td>
-										<td className="py-2 px-3">
-											<span className="px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800">
-												Needs Improvement
-											</span>
-										</td>
-										<td className="py-2 px-3 text-lg">📈</td>
-									</tr>
+										);
+									})}
 								</tbody>
 							</table>
 						</div>
-						{/* Mini Trend Chart */}
-						<div className="mb-4">
-							<h4 className="text-md font-semibold text-gray-800 mb-2">
-								Score Trend
-							</h4>
-							<div className="flex justify-center">
-								<LineChart
-									width={300}
-									height={120}
-									data={[
-										{ date: "2024-05-05", score: 55 },
-										{ date: "2024-05-08", score: 72 },
-										{ date: "2024-05-10", score: 95 },
-									]}>
-									<XAxis
-										dataKey="date"
-										tick={{ fontSize: 12 }}
-									/>
-									<YAxis
-										domain={[0, 100]}
-										tick={{ fontSize: 12 }}
-									/>
-									<Tooltip />
-									<Line
-										type="monotone"
-										dataKey="score"
-										stroke="#7c3aed"
-										strokeWidth={3}
-										dot={{ r: 4 }}
-										isAnimationActive={true}
-										animationDuration={1200}
-									/>
-								</LineChart>
+					</motion.div>
+
+					{/* Analytics Charts Section - Enhanced */}
+					<motion.div
+						id="analytics-section"
+						initial={{ opacity: 0, y: 20 }}
+						animate={{ opacity: 1, y: 0 }}
+						transition={{ delay: 0.3 }}
+						className="grid grid-cols-1 lg:grid-cols-2 gap-6 w-full max-w-full">
+						{/* Performance Analytics Card */}
+						<div className="bg-white rounded-xl shadow-lg p-6 flex flex-col gap-6 w-full max-w-full overflow-x-auto">
+							<h3 className="text-lg font-semibold text-gray-900 mb-2">
+								Performance Analytics
+							</h3>
+							{/* Pie Chart and Stats Summary */}
+							<div className="flex flex-col md:flex-row items-center gap-8 w-full max-w-full">
+								{(() => {
+									// Calculate performance counts from quizResults
+									const performanceCounts = {
+										Excellent: 0,
+										Good: 0,
+										"Needs Improvement": 0,
+									};
+									(quizResults || []).forEach((result) => {
+										const percent = result.total_questions
+											? result.score / result.total_questions
+											: 0;
+										if (percent >= 0.8) performanceCounts.Excellent += 1;
+										else if (percent >= 0.6) performanceCounts.Good += 1;
+										else performanceCounts["Needs Improvement"] += 1;
+									});
+									const pieData = Object.entries(performanceCounts)
+										.map(([name, value]) => ({ name, value }))
+										.filter((d) => d.value > 0);
+									const COLORS = ["#34d399", "#fbbf24", "#f87171"];
+
+									// Stats from fetched data
+									const totalQuizzes = quizResults ? quizResults.length : 0;
+									const averageScore =
+										quizResults && quizResults.length
+											? Math.round(
+													quizResults.reduce(
+														(acc, q) =>
+															acc +
+															(q.total_questions
+																? (q.score / q.total_questions) * 100
+																: 0),
+														0
+													) / quizResults.length
+											  )
+											: 0;
+									const bestScore =
+										quizResults && quizResults.length
+											? Math.round(
+													Math.max(
+														...quizResults.map((q) =>
+															q.total_questions
+																? (q.score / q.total_questions) * 100
+																: 0
+														)
+													)
+											  )
+											: 0;
+									const recentActivity =
+										quizResults && quizResults.length
+											? quizResults.filter((q) => {
+													const quizDate = new Date(q.timestamp);
+													const now = new Date();
+													const diff = (now - quizDate) / (1000 * 60 * 60 * 24);
+													return diff <= 7;
+											  }).length
+											: 0;
+									const improvement = (() => {
+										// Calculate improvement as difference between last and first quiz score
+										if (!quizResults || quizResults.length < 2) return 0;
+										const sorted = [...quizResults].sort(
+											(a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+										);
+										const first = sorted[0];
+										const last = sorted[sorted.length - 1];
+										const firstScore = first.total_questions
+											? (first.score / first.total_questions) * 100
+											: 0;
+										const lastScore = last.total_questions
+											? (last.score / last.total_questions) * 100
+											: 0;
+										return Math.round(lastScore - firstScore);
+									})();
+
+									return (
+										<>
+											<div className="max-w-full overflow-x-auto">
+												<PieChart
+													width={220}
+													height={180}>
+													<Pie
+														data={pieData}
+														dataKey="value"
+														nameKey="name"
+														cx="50%"
+														cy="50%"
+														outerRadius={60}
+														fill="#8884d8"
+														label
+														isAnimationActive={true}
+														animationDuration={1200}>
+														{pieData.map((entry, index) => (
+															<Cell
+																key={`cell-${index}`}
+																fill={COLORS[index % COLORS.length]}
+															/>
+														))}
+													</Pie>
+													<Tooltip />
+													<Legend />
+												</PieChart>
+											</div>
+											{/* Stats Summary */}
+											<div className="space-y-2 min-w-[180px] max-w-full">
+												<div className="flex justify-between">
+													<span className="text-gray-600">Total Attempts:</span>
+													<span className="font-medium">{totalQuizzes}</span>
+												</div>
+												<div className="flex justify-between">
+													<span className="text-gray-600">Average Score:</span>
+													<span className="font-medium">{averageScore}%</span>
+												</div>
+												<div className="flex justify-between">
+													<span className="text-gray-600">
+														Best Performance:
+													</span>
+													<span className="font-medium text-green-600">
+														{bestScore}%
+													</span>
+												</div>
+												<div className="flex justify-between">
+													<span className="text-gray-600">
+														Recent Activity:
+													</span>
+													<span className="font-medium">
+														{recentActivity} quizzes (7 days)
+													</span>
+												</div>
+												<div className="flex justify-between">
+													<span className="text-gray-600">Improvement:</span>
+													<span
+														className={`font-medium ${
+															improvement >= 0
+																? "text-green-600"
+																: "text-red-600"
+														}`}>
+														{improvement >= 0 ? "+" : ""}
+														{improvement}%
+													</span>
+												</div>
+											</div>
+										</>
+									);
+								})()}
+							</div>
+							{/* Badges/Achievements */}
+							<div className="mt-4 flex flex-wrap gap-2 max-w-full">
+								{(quizResults?.length ?? 0) >= 10 && (
+									<span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-semibold">
+										10 Quizzes Completed
+									</span>
+								)}
+								{(() => {
+									const averageScore =
+										quizResults && quizResults.length
+											? Math.round(
+													quizResults.reduce(
+														(acc, q) =>
+															acc +
+															(q.total_questions
+																? (q.score / q.total_questions) * 100
+																: 0),
+														0
+													) / quizResults.length
+											  )
+											: 0;
+									if (averageScore >= 90) {
+										return (
+											<span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold">
+												High Scorer
+											</span>
+										);
+									}
+									return null;
+								})()}
+								{(() => {
+									const improvement =
+										quizResults && quizResults.length >= 2
+											? (() => {
+													const sorted = [...quizResults].sort(
+														(a, b) =>
+															new Date(a.timestamp) - new Date(b.timestamp)
+													);
+													const first = sorted[0];
+													const last = sorted[sorted.length - 1];
+													const firstScore = first.total_questions
+														? (first.score / first.total_questions) * 100
+														: 0;
+													const lastScore = last.total_questions
+														? (last.score / last.total_questions) * 100
+														: 0;
+													return lastScore - firstScore;
+											  })()
+											: 0;
+									if (improvement >= 10) {
+										return (
+											<span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-semibold">
+												Most Improved
+											</span>
+										);
+									}
+									return null;
+								})()}
+							</div>
+							{/* Last Login/Activity */}
+							<div className="mt-2 text-sm text-gray-500 max-w-full">
+								Last login:{" "}
+								{user?.last_sign_in_at
+									? new Date(user.last_sign_in_at).toLocaleDateString()
+									: "N/A"}
+								&nbsp;&bull;&nbsp;Last activity:{" "}
+								{quizResults && quizResults.length
+									? (() => {
+											const sorted = [...quizResults].sort(
+												(a, b) => new Date(b.timestamp) - new Date(a.timestamp)
+											);
+											const last = sorted[0];
+											const lastDate = new Date(last.timestamp);
+											const now = new Date();
+											const diffDays = Math.floor(
+												(now - lastDate) / (1000 * 60 * 60 * 24)
+											);
+											return diffDays === 0
+												? "Today"
+												: diffDays === 1
+												? "1 day ago"
+												: `${diffDays} days ago`;
+									  })()
+									: "No activity"}
 							</div>
 						</div>
-						{/* Admin Notes Section */}
-						<div className="mb-2">
-							<h4 className="text-md font-semibold text-gray-800 mb-2">
-								Admin Notes
-							</h4>
-							<textarea
-								className="w-full border rounded-lg p-2 text-sm"
-								rows={3}
-								placeholder="Add notes about this student..."
-							/>
+						{/* Quiz Activity Card */}
+						<div className="bg-white rounded-xl shadow-lg p-6 flex flex-col gap-6 w-full max-w-full overflow-x-auto">
+							<h3 className="text-lg font-semibold text-gray-900 mb-2">
+								Quiz Activity
+							</h3>
+							{/* Recent Quiz Results Table */}
+							<div className="overflow-x-auto w-full max-w-full">
+								<table className="w-full text-sm border rounded-lg mb-4 max-w-full">
+									<thead>
+										<tr className="bg-gray-100">
+											<th className="py-2 px-3 text-left">Date</th>
+											<th className="py-2 px-3 text-left">Quiz</th>
+											<th className="py-2 px-3 text-left">Score</th>
+											<th className="py-2 px-3 text-left">Questions</th>
+											<th className="py-2 px-3 text-left">Status</th>
+											<th className="py-2 px-3 text-left">Performance</th>
+										</tr>
+									</thead>
+									<tbody>
+										{(quizResults || []).slice(0, 3).map((result, idx) => {
+											const percent = result.total_questions
+												? (result.score / result.total_questions) * 100
+												: 0;
+											let status = "";
+											let badge = "";
+											if (percent >= 80) {
+												status = "Excellent";
+												badge = "🏆";
+											} else if (percent >= 60) {
+												status = "Good";
+												badge = "👍";
+											} else {
+												status = "Needs Improvement";
+												badge = "📈";
+											}
+											return (
+												<tr
+													key={result.id || idx}
+													className="border-b hover:bg-gray-50">
+													<td className="py-2 px-3 text-gray-600">
+														{result.timestamp
+															? new Date(result.timestamp).toLocaleDateString()
+															: ""}
+													</td>
+													<td className="py-2 px-3 text-gray-600">
+														{result.quiz_title || "Quiz"}
+													</td>
+													<td className="py-2 px-3">
+														<span
+															className={`px-2 py-1 rounded-full text-xs font-medium ${
+																percent >= 80
+																	? "bg-green-100 text-green-800"
+																	: percent >= 60
+																	? "bg-yellow-100 text-yellow-800"
+																	: "bg-red-100 text-red-800"
+															}`}>
+															{Math.round(percent)}%
+														</span>
+													</td>
+													<td className="py-2 px-3 text-gray-600">
+														{result.score}/{result.total_questions}
+													</td>
+													<td className="py-2 px-3">
+														<span
+															className={`px-2 py-1 rounded-full text-xs font-medium ${
+																percent >= 80
+																	? "bg-green-100 text-green-800"
+																	: percent >= 60
+																	? "bg-yellow-100 text-yellow-800"
+																	: "bg-red-100 text-red-800"
+															}`}>
+															{status}
+														</span>
+													</td>
+													<td className="py-2 px-3 text-lg">{badge}</td>
+												</tr>
+											);
+										})}
+										{(!quizResults || quizResults.length === 0) && (
+											<tr>
+												<td
+													colSpan={6}
+													className="py-4 text-center text-gray-400">
+													No recent quiz activity.
+												</td>
+											</tr>
+										)}
+									</tbody>
+								</table>
+							</div>
+							{/* Mini Trend Chart */}
+							<div className="mb-4 w-full max-w-full overflow-x-auto">
+								<h4 className="text-md font-semibold text-gray-800 mb-2">
+									Score Trend
+								</h4>
+								<div className="flex justify-center w-full max-w-full">
+									<LineChart
+										width={300}
+										height={120}
+										data={
+											(quizResults || [])
+												.slice(0, 5)
+												.reverse()
+												.map((result) => ({
+													date: result.timestamp
+														? new Date(result.timestamp).toLocaleDateString()
+														: "",
+													score: result.total_questions
+														? Math.round(
+																(result.score / result.total_questions) * 100
+														  )
+														: 0,
+												})) || []
+										}>
+										<XAxis
+											dataKey="date"
+											tick={{ fontSize: 12 }}
+										/>
+										<YAxis
+											domain={[0, 100]}
+											tick={{ fontSize: 12 }}
+										/>
+										<Tooltip />
+										<Line
+											type="monotone"
+											dataKey="score"
+											stroke="#7c3aed"
+											strokeWidth={3}
+											dot={{ r: 4 }}
+											isAnimationActive={true}
+											animationDuration={1200}
+										/>
+									</LineChart>
+								</div>
+							</div>
+							{/* Admin Notes Section */}
+							<div className="mb-2 w-full max-w-full">
+								<h4 className="text-md font-semibold text-gray-800 mb-2">
+									Admin Notes
+								</h4>
+								<textarea
+									className="w-full border rounded-lg p-2 text-sm"
+									rows={3}
+									placeholder="Add notes about this student..."
+								/>
+							</div>
+							{/* Send Feedback Button */}
+							<div className="flex justify-end w-full max-w-full">
+								<button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+									Send Feedback
+								</button>
+							</div>
 						</div>
-						{/* Send Feedback Button */}
-						<div className="flex justify-end">
-							<button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
-								Send Feedback
-							</button>
-						</div>
-					</div>
-				</motion.div>
-			</main>
+					</motion.div>
+				</main>
+			</div>
 
 			{/* Student Detail Modal */}
 			{showStudentModal && selectedStudent && (
