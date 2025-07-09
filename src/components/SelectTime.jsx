@@ -248,7 +248,7 @@ export default function SelectTime() {
 					<p className="text-sm text-gray-600">{quizState.message}</p>
 
 					{quizState.hasTakenQuiz && (
-						<div className="mt-3 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+						<div className="mt-3 p-3 flex flex-col items-center justify-center bg-yellow-50 border border-yellow-200 rounded-lg">
 							<div className="flex items-center gap-2 text-yellow-700">
 								<FaExclamationTriangle />
 								<span className="font-semibold">Quiz Already Taken</span>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { supabase } from "../../../lib/supabase";
 import { QUIZ_CONFIG } from "../../../lib/quiz-config";
@@ -13,6 +14,10 @@ import {
 	FaUnlock,
 	FaPlay,
 	FaStop,
+	FaArrowLeft,
+	FaDatabase,
+	FaCheck,
+	FaTimes,
 } from "react-icons/fa";
 
 export default function QuizSettingsAdmin() {
@@ -27,6 +32,7 @@ export default function QuizSettingsAdmin() {
 	const [loading, setLoading] = useState(true);
 	const [saving, setSaving] = useState(false);
 	const [message, setMessage] = useState("");
+	const router = useRouter();
 
 	useEffect(() => {
 		const loadSettings = async () => {
@@ -92,187 +98,282 @@ export default function QuizSettingsAdmin() {
 		}
 	};
 
+	const handleBackToAdmin = () => {
+		router.push("/admin/dashboard");
+	};
+
 	if (loading) {
 		return (
-			<div className="min-h-screen flex items-center justify-center">
+			<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-indigo-100">
 				<div className="text-center">
-					<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-					<p>Loading settings...</p>
+					<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
+					<p className="text-gray-600">Loading settings...</p>
 				</div>
 			</div>
 		);
 	}
 
 	return (
-		<div className="min-h-screen p-8 bg-gray-50">
-			<div className="max-w-2xl mx-auto">
-				<h1 className="text-3xl font-bold mb-8">Quiz Settings Admin</h1>
-
-				<div className="bg-white rounded-lg shadow-lg p-6">
-					<div className="space-y-6">
-						{/* Real Quiz Mode Toggle */}
-						<div>
-							<label className="flex items-center space-x-2">
-								<input
-									type="checkbox"
-									checked={settings.is_active}
-									onChange={(e) =>
-										setSettings({ ...settings, is_active: e.target.checked })
-									}
-									className="rounded"
-								/>
-								<span className="font-semibold">Enable Real Quiz Mode</span>
-							</label>
-							<p className="text-sm text-gray-600 mt-1">
-								When enabled, students can take the real quiz during the
-								specified time period.
-							</p>
+		<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100">
+			<div className="max-w-4xl mx-auto p-8">
+				{/* Header */}
+				<motion.div
+					initial={{ opacity: 0, y: -20 }}
+					animate={{ opacity: 1, y: 0 }}
+					className="flex items-center justify-between mb-8">
+					<div className="flex items-center space-x-4">
+						<div className="flex items-center space-x-3">
+							<div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
+								<FaCog className="text-white text-xl" />
+							</div>
+							<h1 className="text-3xl font-bold text-gray-900">
+								Quiz Settings Admin
+							</h1>
 						</div>
+					</div>
+				</motion.div>
 
-						{/* Practice Mode Toggle */}
-						<div>
-							<label className="flex items-center space-x-2">
-								<input
-									type="checkbox"
-									checked={settings.practice_mode}
-									onChange={(e) =>
-										setSettings({
-											...settings,
-											practice_mode: e.target.checked,
-										})
-									}
-									className="rounded"
-								/>
-								<span className="font-semibold">Enable Practice Mode</span>
-							</label>
-							<p className="text-sm text-gray-600 mt-1">
-								When enabled, students can practice when real quiz is not
-								active. When disabled, only real quiz mode is available.
-							</p>
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ delay: 0.1 }}
+					className="bg-white rounded-xl shadow-lg p-6">
+					<div className="space-y-6">
+						{/* Mode Toggles Section */}
+						<div className="space-y-6">
+							<h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+								<FaDatabase className="text-purple-600" />
+								Quiz Mode Settings
+							</h2>
+
+							{/* Real Quiz Mode Toggle */}
+							<div className="bg-gray-50 rounded-lg p-4">
+								<label className="flex items-center space-x-3">
+									<input
+										type="checkbox"
+										checked={settings.is_active}
+										onChange={(e) =>
+											setSettings({ ...settings, is_active: e.target.checked })
+										}
+										className="w-5 h-5 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 focus:ring-2"
+									/>
+									<div className="flex items-center gap-2">
+										{settings.is_active ? (
+											<FaLock className="text-red-500" />
+										) : (
+											<FaUnlock className="text-gray-400" />
+										)}
+										<span className="font-semibold text-gray-900">
+											Enable Real Quiz Mode
+										</span>
+									</div>
+								</label>
+								<p className="text-sm text-gray-600 mt-2 ml-8">
+									When enabled, students can take the real quiz during the
+									specified time period.
+								</p>
+							</div>
+
+							{/* Practice Mode Toggle */}
+							<div className="bg-gray-50 rounded-lg p-4">
+								<label className="flex items-center space-x-3">
+									<input
+										type="checkbox"
+										checked={settings.practice_mode}
+										onChange={(e) =>
+											setSettings({
+												...settings,
+												practice_mode: e.target.checked,
+											})
+										}
+										className="w-5 h-5 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 focus:ring-2"
+									/>
+									<div className="flex items-center gap-2">
+										{settings.practice_mode ? (
+											<FaPlay className="text-green-500" />
+										) : (
+											<FaStop className="text-gray-400" />
+										)}
+										<span className="font-semibold text-gray-900">
+											Enable Practice Mode
+										</span>
+									</div>
+								</label>
+								<p className="text-sm text-gray-600 mt-2 ml-8">
+									When enabled, students can practice when real quiz is not
+									active. When disabled, only real quiz mode is available.
+								</p>
+							</div>
 						</div>
 
 						{/* Mode Status Display */}
-						<div className="p-4 bg-gray-50 rounded-lg">
-							<h4 className="font-semibold mb-2">Current Mode Status:</h4>
-							<div className="space-y-2">
-								<div className="flex items-center gap-2">
-									{settings.is_active ? (
-										<FaLock className="text-red-500" />
-									) : (
-										<FaUnlock className="text-gray-400" />
-									)}
-									<span
-										className={
-											settings.is_active ? "text-red-700" : "text-gray-600"
-										}>
-										Real Quiz: {settings.is_active ? "Enabled" : "Disabled"}
+						<div className="bg-purple-50 rounded-lg p-4">
+							<h4 className="font-semibold mb-3 text-purple-800">
+								Current Mode Status:
+							</h4>
+							<div className="space-y-3">
+								<div className="flex items-center justify-between">
+									<span className="text-sm font-medium text-gray-600">
+										Real Quiz Mode
 									</span>
+									<div className="flex items-center gap-2">
+										{settings.is_active ? (
+											<FaCheck className="text-green-600" />
+										) : (
+											<FaTimes className="text-red-600" />
+										)}
+										<span
+											className={`px-3 py-1 rounded-full text-xs font-semibold ${
+												settings.is_active
+													? "bg-green-100 text-green-800"
+													: "bg-red-100 text-red-800"
+											}`}>
+											{settings.is_active ? "Enabled" : "Disabled"}
+										</span>
+									</div>
 								</div>
-								<div className="flex items-center gap-2">
-									{settings.practice_mode ? (
-										<FaPlay className="text-green-500" />
-									) : (
-										<FaStop className="text-gray-400" />
-									)}
-									<span
-										className={
-											settings.practice_mode
-												? "text-green-700"
-												: "text-gray-600"
-										}>
-										Practice Mode:{" "}
-										{settings.practice_mode ? "Enabled" : "Disabled"}
+								<div className="flex items-center justify-between">
+									<span className="text-sm font-medium text-gray-600">
+										Practice Mode
 									</span>
+									<div className="flex items-center gap-2">
+										{settings.practice_mode ? (
+											<FaCheck className="text-green-600" />
+										) : (
+											<FaTimes className="text-red-600" />
+										)}
+										<span
+											className={`px-3 py-1 rounded-full text-xs font-semibold ${
+												settings.practice_mode
+													? "bg-green-100 text-green-800"
+													: "bg-red-100 text-red-800"
+											}`}>
+											{settings.practice_mode ? "Enabled" : "Disabled"}
+										</span>
+									</div>
 								</div>
 							</div>
 						</div>
 
-						<div className="grid grid-cols-2 gap-4">
-							<div>
-								<label className="block text-sm font-medium mb-2">
-									Time Limit (minutes)
-								</label>
-								<input
-									type="number"
-									value={settings.time}
-									onChange={(e) =>
-										setSettings({ ...settings, time: parseInt(e.target.value) })
-									}
-									className="w-full p-2 border rounded"
-								/>
+						{/* Quiz Configuration Section */}
+						<div className="space-y-6">
+							<h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+								<FaClock className="text-purple-600" />
+								Quiz Configuration
+							</h2>
+
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+								<div>
+									<label className="block text-sm font-medium mb-2 text-gray-700">
+										Time Limit (minutes)
+									</label>
+									<input
+										type="number"
+										value={settings.time}
+										onChange={(e) =>
+											setSettings({
+												...settings,
+												time: parseInt(e.target.value),
+											})
+										}
+										className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+									/>
+								</div>
+
+								<div>
+									<label className="block text-sm font-medium mb-2 text-gray-700">
+										Question Count
+									</label>
+									<input
+										type="number"
+										value={settings.questions}
+										onChange={(e) =>
+											setSettings({
+												...settings,
+												questions: parseInt(e.target.value),
+											})
+										}
+										className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+									/>
+								</div>
 							</div>
 
-							<div>
-								<label className="block text-sm font-medium mb-2">
-									Question Count
-								</label>
-								<input
-									type="number"
-									value={settings.questions}
-									onChange={(e) =>
-										setSettings({
-											...settings,
-											questions: parseInt(e.target.value),
-										})
-									}
-									className="w-full p-2 border rounded"
-								/>
+							<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+								<div>
+									<label className="block text-sm font-medium mb-2 text-gray-700">
+										Start Time
+									</label>
+									<input
+										type="datetime-local"
+										value={settings.start_time}
+										onChange={(e) =>
+											setSettings({ ...settings, start_time: e.target.value })
+										}
+										className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+									/>
+								</div>
+
+								<div>
+									<label className="block text-sm font-medium mb-2 text-gray-700">
+										End Time
+									</label>
+									<input
+										type="datetime-local"
+										value={settings.end_time}
+										onChange={(e) =>
+											setSettings({ ...settings, end_time: e.target.value })
+										}
+										className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+									/>
+								</div>
 							</div>
 						</div>
 
-						<div>
-							<label className="block text-sm font-medium mb-2">
-								Start Time
-							</label>
-							<input
-								type="datetime-local"
-								value={settings.start_time}
-								onChange={(e) =>
-									setSettings({ ...settings, start_time: e.target.value })
-								}
-								className="w-full p-2 border rounded"
-							/>
-						</div>
-
-						<div>
-							<label className="block text-sm font-medium mb-2">End Time</label>
-							<input
-								type="datetime-local"
-								value={settings.end_time}
-								onChange={(e) =>
-									setSettings({ ...settings, end_time: e.target.value })
-								}
-								className="w-full p-2 border rounded"
-							/>
-						</div>
-
+						{/* Message Display */}
 						{message && (
-							<div
-								className={`p-3 rounded ${
+							<motion.div
+								initial={{ opacity: 0, y: 10 }}
+								animate={{ opacity: 1, y: 0 }}
+								className={`p-4 rounded-lg ${
 									message.includes("Error")
-										? "bg-red-100 text-red-700"
-										: "bg-green-100 text-green-700"
+										? "bg-red-100 text-red-700 border border-red-200"
+										: "bg-green-100 text-green-700 border border-green-200"
 								}`}>
 								{message}
-							</div>
+							</motion.div>
 						)}
 
-						<button
-							onClick={handleSave}
-							disabled={saving}
-							className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 disabled:opacity-50">
-							{saving ? "Saving..." : "Save Settings"}
-						</button>
+						{/* Action Buttons */}
+						<div className="flex gap-4 pt-4">
+							<button
+								onClick={handleSave}
+								disabled={saving}
+								className="flex-1 bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors flex items-center justify-center gap-2 font-medium">
+								<FaSave />
+								{saving ? "Saving..." : "Save Settings"}
+							</button>
+							<button
+								onClick={handleBackToAdmin}
+								className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2 font-medium">
+								<FaArrowLeft />
+								Back to Admin
+							</button>
+						</div>
 					</div>
-				</div>
+				</motion.div>
 
-				<div className="mt-8">
+				{/* Additional Links */}
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					transition={{ delay: 0.2 }}
+					className="mt-8 text-center">
 					<a
 						href="/test-db"
-						className="text-blue-600 hover:underline">
+						className="text-purple-600 hover:text-purple-700 hover:underline font-medium">
 						View Database Test Page
 					</a>
-				</div>
+				</motion.div>
 			</div>
 		</div>
 	);

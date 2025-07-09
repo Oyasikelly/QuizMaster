@@ -195,7 +195,6 @@ const QuizAnalytics = () => {
 					<option value="all">All Classes</option>
 					<option value="yaya">Yaya</option>
 					<option value="adult">Adult</option>
-					<option value="adults">Adults</option>
 				</select>
 			</div>
 
@@ -457,7 +456,7 @@ const QuizAnalytics = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{filteredResults.slice(0, 10).map((result) => {
+							{filteredResults.slice(0, 10).map((result, index) => {
 								const student = students.find(
 									(s) => s.id === result.student_id
 								);
@@ -473,7 +472,7 @@ const QuizAnalytics = () => {
 
 								return (
 									<tr
-										key={result.id}
+										key={index + 1}
 										className="border-b border-gray-100 hover:bg-gray-50">
 										<td className="py-3 px-4">
 											<div className="flex items-center space-x-3">

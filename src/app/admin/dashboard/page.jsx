@@ -56,6 +56,7 @@ const AdminDashboard = () => {
 	const [showEditModal, setShowEditModal] = useState(false);
 	const [editingStudent, setEditingStudent] = useState(null);
 	const [sidebarOpen, setSidebarOpen] = useState(false);
+	const [showExportModal, setShowExportModal] = useState(false);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -353,6 +354,309 @@ const AdminDashboard = () => {
 	const handleCancelEdit = () => {
 		setShowEditModal(false);
 		setEditingStudent(null);
+	};
+
+	const handleExportResults = () => {
+		try {
+			// Prepare data for export
+			const exportData = quizResults.map((result) => {
+				const student = students.find((s) => s.email === result.email);
+				const scorePercentage = Math.round(
+					(result.score / result.total_questions) * 100
+				);
+
+				return {
+					"Student Name": student?.name || "Unknown",
+					Email: result.email,
+					Class: student?.class || "Not set",
+					Score: `${result.score}/${result.total_questions}`,
+					Percentage: `${scorePercentage}%`,
+					Performance:
+						scorePercentage >= 80
+							? "Excellent"
+							: scorePercentage >= 60
+							? "Good"
+							: "Needs Improvement",
+					Date: new Date(result.timestamp).toLocaleDateString(),
+					Time: new Date(result.timestamp).toLocaleTimeString(),
+				};
+			});
+
+			// Group by class
+			const groupedByClass = {};
+			exportData.forEach((result) => {
+				const className = result.Class;
+				if (!groupedByClass[className]) {
+					groupedByClass[className] = [];
+				}
+				groupedByClass[className].push(result);
+			});
+
+			// Create CSV content
+			let csvContent = "data:text/csv;charset=utf-8,";
+
+			// Add header
+			const headers = [
+				"Student Name",
+				"Email",
+				"Class",
+				"Score",
+				"Percentage",
+				"Performance",
+				"Date",
+				"Time",
+			];
+			csvContent += headers.join(",") + "\n";
+
+			// Add data rows
+			Object.keys(groupedByClass).forEach((className) => {
+				// Add class header
+				csvContent += `\n${className} Class Results\n`;
+				csvContent += headers.join(",") + "\n";
+
+				// Add class data
+				groupedByClass[className].forEach((result) => {
+					const row = headers.map((header) => {
+						const value = result[header];
+						// Escape commas and quotes in CSV
+						return `"${String(value).replace(/"/g, '""')}"`;
+					});
+					csvContent += row.join(",") + "\n";
+				});
+			});
+
+			// Create and download file
+			const encodedUri = encodeURI(csvContent);
+			const link = document.createElement("a");
+			link.setAttribute("href", encodedUri);
+			link.setAttribute(
+				"download",
+				`quiz-results-${new Date().toISOString().split("T")[0]}.csv`
+			);
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+
+			// Show success message
+			alert(
+				`Export successful! Downloaded ${exportData.length} quiz results grouped by class.`
+			);
+		} catch (error) {
+			console.error("Error exporting results:", error);
+			alert("Error exporting results. Please try again.");
+		}
+	};
+
+	const handleExportDetailedResults = () => {
+		try {
+			// Create detailed export with summary statistics
+			const exportData = quizResults.map((result) => {
+				const student = students.find((s) => s.email === result.email);
+				const scorePercentage = Math.round(
+					(result.score / result.total_questions) * 100
+				);
+
+				return {
+					"Student Name": student?.name || "Unknown",
+					Email: result.email,
+					Class: student?.class || "Not set",
+					Score: `${result.score}/${result.total_questions}`,
+					Percentage: `${scorePercentage}%`,
+					Performance:
+						scorePercentage >= 80
+							? "Excellent"
+							: scorePercentage >= 60
+							? "Good"
+							: "Needs Improvement",
+					Date: new Date(result.timestamp).toLocaleDateString(),
+					Time: new Date(result.timestamp).toLocaleTimeString(),
+				};
+			});
+
+			// Group by class and add summary statistics
+			const groupedByClass = {};
+			exportData.forEach((result) => {
+				const className = result.Class;
+				if (!groupedByClass[className]) {
+					groupedByClass[className] = [];
+				}
+				groupedByClass[className].push(result);
+			});
+
+			// Create CSV content with summary
+			let csvContent = "data:text/csv;charset=utf-8,";
+
+			// Add overall summary
+			csvContent += "QUIZ RESULTS SUMMARY\n";
+			csvContent += `Total Results: ${exportData.length}\n`;
+			csvContent += `Export Date: ${new Date().toLocaleDateString()}\n`;
+			csvContent += `Export Time: ${new Date().toLocaleTimeString()}\n\n`;
+
+			// Add class summaries
+			Object.keys(groupedByClass).forEach((className) => {
+				const classResults = groupedByClass[className];
+				const classScores = classResults.map((r) =>
+					parseInt(r.Percentage.replace("%", ""))
+				);
+				const avgScore = Math.round(
+					classScores.reduce((a, b) => a + b, 0) / classScores.length
+				);
+				const bestScore = Math.max(...classScores);
+				const worstScore = Math.min(...classScores);
+
+				csvContent += `${className} CLASS SUMMARY\n`;
+				csvContent += `Total Students: ${classResults.length}\n`;
+				csvContent += `Average Score: ${avgScore}%\n`;
+				csvContent += `Best Score: ${bestScore}%\n`;
+				csvContent += `Worst Score: ${worstScore}%\n\n`;
+			});
+
+			// Add detailed results by class
+			Object.keys(groupedByClass).forEach((className) => {
+				csvContent += `${className} CLASS DETAILED RESULTS\n`;
+				const headers = [
+					"Student Name",
+					"Email",
+					"Class",
+					"Score",
+					"Percentage",
+					"Performance",
+					"Date",
+					"Time",
+				];
+				csvContent += headers.join(",") + "\n";
+
+				groupedByClass[className].forEach((result) => {
+					const row = headers.map((header) => {
+						const value = result[header];
+						return `"${String(value).replace(/"/g, '""')}"`;
+					});
+					csvContent += row.join(",") + "\n";
+				});
+				csvContent += "\n";
+			});
+
+			// Create and download file
+			const encodedUri = encodeURI(csvContent);
+			const link = document.createElement("a");
+			link.setAttribute("href", encodedUri);
+			link.setAttribute(
+				"download",
+				`detailed-quiz-results-${new Date().toISOString().split("T")[0]}.csv`
+			);
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+
+			alert(
+				`Detailed export successful! Downloaded ${exportData.length} quiz results with class summaries.`
+			);
+		} catch (error) {
+			console.error("Error exporting detailed results:", error);
+			alert("Error exporting detailed results. Please try again.");
+		}
+	};
+
+	const handleExportByClass = (className) => {
+		try {
+			// Filter results by class
+			const classResults = quizResults.filter((result) => {
+				const student = students.find((s) => s.email === result.email);
+				return student?.class?.toLowerCase() === className.toLowerCase();
+			});
+
+			if (classResults.length === 0) {
+				alert(`No results found for ${className} class.`);
+				return;
+			}
+
+			// Prepare data for export
+			const exportData = classResults.map((result) => {
+				const student = students.find((s) => s.email === result.email);
+				const scorePercentage = Math.round(
+					(result.score / result.total_questions) * 100
+				);
+
+				return {
+					"Student Name": student?.name || "Unknown",
+					Email: result.email,
+					Class: student?.class || "Not set",
+					Score: `${result.score}/${result.total_questions}`,
+					Percentage: `${scorePercentage}%`,
+					Performance:
+						scorePercentage >= 80
+							? "Excellent"
+							: scorePercentage >= 60
+							? "Good"
+							: "Needs Improvement",
+					Date: new Date(result.timestamp).toLocaleDateString(),
+					Time: new Date(result.timestamp).toLocaleTimeString(),
+				};
+			});
+
+			// Create CSV content
+			let csvContent = "data:text/csv;charset=utf-8,";
+
+			// Add class summary
+			const classScores = exportData.map((r) =>
+				parseInt(r.Percentage.replace("%", ""))
+			);
+			const avgScore = Math.round(
+				classScores.reduce((a, b) => a + b, 0) / classScores.length
+			);
+			const bestScore = Math.max(...classScores);
+			const worstScore = Math.min(...classScores);
+
+			csvContent += `${className.toUpperCase()} CLASS RESULTS\n`;
+			csvContent += `Total Students: ${exportData.length}\n`;
+			csvContent += `Average Score: ${avgScore}%\n`;
+			csvContent += `Best Score: ${bestScore}%\n`;
+			csvContent += `Worst Score: ${worstScore}%\n`;
+			csvContent += `Export Date: ${new Date().toLocaleDateString()}\n\n`;
+
+			// Add headers
+			const headers = [
+				"Student Name",
+				"Email",
+				"Class",
+				"Score",
+				"Percentage",
+				"Performance",
+				"Date",
+				"Time",
+			];
+			csvContent += headers.join(",") + "\n";
+
+			// Add data rows
+			exportData.forEach((result) => {
+				const row = headers.map((header) => {
+					const value = result[header];
+					return `"${String(value).replace(/"/g, '""')}"`;
+				});
+				csvContent += row.join(",") + "\n";
+			});
+
+			// Create and download file
+			const encodedUri = encodeURI(csvContent);
+			const link = document.createElement("a");
+			link.setAttribute("href", encodedUri);
+			link.setAttribute(
+				"download",
+				`${className.toLowerCase()}-quiz-results-${
+					new Date().toISOString().split("T")[0]
+				}.csv`
+			);
+			document.body.appendChild(link);
+			link.click();
+			document.body.removeChild(link);
+
+			alert(
+				`${className} class export successful! Downloaded ${exportData.length} results.`
+			);
+		} catch (error) {
+			console.error("Error exporting class results:", error);
+			alert("Error exporting class results. Please try again.");
+		}
 	};
 
 	// Sidebar links
@@ -732,7 +1036,9 @@ const AdminDashboard = () => {
 							<h2 className="text-xl font-semibold text-gray-900">
 								Recent Quiz Results
 							</h2>
-							<button className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+							<button
+								onClick={() => setShowExportModal(true)}
+								className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
 								<FaDownload size={14} />
 								<span>Export</span>
 							</button>
@@ -1675,6 +1981,149 @@ const AdminDashboard = () => {
 									className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
 									Save Changes
 								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			)}
+
+			{/* Export Modal */}
+			{showExportModal && (
+				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+					<div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
+						{/* Modal Header */}
+						<div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
+							<div className="flex items-center space-x-3">
+								<div className="w-12 h-12 bg-gradient-to-r from-green-500 to-blue-600 rounded-full flex items-center justify-center">
+									<FaDownload className="text-white text-xl" />
+								</div>
+								<div>
+									<h2 className="text-xl font-semibold text-gray-900">
+										Export Quiz Results
+									</h2>
+									<p className="text-sm text-gray-500">
+										Choose your export format
+									</p>
+								</div>
+							</div>
+							<button
+								onClick={() => setShowExportModal(false)}
+								className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
+								<FaTimes size={20} />
+							</button>
+						</div>
+
+						{/* Modal Content */}
+						<div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)] custom-scrollbar">
+							<div className="space-y-6">
+								{/* Export Options */}
+								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+									{/* All Results */}
+									<div className="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-xl p-6 border border-purple-200">
+										<h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
+											<FaDownload className="mr-2 text-purple-600" />
+											All Results
+										</h3>
+										<p className="text-sm text-gray-600 mb-4">
+											Export all quiz results grouped by class
+										</p>
+										<button
+											onClick={() => {
+												handleExportResults();
+												setShowExportModal(false);
+											}}
+											className="w-full px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+											Export All ({quizResults.length} results)
+										</button>
+									</div>
+
+									{/* Detailed Results */}
+									<div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-xl p-6 border border-blue-200">
+										<h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
+											<FaChartBar className="mr-2 text-blue-600" />
+											Detailed Report
+										</h3>
+										<p className="text-sm text-gray-600 mb-4">
+											Export with class summaries and statistics
+										</p>
+										<button
+											onClick={() => {
+												handleExportDetailedResults();
+												setShowExportModal(false);
+											}}
+											className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+											Export Detailed
+										</button>
+									</div>
+								</div>
+
+								{/* Export by Class */}
+								<div className="bg-gray-50 rounded-xl p-6">
+									<h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+										<FaUsers className="mr-2 text-gray-600" />
+										Export by Class
+									</h3>
+									<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+										{Object.keys(groupedByClass).map((className) => {
+											const classResults = quizResults.filter((result) => {
+												const student = students.find(
+													(s) => s.email === result.email
+												);
+												return (
+													student?.class?.toLowerCase() ===
+													className.toLowerCase()
+												);
+											});
+
+											return (
+												<button
+													key={className}
+													onClick={() => {
+														handleExportByClass(className);
+														setShowExportModal(false);
+													}}
+													className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 hover:border-purple-300 hover:shadow-md transition-all">
+													<div className="flex items-center space-x-2">
+														<span className="font-medium text-gray-900">
+															{className}
+														</span>
+														<span className="text-sm text-gray-500">
+															({classResults.length} results)
+														</span>
+													</div>
+													<FaDownload className="text-purple-600" />
+												</button>
+											);
+										})}
+									</div>
+								</div>
+
+								{/* Export Summary */}
+								<div className="bg-green-50 rounded-xl p-4 border border-green-200">
+									<h4 className="font-semibold text-green-800 mb-2">
+										Export Summary
+									</h4>
+									<div className="text-sm text-green-700 space-y-1">
+										<p>• Total Results: {quizResults.length}</p>
+										<p>
+											• Classes Available: {Object.keys(groupedByClass).length}
+										</p>
+										<p>
+											• Date Range:{" "}
+											{quizResults.length > 0
+												? `${new Date(
+														Math.min(
+															...quizResults.map((r) => new Date(r.timestamp))
+														)
+												  ).toLocaleDateString()} - ${new Date(
+														Math.max(
+															...quizResults.map((r) => new Date(r.timestamp))
+														)
+												  ).toLocaleDateString()}`
+												: "No data"}
+										</p>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
