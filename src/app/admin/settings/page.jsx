@@ -201,6 +201,10 @@ const AdminSettings = () => {
 		alert("System settings updated successfully!");
 	};
 
+	const handleQuizSchedule = () => {
+		router.push("/admin/quiz-settings");
+	};
+
 	// Filtered students (for search, if needed)
 	const filteredStudents = useMemo(
 		() =>
@@ -382,9 +386,14 @@ const AdminSettings = () => {
 							{/* Quiz Settings */}
 							<div className="bg-white rounded-xl shadow-lg p-6">
 								<h3 className="text-lg font-semibold text-gray-900 mb-4">
-									Quiz Settings
+									Quiz Scheduling
 								</h3>
-								<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+								<button
+									onClick={handleQuizSchedule}
+									className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+									Schedule
+								</button>
+								{/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 									<SettingNumberInput
 										label="Maximum Quiz Attempts"
 										value={systemSettings.maxQuizAttempts}
@@ -409,7 +418,7 @@ const AdminSettings = () => {
 											}))
 										}
 									/>
-								</div>
+								</div> */}
 							</div>
 
 							{/* Admin Settings */}

@@ -1,64 +1,81 @@
-// Debug script to check quiz settings
-// Run this in your browser console to see what's happening
+// Debug script to test quiz_settings table connection
+// Run this with: node debug-quiz-settings.js
 
-const debugQuizSettings = async () => {
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseKey) {
+	console.error("❌ Missing Supabase environment variables");
+	console.log("Please check your .env.local file");
+	process.exit(1);
+}
+
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+async function debugQuizSettings() {
+	console.log("🔍 Debugging quiz_settings table...");
+	console.log("📡 Supabase URL:", supabaseUrl);
+	console.log("🔑 Supabase Key:", supabaseKey ? "Present" : "Missing");
+
 	try {
-		console.log("🔍 Checking quiz settings...");
+		console.log("\n📊 Testing database connection...");
 
-		// Get current time
-		const now = new Date();
-		console.log("🕐 Current time:", now.toISOString());
-		console.log("🕐 Current time (local):", now.toString());
+		// Test basic connection
+		const { data: testData, error: testError } = await supabase
+			.from("quiz_settings")
+			.select("count")
+			.limit(1);
 
-		// Check if we can access Supabase
-		if (typeof window !== "undefined" && window.supabase) {
-			const { data, error } = await window.supabase
-				.from("quiz_settings")
-				.select("*")
-				.single();
+		if (testError) {
+			console.error("❌ Database connection failed:", testError);
+			return;
+		}
 
-			if (error) {
-				console.error("❌ Error loading settings:", error);
-				return;
-			}
+		console.log("✅ Database connection successful");
 
-			console.log("📊 Quiz Settings from Database:", data);
+		// Check if table exists and has data
+		console.log("\n📋 Checking quiz_settings table...");
+		const { data, error } = await supabase
+			.from("quiz_settings")
+			.select("*")
+			.single();
 
-			// Check if quiz is active
-			const isActive = data.is_active;
-			console.log("🔒 Quiz Active:", isActive);
+		if (error) {
+			console.log("❌ Error fetching settings:", error);
 
-			if (isActive && data.start_time && data.end_time) {
-				const startTime = new Date(data.start_time);
-				const endTime = new Date(data.end_time);
+			if (error.code === "PGRST116") {
+				console.log("📝 No settings found - table might be empty");
 
-				console.log("⏰ Start Time:", startTime.toString());
-				console.log("⏰ End Time:", endTime.toString());
-				console.log("⏰ Current Time:", now.toString());
+				// Try to create default settings
+				console.log("🛠️  Creating default settings...");
+				const { data: newData, error: insertError } = await supabase
+					.from("quiz_settings")
+					.insert({
+						id: 1,
+						is_active: false,
+						time: 60,
+						questions: 100,
+						start_time: null,
+						end_time: null,
+						practice_mode: false,
+					})
+					.select()
+					.single();
 
-				const isInTimeRange = now >= startTime && now <= endTime;
-				console.log("✅ In Quiz Time Range:", isInTimeRange);
-
-				if (isInTimeRange) {
-					console.log("🎯 SHOULD BE REAL QUIZ MODE");
+				if (insertError) {
+					console.error("❌ Error creating default settings:", insertError);
 				} else {
-					console.log("📚 SHOULD BE PRACTICE MODE");
-					if (now < startTime) {
-						console.log("⏳ Quiz hasn't started yet");
-					} else {
-						console.log("⏰ Quiz period has ended");
-					}
+					console.log("✅ Default settings created:", newData);
 				}
-			} else {
-				console.log("❌ Quiz is not active or missing time settings");
 			}
 		} else {
-			console.log("❌ Supabase not available in window object");
+			console.log("✅ Settings found:", data);
 		}
-	} catch (error) {
-		console.error("❌ Debug error:", error);
+	} catch (err) {
+		console.error("❌ Unexpected error:", err);
 	}
-};
+}
 
-// Run the debug function
 debugQuizSettings();

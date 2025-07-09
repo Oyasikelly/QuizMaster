@@ -125,7 +125,7 @@ const Quiz = ({ initialQuestions, category }) => {
 
 			const student_id = data.user.id;
 			const userEmail = data.user.email;
-			console.log(student_id);
+			// console.log(student_id);
 			// Get extra profile info
 			const { data: usersData, error: usersError } = await supabase
 				.from("users_profile")
