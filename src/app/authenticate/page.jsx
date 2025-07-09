@@ -111,7 +111,8 @@ const AuthPage = () => {
 						email: email,
 						password: password,
 						options: {
-							emailRedirectTo: "https://quizmasterrccg.vercel.app/authenticate",
+							emailRedirectTo:
+								"https://quizmasterofficial2024.vercel.app/authenticate",
 						},
 					});
 
