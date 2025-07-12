@@ -575,8 +575,12 @@
 	},
 	{
 		"question": "One of the following is not a lesson outlines of lesson 21",
-		"options": ["Debt Management", "Causes and effects of debt", "Avoid debt"],
-		"answer": "Debt Management"
+		"options": [
+			"Debt for investment",
+			"Causes and effects of debt",
+			"Debt Management"
+		],
+		"answer": "Debt for investment"
 	},
 	{
 		"question": "What is another word for borrower?",
@@ -684,8 +688,8 @@
 	},
 	{
 		"question": "Mention one of the two outlines for lesson 25",
-		"options": ["Love God", "Love fellow Humans", "Both A and B"],
-		"answer": "Both A and B"
+		"options": ["Love God", "Give always", "Disobedience"],
+		"answer": "Love God"
 	},
 	{
 		"question": "To have God is to __________",
