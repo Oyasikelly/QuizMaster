@@ -83,6 +83,14 @@ const StudentHome = () => {
 				color: "from-green-500 to-emerald-600",
 				bgColor: "bg-gradient-to-br from-green-50 to-emerald-50",
 			},
+			{
+				title: "Adults Quiz",
+				description: "Comprehensive knowledge for mature learners",
+				icon: <Brain className="w-8 h-8" />,
+				path: "/quiz/adults",
+				color: "from-blue-500 to-cyan-600",
+				bgColor: "bg-gradient-to-br from-blue-50 to-cyan-50",
+			},
 		];
 	} else if (
 		user?.class?.toLowerCase() === "adult" ||
@@ -96,6 +104,14 @@ const StudentHome = () => {
 				path: "/quiz/adults",
 				color: "from-blue-500 to-cyan-600",
 				bgColor: "bg-gradient-to-br from-blue-50 to-cyan-50",
+			},
+			{
+				title: "Yaya Quiz",
+				description: "Specialized content for caregivers",
+				icon: <Heart className="w-8 h-8" />,
+				path: "/quiz/yaya",
+				color: "from-green-500 to-emerald-600",
+				bgColor: "bg-gradient-to-br from-green-50 to-emerald-50",
 			},
 		];
 	}
