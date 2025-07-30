@@ -1,1344 +1,197 @@
 [
 	{
-		"question": "According to Matthew 19:23 - 24, the Kingdom of God is also referred to as",
-		"options": [
-			"The Kingdom of Christ",
-			"The Kingdom of Heaven",
-			"The Kingdom of believers"
-		],
-		"answer": "The Kingdom of Heaven"
-	},
-	{
-		"question": "According to the Manual, in lesson one, what is generally considered as the central theme of Jesus' teaching?",
-		"options": [
-			"The concept of Jesus second coming",
-			"The concept of the End Time",
-			"The concept of the Kingdom of God"
-		],
-		"answer": "The concept of the Kingdom of God"
-	},
-	{
-		"question": "According to the first outline of lesson one, God's Kingdom comprises of three aspects. A universal Kingdom, A Mediatorial Kingdom and a ......................",
-		"options": ["Spiritual Kingdom", "Earthly Kingdom", "Heavenly Kingdom"],
-		"answer": "Spiritual Kingdom"
-	},
-	{
-		"question": "The second outline of lesson one is .........................",
-		"options": [
-			"Seeking the kingdom of God",
-			"Understanding the Kingdom",
-			"Living in the Kingdom"
-		],
-		"answer": "Seeking the kingdom of God"
-	},
-	{
-		"question": "According to lesson one, what is the main benefit of the Kingdom as stated in Acts 3:19 and 5:31?",
-		"options": [
-			"Forgiveness of sin",
-			"Admission into the Kingdom of God",
-			"Baptism in the Holy Ghost"
-		],
-		"answer": "Forgiveness of sin"
-	},
-	{
-		"question": "According to the Christian faith, The Deity is",
-		"options": [
-			"The Creator and Supreme Being",
-			"The Creator and The Creature",
-			"Jesus and His disciples"
-		],
-		"answer": "The Creator and Supreme Being"
-	},
-	{
-		"question": "The first lesson outline of Lesson two is ......................",
-		"options": [
-			"The Divinity of Jesus Christ",
-			"The Authority of the Father",
-			"The Work of the Holy Spirit"
-		],
-		"answer": "The Divinity of Jesus Christ"
-	},
-	{
-		"question": "According to lesson two, which of these is NOT an evidence that Jesus is God?",
-		"options": [
-			"Jesus is the head of the God Head",
-			"Old testament prophecies Christ announces His Deity as the Mighty God",
-			"Jesus is a member of the Godhead referred to as the Trinity"
-		],
-		"answer": "Jesus is the head of the God Head"
-	},
-	{
-		"question": "Which of these is a reason why Jesus is also referred to as God?",
-		"options": [
-			"Because He is the only begotten son of God",
-			"Some titles that uniquely belong to Jehovah are used for Jesus",
-			"There are some actions that Jesus alone can take"
-		],
-		"answer": "Some titles that uniquely belong to Jehovah are used for Jesus"
-	},
-	{
-		"question": "The topic of lesson two is ....................................",
-		"options": [
-			"The Deity of Jesus (part 1)",
-			"Jesus the Mediator",
-			"The Glory of Christ"
-		],
-		"answer": "The Deity of Jesus (part 1)"
-	},
-	{
-		"question": "According to the Manual, which of these is NOT a miracle performed by Jesus as a proof that He is God.",
-		"options": [
-			"Turning water to wine",
-			"Healing the blind and lame",
-			"Parting the Red Sea"
-		],
-		"answer": "Parting the Red Sea"
-	},
-	{
-		"question": "A miracle is an event that involves the .............. and powerful action of God, transcending the ordinary laws of nature.",
-		"options": [
-			"Direct & Powerful",
-			"Natural & Controlled",
-			"Normal & Scheduled"
-		],
-		"answer": "Direct & Powerful"
-	},
-	{
-		"question": "What is the memory verse of lesson three: 'The Deity of Jesus Part 2'?",
-		"options": ["John 10:38", "John 3:16", "John 14:1"],
-		"answer": "John 10:38"
-	},
-	{
-		"question": "According to the manual, Jesus used the definite article to distinguish Himself as .................., .............  and  .....................",
-		"options": [
-			"The way, the Truth and the Life",
-			"The Light, the Bread and the Door",
-			"The Teacher, the Master and the Rabbi"
-		],
-		"answer": "The way, the Truth and the Life"
-	},
-	{
-		"question": "According to Psalm 119:142, truth represents",
-		"options": ["The nature of God", "The Law of God", "The word of God"],
-		"answer": "The Law of God"
-	},
-	{
-		"question": "What is the Topic of lesson four?",
-		"options": [
-			"The Creature called Man",
-			"My Enemy: The Flesh",
-			"The Deity of Jesus Part 2"
-		],
-		"answer": "The Creature called Man"
-	},
-	{
-		"question": "God's image upon man before the fall consist of ALL except one",
-		"options": [
-			"The soul bears God's image",
-			"Man physically resembles God",
-			"Man resemble God in Creativity"
-		],
-		"answer": "Man physically resembles God"
-	},
-	{
-		"question": "According to outline one of lesson four, man is not a representative of God in authority and dominion.",
-		"options": ["True", "Sometime", "False"],
-		"answer": "False"
-	},
-	{
-		"question": "According to the manual, Thessalonians 5:23 present man as",
-		"options": ["A living soul", "A new creature", "A Tripartite being"],
-		"answer": "A Tripartite being"
-	},
-	{
-		"question": "Which of these three dimensions of man will stand in judgement as stated in the manual?",
-		"options": ["The soul", "The body", "The spirit"],
-		"answer": "The soul"
-	},
-	{
-		"question": "According to Rom. 7:18-22 and the manual, which of these is considered as 'My Enemy'?",
-		"options": [
-			"Witches and wizards",
-			"Members of a man's household",
-			"The Flesh"
-		],
-		"answer": "The Flesh"
-	},
-	{
-		"question": "The memory verse for lesson five is taken from",
-		"options": ["Rom. 8:8", "Rom. 8:18", "Rom. 7:18"],
-		"answer": "Rom. 8:8"
-	},
-	{
-		"question": "According to Romans 8:13, the flesh is",
-		"options": [
-			"Our body",
-			"The sinful nature that dwells in our body",
-			"The flesh and blood in a man"
-		],
-		"answer": "The sinful nature that dwells in our body"
-	},
-	{
-		"question": "According to the manual, 'Self' expresses itself through the following ways except",
-		"options": ["Self-pride", "Selflessness", "Self-love"],
-		"answer": "Selflessness"
-	},
-	{
-		"question": "What are the three things the Bible tells us about the flesh? It never obey God, subject to sin and the flesh is Satan's.................. for sinning.",
-		"options": ["Stronghold", "Instrument", "Temptation"],
-		"answer": "Stronghold"
-	},
-	{
-		"question": "'I know who I am' is the topic for lesson ...........",
-		"options": ["Lesson 5", "Lesson 6", "Lesson 7"],
-		"answer": "Lesson 6"
-	},
-	{
-		"question": "A believer in Christ becomes a new creature by",
-		"options": [
-			"Being baptized",
-			"Being born again",
-			"By works of righteousness"
-		],
-		"answer": "Being born again"
-	},
-	{
-		"question": "According to 1 Peter 2:11 and Heb. 11:13, the believer in Christ is likened to",
-		"options": [
-			"A stranger and disciple",
-			"A pilgrim and a traveler",
-			"A stranger and a pilgrim"
-		],
-		"answer": "A stranger and a pilgrim"
-	},
-	{
-		"question": "Romans 5:17 is the memory verse for lesson .............",
-		"options": ["5", "6", "7"],
-		"answer": "6"
-	},
-	{
-		"question": "Which of these is an evidence of a changed person?",
-		"options": [
-			"A new identity is conferred on such a believer",
-			"His or her name is changed",
-			"He/she began to put on new clothes"
-		],
-		"answer": "A new identity is conferred on such a believer"
-	},
-	{
-		"question": "The term 'Disciple' originally means",
-		"options": ["A follower of Jesus", "A pupil or an apprentice", "A workman"],
-		"answer": "A pupil or an apprentice"
-	},
-	{
-		"question": "The two lesson outlines for lesson seven, 'The cost of discipleship' are .............. and ................",
-		"options": [
-			"A disciple's attribute and key discipline",
-			"Discipleship and Cost",
-			"Sacrifice and Training"
-		],
-		"answer": "A disciple's attribute and key discipline"
-	},
-	{
-		"question": "Which of these is the Bible passage for lesson seven?",
-		"options": ["1 John 2:6-12", "Matthew 16:24-30", "Luke 9:57-62"],
-		"answer": "Luke 9:57-62"
-	},
-	{
-		"question": "Which of these is not an attribute of a disciple?",
-		"options": [
-			"He must be forgiving",
-			"He can continue to live a sinful life even though he is a disciple",
-			"Love unconditionally in the face of adversity"
-		],
-		"answer": "He can continue to live a sinful life even though he is a disciple"
-	},
-	{
-		"question": "According to the manual, a disciple must demonstrate discipline in the following ways except",
-		"options": [
-			"He can be lazy and given to procrastination",
-			"Be purposeful",
-			"He must persevere"
-		],
-		"answer": "He can be lazy and given to procrastination"
-	},
-	{
-		"question": "'Forbearing one another and forgiving one another if man have a quarrel against any: even as Christ forgave you, so also do ye' — The above memory verse is taken from",
-		"options": ["Colossians 3:13", "Ephesians 4:32", "Romans 12:18"],
-		"answer": "Colossians 3:13"
-	},
-	{
-		"question": "Which teach method was adopted in lesson 8?",
-		"options": [
-			"Question and answer method",
-			"Lecture method",
-			"Either of the above"
-		],
-		"answer": "Lecture method"
-	},
-	{
-		"question": "According to outline one of lesson 8, one of the major reasons why we should forgive is",
-		"options": ["It is a command", "It is optional", "All of the above"],
-		"answer": "It is a command"
-	},
-	{
-		"question": "All, except one are the dangers of unforgiveness",
-		"options": [
-			"God is happy with us",
-			"It hinders our prayers",
-			"It brings bitterness"
-		],
-		"answer": "God is happy with us"
-	},
-	{
-		"question": "The Bible passage for lesson eight is",
-		"options": ["Genesis 50:17-20", "Matthew 6:14-15", "Luke 15:11-32"],
-		"answer": "Genesis 50:17-20"
-	},
-
-	{
-		"question": "Lie is an ….. act of deviating from the truth.",
-		"options": ["Unintentional", "Unusual", "Intentional"],
-		"answer": "Intentional"
-	},
-	{
-		"question": "Which are the two lesson outlines of Lesson 9?",
-		"options": [
-			"The subdivisions, Consequences and Remedies",
-			"Subdivisions, Problems and Solutions",
-			"Subdivision and Remedies"
-		],
-		"answer": "The subdivisions, Consequences and Remedies"
-	},
-	{
-		"question": "To praise dishonestly because of ulterior motive is",
-		"options": ["Guile", "Hypocrisy", "Flattery"],
-		"answer": "Flattery"
-	},
-	{
-		"question": "Telling the whole truth is a virtue that brings …………...",
-		"options": ["Respect", "Blessings", "Honour"],
-		"answer": "Honour"
-	},
-	{
-		"question": "Consequences of lies include the following except -------------",
-		"options": [
-			"No liar will make heaven",
-			"Getting cut off from God",
-			"Living a realistic life"
-		],
-		"answer": "Living a realistic life"
-	},
-	{
-		"question": "What is the Bible passage of Lesson 10?",
-		"options": ["1 Peter 5:5-7", "2 Peter 5:5-6", "1 Peter 5:6-7"],
-		"answer": "1 Peter 5:5-7"
-	},
-	{
-		"question": "Despite the magnitude of God’s creation, He still ……. Himself to behold the activities of man on earth.",
-		"options": ["Lower", "Humble", "Move"],
-		"answer": "Humble"
-	},
-	{
-		"question": "Pride is a rebellion against God — a bid to share in His…………",
-		"options": ["Wisdom", "Glory", "Power"],
-		"answer": "Glory"
-	},
-	{
-		"question": "Who was the King that was eaten by worms and he died?",
-		"options": ["Pharaoh", "Nebuchadnezzar", "Herod"],
-		"answer": "Herod"
-	},
-	{
-		"question": "…… is the antidote for pride and a requirement to work with God.",
-		"options": ["Fear", "Joy", "Humility"],
-		"answer": "Humility"
-	},
-	{
-		"question": "What is the memory verse of Lesson 11?",
-		"options": [
-			"For where envying and strife is, there is confusion and every evil works – James 3:16",
-			"For where envying and strife is, there is confusion and evil works – James 3:15",
-			"For where envying and strife is, there is confusion and every evil work – James 3:14"
-		],
-		"answer": "For where envying and strife is, there is confusion and every evil works – James 3:16"
-	},
-	{
-		"question": "Lesson 11 has two Outlines and they are?",
-		"options": [
-			"Effects and enemies of strife, The Right Resolution",
-			"Effects and Agents of Strife, The Right Resolution",
-			"The Right Resolution"
-		],
-		"answer": "Effects and Agents of Strife, The Right Resolution"
-	},
-	{
-		"question": "Preventing or staying away from strife must be a ………..resolve and responsibility one must be willing to take up.",
-		"options": ["Strong", "Bold", "Personal"],
-		"answer": "Personal"
-	},
-	{
-		"question": "Psalm 133:2-3 states that unity brings ………",
-		"options": [
-			"Anointing, refreshing and blessing",
-			"Power, righteousness and favour",
-			"Anointing"
-		],
-		"answer": "Anointing, refreshing and blessing"
-	},
-	{
-		"question": "Strife is a work of the ……….. and it must be kicked out to build unity and achieve giant strides in life.",
-		"options": ["Spirit", "Flesh", "World"],
-		"answer": "Flesh"
-	},
-	{
-		"question": "What is the topic of Lesson 12?",
-		"options": [
-			"A wholesome Christian home",
-			"Wholesome Christian life in the world",
-			"A wholesome Christian life"
-		],
-		"answer": "A wholesome Christian life"
-	},
-	{
-		"question": "The scripture makes it clear that we should live a …… life involving the soul, spirit and body.",
-		"options": ["Balanced", "Natural life", "Good"],
-		"answer": "Balanced"
-	},
-	{
-		"question": "“Beloved I wish above all things that thou mayest prosper and be in health, even as thy soul prospereth” is from the Bible Text………",
-		"options": ["3 John 3", "3 John 2", "2 John 2:2"],
-		"answer": "3 John 2"
-	},
-	{
-		"question": "Being a good steward over our finances takes a lot of ------------",
-		"options": ["Discipline", "Power", "Conversation"],
-		"answer": "Discipline"
-	},
-	{
-		"question": "Exercising …….…. in God will bring peace and confidence to weather the storms of life.",
-		"options": ["Wisdom", "Faith", "Company"],
-		"answer": "Company"
-	},
-
-	{
-		"question": "……...... is termed temporary madness because it takes over the mind and body and removes the ability to reason.",
-		"options": ["Anger", "Aggressive feeling", "Restless"],
-		"answer": "Anger"
-	},
-	{
-		"question": "Who expressed hasty judgement in 2 Samuel 12:5-7?",
-		"options": ["Saul", "David", "Nathan the prophet"],
-		"answer": "David"
-	},
-	{
-		"question": "To manage anger, every believer must develop the ability to control his/her ………….",
-		"options": ["Mouth", "Mind", "Jackpot"],
-		"answer": "Jackpot"
-	},
-	{
-		"question": "The scripture……… says “We are counselled to provide a soft and gentle answer”",
-		"options": ["Prov 15:1", "Psalm 15:2", "None of the above"],
-		"answer": "Prov 15:1"
-	},
-	{
-		"question": "What is the Bible passage of Lesson 14?",
-		"options": ["Ephesians 4:26-27", "Ephesians 3:26-27", "Proverbs 17:27"],
-		"answer": "Proverbs 17:27"
-	},
-	{
-		"question": "Substance addiction is also known as",
-		"options": [
-			"Material use disorder",
-			"Substance use disorder",
-			"Drug abuse"
-		],
-		"answer": "Sexual beings"
-	},
-	{
-		"question": "Mood-altering behaviour include the following except",
-		"options": ["Gambling", "Sex", "Careful spending"],
-		"answer": "Gambling"
-	},
-	{
-		"question": "What kind of addiction was Saul involved in?",
-		"options": ["War", "Power", "King"],
-		"answer": "War"
-	},
-	{
-		"question": "…… is to addiction what backslidden is to sin.",
-		"options": ["Relapse", "Weakness", "Hopelessness"],
-		"answer": "Mind"
-	},
-	{
-		"question": "In overcoming addiction, keep ………. with those who can encourage you to total victory.",
-		"options": ["Company", "Distance", "Arguments"],
-		"answer": "Company"
-	},
-	{
-		"question": "Gambling most definitely is not focused on the love of money but a mere lifestyle",
-		"options": ["True", "False", "Either of the above"],
-		"answer": "False"
-	},
-	{
-		"question": "What was used in the Bible for religious or divine leading?",
-		"options": ["Gambling", "Lot", "Signs"],
-		"answer": "Lot"
-	},
-	{
-		"question": "Studies have shown that many lottery winners ended up in worse financial situations after ……",
-		"options": ["Investing", "Giving", "Jackpot"],
-		"answer": "Jackpot"
-	},
-	{
-		"question": "Quote the Memory Verse of Lesson 16.",
-		"options": [
-			"Let your conversation be without covetousness; and be content with such things as ye have: for he hath said, I will never leave thee, nor forsake thee – Heb 13:5",
-			"Let your obedience be without covetousness and be content with such things as ye have: for he hath said, I will never leave thee, nor forsake thee – Heb 13:5",
-			"Let your knowledge be without covetousness and be content with such things as ye have: for he hath said, I will never leave thee, nor forsake thee – Heb 13:5"
-		],
-		"answer": "Let your conversation be without covetousness; and be content with such things as ye have: for he hath said, I will never leave thee, nor forsake thee – Heb 13:5"
-	},
-	{
-		"question": "Those who engage in get rich quick schemes stand the risk of losing……………………",
-		"options": ["Their life", "Honour", "Everything"],
-		"answer": "Everything"
-	},
-	{
-		"question": "The fact that God created humanity as “male and female” means that we are created as …………..",
-		"options": ["Spiritual beings", "Sexual beings", "Equal beings"],
-		"answer": "Sexual beings"
-	},
-	{
-		"question": "Perverted sexual attraction towards children is called",
-		"options": ["Paedophilia", "Incest", "Homosexuality"],
-		"answer": "Paedophilia"
-	},
-	{
-		"question": "State the Bible passage of Lesson 17.",
-		"options": [
-			"1 Corinthians 6:16-20",
-			"2 Corinthians 6:16–20",
-			"Romans 4:10–12"
-		],
-		"answer": "1 Corinthians 6:16-20"
-	},
-	{
-		"question": "To overcome sexual vices, confess your sins to God and ask Him to cleanse, renew and transform your……….",
-		"options": ["Heart", "Mind", "Soul"],
-		"answer": "Mind"
-	},
-	{
-		"question": "Failure to repent from sexual vice can lead to the following except",
-		"options": [
-			"Addiction",
-			"Strange illness and diseases",
-			"Fulfilled destinies"
-		],
-		"answer": "Fulfilled destinies"
-	},
-	{
-		"question": "According to the lesson, one of the strategies Satan uses to lead people into loneliness is:",
-		"options": [
-			"Tempting them to sin",
-			"Making them believe they are hated by everyone",
-			"Preventing them from praying"
-		],
-		"answer": "Making them believe they are hated by everyone"
-	},
-	{
-		"question": "What was Elijah’s response in 1 Kings 19:10 that showed a deep sense of loneliness?",
-		"options": [
-			"I will bless the Lord at all times.",
-			"It is enough; now, O Lord, take away my life.",
-			"I, even I only, am left; and they seek my life."
-		],
-		"answer": "I, even I only, am left; and they seek my life."
-	},
-	{
-		"question": "According to the manual, what is the spiritual danger of unproductive solitude during loneliness?",
-		"options": [
-			"Lack of rest",
-			"Being tempted to relocate",
-			"The flesh or devil occupying one’s mind"
-		],
-		"answer": "The flesh or devil occupying one’s mind"
-	},
-	{
-		"question": "Emotional and social _______ play a significant role in luring people into loneliness.",
-		"options": ["Isolation", "Disconnection", "Conflict"],
-		"answer": "Disconnection"
-	},
-	{
-		"question": "The cure for any kind of loneliness, as mentioned in the conclusion, is the comforting fellowship of ________.",
-		"options": ["Believers", "Friends", "Christ"],
-		"answer": "Christ"
-	},
-	{
-		"question": "According to Psalm 67:5-6, what is a direct consequence of all people praising God?",
-		"options": [
-			"The earth shall rest from trouble",
-			"The heavens shall declare His glory",
-			"The earth shall yield her increase and God shall bless us"
-		],
-		"answer": "The earth shall yield her increase and God shall bless us"
-	},
-	{
-		"question": "Why is God’s holiness considered a major reason for continuous praise according to the lesson?",
-		"options": [
-			"Because it reflects His generosity",
-			"Because His holiness is linked with His glory",
-			"Because He judges sinners"
-		],
-		"answer": "Because His holiness is linked with His glory"
-	},
-	{
-		"question": "Which of the following best describes acceptable praise to God?",
-		"options": [
-			"Loud musical worship regardless of lifestyle",
-			"Any form of praise done in church",
-			"Praise offered in holiness and repentance by God’s children"
-		],
-		"answer": "Praise offered in holiness and repentance by God’s children"
-	},
-	{
-		"question": "To offer an acceptable praise to God, it is necessary to be a ____________ of God.",
-		"options": ["Servant", "Follower", "Child"],
-		"answer": "Child"
-	},
-	{
-		"question": "God accepts praise only from those who draw near to Him in ____________ and ____________.",
-		"options": [
-			"Holiness and truth",
-			"Faith and love",
-			"Holiness and repentance"
-		],
-		"answer": "Holiness and repentance"
-	},
-	{
-		"question": "According to the lesson, which of the following best describes God’s role as the ultimate model of empathy?",
-		"options": [
-			"He sends angels to judge the earth",
-			"He knows our frame and helps in our shortcomings",
-			"He encourages the strong and judges the weak"
-		],
-		"answer": "He knows our frame and helps in our shortcomings"
-	},
-	{
-		"question": "What is the biblical method of practicing empathy as taught in the manual?",
-		"options": [
-			"Speak the truth at all times",
-			"Observe others from a distance",
-			"Discern suffering and act quickly and personally"
-		],
-		"answer": "Discern suffering and act quickly and personally"
-	},
-	{
-		"question": "In Luke 7:13, what did Jesus do upon seeing the widow that revealed true empathy?",
-		"options": [
-			"He called His disciples to comfort her",
-			"He asked her to pray more",
-			"He had compassion on her and said, 'Weep not'"
-		],
-		"answer": "He had compassion on her and said, 'Weep not'"
-	},
-	{
-		"question": "The Holy Spirit shows empathy by __________ us in times of grief and pain.",
-		"options": ["Defending", "Comforting", "Strengthening"],
-		"answer": "Comforting"
-	},
-	{
-		"question": "The motive for showing empathy is to imitate God and obey His __________ to show compassion toward others.",
-		"options": ["Word", "Commands", "Love"],
-		"answer": "Commands"
-	},
-	{
-		"question": "Which of the following best describes the spiritual implication of Abraham’s hospitality in Genesis 18:1-10?",
-		"options": [
-			"It was a common cultural practice in his time",
-			"It brought divine revelation and the promise of a son",
-			"It gave him fame among the Canaanites"
-		],
-		"answer": "It brought divine revelation and the promise of a son"
-	},
-	{
-		"question": "Which of these is a distinguishing attribute of a truly hospitable person according to the lesson?",
-		"options": [
-			"Timidity and patience",
-			"Sympathy without action",
-			"Selflessness and swift responsiveness"
-		],
-		"answer": "Selflessness and swift responsiveness"
-	},
-	{
-		"question": "According to Hebrews 13:2, hospitality can result in what uncommon experience?",
-		"options": [
-			"Escape from temptation",
-			"Financial abundance",
-			"Entertaining angels unknowingly"
-		],
-		"answer": "Entertaining angels unknowingly"
-	},
-	{
-		"question": "Hospitality is not just a good deed but a __________ commanded and commended in Scripture.",
-		"options": ["Habit", "Virtue", "Law"],
-		"answer": "Virtue"
-	},
-	{
-		"question": "According to Matthew 25:34-36, hospitality is a condition that can lead to inheriting the __________ prepared by God.",
-		"options": ["Crown", "Kingdom", "Reward"],
-		"answer": "Kingdom"
-	},
-	{
-		"question": "According to Jonah 4:3, what was Jonah's reason for asking God to take his life?",
-		"options": [
-			"He was physically ill",
-			"He was afraid of the Ninevites",
-			"He thought it was better to die than to live"
-		],
-		"answer": "He thought it was better to die than to live"
-	},
-	{
-		"question": "Which of the following individuals in the Bible experienced deep despair but did not commit suicide?",
-		"options": ["Ahithophel", "Judas Iscariot", "Elijah"],
-		"answer": "Elijah"
-	},
-	{
-		"question": "What does Job 14:14 teach about enduring through trials?",
-		"options": [
-			"That death is the only escape",
-			"That revenge should be sought",
-			"That one should wait patiently for divine change"
-		],
-		"answer": "That one should wait patiently for divine change"
-	},
-	{
-		"question": "Suicide is regarded in the Bible as ______, which is a violation of God’s commandment. (Exodus 20:13)",
-		"options": ["Murder", "Sin", "Escape"],
-		"answer": "Murder"
-	},
-	{
-		"question": "Despite his despair, Apostle Paul learned that the Lord can help us to ______ all things. (2 Corinthians 1:9)",
-		"options": ["Bear", "Overcome", "Ignore"],
-		"answer": "Bear"
-	},
-	{
-		"question": "According to 1 Timothy 6:14, how long must believers keep the commandment without spot?",
-		"options": [
-			"Until the end of the year",
-			"Until they achieve success",
-			"Until the appearing of our Lord Jesus Christ"
-		],
-		"answer": "Until the appearing of our Lord Jesus Christ"
-	},
-	{
-		"question": "What is the primary requirement for being a vessel fit for the Master’s use according to 2 Timothy 2:21?",
-		"options": [
-			"Intelligence and boldness",
-			"Wealth and popularity",
-			"Sanctification and purity"
-		],
-		"answer": "Sanctification and purity"
-	},
-	{
-		"question": "According to the lesson, what is the ultimate gain of living a blameless life?",
-		"options": ["Wealth and prosperity", "Honor from men", "Eternal life"],
-		"answer": "Eternal life"
-	},
-	{
-		"question": "Believers must preserve their ______ of righteousness till the coming of the Lord. (Ecclesiastes 9:8)",
-		"options": ["Heart", "Garment", "Soul"],
-		"answer": "Garment"
-	},
-	{
-		"question": "A life without spot requires purging the ______ from dead works. (Hebrews 9:14)",
-		"options": ["Conscience", "Mind", "Soul"],
-		"answer": "Conscience"
-	},
-	{
-		"question": "According to John 16:13, what primary role does the Holy Spirit play in a believer’s life?",
-		"options": [
-			"He acts as a judge over believers",
-			"He guides believers into all truth",
-			"He reveals hidden treasures of the earth"
-		],
-		"answer": "He guides believers into all truth"
-	},
-	{
-		"question": "How can believers distinguish between their thoughts and the leading of the Holy Spirit?",
-		"options": [
-			"The Holy Spirit leads into sin, while thoughts never do",
-			"Thoughts are always unstable, while the Holy Spirit's guidance aligns with God's word",
-			"Thoughts always bring peace, while the Holy Spirit leads to confusion"
-		],
-		"answer": "Thoughts are always unstable, while the Holy Spirit's guidance aligns with God's word"
-	},
-	{
-		"question": "What is a key indicator that the Holy Spirit is guiding a believer?",
-		"options": [
-			"A sense of fear and uncertainty",
-			"Immediate worldly gain",
-			"Inner peace and alignment with Scripture"
-		],
-		"answer": "Inner peace and alignment with Scripture"
-	},
-	{
-		"question": "The Holy Spirit is referred to as the __________ of truth who will guide believers into all truth.",
-		"options": ["Spirit", "Teacher", "Helper"],
-		"answer": "Spirit"
-	},
-	{
-		"question": "The guidance of the Holy Spirit always aligns with __________ and brings ___________.",
-		"options": [
-			"God's word and blessings",
-			"God's word and peace",
-			"Faith and prosperity"
-		],
-		"answer": "God's word and peace"
-	},
-	{
-		"question": "“Our thoughts may be sensual, it can lead us astray and eventually bring harm.” Give a backup scripture.",
-		"options": ["Romans 8:5", "Galatians 5:1", "Philippians 4:8"],
-		"answer": "Romans 8:5"
-	},
-	{
-		"question": "In Acts 3:1-7, what was the key evidence of the Holy Spirit’s power working through Peter?",
-		"options": [
-			"His eloquent preaching",
-			"The healing of the lame man",
-			"The giving of alms"
-		],
-		"answer": "The healing of the lame man"
-	},
-	{
-		"question": "Which of the following accurately reflects the role of the Holy Spirit in a believer’s life according to Romans 8:26 and Ephesians 3:16?",
-		"options": [
-			"He teaches financial wisdom and strategy",
-			"He helps with physical strength and leadership",
-			"He strengthens believers in their weaknesses and limitations"
-		],
-		"answer": "He strengthens believers in their weaknesses and limitations"
-	},
-	{
-		"question": "The conclusion part of Lesson 25 states: “The power of the Holy Spirit is still very much available today and________________________ (Acts 2:39)”",
-		"options": [
-			"And you can receive it if you pray",
-			"And you can experience it",
-			"And it works only in the church"
-		],
-		"answer": "And you can experience it"
-	},
-	{
-		"question": "Through the Holy Spirit, the believer’s body becomes His ____________, signifying God's presence and ________________.",
-		"options": [
-			"Temple, ownership",
-			"House, holiness",
-			"Dwelling, righteousness"
-		],
-		"answer": "Temple, ownership"
-	},
-	{
-		"question": "Christians should be weary of some ______ who are determined to make new ____ out of AI.",
-		"options": [
-			"Government/law",
-			"Scientists/religion",
-			"Scientists/experiment"
-		],
-		"answer": "Scientists/religion"
-	},
-	{
-		"question": "_____ was a very good example used in the relationship between a daughter-in-law & in-law.",
-		"options": ["Dorcas", "Ruth", "Abigail"],
-		"answer": "Ruth"
-	},
-	{
-		"question": "You can be involved in Mission via the following ways.",
-		"options": [
-			"Being a Christian",
-			"Being Born-again",
-			"Financing the project"
-		],
-		"answer": "Financing the project"
-	},
-	{
-		"question": "________ brings about stable environment to nurture children and a lasting marriage.",
-		"options": ["Unity", "Covenant", "Relationship"],
-		"answer": "Unity"
-	},
-	{
-		"question": "The Bible passage for the Topic Zelophehad's daughters was taken from _______.",
-		"options": ["Leviticus", "Deuteronomy", "Numbers"],
-		"answer": "Numbers"
-	},
-	{
-		"question": "_______ was the role model used for the lesson financial independence.",
-		"options": ["Solomon", "Abraham", "Isaac"],
-		"answer": "Isaac"
-	},
-	{
-		"question": "Parents should be willing to use all forms of _______ at their disposal to secure moral boundaries.",
-		"options": ["Corrections", "Love", "Connections"],
-		"answer": "Corrections"
-	},
-	{
-		"question": "______ is tagged as an end time tool of the devil and Antichrist.",
-		"options": ["Fashion", "Increased knowledge", "AI"],
-		"answer": "AI"
-	},
-	{
-		"question": "Christian couples must relate with their in-laws in love as ___________/__________ of the world.",
-		"options": ["Salt/Light", "Head/Tail", "Brother/Sister"],
-		"answer": "Salt/Light"
-	},
-	{
-		"question": "_____ can be replaced by technology hence Christians should support one another.",
-		"options": ["Human relationship", "Religion", "Beliefs"],
-		"answer": "Human relationship"
-	},
-	{
-		"question": "_______ is at the heart of what the church stands for.",
-		"options": ["Christianity", "Mission", "The Great Commission"],
-		"answer": "Mission"
-	},
-	{
-		"question": "A period of transition in life where someone struggles with their identity and self-confidence is termed ________________",
-		"options": ["Adulthood", "Midlife crises", "Youthful stage"],
-		"answer": "Midlife crises"
-	},
-	{
-		"question": "While giving freedom to our children, it is important to communicate _______ boundaries.",
-		"options": ["Freedom", "Moral", "Balanced"],
-		"answer": "Moral"
-	},
-	{
-		"question": "From the beginning, unity in marriage was not given as hope; it was a ____",
-		"options": ["Lesson", "Purpose", "Command"],
-		"answer": "Command"
-	},
-	{
-		"question": "Nurturing meaningful relationship, networking with people who are \"flying\" etc. can contribute to a sense of well-being during challenging period of _____.",
-		"options": [
-			"Midlife crises",
-			"Financial independence",
-			"Christian marriage"
-		],
-		"answer": "Midlife crises"
-	},
-	{
-		"question": "Working towards having multiple streams of income is one way to have _______________________",
-		"options": ["Security", "Financial independence", "Freedom"],
-		"answer": "Financial independence"
-	},
-	{
-		"question": "Be wise in all decisions relating to your in-laws especially in ____.",
-		"options": ["House", "Maturity", "Speech"],
-		"answer": "Speech"
-	},
-	{
-		"question": "Zelophehad is a man from the tribe of ______.",
-		"options": ["Israel", "Manasseh", "Ephraim"],
-		"answer": "Ephraim"
-	},
-	{
-		"question": "The total number of Zelophehad’s daughters were ________.",
-		"options": ["Five", "Seven", "Three"],
-		"answer": "Five"
-	},
-	{
-		"question": "The opening prayer for the Lesson 32 'Midlife crisis' is ______.",
-		"options": [
-			"Dear Lord, guide my heart to take the right steps in life",
-			"Lord Jesus, let me always know that you are with me",
-			"Father, help me to gain control over my emotions"
-		],
-		"answer": "Father, help me to gain control over my emotions"
-	},
-	{
-		"question": "All except one is a responsibility of parents to their children.",
-		"options": [
-			"Be connected to them",
-			"Be unapproachable",
-			"Communicate all they need to know for a successful life"
-		],
-		"answer": "Be unapproachable"
-	},
-	{
-		"question": "The people group can be considered unreached if evangelical Christians are less than ______ of the entire population.",
-		"options": ["10%", "50%", "2%"],
-		"answer": "2%"
-	},
-	{
-		"question": "Technology ____________ should be avoided so as not to kill mental and spiritual ________.",
-		"options": [
-			"Addiction & Growth",
-			"Overload & Development",
-			"Control & Capacity"
-		],
-		"answer": "Addiction & Growth"
-	},
-	{
-		"question": "Marriage is not ________.",
-		"options": [
-			"A covenant relationship between a man and a woman",
-			"Likened to Jesus and His church",
-			"Cohabiting"
-		],
-		"answer": "Cohabiting"
-	},
-	{
-		"question": "________ are prone to midlife crisis.",
-		"options": ["Aged people only", "Married people only", "Everyone"],
-		"answer": "Everyone"
-	},
-	{
-		"question": "Mention the moral boundary God gave to Adam and Eve in the garden of Eden.",
-		"options": [
-			"Do not eat from the tree of life",
-			"Not to eat of the tree of knowledge of good & evil",
-			"Not to leave the garden"
-		],
-		"answer": "Not to eat of the tree of knowledge of good & evil"
-	},
-	{
-		"question": "The family of Zelophehad are members of _______ lineage.",
-		"options": ["Joseph", "Reuben", "Esau"],
-		"answer": "Joseph"
-	},
-	{
-		"question": "_____________ loved money in John 12:4-6 that later led to his destruction.",
-		"options": ["Ananias", "Judas", "Simon"],
-		"answer": "Judas"
+		"question": "What is the Bible text for lesson 51?",
+		"options": ["Revelation 5:10-30", "1Pet. 5:1-7", "REVELATION 21:1-5"],
+		"answer": "REVELATION 21:1-5"
 	},
 	{
-		"question": "One of these do not have a choice regarding the commission to mission.",
-		"options": ["Born again", "Church goers", "None of the above"],
-		"answer": "Born again"
-	},
-	{
-		"question": "A ________ who loves _____________ genuinely will be united in marriage.",
-		"options": [
-			"Husband & his wife",
-			"Man & his spouse",
-			"Christian & his partner"
-		],
-		"answer": "Husband & his wife"
-	},
-	{
-		"question": "The Bible passage Ruth 2:8-12 was for Lesson 28 with the topic _____.",
-		"options": [
-			"Christian couples & in-laws",
-			"Zelophehad's daughters",
-			"Parenting like God"
-		],
-		"answer": "Christian couples & in-laws"
-	},
-	{
-		"question": "But thou shalt remember the Lord thy God; for it is He that giveth thee power to get wealth.",
-		"options": ["Deuteronomy 8:18a", "Deuteronomy 18:8a", "Deuteronomy 8:8a"],
-		"answer": "Deuteronomy 8:18a"
-	},
-	{
-		"question": "________ wants to be involved in the lives of his children according to lesson 30.",
-		"options": ["Jesus", "God", "The Holy Spirit"],
-		"answer": "God"
-	},
-	{
-		"question": "All of these are ways cordial relationship can be maintained with in-laws except",
-		"options": [
-			"Treat them as your own blood relative",
-			"Stay off damaging rules",
-			"Treat them as less important"
-		],
-		"answer": "Treat them as less important"
-	},
-	{
-		"question": "_____________________, ______________________, and ___________________ are all involved in Mission.",
-		"options": [
-			"The Apostles, Jesus, Angels",
-			"God the Father, God the Son, God the Holy Spirit",
-			"Christians, Pastors, Prophets"
-		],
-		"answer": "God the Father, God the Son, God the Holy Spirit"
-	},
-	{
-		"question": "Artificial intelligence is one of the tools borne from the _____ ability God gave to man.",
+		"question": "What is the 1st lesson outline for lesson 51?",
 		"options": [
-			"Technological/Creative",
-			"Technological/Gift",
-			"Technological/Godly"
+			"Biblical screenshot",
+			"BIBLICAL SNAPSHOT",
+			"Biblical examination"
 		],
-		"answer": "Technological/Creative"
-	},
-	{
-		"question": "______ and ______ are the name of Zelophehad's daughters.",
-		"options": ["Noha/Tirzah", "Hoglah/Abigail", "Mahlah/Levilah"],
-		"answer": "Noha/Tirzah"
-	},
-	{
-		"question": "Midlife crises happens for a ______",
-		"options": ["Lifetime", "Season", "All of the above"],
-		"answer": "Season"
-	},
-	{
-		"question": "When ______ is unpretentious, love follows.",
-		"options": ["Submission", "Unity", "Marriage"],
-		"answer": "Submission"
+		"answer": "BIBLICAL SNAPSHOT"
 	},
 	{
-		"question": "Attaining financial independence as a Christian, one must do one of the following.",
-		"options": ["Be stingy", "Eliminate debt", "Starve to save"],
-		"answer": "Eliminate debt"
+		"question": "According to lesson 51, _______ shall see the face of Jesus.",
+		"options": ["The righteous", "The dead", "THE SAINTS"],
+		"answer": "THE SAINTS"
 	},
 	{
-		"question": "Capacity is defined as an individual’s ____ which includes the following except _______",
-		"options": ["Mental ability", "Maximum ability", "Physical ability"],
-		"answer": "Maximum ability"
+		"question": "_______ is the memory verse for lesson 47.",
+		"options": ["3 John 2", "1 JOHN 2:22", "John 10:10"],
+		"answer": "1 JOHN 2:22"
 	},
 	{
-		"question": "The lesson aim for lesson 42 is ____",
+		"question": "State the 2 lesson outlines for lesson 48.",
 		"options": [
-			"To teach in all spheres of life",
-			"To teach us to grow our capacity",
-			"To teach the concept of capacity building"
+			"What is Hell?, The power of Hell.",
+			"How to avoid hell, The Bible's description of hell",
+			"DESCRIPTION OF HELL, HOW TO AVOID HELL."
 		],
-		"answer": "To teach the concept of capacity building"
-	},
-	{
-		"question": "In outline one of lesson 42 there are ______ sub-topics",
-		"options": ["5", "1", "8"],
-		"answer": "8"
-	},
-	{
-		"question": "Every man has a deposit of God’s grace which must be _____ according to Matthew 25:14-27",
-		"options": ["Increased", "Dreamed of", "Deliberate"],
-		"answer": "Increased"
-	},
-	{
-		"question": "What is the potent weapon that can disarm the enemy?",
-		"options": ["Mind", "Knowledge", "Character"],
-		"answer": "Character"
-	},
-	{
-		"question": "What brings honour to God and makes us acceptable before men?",
-		"options": ["Objectives", "Establishment", "Moderation"],
-		"answer": "Moderation"
-	},
-	{
-		"question": "According to Ecclesiastes 2:10-11, it is ______ for Christians to understand how and why we should live in moderation",
-		"options": ["Expedient", "Convenient", "Good"],
-		"answer": "Expedient"
+		"answer": "DESCRIPTION OF HELL, HOW TO AVOID HELL."
 	},
 	{
-		"question": "In every area of our lives Christians should not show moderation?",
-		"options": ["True", "False", "None of the above"],
-		"answer": "False"
+		"question": "What is the Bible text for lesson 50?",
+		"options": ["Rev. 20:3 -17", "1 PET. 1:3-5", "3 John 1 - 3"],
+		"answer": "1 PET. 1:3-5"
 	},
 	{
-		"question": "We should show moderation in all aspects of life except _______",
-		"options": ["Celebrations", "Desires", "Prayers"],
-		"answer": "Prayers"
+		"question": "According to _______ , the kingdom of God is also known as the kingdom of heaven.",
+		"options": ["Matt. 6:33", "1 Chro. 29:10-12", "MATT. 19:23-24"],
+		"answer": "MATT. 19:23-24"
 	},
 	{
-		"question": "According to how to live in moderation in the book of Proverbs 23:20-21; 25:16 we are not to show moderation in eating and drinking.",
-		"options": ["True", "False", "None of the above"],
-		"answer": "False"
+		"question": "According to Daniel 4:3, God's kingdom is _______",
+		"options": ["mediatorial", "UNIVERSAL", "spiritual"],
+		"answer": "UNIVERSAL"
 	},
 	{
-		"question": "The topic “yesterday” is treated in lesson ___________",
-		"options": ["Lesson 41", "Lesson 40", "Lesson 43"],
-		"answer": "Lesson 41"
+		"question": "One of the fundamental obligations of a Christian is to follow peace with all men according to _______.",
+		"options": ["HEB. 12:14-15", "Mark 11:25", "Heb. 11:13-15"],
+		"answer": "HEB. 12:14-15"
 	},
 	{
-		"question": "In the topic of “yesterday” we were told that we shall learn how to overcome the urge to cling to the ________, embrace ________ and look on the bright side of __________",
-		"options": [
-			"Past, today, tomorrow",
-			"Tomorrow, past, today",
-			"Today, past, tomorrow"
-		],
-		"answer": "Past, today, tomorrow"
-	},
-	{
-		"question": "In lesson 41 the memory verse was taken from?",
-		"options": ["1 Timothy 3:13", "1 Corinthians 3:13", "Philippians 3:13"],
-		"answer": "Philippians 3:13"
+		"question": "\"The Branches of Lies\" is the topic for which lesson?",
+		"options": ["15", "9", "25"],
+		"answer": "9"
 	},
 	{
-		"question": "According to 2 Samuel 12:18-23, accelerate your forward movement by thinking and taking the next step into a ______",
-		"options": ["Better tomorrow", "Good tomorrow", "Brighter tomorrow"],
-		"answer": "Brighter tomorrow"
+		"question": "_______ has been linked to increased stress, depression and anxiety, according to lesson 18.",
+		"options": ["Loneliness", "Fear", "CHRONIC LONELINESS"],
+		"answer": "CHRONIC LONELINESS"
 	},
 	{
-		"question": "Why should we forget yesterday? (All are valid except one)",
-		"options": [
-			"Because it is gone",
-			"One cannot bring back the hand of the clock",
-			"To avoid repetition of the same thing"
-		],
-		"answer": "To avoid repetition of the same thing"
+		"question": "What is the 2nd lesson outline for lesson 12?",
+		"options": ["The blessing", "THE BENEFITS", "The Christian life"],
+		"answer": "THE BENEFITS"
 	},
 	{
-		"question": "What is the topic for the lesson 40?",
-		"options": ["The covenant meal", "Watchfulness", "Yesterday"],
-		"answer": "The covenant meal"
+		"question": "What is the Bible text for lesson 16?",
+		"options": ["1 TIM. 6:6-11", "Matt. 17:4-11", "2 Tim 5:2-8"],
+		"answer": "1 TIM. 6:6-11"
 	},
 	{
-		"question": "Where was the passage taken from in lesson 40?",
-		"options": [
-			"1 Corinthians 11:24-29",
-			"Matthew 11:24-29",
-			"Exodus 11:24-29"
-		],
-		"answer": "1 Corinthians 11:24-29"
+		"question": "\"He maketh me to lie down in green pastures: he leadeth me beside the still waters\". What lesson has this as memory verse?",
+		"options": ["Lesson 10", "LESSON 44", "Lesson 14"],
+		"answer": "LESSON 44"
 	},
 	{
-		"question": "A regenerated life means the following except ____",
-		"options": [
-			"You must be born again",
-			"Those who have been redeemed",
-			"Taking the Holy Communion worthily"
-		],
-		"answer": "Taking the Holy Communion worthily"
+		"question": "What is the 1st lesson outline for Lesson 41?",
+		"options": ["The Future is bright", "PAST IS PAST", "Overcomers"],
+		"answer": "PAST IS PAST"
 	},
 	{
-		"question": "What must be taken under self-examination according to lesson 40?",
-		"options": ["Holy Communion", "The Covenant Meal", "Lord’s supper"],
-		"answer": "The Covenant Meal"
+		"question": "Which prophet would say was the main character of lesson 45?",
+		"options": ["Prophet Joel", "PROPHET SAMUEL", "The man: Joshua"],
+		"answer": "PROPHET SAMUEL"
 	},
 	{
-		"question": "What can reveal secrets according to the book of Matthew 26:19-23?",
-		"options": ["Privileged meal", "Holy Communion", "Breaking bread"],
-		"answer": "Holy Communion"
+		"question": "What is the memory verse for lesson 36?",
+		"options": ["1COR. 9:19-23", "1Thess. 8:10-14", "2 Cor. 12:5-9"],
+		"answer": "1COR. 9:19-23"
 	},
 	{
-		"question": "What does God give to everybody to operate in the course of life according to Matthew 25:1?",
-		"options": ["Equal right", "Equal opportunity", "Equal chances"],
-		"answer": "Equal chances"
+		"question": "\"Let your moderation be known unto all men. The Lord is at hand.\" Where is the above scripture taken from?",
+		"options": ["John 10:10", "PHIL. 4:5", "Col. 3:14"],
+		"answer": "PHIL. 4:5"
 	},
 	{
-		"question": "We should stay ____ no matter the height you attain according to Matthew 18:4.",
-		"options": ["Peaceful", "Obedient", "Humble"],
-		"answer": "Humble"
+		"question": "What is the 2nd Lesson outline for Lesson 46?",
+		"options": ["THE BLESSING", "The outcome", "The benefits."],
+		"answer": "THE BLESSING"
 	},
 	{
-		"question": "We should be mindful of kingdom business by investing our ______, _______ and ______ according to 1 Thessalonians 2:8; 2 Corinthians 12:15.",
-		"options": [
-			"Incomes, period and liveliness",
-			"Time, energy and resources",
-			"Vigor, possessions and stretch"
-		],
-		"answer": "Time, energy and resources"
+		"question": "Zelophehad was a man from the tribe of _______",
+		"options": ["Israel", "MANASSEH", "JSludah"],
+		"answer": "MANASSEH"
 	},
 	{
-		"question": "God said we should be cautious because punishment awaits anyone left behind because of _______ according to 2 Peter 2:4-9; Revelation 13:9-10.",
+		"question": "What is the topic of Lesson 34?",
 		"options": [
-			"Worldly pleasures",
-			"Desires experienced",
-			"Sophisticated choices"
+			"Cross Cultural Mission, 1",
+			"MISSIONS MINDEDNESS",
+			"Cross Cultural Mission, 2"
 		],
-		"answer": "Worldly pleasures"
+		"answer": "MISSIONS MINDEDNESS"
 	},
 	{
-		"question": "What should we prayerfully strive to rid of according to 1 Corinthians 10:31?",
-		"options": ["Good habit", "Bad habit", "Wicked practice"],
-		"answer": "Wicked practice"
+		"question": "The memory verse of lesson 40 was taken from _______",
+		"options": ["John 14:14", "JOHN 6:51", "Matt. 11:19"],
+		"answer": "JOHN 6:51"
 	},
 	{
-		"question": "What is the art of preaching the Gospel?",
-		"options": ["Evangelism", "Preaching", "Talking to people"],
-		"answer": "Evangelism"
+		"question": "\"Can two walk together, except they be agreed?\". This is the memory verse of lesson _______",
+		"options": ["27", "39", "29"],
+		"answer": "29"
 	},
 	{
-		"question": "The memory verse for lesson 37 was read from the book of ___________",
-		"options": ["Galatians 6:10", "Romans 5:8", "Mark 16:15"],
-		"answer": "Galatians 6:10"
+		"question": "What is the 1st lesson outline of lesson 31?",
+		"options": ["The need to pray", "The need to fast", "THE NEED TO ASK"],
+		"answer": "THE NEED TO ASK"
 	},
 	{
-		"question": "Welfare evangelism is one of the ways of spreading the gospel to the sinners",
-		"options": ["True", "False", "All of the above"],
-		"answer": "True"
+		"question": "According to lesson 37, _______ is one of the ways of spreading the gospel to the sinners and the less privileged.",
+		"options": ["Missions", "WELFARE EVANGELISM", "Evangelism"],
+		"answer": "WELFARE EVANGELISM"
 	},
 	{
-		"question": "Welfare can mean the following except ____",
-		"options": ["Health", "Food", "Good manners"],
-		"answer": "Good manners"
-	},
-	{
-		"question": "Jesus was able to minister to all the people who attended the feast and most of whom were sinners; this can be a form of ____",
-		"options": [
-			"Provisions evangelism",
-			"Welfare evangelism",
-			"Earthly evangelism"
-		],
-		"answer": "Welfare evangelism"
+		"question": "What is the Bible text for the lesson, \"Parenting Like God\"?.",
+		"options": ["1 SAM. 7:12-15", "2Kings 17:1-6", "2Sam. 7:12-15"],
+		"answer": "1 SAM. 7:12-15"
 	},
 	{
-		"question": "Cross-cultural missions involve connecting with people whose culture is different from our own",
-		"options": ["True", "False", "All of the above"],
-		"answer": "True"
+		"question": "\"Take ye heed, watch and pray: for ye know not when the time is\". Mark 13:33. This is the memory verse for what lesson?",
+		"options": ["Lesson 10", "LESSON 38", "Lesson 45"],
+		"answer": "LESSON 38"
 	},
 	{
-		"question": "Teaching them to observe all things whatsoever I have commanded you: and, lo, I am with you always, even unto the end of the world is taken from which book of the Bible?",
-		"options": ["Matthew 28:20", "Luke 28:20", "John 28:20"],
-		"answer": "Matthew 28:20"
+		"question": "According to _______ God wants his people to prosper.",
+		"options": ["1 John 5:3", "1Pet. 4:12", "3 JOHN 2"],
+		"answer": "3 JOHN 2"
 	},
 	{
-		"question": "Paul’s goal was to bring as many people as possible to faith in Jesus according to 1 Corinthians 9:22. This can be referred to as _______",
+		"question": "What is the 2nd lesson outline for lesson 28?",
 		"options": [
-			"Cross-cultural mission",
-			"Cross-cultural faith",
-			"Effective mission"
+			"THE THIN LINE",
+			"The culture of faith",
+			"Building a cordial relationship"
 		],
-		"answer": "Cross-cultural mission"
+		"answer": "THE THIN LINE"
 	},
 	{
-		"question": "Who found himself among the Jews and spoke to them using the Jewish Scriptures and history according to Acts 13:13-42?",
-		"options": ["Paul", "James", "Peter"],
-		"answer": "Paul"
+		"question": "Where is the memory verse of lesson 42 taken from?",
+		"options": ["JUDE 1:20", "1 Sam. 22:5", "Phil. 4:5"],
+		"answer": "JUDE 1:20"
 	},
 	{
-		"question": "Missionaries should not be assured of God’s presence at all times and thereby not be encouraged.",
-		"options": ["True", "False", "All of the above"],
-		"answer": "False"
+		"question": "According to lesson 22, God is the giver of life: He gives, and He takes away. What scripture can this be found in?",
+		"options": ["Esther 5:3", "Ps. 119:4", "JOB 1:21"],
+		"answer": "JOB 1:21"
 	},
 	{
-		"question": "What is the topic for lesson 35?",
+		"question": "What is the 1st lesson outline for lesson 32?",
 		"options": [
-			"Cross-cultural missions part 2",
-			"Cross-cultural missions part 1",
-			"Capacity building"
+			"Cause of a Midlife crisis",
+			"Symptoms of a Midlife crisis",
+			"REASONS AND SYMPTOMS OF A MIDLIFE CRISIS"
 		],
-		"answer": "Cross-cultural missions part 1"
+		"answer": "REASONS AND SYMPTOMS OF A MIDLIFE CRISIS"
 	},
 	{
-		"question": "What is an itinerant missionary minister called?",
-		"options": [
-			"Vocational missionary",
-			"Social missionary",
-			"Apostolic calling"
-		],
-		"answer": "Apostolic calling"
-	},
-	{
-		"question": "What is someone with the heart of missions who rises to the pressing needs of a people group called?",
-		"options": [
-			"Modern media missionary",
-			"Full-time missionary",
-			"Social ministry missionary"
-		],
-		"answer": "Social ministry missionary"
+		"question": "According to the 1st lesson outline of lesson 16, Gambling and Lot Casting involve the concept of _______.",
+		"options": ["Luck", "CHANCE", "Money"],
+		"answer": "CHANCE"
 	},
 	{
-		"question": "A cross-cultural missionary must have a passion for the _______ according to Romans 9:1-3.",
-		"options": ["Lost", "Mislaid", "Misplaced"],
-		"answer": "Lost"
+		"question": "\"Sexual Vices\" is the lesson topic of what lesson?",
+		"options": ["43", "17", "12"],
+		"answer": "17"
 	},
 	{
-		"question": "What can be referred to as going abroad to plant churches meant to reach their country/tribesmen living overseas?",
-		"options": [
-			"Cross-cultural missions",
-			"International church planting venture",
-			"Investment of churches international"
-		],
-		"answer": "International church planting venture"
+		"question": "What is the Bible text for lesson 20?",
+		"options": ["Luke 7:11-16", "Matt. 5:16-19", "Luke 5: 8-19"],
+		"answer": "Luke 7:11-16"
 	}
 ]
