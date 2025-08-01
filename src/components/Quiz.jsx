@@ -109,19 +109,50 @@ const Quiz = ({ initialQuestions, category }) => {
 			(str || "")
 				.trim()
 				.toLowerCase()
-				.replace(/[^\w\s]/g, "");
+				.replace(/[^\w\s]/g, ""); // Keep hyphens, remove other punctuation
 
 		try {
-			const correctAnswersCount = answers.filter((answer, index) => {
-				const question = questions[index];
-				const correct = normalize(question.answer);
+			const evaluateFillInTheBlank = (question, userAnswer) => {
+				const normalizedUserWords = normalize(userAnswer).split(/\s+/);
 
-				if (question.type === "fill-in-the-blank") {
-					return normalize(answer) === correct;
+				const rawAnswers = question.answer
+					.split(/,|\/| or | OR /)
+					.map((a) => normalize(a).trim())
+					.filter(Boolean);
+
+				const normalizedUserAnswerString = normalize(userAnswer);
+
+				let matchCount = 0;
+				for (const correct of rawAnswers) {
+					if (
+						correct.includes(" ") // full phrase
+							? normalizedUserAnswerString.includes(correct)
+							: normalizedUserWords.includes(correct)
+					) {
+						matchCount++;
+					}
 				}
 
-				// For objective (multiple choice), compare normalized as well
-				return normalize(answer) === correct;
+				// Set thresholds based on the question phrasing
+				const qText = question.question.toLowerCase();
+				if (qText.includes("mention four")) return matchCount >= 4;
+				if (qText.includes("mention three")) return matchCount >= 3;
+				if (qText.includes("mention two")) return matchCount >= 2;
+				if (qText.includes("mention one")) return matchCount >= 1;
+				if (qText.includes("complete")) return matchCount >= 3;
+
+				return matchCount >= 1;
+			};
+
+			const correctAnswersCount = answers.filter((answer, index) => {
+				const question = questions[index];
+
+				if (question.type === "fill-in-the-blank") {
+					return evaluateFillInTheBlank(question, answer);
+				}
+
+				// For objective (multiple choice), compare normalized
+				return normalize(answer) === normalize(question.answer);
 			}).length;
 
 			const normalizedAnswers = answers.map((answer, index) => {
