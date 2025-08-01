@@ -105,21 +105,45 @@ const Quiz = ({ initialQuestions, category }) => {
 		setIsSubmitting(true);
 		setTimerRunning(false);
 
+		const normalize = (str) =>
+			(str || "")
+				.trim()
+				.toLowerCase()
+				.replace(/[^\w\s]/g, "");
+
 		try {
 			const correctAnswersCount = answers.filter((answer, index) => {
-				const actualAnswer = questions[index].answer;
-				if (questions[index].type === "fill-in-the-blank") {
-					return (
-						(answer || "").trim().toLowerCase() ===
-						actualAnswer.trim().toLowerCase()
-					);
+				const question = questions[index];
+				const correct = normalize(question.answer);
+
+				if (question.type === "fill-in-the-blank") {
+					return normalize(answer) === correct;
 				}
-				return answer === actualAnswer;
+
+				// For objective (multiple choice), compare normalized as well
+				return normalize(answer) === correct;
 			}).length;
+
+			const normalizedAnswers = answers.map((answer, index) => {
+				const question = questions[index];
+
+				return question.type === "fill-in-the-blank"
+					? normalize(answer)
+					: answer;
+			});
+
+			// Normalize correct answers too
+			const normalizedQuestions = questions.map((q) => ({
+				...q,
+				answer: normalize(q.answer),
+			}));
 
 			localStorage.setItem(
 				"quizResults",
-				JSON.stringify({ answers, questions })
+				JSON.stringify({
+					answers: normalizedAnswers,
+					questions: normalizedQuestions,
+				})
 			);
 
 			const { data, error } = await supabase.auth.getUser();
@@ -132,8 +156,7 @@ const Quiz = ({ initialQuestions, category }) => {
 
 			const student_id = data.user.id;
 			const userEmail = data.user.email;
-			// console.log(student_id);
-			// Get extra profile info
+
 			const { data: usersData, error: usersError } = await supabase
 				.from("users_profile")
 				.select("email, name, class")
@@ -143,11 +166,9 @@ const Quiz = ({ initialQuestions, category }) => {
 
 			if (usersError) {
 				console.error("Error fetching user profile:", usersError);
-				// Continue with basic data if profile fetch fails
 			}
 
 			const userProfile = usersData && usersData[0];
-			console.log("User profile:", userProfile);
 
 			const resultData = {
 				student_id: student_id,
@@ -162,7 +183,6 @@ const Quiz = ({ initialQuestions, category }) => {
 
 			console.log("Upserting quiz result:", resultData);
 
-			// Upsert quiz result based on student_id
 			const { data: upsertData, error: upsertError } = await supabase
 				.from("quiz_results")
 				.upsert([resultData], { onConflict: ["student_id"] })
@@ -181,12 +201,13 @@ const Quiz = ({ initialQuestions, category }) => {
 			);
 		} catch (err) {
 			console.error("An error occurred during submission:", err);
-			// Don't block the user - continue to results page
 			removeNavigationLock();
 			router.replace(
 				`/quiz/results?correct=${
-					answers.filter((answer, index) => answer === questions[index].answer)
-						.length
+					answers.filter(
+						(answer, index) =>
+							normalize(answer) === normalize(questions[index].answer)
+					).length
 				}&total=${questions.length}`
 			);
 		} finally {
