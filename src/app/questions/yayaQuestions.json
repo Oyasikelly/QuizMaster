@@ -1,213 +1,1548 @@
 [
 	{
-		"question": "The earth was without form, and void; and darkness was on the face of the deep. And the Spirit of God was hovering over the face of the waters. This passage can be found in ___________.",
-		"options": ["Gen. 1:3", "Gen. 5:4", "Gen. 1:2"],
-		"answer": "Gen. 1:2"
+		"question": "\"Ruach\" in _____ Tongue means the _____",
+		"options": [
+			"Latin,Abode of God",
+			"Greek, Presence of God",
+			"Hebrew, Spirit of God"
+		],
+		"type": "multiple-choice",
+		"answer": "Hebrew, Spirit of God"
 	},
 	{
-		"question": "At Jesus’ baptism, the Spirit of God descended as a dove upon Him. What scripture can this be found?",
-		"options": ["Matt. 3:16", "1 Pet. 2:14", "Jn. 5:6"],
-		"answer": "Matt. 3:16"
+		"question": "The Spirit of God is linked with _____",
+		"options": ["Mankind", "Creation", "Divinity"],
+		"type": "multiple-choice",
+		"answer": "Creation"
 	},
 	{
-		"question": "What is the Bible scripture for 'Rauch Elohim'?",
-		"options": ["Exodus 5:1-10", "Num. 2:4-17", "Exodus 31:1-5"],
-		"answer": "Exodus 31:1-5"
+		"question": "The spirit of God equipped Bezaleel with_____",
+		"options": [
+			"Wisdom, Understanding, Knowledge",
+			"Wisdom, Power & understanding",
+			"wisdom, authority & skills"
+		],
+		"type": "multiple-choice",
+		"answer": "Wisdom, Understanding, Knowledge"
 	},
 	{
-		"question": "God is all-knowing and possesses all secrets. This attribute can be found in _______________.",
-		"options": ["Ps. 14:7", "Is. 24:16", "Ps. 139:7"],
-		"answer": "Ps. 139:7"
+		"question": "Mention three attributes of the spirit of God?",
+		"type": "fill-in-the-blank",
+		"answer": "i. Creativity ii. Inspiration iii. Authority iv. Omniscience v. Omnipotence"
 	},
 	{
-		"question": "The memory verse for Lesson 2 is taken from _______________.",
-		"options": ["Num. 5:13", "Lev. 19:31", "Joel 1:25"],
-		"answer": "Lev. 19:31"
+		"question": "_____was supernaturally transported to Azotus by the spirit of God, After he ministered to the Ethiopian Eunuch",
+		"options": ["Philip", "Paul", "Peter"],
+		"type": "multiple-choice",
+		"answer": "Philip"
 	},
 	{
-		"question": "Whoever abides in Him does not sin. Whoever sins has neither seen Him nor known Him. What scripture is that?",
-		"options": ["3John 2", "1Pet. 3:4", "1John 3:6"],
+		"question": "_____is a term used to describe spiritual practices, that do not conform to true Christianity",
+		"type": "fill-in-the-blank",
+		"answer": "Alternative spirituality"
+	},
+	{
+		"question": "Complete the memory verse for lesson 2,\"Give no regards to _____ and _____ spirits, do not seek after them, to be _____ by then. I am the Lord your God.",
+		"type": "fill-in-the-blank",
+		"answer": "Mediums and Familiar, defiled"
+	},
+	{
+		"question": "_____is the conjuring of the spirits of the dead to magically reveal the future",
+		"options": ["Crystal Sphere", "Necromancy", "Astrology"],
+		"type": "multiple-choice",
+		"answer": "Necromancy"
+	},
+	{
+		"question": "To worship the_____ is a clear violation of God's law according to Deuteronomy 4:19",
+		"options": ["Magicians", "Astrologers", "Starry host"],
+		"type": "multiple-choice",
+		"answer": "Starry host"
+	},
+	{
+		"question": "Likewise, anything that seeks to manipulate the spirit world can be categorized as _____ according to Gal 5:19-21",
+		"type": "fill-in-the-blank",
+		"answer": "Witchcraft"
+	},
+	{
+		"question": "What is Sin according to 1 John 3:4?",
+		"type": "fill-in-the-blank",
+		"answer": "Violation of the perfect Holiness of God"
+	},
+	{
+		"question": "\"Whoever abides in Him does not sin, Whoever sins has neither seen him nor know Him.\" Where is this verse taken from",
+		"options": ["1John 3:6", "2 peter 2:5", "James 1:7"],
+		"type": "multiple-choice",
 		"answer": "1John 3:6"
 	},
 	{
-		"question": "Sinners cannot hide their sins from God. Where can this be found according to lesson 3?",
-		"options": ["Jer. 1:20", "Amos 2:22", "Jer. 2:22"],
-		"answer": "Jer. 2:22"
+		"question": "Sin started with who in Isa 14:12-14?",
+		"type": "fill-in-the-blank",
+		"answer": "Satan"
 	},
 	{
-		"question": "Where is the Bible text for Lesson 4 taken from?",
-		"options": ["2Tim. 4:2-7", "Phil. 3:12-14", "2Tim. 3:13-17"],
-		"answer": "2Tim. 3:13-17"
+		"question": "State three grievous consequences of Sin?",
+		"type": "fill-in-the-blank",
+		"answer": "i. Separation from God ii. Exposure to attacks iii. Eternal punishment iv. Death v.Hell"
 	},
 	{
-		"question": "Sanctify them by your truth. Your Word is truth. Where can this be found in the Bible?",
-		"options": ["John 7:7", "John 17:17", "Dan. 6:12"],
+		"question": "Sin in Hebrew Tongue is _____",
+		"options": ["Chatta ah", "Chate ah", "Chat-ah"],
+		"type": "multiple-choice",
+		"answer": "Chatta ah"
+	},
+	{
+		"question": "\"Sanctify them by your truth, Your word is truth\" Where is this verse taken from",
+		"options": ["John 17:10", "John 17:17", "1 John 1:17"],
+		"type": "multiple-choice",
 		"answer": "John 17:17"
 	},
 	{
-		"question": "What is the 2nd lesson outline for lesson 5?",
+		"question": "The Greek word for truth is _____",
+		"options": ["Aritheia", "Aleritheia", "Aletheia"],
+		"type": "multiple-choice",
+		"answer": "Aletheia"
+	},
+	{
+		"question": "If Jesus is the Word, then the Word of God is the _____",
+		"type": "fill-in-the-blank",
+		"answer": "Truth"
+	},
+	{
+		"question": "The word of God is sharp and powerful according to _____",
+		"type": "fill-in-the-blank",
+		"answer": "Heb 4:12"
+	},
+	{
+		"question": "One false doctrine introduced by the devil to counter sound doctrine of God according to phil 4:13 is _____",
+		"type": "fill-in-the-blank",
+		"answer": "Relative"
+	},
+
+	{
+		"question": "The Topic for lesson 5 is _____",
+		"type": "fill-in-the-blank",
+		"answer": "Holiness is impossible"
+	},
+	{
+		"question": "To be a God pleaser, A believer must do the following",
+		"options": ["Obey God", "Fear Men", "Be a devout worshipper"],
+		"type": "multiple-choice",
+		"answer": "Obey God"
+	},
+	{
+		"question": "One benefit of being a God-pleaser based on Daniel 1:8,20 is _____",
+		"type": "fill-in-the-blank",
+		"answer": "Divine promotion"
+	},
+	{
+		"question": "One way to be a God-pleaser is to believe and trust God wholeheartedly, according to the scriptures in _____",
+		"type": "fill-in-the-blank",
+		"answer": "Psalm 118:8"
+	},
+	{
+		"question": "Actively Enlarging the kingdom of God is one attribute of Men Pleasers",
+		"options": ["True", "False"],
+		"type": "true-false",
+		"answer": "False"
+	},
+	{
+		"question": "One of the ways of overcoming Men-pleasing attitudes according to Psalm37:4 is _____",
+		"type": "fill-in-the-blank",
+		"answer": "God must always be your delight"
+	},
+	{
+		"question": "According to Col 3:22, Bondservants are to obey their masters according to the _____, not with eye service, as men Pleasers, but in _____ of heart.",
+		"options": ["flesh, fear", "Spirit, fear", "flesh, sincerity"],
+		"type": "multiple-choice",
+		"answer": "flesh, sincerity"
+	},
+	{
+		"question": "According to James 4:4b, Men pleasers will become the _____ of God",
+		"options": ["Forsaken", "Enemy", "Wrath"],
+		"type": "multiple-choice",
+		"answer": "Enemy"
+	},
+	{
+		"question": "The first outline of lesson six is _____",
+		"type": "fill-in-the-blank",
+		"answer": "Characteristics and Dangers of pleasing Men"
+	},
+	{
+		"question": "To overcome the men pleasing attitude, believers should",
 		"options": [
-			"Becoming a People please",
-			"Dangers of pleasing men",
-			"Benefits of being a God-pleaser"
+			"moderate degree of seriousness",
+			"pray in the spirit of courage",
+			"Stop putting their hope in Men"
 		],
-		"answer": "Benefits of being a God-pleaser"
+		"type": "multiple-choice",
+		"answer": "Stop putting their hope in Men"
 	},
 	{
-		"question": "The Bible text for lesson 6 was taken from ____________",
-		"options": ["Eph. 6:10-15", "Rom. 5:12-21", "Eph. 6: 5-8"],
-		"answer": "Eph. 6: 5-8"
+		"question": "The Topic for lesson 7 is _____",
+		"type": "fill-in-the-blank",
+		"answer": "The Christian faith"
 	},
 	{
-		"question": "The first lesson outline for lesson 6 is ______________",
+		"question": "The Christian faith is a _____ and not a _____",
 		"options": [
-			"Dangers of pleasing men.",
-			"Characteristics and dangers of pleasing men",
-			"Overcoming men pleasing attitudes."
+			"Relationship, Religion",
+			"Religion, Relationship",
+			"Religion, Idol"
 		],
-		"answer": "Characteristics and dangers of pleasing men"
+		"type": "multiple-choice",
+		"answer": "Relationship, Religion"
 	},
 	{
-		"question": "According to lesson 7, there are diverse views, both within and without about the __________.",
-		"options": ["ten commandments", "the Christian faith", "the book of life"],
-		"answer": "the Christian faith"
+		"question": "According to lesson 7, _____ Pride themselves on their ability to keep the law",
+		"type": "fill-in-the-blank",
+		"answer": "Jewish Leaders"
 	},
 	{
-		"question": "The leaders of religious sects add many of their own rules to make it even more ____________.",
-		"options": ["Perfect", "Correct", "Cumbersome"],
-		"answer": "Cumbersome"
+		"question": "God desires that we be holy, as He is holy according to _____",
+		"type": "fill-in-the-blank",
+		"answer": "2 peter 3:18"
 	},
 	{
-		"question": "‘Divine Resistance’ is the topic for Lesson ______.",
-		"options": ["8", "15", "10"],
-		"answer": "10"
+		"question": "\"But God demonstrates His own love towards us, in that while we were still sinners, Christ died for us\" Where is the memory verse taken from?",
+		"options": ["Rom 3:5", "Rom 5:8", "Rom 8:5"],
+		"type": "multiple-choice",
+		"answer": "Rom 5:8"
 	},
 	{
-		"question": "What is the first lesson outline for lesson 8?",
+		"question": "The following are things that accompany salvation except",
+		"options": ["Victory", "Prosperity", "Lasciviousness"],
+		"type": "multiple-choice",
+		"answer": "Lasciviousness"
+	},
+	{
+		"question": "_____ Contains Everything that makes life Enjoyable",
+		"options": ["Fame package", "Money package", "Redemption Package"],
+		"type": "multiple-choice",
+		"answer": "Redemption Package"
+	},
+	{
+		"question": "One major factor that may hinder a believer from enjoying the redemption package is _____",
+		"options": ["Selfishness", "Ignorance", "Lack of Giving"],
+		"type": "multiple-choice",
+		"answer": "Ignorance"
+	},
+	{
+		"question": "In victory package, believers have victory over the following except",
+		"options": ["All options are correct", "Sin", "Death"],
+		"type": "multiple-choice",
+		"answer": "All options are correct"
+	},
+	{
+		"question": "The following are the covenant of prosperity except",
+		"options": ["Sowing", "Restoring", "Giving"],
+		"type": "multiple-choice",
+		"answer": "Restoring"
+	},
+	{
+		"question": "The topic of lesson 9 is ............",
 		"options": [
-			"Unfolding the Redemption package",
-			"Reasons for not enjoying the Redemption package.",
-			"The importance of the Redemption package"
+			"divine resistance",
+			"consecration",
+			"Christianity and socialization"
 		],
-		"answer": "Reasons for not enjoying the Redemption package."
+		"type": "multiple-choice",
+		"answer": "Christianity and socialization"
 	},
 	{
-		"question": "According to 3John 2-4, The testimony that John holds on faithfulness prompted him to write about the joy he feels and the desire to see _________.",
-		"options": ["Gaius", "Peter", "Andrew"],
-		"answer": "Gaius"
+		"question": "'Let your moderation be known unto all men. The Lord is at hand.' The bible passage is ................",
+		"options": ["phil. 4:5", "James 4:6", "Rom. 12:1"],
+		"type": "multiple-choice",
+		"answer": "phil. 4:5"
 	},
 	{
-		"question": "Let your moderation be known unto all men. The Lord is at hand. What scripture is this?",
-		"options": ["Col. 3:14", "Phil. 4:5", "Col. 5:17"],
-		"answer": "Phil. 4:5"
+		"question": "To socialize according to our manual is simply ...............",
+		"type": "fill-in-the-blank",
+		"answer": "PG 26"
 	},
 	{
-		"question": "What would you say is the antidote for pride according to the 2nd lesson outline of lesson 10?",
-		"options": ["Meekness", "Humility", "Joy"],
-		"answer": "Humility"
+		"question": "Divine resistance is lesson .................",
+		"options": ["lesson 10", "lesson 9", "lesson 11"],
+		"type": "multiple-choice",
+		"answer": "lesson 10"
 	},
 	{
-		"question": "What is the Bible text for lesson 51?",
-		"options": ["Revelation 5:10-30", "1Pet. 5:1-7", "Revelation 21:1-5"],
-		"answer": "Revelation 21:1-5"
+		"question": "The bible passage of lesson 9 is ...........................",
+		"type": "fill-in-the-blank",
+		"answer": "1cor. 6:12-13"
 	},
 	{
-		"question": "What is the 1st lesson outline for lesson 51?",
+		"question": "Humility is an antidote of ............ and a requirement to ........................ according to Micah 6:8",
+		"type": "fill-in-the-blank",
+		"answer": "PRIDE AND WALK WITH GOD"
+	},
+	{
+		"question": "Humility comes before ................. according to our manual.",
+		"type": "fill-in-the-blank",
+		"answer": "HONOUR"
+	},
+	{
+		"question": "Consecration from the Hebrew root is ...............",
+		"type": "fill-in-the-blank",
+		"answer": "MILLU"
+	},
+	{
+		"question": "The lesson topic for lesson 11 is ............",
+		"options": ["divine resistance", "consecration", "cultural Christianity"],
+		"type": "multiple-choice",
+		"answer": "cultural Christianity"
+	},
+	{
+		"question": "The mission of Jesus was to ............... believers according to John 15:3",
+		"type": "fill-in-the-blank",
+		"answer": "SANCTIFY"
+	},
+	{
+		"question": "The bible memory verse of lesson 11 is .............",
+		"options": ["1 peter 5:5-7", "revelation 1:5-6", "Matthew 7:21-23"],
+		"type": "multiple-choice",
+		"answer": "Matthew 7:21-23"
+	},
+	{
+		"question": "................. Is a nominal believer who superficially identifies themselves as Christian but do not truly adhere to the tenets of the Christian faith according to Matthew 15:8.",
+		"type": "fill-in-the-blank",
+		"answer": "CULTURAL CHRISTAINITY"
+	},
+	{
+		"question": "Lesson 13 topic is ............",
+		"type": "fill-in-the-blank",
+		"answer": "QUATERLY REVIEW"
+	},
+	{
+		"question": "The lesson topic of lesson 12 is .............",
+		"options": ["cultural Christianity", "anger management", "karpos pneuma"],
+		"type": "multiple-choice",
+		"answer": "cultural Christianity"
+	},
+	{
+		"question": "The bible passage of lesson 14 is .........",
+		"options": ["Ephesians 4:26-27", "Galatians 5:22-25", "1 Tim 6:6-11"],
+		"type": "multiple-choice",
+		"answer": "Ephesians 4:26-27"
+	},
+	{
+		"question": "Lesson 14 topic is ............",
+		"options": ["Gambling", "karpos pneuma", "anger management"],
+		"type": "multiple-choice",
+		"answer": "anger management"
+	},
+	{
+		"question": "............... is a negative emotion characterized by bitterness towards something especially when there is a perceived wrong.",
+		"type": "fill-in-the-blank",
+		"answer": "ANGER"
+	},
+	{
+		"question": "The memory verse of lesson 14 is ...............",
+		"type": "fill-in-the-blank",
+		"answer": "ECC. 7:9"
+	},
+	{
+		"question": "The bible verse Galatians 5:22-25 is for lesson ...........",
+		"options": ["12", "15", "16"],
+		"type": "multiple-choice",
+		"answer": "15"
+	},
+	{
+		"question": "KARPOS PNUEMA is known as .................................",
+		"type": "fill-in-the-blank",
+		"answer": "THE FRUIT OF THE HOLY SPIRIT"
+	},
+
+	{
+		"question": "The topic of lesson 9 is ............",
 		"options": [
-			"Biblical screenshot",
-			"Biblical snapshot",
-			"Biblical examination"
+			"divine resistance",
+			"consecration",
+			"Christianity and socialization"
 		],
-		"answer": "Biblical snapshot"
+		"type": "multiple-choice",
+		"answer": "Christianity and socialization"
 	},
 	{
-		"question": "According to lesson 51, ________ shall see the face of Jesus.",
-		"options": ["The righteous", "The dead", "The saints"],
-		"answer": "The saints"
+		"question": "'Let your moderation be known unto all men. The Lord is at hand.' The bible passage is ................",
+		"options": ["phil. 4:5", "James 4:6", "Rom. 12:1"],
+		"type": "multiple-choice",
+		"answer": "phil. 4:5"
 	},
 	{
-		"question": "_____________ is the memory verse for lesson 47.",
-		"options": ["3 John 2", "1 John 2:22", "John 10:10"],
-		"answer": "1 John 2:22"
+		"question": "To socialize according to our manual is simply ...............",
+		"type": "fill-in-the-blank",
+		"answer": "PG 26"
 	},
 	{
-		"question": "State the 2 lesson outlines for lesson 48.",
+		"question": "Divine resistance is lesson .................",
+		"options": ["lesson 10", "lesson 9", "lesson 11"],
+		"type": "multiple-choice",
+		"answer": "lesson 10"
+	},
+	{
+		"question": "The bible passage of lesson 9 is ...........................",
+		"type": "fill-in-the-blank",
+		"answer": "1cor. 6:12-13"
+	},
+	{
+		"question": "Humility is an antidote of ............ and a requirement to ........................ according to Micah 6:8",
+		"type": "fill-in-the-blank",
+		"answer": "PRIDE AND WALK WITH GOD"
+	},
+	{
+		"question": "Humility comes before ................. according to our manual.",
+		"type": "fill-in-the-blank",
+		"answer": "HONOUR"
+	},
+	{
+		"question": "Consecration from the Hebrew root is ...............",
+		"type": "fill-in-the-blank",
+		"answer": "MILLU"
+	},
+	{
+		"question": "The lesson topic for lesson 11 is ............",
+		"options": ["divine resistance", "consecration", "cultural Christianity"],
+		"type": "multiple-choice",
+		"answer": "cultural Christianity"
+	},
+	{
+		"question": "The mission of Jesus was to ............... believers according to John 15:3",
+		"type": "fill-in-the-blank",
+		"answer": "SANCTIFY"
+	},
+	{
+		"question": "The bible memory verse of lesson 11 is .............",
+		"options": ["1 peter 5:5-7", "revelation 1:5-6", "Matthew 7:21-23"],
+		"type": "multiple-choice",
+		"answer": "Matthew 7:21-23"
+	},
+	{
+		"question": "................. Is a nominal believer who superficially identifies themselves as Christian but do not truly adhere to the tenets of the Christian faith according to Matthew 15:8.",
+		"type": "fill-in-the-blank",
+		"answer": "CULTURAL CHRISTAINITY"
+	},
+	{
+		"question": "Lesson 13 topic is ............",
+		"type": "fill-in-the-blank",
+		"answer": "QUATERLY REVIEW"
+	},
+	{
+		"question": "The lesson topic of lesson 12 is .............",
+		"options": ["cultural Christianity", "anger management", "karpos pneuma"],
+		"type": "multiple-choice",
+		"answer": "cultural Christianity"
+	},
+	{
+		"question": "The bible passage of lesson 14 is .........",
+		"options": ["Ephesians 4:26-27", "Galatians 5:22-25", "1 Tim 6:6-11"],
+		"type": "multiple-choice",
+		"answer": "Ephesians 4:26-27"
+	},
+	{
+		"question": "Lesson 14 topic is ............",
+		"options": ["Gambling", "karpos pneuma", "anger management"],
+		"type": "multiple-choice",
+		"answer": "anger management"
+	},
+	{
+		"question": "............... is a negative emotion characterized by bitterness towards something especially when there is a perceived wrong.",
+		"type": "fill-in-the-blank",
+		"answer": "ANGER"
+	},
+	{
+		"question": "The memory verse of lesson 14 is ...............",
+		"type": "fill-in-the-blank",
+		"answer": "ECC. 7:9"
+	},
+	{
+		"question": "The bible verse Galatians 5:22-25 is for lesson ...........",
+		"options": ["12", "15", "16"],
+		"type": "multiple-choice",
+		"answer": "15"
+	},
+	{
+		"question": "KARPOS PNUEMA is known as .................................",
+		"type": "fill-in-the-blank",
+		"answer": "THE FRUIT OF THE HOLY SPIRIT"
+	},
+
+	{
+		"question": "Which of this is not one of the lesson outlines for lesson 18",
 		"options": [
-			"What is Hell?, The power of Hell.",
-			"How to avoid hell, The Bible’s description of hell",
-			"Description of hell, How to avoid hell"
+			"Satan's world system",
+			"Man's world system",
+			"God has a world system"
 		],
-		"answer": "Description of hell, How to avoid hell"
+		"type": "multiple-choice",
+		"answer": "Man's world system"
 	},
 	{
-		"question": "What is the Bible text for lesson 50?",
-		"options": ["Rev. 20:3 -17", "1 Pet. 1:3-5", "3 John 1 - 3"],
-		"answer": "1 Pet. 1:3-5"
+		"question": "What passage of the scriptures quotes \"Do not love the world or the things in the world, If anyone loves the world the love of the father is not in him\".",
+		"type": "fill-in-the-blank",
+		"answer": "1 John 2:15"
 	},
 	{
-		"question": "What is the first lesson outline for lesson 28?",
-		"options": ["Peace", "Biblical instances", "Indications of love"],
-		"answer": "Biblical instances"
-	},
-	{
-		"question": "According to lesson 30, God sent hope to the children of Israel through Prophet __________.",
-		"options": ["Joel", "Ezekiel", "Isaiah"],
-		"answer": "Isaiah"
-	},
-	{
-		"question": "What is the topic of lesson 35?",
+		"question": "What is the topic of lesson 18",
 		"options": [
-			"Cross-cultural missions Part 2",
-			"Kingdom influencers",
-			"Cross cultural missions Part 1"
+			"The Redemption package",
+			"The world system",
+			"Love; the greatest commandment"
 		],
-		"answer": "Cross cultural missions Part 1"
+		"type": "multiple-choice",
+		"answer": "The world system"
 	},
 	{
-		"question": "The memory verse for lesson 40, Crisis of Identity is ______________.",
-		"options": ["Gen. 32:28", "Esther 4:5", "Num. 11:12"],
-		"answer": "Gen. 32:28"
+		"question": "Since the fall of Adam and Eve, Satan has changed the mode of operation in the world.",
+		"options": ["True", "False", "All of the above"],
+		"type": "true-false",
+		"answer": "True"
 	},
 	{
-		"question": "What is the 2nd lesson outline for lesson 45?",
+		"question": "God clearly warns against _________ with the world",
+		"options": ["Unionism", "Discussion", "Friendship"],
+		"type": "multiple-choice",
+		"answer": "Friendship"
+	},
+	{
+		"question": "THE ESSENCE OF PRAISE is the topic for which lesson",
+		"options": ["18", "19", "20"],
+		"type": "multiple-choice",
+		"answer": "19"
+	},
+	{
+		"question": "According to our lesson \"the essence of praise\", the _________ of God are sufficient reasons for us to praise Him.",
+		"options": ["Healings", "Deliverance", "Attributes"],
+		"type": "multiple-choice",
+		"answer": "Attributes"
+	},
+	{
+		"question": "God is over all Mankind yet He accepts praise only from those who draw near to him in _________",
 		"options": [
-			"Chronicles of Ezra",
-			"The portrait of an intentional leader",
-			"The example of Nehemiah"
+			"Sacrifice and holiness",
+			"Holiness and repentance",
+			"Repentance and sacrifice"
 		],
-		"answer": "The example of Nehemiah"
+		"type": "multiple-choice",
+		"answer": "Holiness and repentance"
 	},
 	{
-		"question": "“Sexual Vices” is the topic for what lesson?",
-		"options": ["Lesson 11", "Lesson 26", "Lesson 17"],
-		"answer": "Lesson 17"
+		"question": "One of these is not a reason for praising God",
+		"options": ["Goodness", "Jealousy", "Anger"],
+		"type": "multiple-choice",
+		"answer": "Anger"
 	},
 	{
-		"question": "“My soul, wait silently for God alone, For my expectation is from Him”. What scripture is this?",
-		"options": ["Ps. 119:15", "Ps. 62:5", "Job 13:2"],
-		"answer": "Ps. 62:5"
+		"question": "I will praise you O Lord my God, with all my heart and I will glorify your name forevermore. Psalms 86 vs _________",
+		"type": "fill-in-the-blank",
+		"answer": "12"
 	},
 	{
-		"question": "What is the topic of lesson 27?",
+		"question": "What is the topic of lesson 20",
+		"type": "fill-in-the-blank",
+		"answer": "Capacity Building"
+	},
+	{
+		"question": "One of these is not a Biblical example of those that built capacity",
+		"options": ["Absalom", "David", "Jephthah"],
+		"type": "multiple-choice",
+		"answer": "Absalom"
+	},
+	{
+		"question": "What is the name of the only woman in the examples of those that built their capacity in the Bible according to lesson 20",
+		"type": "fill-in-the-blank",
+		"answer": "Deborah"
+	},
+	{
+		"question": "Which area did Joseph develop his capacity according to lesson 20",
+		"options": ["Prayers", "Association", "Gift"],
+		"type": "multiple-choice",
+		"answer": "Gift"
+	},
+	{
+		"question": "Who had a very discouraging beginning being an outcast yet developed himself to become a warrior and ruler of his people",
+		"options": ["Reuben", "Jephthah", "Daniel"],
+		"type": "multiple-choice",
+		"answer": "Jephthah"
+	},
+	{
+		"question": "What is the topic of the lesson that made reference to the wife of the sons of the prophets that cry out to Elisha",
+		"options": ["Debt Management", "Diligence", "Divine Resistance"],
+		"type": "multiple-choice",
+		"answer": "Debt Management"
+	},
+	{
+		"question": "Uncontrolled child bearing is not a likely cause of debt",
+		"options": ["False", "True", "Not Applicable"],
+		"type": "true-false",
+		"answer": "False"
+	},
+	{
+		"question": "One of this is not an effect of debt",
 		"options": [
-			"Diligence",
-			"Artificial intelligence and Christianity",
-			"Dealing with fear"
+			"The lender can torment the borrower",
+			"It can't lead to emotional breakdown",
+			"Borrower become uncomfortable"
 		],
-		"answer": "Artificial intelligence and Christianity"
+		"type": "multiple-choice",
+		"answer": "It can't lead to emotional breakdown"
 	},
 	{
-		"question": "What is the Bible text for lesson 32?",
-		"options": ["Gen. 22:5-15", "Lev. 4:13-17", "Gen. 26:18-22"],
-		"answer": "Gen. 26:18-22"
+		"question": "One of the following is not a lesson outlines of lesson 21",
+		"options": ["Debt Management", "Causes and effects of debt", "Avoid debt"],
+		"type": "multiple-choice",
+		"answer": "Debt Management"
 	},
 	{
-		"question": "What is the 2nd lesson outline for lesson 42?",
+		"question": "What is another word for borrower",
+		"type": "fill-in-the-blank",
+		"answer": "Debtor"
+	},
+
+	{
+		"question": "What parable was used in the introduction of lesson topic: CHRISTIANS AND INVESTMENT",
 		"options": [
-			"Good governance",
-			"The expectations",
-			"Understanding governance"
+			"Parable of the lost sheep",
+			"Parable of the talents",
+			"Parable of the sower"
 		],
-		"answer": "The expectations"
+		"type": "multiple-choice",
+		"answer": "Parable of the talents"
+	},
+	{
+		"question": "Wealth gained by dishonesty will be diminished, but he who gather by labour will increase. Proverbs 13 vs......",
+		"options": ["1", "11", "21"],
+		"type": "multiple-choice",
+		"answer": "11"
+	},
+	{
+		"question": "Saving for the future is not Biblical",
+		"options": ["False", "True", "Not Applicable"],
+		"type": "multiple-choice",
+		"answer": "False"
+	},
+	{
+		"question": "Christians and investment is the topic for which lesson?",
+		"type": "fill-in-the-blank",
+		"answer": "22"
+	},
+	{
+		"question": "One of this is a reason for investment",
+		"options": [
+			"To acquire the best materially",
+			"To compete with the high and mighty",
+			"To beat inflation"
+		],
+		"type": "multiple-choice",
+		"answer": "To beat inflation"
+	},
+	{
+		"question": "What is the waiting room",
+		"options": [
+			"Where you prepare for the next phase of the journey",
+			"Bus stop to board the next vehicle",
+			"Place of crying for your lost opportunity"
+		],
+		"type": "multiple-choice",
+		"answer": "Where you prepare for the next phase of the journey"
+	},
+	{
+		"question": "Below is not a nature of the waiting room",
+		"options": [
+			"Waiting will not be forever",
+			"God uses the waiting room to test our commitment and grow our faith",
+			"Waiting is avoidable"
+		],
+		"type": "multiple-choice",
+		"answer": "Waiting is avoidable"
+	},
+	{
+		"question": "One of the blessings of waiting is that it takes away ---------",
+		"type": "fill-in-the-blank",
+		"answer": "Shame"
+	},
+	{
+		"question": "How we emerge from God's waiting room is dependent on our",
+		"options": ["Qualifications", "Attitude", "Skills"],
+		"type": "multiple-choice",
+		"answer": "Attitude"
+	},
+	{
+		"question": "Topic of lesson 23 is the waiting ---------",
+		"options": ["Field", "Church", "Room"],
+		"type": "multiple-choice",
+		"answer": "Room"
+	},
+	{
+		"question": "What is the Bible passage for lesson 24",
+		"type": "fill-in-the-blank",
+		"answer": "Judges 14:1-3"
+	},
+	{
+		"question": "One of the persons that made wrong choice was Amnon. He chose to listen to",
+		"options": ["Jonathan", "Joshua", "Jonadab"],
+		"type": "multiple-choice",
+		"answer": "Jonadab"
+	},
+	{
+		"question": "What is the topic of lesson 24",
+		"type": "fill-in-the-blank",
+		"answer": "Choose wisely"
+	},
+	{
+		"question": "One of the guiding principles to making the right choice is",
+		"options": [
+			"Engage the holy Spirit",
+			"Engage your friends",
+			"Engage your biological parents"
+		],
+		"type": "multiple-choice",
+		"answer": "Engage the holy Spirit"
+	},
+	{
+		"question": "--------- Chose the wrong location for his agricultural business and it affected his family negatively",
+		"options": ["Jonah", "Cain", "Lot"],
+		"type": "multiple-choice",
+		"answer": "Lot"
+	},
+	{
+		"question": "Mention one of the two outlines for lesson 25",
+		"type": "fill-in-the-blank",
+		"answer": "Love God OR Love fellow Humans"
+	},
+	{
+		"question": "To have God is to ------------",
+		"options": ["Desire Him", "Not to keep His words", "Not to pray to Him"],
+		"type": "multiple-choice",
+		"answer": "Desire Him"
+	},
+	{
+		"question": "What is the greatest commandment",
+		"type": "fill-in-the-blank",
+		"answer": "Love"
+	},
+	{
+		"question": "Loving God requires knowing him and that knowledge begins with His",
+		"options": ["Name", "Word", "Power"],
+		"type": "multiple-choice",
+		"answer": "Word"
+	},
+	{
+		"question": "God kind of love is that which is given to those who did not deserve it including our",
+		"options": ["Friends", "Neighbors", "Enemies"],
+		"type": "multiple-choice",
+		"answer": "Enemies"
+	},
+
+	{
+		"question": "Define Artificial Intelligence according to outline one of lesson 27",
+		"type": "fill-in-the-blank",
+		"answer": "Artificial Intelligence refers to imitation of human intelligence in machines, enabling them to perform tasks that typically requires human intelligence."
+	},
+	{
+		"question": "One benefit of AI is that it can quickly aid access to a wealth of _________ and other Christian _________ when needed.(John 5:39)",
+		"type": "fill-in-the-blank",
+		"answer": "Scriptures / texts"
+	},
+	{
+		"question": "............ has existed since the Bible days",
+		"options": ["science and technology", "science", "technology"],
+		"type": "multiple-choice",
+		"answer": "technology"
+	},
+	{
+		"question": "_________ should be avoided not to kill mental and spiritual growth",
+		"options": ["drugs addiction", "technological addiction", "AI addiction"],
+		"type": "multiple-choice",
+		"answer": "technological addiction"
+	},
+	{
+		"question": "A state or an instance of being obligated or emotionally driven to a cause is known as _________",
+		"options": ["commitment", "obedience", "hard work"],
+		"type": "multiple-choice",
+		"answer": "commitment"
+	},
+	{
+		"question": "According to the last statement of Lesson 28 introduction, \"this means we must hold nothing back from Him because god holds nothing back from us\" give the scripture reference",
+		"options": ["matthew 22:37", "psalm 34:1", "John 3:16"],
+		"type": "multiple-choice",
+		"answer": "John 3:16"
+	},
+	{
+		"question": "The 2nd Lesson outline for lesson 28 was given as .......................",
+		"type": "fill-in-the-blank",
+		"answer": "Indication of commitment"
+	},
+	{
+		"question": "Diligence is the topic for lesson ......",
+		"options": ["29", "31", "30"],
+		"type": "multiple-choice",
+		"answer": "29"
+	},
+	{
+		"question": "According to proverbs 13:4,mention the attributes of diligent people .......................",
+		"type": "fill-in-the-blank",
+		"answer": "They plan and work to meet needs."
+	},
+	{
+		"question": "Wasters of time, talent and opportunities are signs of .......",
+		"options": [
+			"dangers of laziness",
+			"dangers of diligence",
+			"dangers of commitment"
+		],
+		"type": "multiple-choice",
+		"answer": "dangers of laziness"
+	},
+	{
+		"question": "There are two specific types of Fear as treated in Lesson 30, state the first one ?",
+		"type": "fill-in-the-blank",
+		"answer": "The fear of the"
+	},
+	{
+		"question": "One consequences of Fear as detailed in Matthew 25:25 is that it stifles our _________ and _________",
+		"options": ["thinking / actions", "failure / pains", "belief / destiny"],
+		"type": "multiple-choice",
+		"answer": "thinking / actions"
+	},
+	{
+		"question": "....... is the dismissing or refusing of a person, proposal, idea, etc",
+		"options": ["rejection", "redirection", "repositioning"],
+		"type": "multiple-choice",
+		"answer": "rejection"
+	},
+	{
+		"question": "The topic failing forward was treated in......",
+		"options": ["lesson 34", "lesson 33", "lesson 32"],
+		"type": "multiple-choice",
+		"answer": "lesson 32"
+	},
+	{
+		"question": "What is the memory verse for lesson 32",
+		"options": ["Prov 24:16", "Prov 2:23", "Mk 3:12"],
+		"type": "multiple-choice",
+		"answer": "Prov 24:16"
+	},
+	{
+		"question": "....... and ......... are attitude for sustaining success",
+		"options": ["joy, peace", "humility, gratitude", "health, wealth"],
+		"type": "multiple-choice",
+		"answer": "humility, gratitude"
+	},
+	{
+		"question": "In lesson 33, we were taught that some people live moderately when they have _________",
+		"options": ["ambition", "enviable status", "no money"],
+		"type": "multiple-choice",
+		"answer": "no money"
+	},
+	{
+		"question": "Every believers has a call to mission of proclaiming the good news of our Lord Jesus Christ to the UPG. What is the full meaning of UPG .............",
+		"type": "fill-in-the-blank",
+		"answer": "Unreached people group"
+	},
+	{
+		"question": "Everyone has a role to play in missions as accounted in the scriptures",
+		"options": ["Romans 10:5", "Mark 16:15", "Act 4:34-35"],
+		"type": "multiple-choice",
+		"answer": "Act 4:34-35"
+	},
+	{
+		"question": "\"Jesus came in obedience to the father's instruction to redeem the world from eternal damnation\" This can be seen from the scriptures",
+		"options": ["John 3:17", "John 10:10", "John 20:21"],
+		"type": "multiple-choice",
+		"answer": "John 10:10"
+	},
+
+	{
+		"question": "....... Is a tool created by scientist and engineers whom God has given ability to improve life",
+		"options": ["Media", "AI", "internet"],
+		"type": "multiple-choice",
+		"answer": "AI"
+	},
+	{
+		"question": "According to John 5:39 ...... one benefit of AI to Christians is to _________",
+		"options": [
+			"give access to wealth of scriptures and other Christian literatures",
+			"browse the internet for information",
+			"make new religion out of AI"
+		],
+		"type": "multiple-choice",
+		"answer": "give access to wealth of scriptures and other Christian literatures"
+	},
+	{
+		"question": "Willingness to give sacrificially is an example of indication of ...",
+		"options": ["dedication", "salvation", "commitment"],
+		"type": "multiple-choice",
+		"answer": "commitment"
+	},
+	{
+		"question": "The following are attributes of a diligent believer except .......",
+		"options": [
+			"to identify false teachers",
+			"devotion to the scripture",
+			"salvation"
+		],
+		"type": "multiple-choice",
+		"answer": "salvation"
+	},
+	{
+		"question": "....... Is a way to resist fear except",
+		"options": [
+			"apply the scriptures",
+			"try to resist torment",
+			"engaging in spiritual exercise"
+		],
+		"type": "multiple-choice",
+		"answer": "try to resist torment"
+	},
+	{
+		"question": "One of the reasons responsible for rejection is",
+		"options": ["envy", "joy", "happiness"],
+		"type": "multiple-choice",
+		"answer": "envy"
+	},
+	{
+		"question": "The following people experienced rejection in the bible except ......",
+		"options": ["Cain", "Joseph", "Abraham"],
+		"type": "multiple-choice",
+		"answer": "Abraham"
+	},
+	{
+		"question": "The bible passage for lesson 32 is.......",
+		"options": ["Gen 26:18-22", "Luke 13:1", "John 3:12"],
+		"type": "multiple-choice",
+		"answer": "Gen 26:18-22"
+	},
+	{
+		"question": "Failure is a ....... to fulfilling destiny",
+		"options": ["point", "springboard", "drive"],
+		"type": "multiple-choice",
+		"answer": "springboard"
+	},
+	{
+		"question": "Whose Life is an illustration to show that success is best handled when it is used for the benefit of people ?",
+		"type": "fill-in-the-blank",
+		"answer": "Joseph"
+	},
+	{
+		"question": "Christians should ensure that human relationships are not replaced by .......",
+		"options": ["technology", "malice", "vengeance"],
+		"type": "multiple-choice",
+		"answer": "technology"
+	},
+	{
+		"question": "...... is a danger of laziness",
+		"options": [
+			"Loan investing",
+			"preventing greed",
+			"increase in poverty due to lack of understanding"
+		],
+		"type": "multiple-choice",
+		"answer": "increase in poverty due to lack of understanding"
+	},
+	{
+		"question": "....... Is a constituent of fear",
+		"options": [
+			"remembrance of a painful past event",
+			"horrible dreams",
+			"seeing spirit beings"
+		],
+		"type": "multiple-choice",
+		"answer": "remembrance of a painful past event"
+	},
+	{
+		"question": "To avoid being rejected by God, one must be ......",
+		"options": ["obedient", "negligent", "doubtful"],
+		"type": "multiple-choice",
+		"answer": "obedient"
+	},
+	{
+		"question": "......... is a mandate for all believers",
+		"options": ["commitment", "obedience", "missions"],
+		"type": "multiple-choice",
+		"answer": "missions"
+	},
+	{
+		"question": "The bible passage for lesson 27 is ......",
+		"options": ["Matt 5:8", "Dan 12:1-4", "John11:35"],
+		"type": "multiple-choice",
+		"answer": "Dan 12:1-4"
+	},
+	{
+		"question": "According to the conclusion paragraph of Lesson 28, our commitment should be shown in our _________ and _________ to Family, community and ultimately to God.",
+		"type": "fill-in-the-blank",
+		"answer": "Behaviour, personal Integrity, loyalty"
+	},
+	{
+		"question": "Mention the second outline of lesson 29 ?",
+		"type": "fill-in-the-blank",
+		"answer": "Dangers of Laziness"
+	},
+	{
+		"question": "According to Proverbs 28:1, we are advised to reject fear and receive the spirit of courage and boldness because it _________",
+		"type": "fill-in-the-blank",
+		"answer": "Complicates situation"
+	},
+	{
+		"question": "...... is a type of fear according to lesson 30",
+		"options": [
+			"fear for the power of God",
+			"fear for reverencing God",
+			"fear of the Lord"
+		],
+		"type": "multiple-choice",
+		"answer": "fear of the Lord"
+	},
+	{
+		"question": "Which of the following is the memory verse for the lesson: Cross-Cultural Missions (Pt 1)?",
+		"options": ["Matt 28:19", "Mark 16:15", "Luke 24:49"],
+		"type": "multiple-choice",
+		"answer": "Mark 16:15"
+	},
+	{
+		"question": "By Cross-Cultural Missions, we mean _________",
+		"options": [
+			"going abroad to plant churches",
+			"teaching people about the culture of the Bible",
+			"reaching out to people of other culture with the gospel of Christ"
+		],
+		"type": "multiple-choice",
+		"answer": "reaching out to people of other culture with the gospel of Christ"
+	},
+	{
+		"question": "A Cross-Cultural missionary should possess the following except:",
+		"options": [
+			"inability to endure hardship",
+			"an accommodating and hospitable attitude",
+			"have a willingness to go"
+		],
+		"type": "multiple-choice",
+		"answer": "inability to endure hardship"
+	},
+	{
+		"question": "Who is a very good example of a Cross-Cultural missionary in the Bible?",
+		"type": "fill-in-the-blank",
+		"answer": "Apostle Paul"
+	},
+	{
+		"question": "One major factor God consider before using anyone is his _________",
+		"options": ["age", "willingness", "capability"],
+		"type": "multiple-choice",
+		"answer": "willingness"
+	},
+	{
+		"question": "Hunger, rejection, persecution and harsh weather conditions are some of the challenges faced by _________",
+		"options": ["An evangelist", "A pastor", "A missionary"],
+		"type": "multiple-choice",
+		"answer": "A missionary"
+	},
+	{
+		"question": "What is the most tasking and time-consuming challenge faced by missionaries in other nations?",
+		"type": "fill-in-the-blank",
+		"answer": "Language & culture learning"
+	},
+	{
+		"question": "In missions, learning and adapting to the culture of the people is important because _________",
+		"options": [
+			"it makes it easier to be accepted by them",
+			"It robs you of your identity",
+			"it is a must"
+		],
+		"type": "multiple-choice",
+		"answer": "it makes it easier to be accepted by them"
+	},
+	{
+		"question": "According to 1 Corinthians 9:22, Apostle Paul's goals was _________",
+		"options": [
+			"develop a friendship atmosphere with people",
+			"listen to the leading of the Spirit",
+			"bring as many people as possible to Christ"
+		],
+		"type": "multiple-choice",
+		"answer": "bring as many people as possible to Christ"
+	},
+	{
+		"question": "The Apostle who was more versatile in the art of learning diverse languages is _________",
+		"options": ["Peter", "John", "None of the above"],
+		"type": "multiple-choice",
+		"answer": "None of the above"
+	},
+	{
+		"question": "What does the Greek word, \"ekklesia\" mean?",
+		"type": "fill-in-the-blank",
+		"answer": "Church"
+	},
+	{
+		"question": "Acts 8:26-41 is the Bible passage for which of the lessons?",
+		"options": ["Commitment", "Dealing with fear", "Church Shift"],
+		"type": "multiple-choice",
+		"answer": "Church Shift"
+	},
+	{
+		"question": "The original purpose of the Church are Worship, fellowship, Discipleship, _________ & _________",
+		"options": [
+			"Visitation & Follow-up",
+			"Ministry & Mission",
+			"Membership & Welfare"
+		],
+		"type": "multiple-choice",
+		"answer": "Ministry & Mission"
+	},
+	{
+		"question": "The Church is an assembly of God's people _________",
+		"options": [
+			"with a properly constructed building",
+			"with or without a building",
+			"without a building"
+		],
+		"type": "multiple-choice",
+		"answer": "with or without a building"
+	},
+	{
+		"question": "How can we do church differently?",
+		"options": [
+			"By introducing varieties to make our services more lively",
+			"By inviting gospel musicians to attract more people to church",
+			"by taking the church to the people who may not be able to gather with us"
+		],
+		"type": "multiple-choice",
+		"answer": "by taking the church to the people who may not be able to gather with us"
+	},
+	{
+		"question": "A self-defeating behavioral pattern marked by a short-term benefit and long term cost is known as _________",
+		"type": "fill-in-the-blank",
+		"answer": "Procrastination"
+	},
+	{
+		"question": "Where in the book of Ecclesiastes is this verse: 'He that observes the wind will not sow and he who regards the clouds will not reap\"?",
+		"options": ["Eccl 12:1", "Eccl. 3:1", "Eccl 11:4"],
+		"type": "multiple-choice",
+		"answer": "Eccl 11:4"
+	},
+	{
+		"question": "One major deficiency that's related to laziness and responsible for redundancy is called _________",
+		"type": "fill-in-the-blank",
+		"answer": "Procrastination"
+	},
+	{
+		"question": "Intentionality, promptness and goal-setting are guaranteed keys to overcoming _________",
+		"options": ["Productivity", "Procrastination", "Resourcefulness"],
+		"type": "multiple-choice",
+		"answer": "Procrastination"
+	},
+	{
+		"question": "John 9:4-5 is the Bible passage for lesson on:",
+		"options": ["Sin is sin", "Alternative Spirituality", "Procrastination"],
+		"type": "multiple-choice",
+		"answer": "Procrastination"
+	},
+
+	{
+		"question": "What is the person in the book of Judges, who questioned his worth when God wanted to use him to deliver Israel?",
+		"type": "fill-in-the-blank",
+		"answer": "Gideon"
+	},
+	{
+		"question": "\"And he said, your name shall no longer be called _________ but _________ for you have struggled with God....\"",
+		"options": ["Abram, Abraham", "Jacob, Israel", "Simon, Peter"],
+		"type": "multiple-choice",
+		"answer": "Jacob, Israel"
+	},
+	{
+		"question": "Crisis is largely a function of _________",
+		"options": [
+			"Financial problem",
+			"health and family challenges",
+			"identity crisis"
+		],
+		"type": "multiple-choice",
+		"answer": "identity crisis"
+	},
+	{
+		"question": "Signs of identity crisis include the following except _________",
+		"options": [
+			"Emotional stability",
+			"low self-esteem",
+			"Lack of fulfillment"
+		],
+		"type": "multiple-choice",
+		"answer": "Emotional stability"
+	},
+	{
+		"question": "One vital step to solving identity crisis is seeking_________",
+		"options": ["divine commendation", "divine revelation", "divine favour"],
+		"type": "multiple-choice",
+		"answer": "divine revelation"
+	},
+	{
+		"question": "Believers who impact the world through their ministries and marketplaces by sharing their faith and using their resources to propagate the gospel are called _________",
+		"options": ["God-pleasers", "World-changers", "Kingdom influencers"],
+		"type": "multiple-choice",
+		"answer": "Kingdom influencers"
+	},
+	{
+		"question": "What is the name of the unpopular disciple in Joppa who positively touched people's lives?",
+		"type": "fill-in-the-blank",
+		"answer": "Tabitha/Dorcas"
+	},
+	{
+		"question": "Which of the following is not an attribute of kingdom influencers?",
+		"options": [
+			"They dominate and make God known everywhere they are seen",
+			"They are professionals who promote Jesus along with their trade for personal motive",
+			"They contribute significantly to the economic and social wellbeing of their societies"
+		],
+		"type": "multiple-choice",
+		"answer": "They are professionals who promote Jesus along with their trade for personal motive"
+	},
+	{
+		"question": "By creating kingdom influencers, we mean _________",
+		"options": [
+			"Preaching Christ to unbelievers around the world",
+			"Living holily to please God",
+			"Touching lives just as Christ Did, with the purpose of gaining them for Him"
+		],
+		"type": "multiple-choice",
+		"answer": "Touching lives just as Christ Did, with the purpose of gaining them for Him"
+	},
+	{
+		"question": "What is the name of the counselor mentioned in Luke 23:49-53?",
+		"options": ["Joseph", "Jesus", "Bathlomew"],
+		"type": "multiple-choice",
+		"answer": "Joseph"
+	},
+	{
+		"question": "Complete the missing words \"Of the increase of His _________ and _________ there shall be no end...\"",
+		"options": ["Kingdom, Glory", "Dominion, Power", "Government, Peace"],
+		"type": "multiple-choice",
+		"answer": "Government, Peace"
+	},
+	{
+		"question": "Promoting Justice and righteousness is God's expectations from his children in _________",
+		"options": ["Ministry", "Government", "The Marketplace"],
+		"type": "multiple-choice",
+		"answer": "Government"
+	},
+	{
+		"question": "The Biblical Daniel can best be described as a _________",
+		"options": ["Prophet", "an Evangelist", "Priest"],
+		"type": "multiple-choice",
+		"answer": "an Evangelist"
+	},
+	{
+		"question": "What was the name of the king who appointed 120 princes of which Daniel was made their president?",
+		"type": "fill-in-the-blank",
+		"answer": "King Dairus"
+	},
+	{
+		"question": "The Bible passage for the lesson on Governance is _________",
+		"options": ["Daniel 6:1-4", "2 Peter 1:3-7", "Luke 10:25-28"],
+		"type": "multiple-choice",
+		"answer": "Daniel 6:1-4"
+	},
+	{
+		"question": "The general traits that provide inner sanctions on our particular motives, intentions and outward conduct is _________",
+		"type": "fill-in-the-blank",
+		"answer": "Virtue"
+	},
+	{
+		"question": "According to Apostle Peter, we can assess glory and virtues through which means?",
+		"options": ["Divine knowledge", "Intellectual knowledge", "Divine wisdom"],
+		"type": "multiple-choice",
+		"answer": "Divine knowledge"
+	},
+	{
+		"question": "What is the most magnificent virtue of all?",
+		"type": "fill-in-the-blank",
+		"answer": "Love"
+	},
+	{
+		"question": "Discipline as a virtue is referred to in the Bible as _________",
+		"options": ["Perseverance", "Endurance", "Temperance"],
+		"type": "multiple-choice",
+		"answer": "Temperance"
+	},
+	{
+		"question": "The fundamental essence of virtues is to help us achieve _________",
+		"options": [
+			"excellence in character and spirituality",
+			"mastery in life and relationship",
+			"Perfection in all things"
+		],
+		"type": "multiple-choice",
+		"answer": "excellence in character and spirituality"
+	},
+
+	{
+		"question": "Genesis 41:1-8 explains that Memories records what is going on in our Lives even _________ in our sleep.",
+		"type": "fill-in-the-blank",
+		"answer": "Mental Images"
+	},
+	{
+		"question": "Memories are events or experiences that happen in the _________",
+		"type": "fill-in-the-blank",
+		"answer": "Past"
+	},
+	{
+		"question": "One of these is a fact about the human memory EXCEPT ONE",
+		"options": [
+			"it draws one closer to God",
+			"the entire body will decay in death but the memory and soul will remain",
+			"it works only at night"
+		],
+		"type": "multiple-choice",
+		"answer": "it works only at night"
+	},
+	{
+		"question": "We can manage our memories through the following except _________",
+		"options": [
+			"knowing what to dwell on and what to let go",
+			"the painful memories we recall should be handed over to God",
+			"hold unto past events and experiences"
+		],
+		"type": "multiple-choice",
+		"answer": "hold unto past events and experiences"
+	},
+	{
+		"question": "According to Phil. 4:8, believers are to meditate only on things that are good.",
+		"options": ["True", "False", "All of the above"],
+		"type": "true-false",
+		"answer": "False"
+	},
+	{
+		"question": "An intentional leader possesses all these characteristics except one",
+		"options": ["takes inventory", "arrogant", "builds a formidable team"],
+		"type": "multiple-choice",
+		"answer": "arrogant"
+	},
+	{
+		"question": "Nehemiah rebuild the broken city wall in _________ days",
+		"type": "fill-in-the-blank",
+		"answer": "52"
+	},
+	{
+		"question": "_________ is the bible text for lesson 45",
+		"options": ["Exodus 18:17-24", "Ruth 3:2-5", "Gen. 1:1"],
+		"type": "multiple-choice",
+		"answer": "Exodus 18:17-24"
+	},
+	{
+		"question": "To be intentional means to be purposeful.",
+		"options": ["True", "maybe", "False"],
+		"type": "true-false",
+		"answer": "True"
+	},
+	{
+		"question": "What is the topic for lesson 45?",
+		"options": [
+			"leadership by example",
+			"godly leadership",
+			"intentional leadership"
+		],
+		"type": "multiple-choice",
+		"answer": "intentional leadership"
+	},
+	{
+		"question": "Joshua was the son of _________",
+		"options": ["Moses", "Abraham", "Num"],
+		"type": "multiple-choice",
+		"answer": "Num"
+	},
+	{
+		"question": "The original name of Joshua was _________",
+		"options": ["Hose", "Hoshea", "Hoston"],
+		"type": "multiple-choice",
+		"answer": "Hoshea"
+	},
+	{
+		"question": "One of the characters/achievements of Joshua except one",
+		"options": [
+			"full of the spirit of wisdom",
+			"proud and disobedient",
+			"he accompanied Moses to mount Sanai and waited at the bottle of the mountain."
+		],
+		"type": "multiple-choice",
+		"answer": "proud and disobedient"
+	},
+	{
+		"question": "Moses renamed him \"Joshua\" meaning _________",
+		"options": ["Jehovah do well", "Jehovah blesses", "Jehovah saves"],
+		"type": "multiple-choice",
+		"answer": "Jehovah saves"
+	},
+	{
+		"question": "Mention 2 lessons from the life of Joshua ? _________ and _________",
+		"type": "fill-in-the-blank",
+		"answer": "We should be bold in the face of challenge ii. We should be obedient and follow instructions"
+	},
+	{
+		"question": "Mention four (4) other names of the antichrist as stated in the lesson ? _________ _________ _________ _________",
+		"type": "fill-in-the-blank",
+		"answer": "The beast ii. The Veil iii. The man of Lawlessness"
+	},
+	{
+		"question": "The antichrist is an opposition to _________",
+		"options": ["Man", "Christ", "Angels"],
+		"type": "multiple-choice",
+		"answer": "Christ"
+	},
+	{
+		"question": "One of the missions of the antichrist is _________",
+		"options": [
+			"he will bless the saints",
+			"he will oppose the doctrines of heaven",
+			"he will work great miracles to deceive people"
+		],
+		"type": "multiple-choice",
+		"answer": "he will work great miracles to deceive people"
+	},
+	{
+		"question": "The end of the antichrist will be in the lake of fire burning with _________",
+		"options": ["heat and flame", "hail stones", "brimstones"],
+		"type": "multiple-choice",
+		"answer": "brimstones"
+	},
+	{
+		"question": "What is the identification of the antichrist?",
+		"options": ["663", "666", "668"],
+		"type": "multiple-choice",
+		"answer": "666"
+	},
+
+	{
+		"question": "The topic for lesson 48 is _________",
+		"type": "fill-in-the-blank",
+		"answer": "Hell"
+	},
+	{
+		"question": "\"the wicked shall be turned into hell and all the nations that forget God? Which verse of the bible?",
+		"options": ["Job 2:8", "Ps. 9:15", "Ps. 50:1"],
+		"type": "multiple-choice",
+		"answer": "Ps. 9:15"
+	},
+	{
+		"question": "Hell was originally prepared for _________ and _________",
+		"options": [
+			"men and women",
+			"Christians and Muslims",
+			"Devil and his angels"
+		],
+		"type": "multiple-choice",
+		"answer": "Devil and his angels"
+	},
+	{
+		"question": "Sheol, Gehenna, Hades and Tartarus are the four (4) words from the original language (Hebrew/Greek) representing hell.",
+		"options": ["False", "True", "maybe"],
+		"type": "true-false",
+		"answer": "False"
+	},
+	{
+		"question": "Believers can avoid hell by the following except one",
+		"options": [
+			"live daily with the consciousness of the reality of hell",
+			"seek first the kingdom of God",
+			"live carelessly"
+		],
+		"type": "multiple-choice",
+		"answer": "live carelessly"
+	},
+	{
+		"question": "The marriage supper of the lamb is the consummation of the union between _________ and _________",
+		"type": "fill-in-the-blank",
+		"answer": "Christ ii. Church"
+	},
+	{
+		"question": "The marriage will take place in _________",
+		"type": "fill-in-the-blank",
+		"answer": "Heaven"
+	},
+	{
+		"question": "One of the importance of the marriage is to gather the _________ of all _________ and present them to God the _________",
+		"options": [
+			"Christians, Nigeria, Mohamed",
+			"saints, ages, Father",
+			"Blacks, Africa, Son"
+		],
+		"type": "multiple-choice",
+		"answer": "saints, ages, Father"
+	},
+	{
+		"question": "The saints will be taken away from the _________ before the activities of the antichrist",
+		"type": "fill-in-the-blank",
+		"answer": "Earth"
+	},
+	{
+		"question": "Those who will be qualify for the marriage supper of the lamb are:",
+		"options": [
+			"The committed giver whose hospitality is divine",
+			"The faithful groom and the bride who are vigilant and watchful",
+			"Faithful saints of God, whose garments of righteousness are without stains."
+		],
+		"type": "multiple-choice",
+		"answer": "Faithful saints of God, whose garments of righteousness are without stains."
+	},
+	{
+		"question": "Complete this bible verse \"Behold, I am coming quickly, and my _________ is with me, to give to _________ according to his _________\"",
+		"type": "fill-in-the-blank",
+		"answer": "Reward, everyone, work"
+	},
+	{
+		"question": "The earthly rewards are corruptible and fades away while the heavenly rewards are incorruptible and undefiled.",
+		"options": ["True", "false", "all"],
+		"type": "true-false",
+		"answer": "True"
+	},
+	{
+		"question": "All these are ways of earning heavenly rewards except _________",
+		"options": [
+			"giving and living a sacrificial life",
+			"being deceitful",
+			"commitment to soul-winning and of the kingdom services."
+		],
+		"type": "multiple-choice",
+		"answer": "being deceitful"
+	},
+	{
+		"question": "According to the topic: REWARDS COMPARED, earthly rewards are good but heavenly rewards are _________",
+		"options": ["more good", "better", "best"],
+		"type": "multiple-choice",
+		"answer": "better"
+	},
+	{
+		"question": "_________ is the bible text for lesson 50",
+		"options": ["1 Sam. 1:3-5", "1 Pet 1:3-5", "1 John 1:3-5"],
+		"type": "multiple-choice",
+		"answer": "1 Pet 1:3-5"
+	},
+	{
+		"question": "The topic for lesson 51 is _________",
+		"options": ["Eternal Rewards", "New Jerusalem", "Hell"],
+		"type": "multiple-choice",
+		"answer": "New Jerusalem"
+	},
+	{
+		"question": "In three (3) sentences, give a biblical snapshot of believer's final abode",
+		"type": "fill-in-the-blank",
+		"answer": "i. It is a city of pure Gold ii. All tears shall be wiped away by God and there shall be no more death, pains and sorrow iii. The glory of God shall supply the light is this city so abode"
+	},
+	{
+		"question": "List 3 requirement for entering into the new Jerusalem ?",
+		"type": "fill-in-the-blank",
+		"answer": "i. Be born again ii. Believers should do away with the works of the flesh :fornication etc. iii. Lay aside every weight and focus on Jesus"
+	},
+	{
+		"question": "According to Revelation 21:27, those whose name are not written in the lamb's book of life will be _________",
+		"options": ["applauded", "condemned", "given gifts."],
+		"type": "multiple-choice",
+		"answer": "condemned"
+	},
+	{
+		"question": "The final abode of all believers is the _________",
+		"options": [
+			"New paradise City",
+			"New Jerusalem",
+			"New Abode of the saint."
+		],
+		"type": "multiple-choice",
+		"answer": "New Jerusalem"
 	}
 ]
