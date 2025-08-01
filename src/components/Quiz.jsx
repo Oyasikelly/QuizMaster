@@ -129,7 +129,7 @@ const Quiz = ({ initialQuestions, category }) => {
 
 				return question.type === "fill-in-the-blank"
 					? normalize(answer)
-					: answer;
+					: normalize(answer);
 			});
 
 			// Normalize correct answers too
