@@ -28,7 +28,7 @@
 	{
 		"question": "Mention three attributes of the spirit of God?",
 		"type": "fill-in-the-blank",
-		"answer": "i. Creativity ii. Inspiration iii. Authority iv. Omniscience v. Omnipotence"
+		"answer": "Creativity, Inspiration, Authority, Omniscience, Omnipotence"
 	},
 	{
 		"question": "_____was supernaturally transported to Azotus by the spirit of God, After he ministered to the Ethiopian Eunuch",
@@ -82,7 +82,7 @@
 	{
 		"question": "State three grievous consequences of Sin?",
 		"type": "fill-in-the-blank",
-		"answer": "i. Separation from God ii. Exposure to attacks iii. Eternal punishment iv. Death v.Hell"
+		"answer": "Separation from God, Exposure to attacks, Eternal punishment, Death v.Hell"
 	},
 	{
 		"question": "Sin in Hebrew Tongue is _____",
@@ -142,7 +142,7 @@
 	{
 		"question": "Actively Enlarging the kingdom of God is one attribute of Men Pleasers",
 		"options": ["True", "False"],
-		"type": "true-false",
+		"type": "multiple-choice",
 		"answer": "False"
 	},
 	{
@@ -494,7 +494,7 @@
 	{
 		"question": "Since the fall of Adam and Eve, Satan has changed the mode of operation in the world.",
 		"options": ["True", "False", "All of the above"],
-		"type": "true-false",
+		"type": "multiple-choice",
 		"answer": "True"
 	},
 	{
@@ -573,7 +573,7 @@
 	{
 		"question": "Uncontrolled child bearing is not a likely cause of debt",
 		"options": ["False", "True", "Not Applicable"],
-		"type": "true-false",
+		"type": "multiple-choice",
 		"answer": "False"
 	},
 	{
@@ -1305,7 +1305,7 @@
 	{
 		"question": "According to Phil. 4:8, believers are to meditate only on things that are good.",
 		"options": ["True", "False", "All of the above"],
-		"type": "true-false",
+		"type": "multiple-choice",
 		"answer": "False"
 	},
 	{
@@ -1328,7 +1328,7 @@
 	{
 		"question": "To be intentional means to be purposeful.",
 		"options": ["True", "maybe", "False"],
-		"type": "true-false",
+		"type": "multiple-choice",
 		"answer": "True"
 	},
 	{
@@ -1372,12 +1372,12 @@
 	{
 		"question": "Mention 2 lessons from the life of Joshua ? _________ and _________",
 		"type": "fill-in-the-blank",
-		"answer": "We should be bold in the face of challenge ii. We should be obedient and follow instructions"
+		"answer": "We should be bold in the face of challenge , We should be obedient and follow instructions"
 	},
 	{
 		"question": "Mention four (4) other names of the antichrist as stated in the lesson ? _________ _________ _________ _________",
 		"type": "fill-in-the-blank",
-		"answer": "The beast ii. The Veil iii. The man of Lawlessness"
+		"answer": "The beast, The Veil, The man of Lawlessness"
 	},
 	{
 		"question": "The antichrist is an opposition to _________",
@@ -1432,7 +1432,7 @@
 	{
 		"question": "Sheol, Gehenna, Hades and Tartarus are the four (4) words from the original language (Hebrew/Greek) representing hell.",
 		"options": ["False", "True", "maybe"],
-		"type": "true-false",
+		"type": "multiple-choice",
 		"answer": "False"
 	},
 	{
@@ -1448,7 +1448,7 @@
 	{
 		"question": "The marriage supper of the lamb is the consummation of the union between _________ and _________",
 		"type": "fill-in-the-blank",
-		"answer": "Christ ii. Church"
+		"answer": "Christ, Church"
 	},
 	{
 		"question": "The marriage will take place in _________",
@@ -1488,7 +1488,7 @@
 	{
 		"question": "The earthly rewards are corruptible and fades away while the heavenly rewards are incorruptible and undefiled.",
 		"options": ["True", "false", "all"],
-		"type": "true-false",
+		"type": "multiple-choice",
 		"answer": "True"
 	},
 	{
@@ -1522,12 +1522,12 @@
 	{
 		"question": "In three (3) sentences, give a biblical snapshot of believer's final abode",
 		"type": "fill-in-the-blank",
-		"answer": "i. It is a city of pure Gold ii. All tears shall be wiped away by God and there shall be no more death, pains and sorrow iii. The glory of God shall supply the light is this city so abode"
+		"answer": "It is a city of pure Gold, All tears shall be wiped away by God and there shall be no more death, pains and sorrow, The glory of God shall supply the light is this city so abode"
 	},
 	{
 		"question": "List 3 requirement for entering into the new Jerusalem ?",
 		"type": "fill-in-the-blank",
-		"answer": "i. Be born again ii. Believers should do away with the works of the flesh :fornication etc. iii. Lay aside every weight and focus on Jesus"
+		"answer": "Be born again, Believers should do away with the works of the flesh :fornication etc., Lay aside every weight and focus on Jesus"
 	},
 	{
 		"question": "According to Revelation 21:27, those whose name are not written in the lamb's book of life will be _________",
