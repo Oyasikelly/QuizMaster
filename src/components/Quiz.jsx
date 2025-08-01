@@ -69,7 +69,7 @@ const Quiz = ({ initialQuestions, category }) => {
 			.slice(0, numQuestions)
 			.map((q) => ({
 				...q,
-				options: shuffleArray(q.options),
+				options: q.type === "multiple-choice" ? shuffleArray(q.options) : [],
 			}));
 		setQuestions(slicedQuestions);
 		setAnswers(Array(slicedQuestions.length).fill(null));
@@ -106,9 +106,16 @@ const Quiz = ({ initialQuestions, category }) => {
 		setTimerRunning(false);
 
 		try {
-			const correctAnswersCount = answers.filter(
-				(answer, index) => answer === questions[index].answer
-			).length;
+			const correctAnswersCount = answers.filter((answer, index) => {
+				const actualAnswer = questions[index].answer;
+				if (questions[index].type === "fill-in-the-blank") {
+					return (
+						(answer || "").trim().toLowerCase() ===
+						actualAnswer.trim().toLowerCase()
+					);
+				}
+				return answer === actualAnswer;
+			}).length;
 
 			localStorage.setItem(
 				"quizResults",
@@ -282,22 +289,34 @@ const Quiz = ({ initialQuestions, category }) => {
 								{questions[currentQuestion].question}
 							</h2>
 							<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-								{questions[currentQuestion].options.map((option, index) => (
-									<motion.button
-										key={index}
-										whileHover={{ scale: 1.04 }}
-										whileTap={{ scale: 0.97 }}
-										onClick={() => handleAnswer(option)}
-										className={`py-3 px-4 rounded-2xl text-base font-medium transition-all duration-200 border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
+								{questions[currentQuestion].type === "multiple-choice" ? (
+									questions[currentQuestion].options.map((option, index) => (
+										<motion.button
+											key={index}
+											whileHover={{ scale: 1.04 }}
+											whileTap={{ scale: 0.97 }}
+											onClick={() => handleAnswer(option)}
+											className={`py-3 px-4 rounded-2xl text-base font-medium transition-all duration-200 border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
 											${
 												answers[currentQuestion] === option
 													? "bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg"
 													: "bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700"
 											}
 										`}>
-										{option}
-									</motion.button>
-								))}
+											{option}
+										</motion.button>
+									))
+								) : (
+									<div className="mb-8">
+										<input
+											type="text"
+											placeholder="Type your answer..."
+											className="w-full p-4 rounded-xl border"
+											value={answers[currentQuestion] || ""}
+											onChange={(e) => handleAnswer(e.target.value)}
+										/>
+									</div>
+								)}
 							</div>
 							<div className="flex justify-between items-center mt-4 gap-4">
 								<button

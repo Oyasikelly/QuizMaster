@@ -261,7 +261,7 @@ export default function SelectTime() {
 					)}
 
 					{!quizState.canTakeQuiz && !quizState.isRealQuiz && (
-						<div className="mt-3 p-3 bg-gray-50 border border-gray-200 rounded-lg">
+						<div className="mt-3 p-3 flex flex-col items-center justify-center bg-gray-50 border border-gray-200 rounded-lg">
 							<div className="flex items-center gap-2 text-gray-700">
 								<FaExclamationTriangle />
 								<span className="font-semibold">Practice Mode Disabled</span>
