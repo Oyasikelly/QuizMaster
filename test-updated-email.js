@@ -1,9 +1,8 @@
 // Test script for updated email notifications with user names
 const https = require("https");
 
-const SUPABASE_URL = "https://YOUR_SUPABASE_URL.supabase.co";
-const SUPABASE_ANON_KEY =
-	"***REMOVED***";
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 
 console.log("🧪 Testing Updated Email Notifications with User Names...");
 
@@ -40,7 +39,7 @@ function testEdgeFunction(testData) {
 		console.log("📤 Sending test notification with user name lookup...");
 		console.log("📋 Data:", JSON.stringify(testData, null, 2));
 		console.log(
-			"🔍 The function will now try to fetch the user name from the database..."
+			"🔍 The function will now try to fetch the user name from the database...",
 		);
 
 		const req = https.request(options, (res) => {
@@ -60,7 +59,7 @@ function testEdgeFunction(testData) {
 					if (parsed.success) {
 						console.log("🎉 Email notification sent successfully!");
 						console.log(
-							"📧 Check your email for the updated notification with user name"
+							"📧 Check your email for the updated notification with user name",
 						);
 					}
 
@@ -86,7 +85,7 @@ async function runTest() {
 	try {
 		console.log("📝 Note: This test uses a sample student ID.");
 		console.log(
-			"💡 For real testing, use an actual user ID from your database."
+			"💡 For real testing, use an actual user ID from your database.",
 		);
 		console.log("");
 
@@ -95,7 +94,7 @@ async function runTest() {
 		console.log("\n✅ Test completed!");
 		console.log("📧 Check your email for the updated notification");
 		console.log(
-			'🔍 The email should now include the user name (or "Unknown User" if not found)'
+			'🔍 The email should now include the user name (or "Unknown User" if not found)',
 		);
 	} catch (error) {
 		console.error("❌ Test failed:", error);

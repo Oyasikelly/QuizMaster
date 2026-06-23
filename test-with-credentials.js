@@ -1,9 +1,8 @@
 // Auto-generated test script with your credentials
 const https = require("https");
 
-const SUPABASE_URL = "https://YOUR_SUPABASE_URL.supabase.co";
-const SUPABASE_ANON_KEY =
-	"***REMOVED***";
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const supabase_anon_key = process.env.SUPABASE_ANON_KEY;
 
 console.log("🧪 Testing Email Notifications with your credentials...");
 
@@ -31,8 +30,8 @@ function testEdgeFunction(testData) {
 			headers: {
 				"Content-Type": "application/json",
 				"Content-Length": Buffer.byteLength(postData),
-				Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-				apikey: SUPABASE_ANON_KEY,
+				Authorization: `Bearer ${supabase_anon_key}`,
+				apikey: supabase_anon_key,
 			},
 		};
 
