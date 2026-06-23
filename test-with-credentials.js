@@ -1,9 +1,8 @@
 // Auto-generated test script with your credentials
 const https = require("https");
 
-const SUPABASE_URL = "https://eubroxxcchuozvpcwbdv.supabase.co";
-const SUPABASE_ANON_KEY =
-	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1YnJveHhjY2h1b3p2cGN3YmR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU5NDAxODgsImV4cCI6MjA1MTUxNjE4OH0.l48Pw0Jr1rUaHO-9eKt988yOZH8ovEwqu5BvZTrYjCc";
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const supabase_anon_key = process.env.SUPABASE_ANON_KEY;
 
 console.log("🧪 Testing Email Notifications with your credentials...");
 
@@ -31,8 +30,8 @@ function testEdgeFunction(testData) {
 			headers: {
 				"Content-Type": "application/json",
 				"Content-Length": Buffer.byteLength(postData),
-				Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
-				apikey: SUPABASE_ANON_KEY,
+				Authorization: `Bearer ${supabase_anon_key}`,
+				apikey: supabase_anon_key,
 			},
 		};
 
