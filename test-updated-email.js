@@ -1,9 +1,8 @@
 // Test script for updated email notifications with user names
 const https = require("https");
 
-const SUPABASE_URL = "https://eubroxxcchuozvpcwbdv.supabase.co";
-const SUPABASE_ANON_KEY =
-	"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImV1YnJveHhjY2h1b3p2cGN3YmR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzU5NDAxODgsImV4cCI6MjA1MTUxNjE4OH0.l48Pw0Jr1rUaHO-9eKt988yOZH8ovEwqu5BvZTrYjCc";
+const SUPABASE_URL = process.env.SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.SUPABASE_ANON_KEY;
 
 console.log("🧪 Testing Updated Email Notifications with User Names...");
 
@@ -40,7 +39,7 @@ function testEdgeFunction(testData) {
 		console.log("📤 Sending test notification with user name lookup...");
 		console.log("📋 Data:", JSON.stringify(testData, null, 2));
 		console.log(
-			"🔍 The function will now try to fetch the user name from the database..."
+			"🔍 The function will now try to fetch the user name from the database...",
 		);
 
 		const req = https.request(options, (res) => {
@@ -60,7 +59,7 @@ function testEdgeFunction(testData) {
 					if (parsed.success) {
 						console.log("🎉 Email notification sent successfully!");
 						console.log(
-							"📧 Check your email for the updated notification with user name"
+							"📧 Check your email for the updated notification with user name",
 						);
 					}
 
@@ -86,7 +85,7 @@ async function runTest() {
 	try {
 		console.log("📝 Note: This test uses a sample student ID.");
 		console.log(
-			"💡 For real testing, use an actual user ID from your database."
+			"💡 For real testing, use an actual user ID from your database.",
 		);
 		console.log("");
 
@@ -95,7 +94,7 @@ async function runTest() {
 		console.log("\n✅ Test completed!");
 		console.log("📧 Check your email for the updated notification");
 		console.log(
-			'🔍 The email should now include the user name (or "Unknown User" if not found)'
+			'🔍 The email should now include the user name (or "Unknown User" if not found)',
 		);
 	} catch (error) {
 		console.error("❌ Test failed:", error);

@@ -21,6 +21,7 @@ export const getQuizSettingsFromDB = async (supabase) => {
 			.select("*")
 			.single();
 
+		console.log(data);
 		if (error) {
 			console.error("❌ Database error:", error);
 			throw error;
@@ -39,6 +40,7 @@ export const getQuizSettingsFromDB = async (supabase) => {
 			PRACTICE: {
 				time: 30,
 				questions: 20,
+				enabled: data.practice_mode || false, // New field for practice mode control
 			},
 		};
 
@@ -58,6 +60,7 @@ export const getQuizSettingsFromDB = async (supabase) => {
 			PRACTICE: {
 				time: 30,
 				questions: 20,
+				enabled: false, // Default to false (strict quiz mode)
 			},
 		};
 	}
@@ -93,24 +96,42 @@ export const isRealQuizActive = async (supabase) => {
 	}
 };
 
+// Check if practice mode is enabled
+export const isPracticeModeEnabled = async (supabase) => {
+	try {
+		console.log("🔍 Checking if practice mode is enabled...");
+		const settings = await getQuizSettingsFromDB(supabase);
+
+		console.log("🎯 Practice mode setting:", settings.PRACTICE.enabled);
+		return settings.PRACTICE.enabled;
+	} catch (error) {
+		console.error("Error checking practice mode:", error);
+		return false; // Default to false (strict quiz mode)
+	}
+};
+
 // Check if user has already taken the real quiz
 export const hasUserTakenRealQuiz = async (supabase, userId) => {
 	try {
 		const settings = await getQuizSettingsFromDB(supabase);
+		console.log(typeof settings.REAL_QUIZ.startTime);
+		console.log(userId);
 		const { data, error } = await supabase
 			.from("quiz_results")
 			.select("timestamp")
 			.eq("student_id", userId)
-			.gte("timestamp", settings.REAL_QUIZ.startTime)
-			.lte("timestamp", settings.REAL_QUIZ.endTime)
+			.gte("timestamp", new Date(settings.REAL_QUIZ.startTime).toISOString())
+			.lte("timestamp", new Date(settings.REAL_QUIZ.endTime).toISOString())
 			.limit(1);
 
 		if (error) {
 			console.error("Error checking quiz history:", error);
 			return false;
 		}
-
-		return data && data.length > 0;
+		console.log(data);
+		const response = data && data.length > 0;
+		console.log(response);
+		return response;
 	} catch (error) {
 		console.error("Error checking quiz history:", error);
 		return false;

@@ -8,20 +8,6 @@ import { isRealQuizActive } from "../lib/quiz-config";
 
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
-const addQuizResult = async (resultData) => {
-	const { data, error } = await supabase
-		.from("quiz_results")
-		.upsert(resultData, {
-			onConflict: ["student_id"],
-		});
-
-	if (error) {
-		console.error("Error adding/updating quiz result:", error);
-	} else {
-		console.log("Quiz result added/updated:", data);
-	}
-};
-
 const Quiz = ({ initialQuestions, category }) => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
@@ -83,7 +69,7 @@ const Quiz = ({ initialQuestions, category }) => {
 			.slice(0, numQuestions)
 			.map((q) => ({
 				...q,
-				options: shuffleArray(q.options),
+				options: q.type === "multiple-choice" ? shuffleArray(q.options) : [],
 			}));
 		setQuestions(slicedQuestions);
 		setAnswers(Array(slicedQuestions.length).fill(null));
@@ -119,14 +105,76 @@ const Quiz = ({ initialQuestions, category }) => {
 		setIsSubmitting(true);
 		setTimerRunning(false);
 
+		const normalize = (str) =>
+			(str || "")
+				.trim()
+				.toLowerCase()
+				.replace(/[^\w\s]/g, ""); // Keep hyphens, remove other punctuation
+
 		try {
-			const correctAnswersCount = answers.filter(
-				(answer, index) => answer === questions[index].answer
-			).length;
+			const evaluateFillInTheBlank = (question, userAnswer) => {
+				const normalizedUserWords = normalize(userAnswer).split(/\s+/);
+
+				const rawAnswers = question.answer
+					.split(/,|\/| or | OR /)
+					.map((a) => normalize(a).trim())
+					.filter(Boolean);
+
+				const normalizedUserAnswerString = normalize(userAnswer);
+
+				let matchCount = 0;
+				for (const correct of rawAnswers) {
+					if (
+						correct.includes(" ") // full phrase
+							? normalizedUserAnswerString.includes(correct)
+							: normalizedUserWords.includes(correct)
+					) {
+						matchCount++;
+					}
+				}
+
+				// Set thresholds based on the question phrasing
+				const qText = question.question.toLowerCase();
+				if (qText.includes("mention four")) return matchCount >= 4;
+				if (qText.includes("mention three")) return matchCount >= 3;
+				if (qText.includes("mention two")) return matchCount >= 2;
+				if (qText.includes("mention one")) return matchCount >= 1;
+				if (qText.includes("complete")) return matchCount >= 3;
+
+				return matchCount >= 1;
+			};
+
+			const correctAnswersCount = answers.filter((answer, index) => {
+				const question = questions[index];
+
+				if (question.type === "fill-in-the-blank") {
+					return evaluateFillInTheBlank(question, answer);
+				}
+
+				// For objective (multiple choice), compare normalized
+				return normalize(answer) === normalize(question.answer);
+			}).length;
+
+			const normalizedAnswers = answers.map((answer, index) => {
+				const question = questions[index];
+
+				return question.type === "fill-in-the-blank"
+					? normalize(answer)
+					: normalize(answer);
+			});
+
+			// Normalize correct answers too
+			const normalizedQuestions = questions.map((q) => ({
+				...q,
+				answer: normalize(q.answer),
+			}));
 
 			localStorage.setItem(
 				"quizResults",
-				JSON.stringify({ answers, questions })
+				JSON.stringify({
+					answers: normalizedAnswers,
+					questions: normalizedQuestions,
+				})
 			);
 
 			const { data, error } = await supabase.auth.getUser();
@@ -140,23 +188,60 @@ const Quiz = ({ initialQuestions, category }) => {
 			const student_id = data.user.id;
 			const userEmail = data.user.email;
 
+			const { data: usersData, error: usersError } = await supabase
+				.from("users_profile")
+				.select("email, name, class")
+				.eq("email", userEmail);
+
+			console.log("User profile fetch result:", { usersData, usersError });
+
+			if (usersError) {
+				console.error("Error fetching user profile:", usersError);
+			}
+
+			const userProfile = usersData && usersData[0];
+
 			const resultData = {
 				student_id: student_id,
+				email: userProfile?.email || userEmail,
+				name: userProfile?.name || "Unknown",
+				class: userProfile?.class || "Unknown",
+				category: category,
 				score: correctAnswersCount,
 				total_questions: questions.length,
 				timestamp: new Date().toISOString(),
 			};
 
-			await addQuizResult(resultData);
-			await transferMultipleColumns(userEmail);
+			console.log("Upserting quiz result:", resultData);
 
-			removeNavigationLock(); // Manually clean up before navigating
+			const { data: upsertData, error: upsertError } = await supabase
+				.from("quiz_results")
+				.upsert([resultData], { onConflict: ["student_id"] })
+				.select();
+
+			if (upsertError) {
+				console.error("Error upserting quiz result:", upsertError);
+			} else {
+				console.log("Quiz result upserted successfully:", upsertData);
+			}
+
+			removeNavigationLock();
 
 			router.replace(
 				`/quiz/results?correct=${correctAnswersCount}&total=${questions.length}`
 			);
 		} catch (err) {
-			console.log("An error occurred during submission:", err);
+			console.error("An error occurred during submission:", err);
+			removeNavigationLock();
+			router.replace(
+				`/quiz/results?correct=${
+					answers.filter(
+						(answer, index) =>
+							normalize(answer) === normalize(questions[index].answer)
+					).length
+				}&total=${questions.length}`
+			);
+		} finally {
 			setIsSubmitting(false);
 		}
 	};
@@ -166,39 +251,6 @@ const Quiz = ({ initialQuestions, category }) => {
 		const secs = seconds % 60;
 		return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
 	};
-
-	async function transferMultipleColumns(userEmail) {
-		try {
-			const { data: usersData, error: usersError } = await supabase
-				.from("users_profile")
-				.select("email, name, class")
-				.eq("email", userEmail);
-
-			if (usersError) throw usersError;
-
-			if (!usersData || usersData.length === 0) {
-				console.log("No user profile found to transfer.");
-				return;
-			}
-
-			const profilesData = usersData.map((user) => ({
-				email: user.email,
-				name: user.name,
-				class: user.class,
-				category: category,
-			}));
-
-			const { error: profilesError } = await supabase
-				.from("quiz_results")
-				.upsert(profilesData, {
-					onConflict: ["student_id"],
-				});
-
-			if (profilesError) throw profilesError;
-		} catch (error) {
-			console.error("Error transferring data:", error.message);
-		}
-	}
 
 	return (
 		<Suspense
@@ -289,22 +341,34 @@ const Quiz = ({ initialQuestions, category }) => {
 								{questions[currentQuestion].question}
 							</h2>
 							<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-								{questions[currentQuestion].options.map((option, index) => (
-									<motion.button
-										key={index}
-										whileHover={{ scale: 1.04 }}
-										whileTap={{ scale: 0.97 }}
-										onClick={() => handleAnswer(option)}
-										className={`py-3 px-4 rounded-2xl text-base font-medium transition-all duration-200 border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
+								{questions[currentQuestion].type === "multiple-choice" ? (
+									questions[currentQuestion].options.map((option, index) => (
+										<motion.button
+											key={index}
+											whileHover={{ scale: 1.04 }}
+											whileTap={{ scale: 0.97 }}
+											onClick={() => handleAnswer(option)}
+											className={`py-3 px-4 rounded-2xl text-base font-medium transition-all duration-200 border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
 											${
 												answers[currentQuestion] === option
 													? "bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg"
 													: "bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700"
 											}
 										`}>
-										{option}
-									</motion.button>
-								))}
+											{option}
+										</motion.button>
+									))
+								) : (
+									<div className="mb-8">
+										<input
+											type="text"
+											placeholder="Type your answer..."
+											className="w-full p-4 rounded-xl border"
+											value={answers[currentQuestion] || ""}
+											onChange={(e) => handleAnswer(e.target.value)}
+										/>
+									</div>
+								)}
 							</div>
 							<div className="flex justify-between items-center mt-4 gap-4">
 								<button

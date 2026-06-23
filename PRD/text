@@ -1,0 +1,120 @@
+Hey Cursor,
+
+Let’s upgrade my QuizMaster app with:
+
+✅ A complete role-based authentication system  
+✅ A full-featured Admin Dashboard  
+✅ Preserved student functionality
+
+Tech stack: Next.js (v14 or v15), Supabase, Tailwind CSS (or ShadCN UI if preferred)
+
+---
+
+🔐 PART 1: Role-Based Sign-Up & Login System
+
+🎯 Goal:
+Users should sign up as either **student** or **admin**, and be redirected accordingly.
+
+Features:
+
+1. **Sign-Up Form**
+
+   - Fields: `name`, `email`, `password`, `role` (select: admin or student)
+   - If role is `admin`, require an **Admin Invite Code**
+   - If invalid code, block sign-up or fallback to student role
+
+2. **Insert Role in Supabase**
+
+   - Insert new user into `users_profile` with: `id`, `email`, `name`, `role`
+   - Default role = `'student'`
+   - Table already exists (`users_profile`) — assume column `role TEXT DEFAULT 'student'` is present
+
+3. **Login Redirect Logic**
+
+   - After login, fetch `users_profile.role` using Supabase
+   - Redirect:
+     - `admin` → `/admin/dashboard`
+     - `student` → `/student/home`
+
+4. **Route Protection**
+
+   - Protect all `/admin/*` routes
+   - Use middleware or simple role-checking on the client
+   - Show "Access Denied" for non-admins
+
+5. **UI/UX**
+   - Use Tailwind or ShadCN to make the form modern, clean, responsive
+   - Add error feedback, loading states, and success messages
+   - Use best practices (validation, clean code structure)
+
+---
+
+👑 PART 2: Full Admin Dashboard (Do Not Interfere With Existing Flows)
+
+Hey Cursor, let's now build a full admin dashboard for my QuizMaster app.
+
+🎯 Goals:
+
+- Create a **standard, seamless, and smooth** Admin Page
+- Do **not alter existing user or student functionalities**
+- Focus on **top-notch UI/UX**: clean layout, responsive design, and intuitive navigation
+- Use existing styling systems (like Tailwind or ShadCN) if already in use
+
+👑 Admin Responsibilities & Features (implement creatively and responsibly):
+
+1. **Dashboard Overview**
+
+   - Total number of students
+   - Number of quizzes taken
+   - Recent quiz activity log
+   - Performance stats (charts or tables)
+
+2. **Student Management**
+
+   - View full list of registered students
+   - Search, filter, and sort students
+   - View individual performance history
+   - Suspend/reactivate student accounts
+
+3. **Quiz Monitoring**
+
+   - List of all quizzes submitted
+   - Filter results by quiz ID, student ID, score range, or date
+   - View detailed quiz results (questions, score, time taken)
+
+4. **Analytics**
+
+   - Graphs: top performers, average scores, pass/fail rate
+   - Export reports (CSV/Excel)
+
+5. **Quiz & Category Management** (optional if supported)
+
+   - Create/edit/delete quizzes
+   - Manage categories or topics
+
+6. **Notifications**
+
+   - Admin-only announcements
+   - View error logs, trigger logs, or email events (if connected)
+
+7. **Account & Settings**
+   - Admin profile management
+   - Change email/password
+   - Toggle visibility of student data
+
+📐 Notes:
+
+- Keep the code clean, modular, and scalable
+- Make the UI responsive and consistent with the rest of the app
+- Protect routes: only allow access to users with an admin role
+- Use mock data if necessary, but prepare for Supabase integration
+
+🚫 DO NOT:
+
+- Change or interfere with student login/signup flow
+- Break or modify existing quiz functionality
+- Touch public-facing or already working routes
+
+The admin features should only **enhance** the app — adding power, visibility, and control without breaking anything.
+
+Go ahead and architect this smartly — make it beautiful and powerful!

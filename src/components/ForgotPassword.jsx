@@ -39,7 +39,7 @@ const ForgotPassword = () => {
 					userEmail.email,
 					{
 						redirectTo:
-							"https://quizmasterrccg.vercel.app/authenticate/forgotpassword/resetpassword",
+							"https://quizmasterofficial2024.vercel.app/authenticate/forgotpassword/resetpassword",
 					}
 				);
 				if (error) {
