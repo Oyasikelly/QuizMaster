@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local test scripts with credentials (auto-generated, never commit)
+test-with-credentials.js
