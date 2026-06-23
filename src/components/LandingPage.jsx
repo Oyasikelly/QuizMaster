@@ -110,11 +110,11 @@ const LandingPage = () => {
 						initial={{ opacity: 0, x: 20 }}
 						animate={{ opacity: 1, x: 0 }}
 						className="flex items-center space-x-2 sm:space-x-4">
-						<button
-							onClick={() => router.push("/authenticate")}
+						<Link
+							href="/authenticate"
 							className="px-4 py-2 sm:px-6 sm:py-2 bg-white/80 backdrop-blur-sm rounded-full text-gray-700 hover:bg-white transition-all duration-300 shadow-lg hover:shadow-xl text-sm sm:text-base">
 							Get Started
-						</button>
+						</Link>
 					</motion.div>
 				</div>
 			</nav>
