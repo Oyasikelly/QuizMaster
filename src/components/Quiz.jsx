@@ -105,8 +105,33 @@ const Quiz = ({ initialQuestions, category }) => {
 		setIsSubmitting(true);
 		setTimerRunning(false);
 
+		const standardizeBibleReference = (text) => {
+			if (!text) return text;
+			// Replace written numbers with digits for books (e.g., First John -> 1 John)
+			let processed = text.replace(/\b(first|second|third)\b/gi, (match) => {
+				const lower = match.toLowerCase();
+				if (lower === "first") return "1";
+				if (lower === "second") return "2";
+				if (lower === "third") return "3";
+				return match;
+			});
+			// Standardize Bible verse patterns to a single solid token (e.g., 1cor6v1213)
+			return processed.replace(
+				/(?:([123]|i{1,3})\s*)?([a-z]{3})[a-z]*\.?\s+(\d+)(?:\s*[:v]\s*|\s+vs\.?\s+|\s+)(\d+(?:\s*-\s*\d+)?)/gi,
+				(match, bookNum, bookName, chapter, verse) => {
+					let num = bookNum ? bookNum.toLowerCase() : "";
+					if (num === "i") num = "1";
+					if (num === "ii") num = "2";
+					if (num === "iii") num = "3";
+					const book = bookName.toLowerCase();
+					const v = verse.replace(/[\s:-]+/g, ""); // Remove spaces, colons, hyphens in the verse part
+					return `${num}${book}${chapter}v${v}`;
+				}
+			);
+		};
+
 		const normalize = (str) =>
-			(str || "")
+			standardizeBibleReference(str || "")
 				.trim()
 				.toLowerCase()
 				.replace(/[^\w\s]/g, ""); // Keep hyphens, remove other punctuation
