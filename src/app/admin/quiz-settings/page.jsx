@@ -18,7 +18,16 @@ import {
 	FaDatabase,
 	FaCheck,
 	FaTimes,
+	FaExclamationTriangle,
 } from "react-icons/fa";
+
+const withTimeout = (promise, ms) =>
+	Promise.race([
+		promise,
+		new Promise((_, reject) =>
+			setTimeout(() => reject(new Error(`Request timed out after ${ms}ms`)), ms)
+		),
+	]);
 
 export default function QuizSettingsAdmin() {
 	const [settings, setSettings] = useState({
@@ -30,44 +39,54 @@ export default function QuizSettingsAdmin() {
 		practice_mode: false, // New field for practice mode
 	});
 	const [loading, setLoading] = useState(true);
+	const [loadError, setLoadError] = useState(false);
 	const [saving, setSaving] = useState(false);
 	const [message, setMessage] = useState("");
 	const router = useRouter();
 
-	useEffect(() => {
-		const loadSettings = async () => {
-			try {
-				const { data, error } = await supabase
-					.from("quiz_settings")
-					.select("*")
-					.single();
+	const loadSettings = async () => {
+		setLoading(true);
+		setLoadError(false);
+		try {
+			const { data, error } = await withTimeout(
+				supabase.from("quiz_settings").select("*").single(),
+				10000
+			);
 
-				if (error) {
-					console.error("Error loading settings:", error);
-					return;
-				}
-
-				if (data) {
-					setSettings({
-						is_active: data.is_active || false,
-						time: data.time || 60,
-						questions: data.questions || 100,
-						start_time: data.start_time
-							? new Date(data.start_time).toISOString().slice(0, 16)
-							: "",
-						end_time: data.end_time
-							? new Date(data.end_time).toISOString().slice(0, 16)
-							: "",
-						practice_mode: data.practice_mode || false, // Load practice mode setting
-					});
-				}
-			} catch (err) {
-				console.error("Error:", err);
-			} finally {
-				setLoading(false);
+			if (error) {
+				console.error("Error loading settings:", error);
+				return;
 			}
-		};
 
+			if (data) {
+				setSettings({
+					is_active: data.is_active || false,
+					time: data.time || 60,
+					questions: data.questions || 100,
+					start_time: data.start_time
+						? new Date(data.start_time).toISOString().slice(0, 16)
+						: "",
+					end_time: data.end_time
+						? new Date(data.end_time).toISOString().slice(0, 16)
+						: "",
+					practice_mode: data.practice_mode || false,
+				});
+			}
+		} catch (err) {
+			console.error("Error:", err);
+			if (
+				err.message?.includes("timed out") ||
+				err.message?.includes("fetch") ||
+				err.message?.includes("network")
+			) {
+				setLoadError(true);
+			}
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
 		loadSettings();
 	}, []);
 
@@ -101,6 +120,25 @@ export default function QuizSettingsAdmin() {
 	const handleBackToAdmin = () => {
 		router.push("/admin/dashboard");
 	};
+
+	if (loadError) {
+		return (
+			<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center p-4">
+				<div className="text-center bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full">
+					<FaExclamationTriangle className="text-red-500 text-5xl mx-auto mb-4" />
+					<h2 className="text-xl font-bold text-gray-800 mb-2">Network Error</h2>
+					<p className="text-gray-600 mb-6">
+						We couldn't connect to the server. Please check your internet connection and try again.
+					</p>
+					<button
+						onClick={loadSettings}
+						className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
+						Retry Connection
+					</button>
+				</div>
+			</div>
+		);
+	}
 
 	if (loading) {
 		return (

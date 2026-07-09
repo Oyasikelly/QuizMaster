@@ -85,6 +85,9 @@ export default function SelectTime() {
 				const isReal = await isRealQuizActive(supabase);
 				console.log("🔒 Is Real Quiz Active:", isReal);
 
+				console.log("🔍 Fetching dynamic quiz settings...");
+				const currentSettings = await getQuizSettings(supabase, isReal);
+
 				console.log("🔍 Checking if practice mode is enabled...");
 				const practiceEnabled = await isPracticeModeEnabled(supabase);
 				console.log("🎯 Practice Mode Enabled:", practiceEnabled);
@@ -109,11 +112,11 @@ export default function SelectTime() {
 						isRealQuiz: true,
 						hasTakenQuiz: false,
 						canTakeQuiz: true,
-						message: "Real Quiz Mode: 1 hour, 100 questions",
+						message: `Real Quiz Mode: ${currentSettings.time} minutes, ${currentSettings.questions} questions`,
 					});
-					// Set fixed values for real quiz
-					setSelectedTime(60);
-					setSelectedQuestions(100);
+					// Set fixed values for real quiz from database
+					setSelectedTime(currentSettings.time);
+					setSelectedQuestions(currentSettings.questions);
 				} else {
 					// Quiz is not active - check if practice mode is enabled
 					if (practiceEnabled) {

@@ -21,6 +21,14 @@ import {
 	FaExclamationTriangle,
 } from "react-icons/fa";
 
+const withTimeout = (promise, ms) =>
+	Promise.race([
+		promise,
+		new Promise((_, reject) =>
+			setTimeout(() => reject(new Error(`Request timed out after ${ms}ms`)), ms)
+		),
+	]);
+
 const SIDEBAR_LINKS = [
 	{ label: "Dashboard", icon: <FaTrophy />, route: "/admin/dashboard" },
 	{ label: "Student Management", icon: <FaUsers />, tab: "students" },
@@ -39,6 +47,7 @@ const DEFAULT_SYSTEM_SETTINGS = {
 const AdminSettings = () => {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [loadError, setLoadError] = useState(false);
 	const [activeTab, setActiveTab] = useState("students");
 	const [students, setStudents] = useState([]);
 	const [quizResults, setQuizResults] = useState([]);
@@ -73,43 +82,80 @@ const AdminSettings = () => {
 		[router]
 	);
 
-	// Fetch user and data
-	useEffect(() => {
-		const getUser = async () => {
-			try {
-				const {
-					data: { session },
-					error: sessionError,
-				} = await supabase.auth.getSession();
-				if (sessionError || !session) {
-					router.push("/authenticate");
-					return;
-				}
-				const {
-					data: { user },
-				} = await supabase.auth.getUser();
-				if (!user) {
-					router.push("/authenticate");
-					return;
-				}
-				const { data: profile } = await supabase
+	const loadData = useCallback(async () => {
+		try {
+			const { data: studentsData = [] } = await withTimeout(
+				supabase.from("users_profile").select("*").eq("role", "student"),
+				10000
+			);
+			const { data: quizData = [] } = await withTimeout(
+				supabase.from("quiz_results").select("*"),
+				10000
+			);
+			const studentsWithCounts = studentsData.map((student) => ({
+				...student,
+				submissionCount: quizData.filter((r) => r.student_id === student.id)
+					.length,
+			}));
+			setStudents(studentsWithCounts);
+			setQuizResults(quizData);
+		} catch (error) {
+			console.error("Error loading data:", error);
+			throw error; // Let getUser catch it
+		}
+	}, []);
+
+	const getUser = useCallback(async () => {
+		setLoading(true);
+		setLoadError(false);
+		try {
+			const {
+				data: { session },
+				error: sessionError,
+			} = await withTimeout(supabase.auth.getSession(), 10000);
+			if (sessionError || !session) {
+				router.push("/authenticate");
+				return;
+			}
+			const {
+				data: { user },
+			} = await withTimeout(supabase.auth.getUser(), 10000);
+			if (!user) {
+				router.push("/authenticate");
+				return;
+			}
+			const { data: profile } = await withTimeout(
+				supabase
 					.from("users_profile")
 					.select("role, name, email")
 					.eq("id", user.id)
-					.single();
-				if (profile?.role !== "admin") {
-					router.push("/authenticate");
-					return;
-				}
-				setUser({ ...user, ...profile });
-				await loadData();
-			} catch (error) {
+					.single(),
+				10000
+			);
+			if (profile?.role !== "admin") {
 				router.push("/authenticate");
-			} finally {
-				setLoading(false);
+				return;
 			}
-		};
+			setUser({ ...user, ...profile });
+			await loadData();
+		} catch (error) {
+			console.error("Init error:", error);
+			if (
+				error.message?.includes("timed out") ||
+				error.message?.includes("fetch") ||
+				error.message?.includes("network")
+			) {
+				setLoadError(true);
+			} else {
+				router.push("/authenticate");
+			}
+		} finally {
+			setLoading(false);
+		}
+	}, [router, loadData]);
 
+	// Fetch user and data
+	useEffect(() => {
 		getUser();
 
 		const {
@@ -119,29 +165,7 @@ const AdminSettings = () => {
 		});
 
 		return () => subscription.unsubscribe();
-	}, [router]);
-
-	// Load students and quiz results
-	const loadData = useCallback(async () => {
-		try {
-			const { data: studentsData = [] } = await supabase
-				.from("users_profile")
-				.select("*")
-				.eq("role", "student");
-			const { data: quizData = [] } = await supabase
-				.from("quiz_results")
-				.select("*");
-			const studentsWithCounts = studentsData.map((student) => ({
-				...student,
-				submissionCount: quizData.filter((r) => r.student_id === student.id)
-					.length,
-			}));
-			setStudents(studentsWithCounts);
-			setQuizResults(quizData);
-		} catch (error) {
-			// Optionally handle error
-		}
-	}, []);
+	}, [getUser, router]);
 
 	// Student edit/save/delete handlers
 	const handleEditStudent = (student) => setEditingStudent({ ...student });
@@ -215,6 +239,25 @@ const AdminSettings = () => {
 			),
 		[students, searchTerm]
 	);
+
+	if (loadError) {
+		return (
+			<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center p-4">
+				<div className="text-center bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full">
+					<FaExclamationTriangle className="text-red-500 text-5xl mx-auto mb-4" />
+					<h2 className="text-xl font-bold text-gray-800 mb-2">Network Error</h2>
+					<p className="text-gray-600 mb-6">
+						We couldn't connect to the server. Please check your internet connection and try again.
+					</p>
+					<button
+						onClick={getUser}
+						className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
+						Retry Connection
+					</button>
+				</div>
+			</div>
+		);
+	}
 
 	if (loading) {
 		return (

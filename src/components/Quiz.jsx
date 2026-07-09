@@ -78,6 +78,7 @@ const Quiz = ({ initialQuestions, category }) => {
 	const [answers, setAnswers] = useState([]);
 	const [timerRunning, setTimerRunning] = useState(true);
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [submitError, setSubmitError] = useState("");
 
 	// Define handlers in a scope accessible to both setup and cleanup
 	const handlePopState = () => {
@@ -147,6 +148,7 @@ const Quiz = ({ initialQuestions, category }) => {
 
 	const handleSubmit = async () => {
 		setIsSubmitting(true);
+		setSubmitError("");
 		setTimerRunning(false);
 
 		try {
@@ -194,7 +196,7 @@ const Quiz = ({ initialQuestions, category }) => {
 			}));
 
 			// ── STEP 1: Save to localStorage IMMEDIATELY ─────────────────────────
-			// This ensures the results page always has data even if the DB fails.
+			// This ensures the results page always has data.
 			localStorage.setItem(
 				"quizResults",
 				JSON.stringify({
@@ -203,90 +205,74 @@ const Quiz = ({ initialQuestions, category }) => {
 				})
 			);
 
-			// ── STEP 2: Navigate to results RIGHT AWAY ───────────────────────────
-			// Students must NEVER be stuck waiting for a database write.
+			// ── STEP 2: Strict Synchronous Save to DB ───────────────────────────
+			// The user must wait for confirmation before seeing their results.
+			const { data: authData, error: authError } = await withTimeout(
+				supabase.auth.getUser(),
+				15000 // Give extra time for mobile networks
+			);
+
+			if (authError || !authData?.user) {
+				throw new Error("Authentication check failed. Please check your network connection.");
+			}
+
+			const student_id = authData.user.id;
+			const userEmail = authData.user.email;
+
+			const { data: usersData, error: usersError } = await withTimeout(
+				supabase
+					.from("users_profile")
+					.select("email, name, class")
+					.eq("email", userEmail),
+				15000
+			);
+
+			if (usersError) {
+				console.error("Profile fetch error:", usersError);
+			}
+
+			const userProfile = usersData && usersData[0];
+
+			const resultData = {
+				student_id,
+				email: userProfile?.email || userEmail,
+				name: userProfile?.name || "Unknown",
+				class: userProfile?.class || "Unknown",
+				category,
+				score: correctAnswersCount,
+				total_questions: questions.length,
+				timestamp: new Date().toISOString(),
+			};
+
+			console.log("Saving DB synchronously:", resultData);
+
+			// IMPORTANT: The database table "quiz_results" MUST have a UNIQUE constraint 
+			// on "student_id" for this to work without throwing an error.
+			const { data: upsertData, error: upsertError } = await withTimeout(
+				supabase
+					.from("quiz_results")
+					.upsert([resultData], { onConflict: "student_id" })
+					.select(),
+				20000 // 20s timeout to allow maximum chance to succeed
+			);
+
+			if (upsertError) {
+				throw new Error(upsertError.message);
+			}
+
+			console.log("DB save success:", upsertData);
+
+			// ── STEP 3: Navigate to results ONLY if DB save succeeds ───────────
 			removeNavigationLock();
 			router.replace(
 				`/quiz/results?correct=${correctAnswersCount}&total=${questions.length}`
 			);
-
-			// ── STEP 3: Save to DB in the background (fire-and-forget) ───────────
-			// A slow or failed DB write must NOT block the user from seeing results.
-			(async () => {
-				try {
-					const { data: authData, error: authError } = await withTimeout(
-						supabase.auth.getUser(),
-						10000
-					);
-
-					if (authError) {
-						console.error("Background DB save — auth error:", authError);
-						return;
-					}
-
-					const student_id = authData.user.id;
-					const userEmail = authData.user.email;
-
-					const { data: usersData, error: usersError } = await withTimeout(
-						supabase
-							.from("users_profile")
-							.select("email, name, class")
-							.eq("email", userEmail),
-						10000
-					);
-
-					if (usersError) {
-						console.error("Background DB save — profile fetch error:", usersError);
-					}
-
-					const userProfile = usersData && usersData[0];
-
-					const resultData = {
-						student_id,
-						email: userProfile?.email || userEmail,
-						name: userProfile?.name || "Unknown",
-						class: userProfile?.class || "Unknown",
-						category,
-						score: correctAnswersCount,
-						total_questions: questions.length,
-						timestamp: new Date().toISOString(),
-					};
-
-					console.log("Background DB save — upserting:", resultData);
-
-					// Using .upsert() as requested so students' previous scores are overwritten.
-					// IMPORTANT: The database table "quiz_results" MUST have a UNIQUE constraint 
-					// on "student_id" for this to work without throwing an error.
-					const { data: upsertData, error: upsertError } = await withTimeout(
-						supabase
-							.from("quiz_results")
-							.upsert([resultData], { onConflict: "student_id" })
-							.select(),
-						10000
-					);
-
-					if (upsertError) {
-						console.error("Background DB save — upsert error:", upsertError);
-					} else {
-						console.log("Background DB save — success:", upsertData);
-					}
-				} catch (dbErr) {
-					console.error("Background DB save — failed:", dbErr.message);
-				}
-			})();
 		} catch (err) {
-			// Even on an unexpected local error, still navigate to results.
 			console.error("An error occurred during submission:", err);
-			removeNavigationLock();
-			const fallbackScore = answers.filter(
-				(answer, index) =>
-					normalize(answer) === normalize(questions[index]?.answer)
-			).length;
-			router.replace(
-				`/quiz/results?correct=${fallbackScore}&total=${questions.length}`
+			setSubmitError(
+				err.message || "Failed to save your score due to a network error. Please ensure you have internet access and try again."
 			);
-		} finally {
-			setIsSubmitting(false);
+			setIsSubmitting(false); // Stop loading so they can click retry
 		}
 	};
 
@@ -314,10 +300,33 @@ const Quiz = ({ initialQuestions, category }) => {
 							Loading Quiz...
 						</p>
 					</motion.div>
+				{/* Error Overlay */}
+			{submitError && (
+				<div className="fixed inset-0 z-[100] flex items-center justify-center bg-white/90 backdrop-blur-md">
+					<motion.div
+						initial={{ opacity: 0, scale: 0.8 }}
+						animate={{ opacity: 1, scale: 1 }}
+						className="flex flex-col items-center justify-center gap-6 bg-red-50 rounded-3xl shadow-2xl p-10 border border-red-200 max-w-md w-11/12">
+						<div className="w-16 h-16 rounded-full bg-red-100 flex items-center justify-center">
+							<svg className="w-8 h-8 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+								<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+							</svg>
+						</div>
+						<p className="text-red-800 text-center font-medium leading-relaxed">
+							{submitError}
+						</p>
+						<button
+							onClick={handleSubmit}
+							className="px-8 py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl shadow-lg transition-colors">
+							Retry Submission
+						</button>
+					</motion.div>
 				</div>
-			}>
-			{isSubmitting && (
-				<div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-sm">
+			)}
+
+			{/* Loading Overlay */}
+			{isSubmitting && !submitError && (
+				<div className="fixed inset-0 z-[100] flex items-center justify-center bg-white/80 backdrop-blur-sm">
 					<motion.div
 						initial={{ opacity: 0, scale: 0.8 }}
 						animate={{ opacity: 1, scale: 1 }}
