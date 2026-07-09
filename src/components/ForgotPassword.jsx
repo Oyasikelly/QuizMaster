@@ -9,8 +9,10 @@ const ForgotPassword = () => {
 	const [email, setEmail] = useState("");
 	const [message, setMessage] = useState("");
 	const [errorMssg, setErrorMssg] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
 
 	const handleForgotPassword = async (e) => {
+		setIsLoading(true);
 		e.preventDefault();
 
 		const { data, error } = await supabase
@@ -49,6 +51,7 @@ const ForgotPassword = () => {
 		} else {
 			console.error(error);
 		}
+		setIsLoading(false);
 	};
 
 	return (
@@ -135,14 +138,24 @@ const ForgotPassword = () => {
 
 					<motion.button
 						type="submit"
-						className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-4 rounded-2xl flex items-center justify-center space-x-3 transition-all duration-300 transform hover:scale-105 hover:shadow-xl shadow-lg text-lg"
-						whileHover={{ scale: 1.02 }}
-						whileTap={{ scale: 0.98 }}
+						disabled={isLoading}
+						className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-2xl flex items-center justify-center space-x-3 transition-all duration-300 hover:shadow-xl shadow-lg text-lg"
+						whileHover={{ scale: isLoading ? 1 : 1.02 }}
+						whileTap={{ scale: isLoading ? 1 : 0.98 }}
 						initial={{ y: 10, opacity: 0 }}
 						animate={{ y: 0, opacity: 1 }}
 						transition={{ duration: 0.6, delay: 0.2 }}>
-						<FiSend className="text-xl" />
-						<span>Send Reset Link</span>
+						{isLoading ? (
+							<>
+								<div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+								<span>Sending...</span>
+							</>
+						) : (
+							<>
+								<FiSend className="text-xl" />
+								<span>Send Reset Link</span>
+							</>
+						)}
 					</motion.button>
 				</form>
 
