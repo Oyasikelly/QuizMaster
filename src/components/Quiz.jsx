@@ -8,6 +8,50 @@ import { isRealQuizActive } from "../lib/quiz-config";
 
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
+// ---------------------------------------------------------------------------
+// Helpers — defined at module level so they are always available, even inside
+// catch blocks and background async tasks.
+// ---------------------------------------------------------------------------
+const standardizeBibleReference = (text) => {
+	if (!text) return text;
+	let processed = text.replace(/\b(first|second|third)\b/gi, (match) => {
+		const lower = match.toLowerCase();
+		if (lower === "first") return "1";
+		if (lower === "second") return "2";
+		if (lower === "third") return "3";
+		return match;
+	});
+	return processed.replace(
+		/(?:([123]|i{1,3})\s*)?([a-z]{3})[a-z]*\.?\s+(\d+)(?:\s*[:v]\s*|\s+vs\.?\s+|\s+)(\d+(?:\s*-\s*\d+)?)/gi,
+		(match, bookNum, bookName, chapter, verse) => {
+			let num = bookNum ? bookNum.toLowerCase() : "";
+			if (num === "i") num = "1";
+			if (num === "ii") num = "2";
+			if (num === "iii") num = "3";
+			const book = bookName.toLowerCase();
+			const v = verse.replace(/[\s:-]+/g, "");
+			return `${num}${book}${chapter}v${v}`;
+		}
+	);
+};
+
+const normalize = (str) =>
+	standardizeBibleReference(str || "")
+		.trim()
+		.toLowerCase()
+		.replace(/[^\w\s]/g, "");
+
+// Wraps a promise with a hard timeout so a stalled network call never hangs.
+const withTimeout = (promise, ms) =>
+	Promise.race([
+		promise,
+		new Promise((_, reject) =>
+			setTimeout(() => reject(new Error(`Request timed out after ${ms}ms`)), ms)
+		),
+	]);
+
+// ---------------------------------------------------------------------------
+
 const Quiz = ({ initialQuestions, category }) => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
@@ -105,52 +149,20 @@ const Quiz = ({ initialQuestions, category }) => {
 		setIsSubmitting(true);
 		setTimerRunning(false);
 
-		const standardizeBibleReference = (text) => {
-			if (!text) return text;
-			// Replace written numbers with digits for books (e.g., First John -> 1 John)
-			let processed = text.replace(/\b(first|second|third)\b/gi, (match) => {
-				const lower = match.toLowerCase();
-				if (lower === "first") return "1";
-				if (lower === "second") return "2";
-				if (lower === "third") return "3";
-				return match;
-			});
-			// Standardize Bible verse patterns to a single solid token (e.g., 1cor6v1213)
-			return processed.replace(
-				/(?:([123]|i{1,3})\s*)?([a-z]{3})[a-z]*\.?\s+(\d+)(?:\s*[:v]\s*|\s+vs\.?\s+|\s+)(\d+(?:\s*-\s*\d+)?)/gi,
-				(match, bookNum, bookName, chapter, verse) => {
-					let num = bookNum ? bookNum.toLowerCase() : "";
-					if (num === "i") num = "1";
-					if (num === "ii") num = "2";
-					if (num === "iii") num = "3";
-					const book = bookName.toLowerCase();
-					const v = verse.replace(/[\s:-]+/g, ""); // Remove spaces, colons, hyphens in the verse part
-					return `${num}${book}${chapter}v${v}`;
-				}
-			);
-		};
-
-		const normalize = (str) =>
-			standardizeBibleReference(str || "")
-				.trim()
-				.toLowerCase()
-				.replace(/[^\w\s]/g, ""); // Keep hyphens, remove other punctuation
-
 		try {
+			// ── Scoring ─────────────────────────────────────────────────────────
 			const evaluateFillInTheBlank = (question, userAnswer) => {
 				const normalizedUserWords = normalize(userAnswer).split(/\s+/);
-
 				const rawAnswers = question.answer
 					.split(/,|\/| or | OR /)
 					.map((a) => normalize(a).trim())
 					.filter(Boolean);
-
 				const normalizedUserAnswerString = normalize(userAnswer);
 
 				let matchCount = 0;
 				for (const correct of rawAnswers) {
 					if (
-						correct.includes(" ") // full phrase
+						correct.includes(" ")
 							? normalizedUserAnswerString.includes(correct)
 							: normalizedUserWords.includes(correct)
 					) {
@@ -158,42 +170,31 @@ const Quiz = ({ initialQuestions, category }) => {
 					}
 				}
 
-				// Set thresholds based on the question phrasing
 				const qText = question.question.toLowerCase();
 				if (qText.includes("mention four")) return matchCount >= 4;
 				if (qText.includes("mention three")) return matchCount >= 3;
 				if (qText.includes("mention two")) return matchCount >= 2;
 				if (qText.includes("mention one")) return matchCount >= 1;
 				if (qText.includes("complete")) return matchCount >= 3;
-
 				return matchCount >= 1;
 			};
 
 			const correctAnswersCount = answers.filter((answer, index) => {
 				const question = questions[index];
-
 				if (question.type === "fill-in-the-blank") {
 					return evaluateFillInTheBlank(question, answer);
 				}
-
-				// For objective (multiple choice), compare normalized
 				return normalize(answer) === normalize(question.answer);
 			}).length;
 
-			const normalizedAnswers = answers.map((answer, index) => {
-				const question = questions[index];
-
-				return question.type === "fill-in-the-blank"
-					? normalize(answer)
-					: normalize(answer);
-			});
-
-			// Normalize correct answers too
+			const normalizedAnswers = answers.map((answer) => normalize(answer));
 			const normalizedQuestions = questions.map((q) => ({
 				...q,
 				answer: normalize(q.answer),
 			}));
 
+			// ── STEP 1: Save to localStorage IMMEDIATELY ─────────────────────────
+			// This ensures the results page always has data even if the DB fails.
 			localStorage.setItem(
 				"quizResults",
 				JSON.stringify({
@@ -202,69 +203,86 @@ const Quiz = ({ initialQuestions, category }) => {
 				})
 			);
 
-			const { data, error } = await supabase.auth.getUser();
-
-			if (error) {
-				console.error("Error fetching user:", error);
-				setIsSubmitting(false);
-				return;
-			}
-
-			const student_id = data.user.id;
-			const userEmail = data.user.email;
-
-			const { data: usersData, error: usersError } = await supabase
-				.from("users_profile")
-				.select("email, name, class")
-				.eq("email", userEmail);
-
-			console.log("User profile fetch result:", { usersData, usersError });
-
-			if (usersError) {
-				console.error("Error fetching user profile:", usersError);
-			}
-
-			const userProfile = usersData && usersData[0];
-
-			const resultData = {
-				student_id: student_id,
-				email: userProfile?.email || userEmail,
-				name: userProfile?.name || "Unknown",
-				class: userProfile?.class || "Unknown",
-				category: category,
-				score: correctAnswersCount,
-				total_questions: questions.length,
-				timestamp: new Date().toISOString(),
-			};
-
-			console.log("Upserting quiz result:", resultData);
-
-			const { data: upsertData, error: upsertError } = await supabase
-				.from("quiz_results")
-				.upsert([resultData], { onConflict: ["student_id"] })
-				.select();
-
-			if (upsertError) {
-				console.error("Error upserting quiz result:", upsertError);
-			} else {
-				console.log("Quiz result upserted successfully:", upsertData);
-			}
-
+			// ── STEP 2: Navigate to results RIGHT AWAY ───────────────────────────
+			// Students must NEVER be stuck waiting for a database write.
 			removeNavigationLock();
-
 			router.replace(
 				`/quiz/results?correct=${correctAnswersCount}&total=${questions.length}`
 			);
+
+			// ── STEP 3: Save to DB in the background (fire-and-forget) ───────────
+			// A slow or failed DB write must NOT block the user from seeing results.
+			(async () => {
+				try {
+					const { data: authData, error: authError } = await withTimeout(
+						supabase.auth.getUser(),
+						10000
+					);
+
+					if (authError) {
+						console.error("Background DB save — auth error:", authError);
+						return;
+					}
+
+					const student_id = authData.user.id;
+					const userEmail = authData.user.email;
+
+					const { data: usersData, error: usersError } = await withTimeout(
+						supabase
+							.from("users_profile")
+							.select("email, name, class")
+							.eq("email", userEmail),
+						10000
+					);
+
+					if (usersError) {
+						console.error("Background DB save — profile fetch error:", usersError);
+					}
+
+					const userProfile = usersData && usersData[0];
+
+					const resultData = {
+						student_id,
+						email: userProfile?.email || userEmail,
+						name: userProfile?.name || "Unknown",
+						class: userProfile?.class || "Unknown",
+						category,
+						score: correctAnswersCount,
+						total_questions: questions.length,
+						timestamp: new Date().toISOString(),
+					};
+
+					console.log("Background DB save — upserting:", resultData);
+
+					// FIX: onConflict must be a string, not an array.
+					// Passing an array caused the upsert to fail silently, blocking the redirect.
+					const { data: upsertData, error: upsertError } = await withTimeout(
+						supabase
+							.from("quiz_results")
+							.upsert([resultData], { onConflict: "student_id" })
+							.select(),
+						10000
+					);
+
+					if (upsertError) {
+						console.error("Background DB save — upsert error:", upsertError);
+					} else {
+						console.log("Background DB save — success:", upsertData);
+					}
+				} catch (dbErr) {
+					console.error("Background DB save — failed:", dbErr.message);
+				}
+			})();
 		} catch (err) {
+			// Even on an unexpected local error, still navigate to results.
 			console.error("An error occurred during submission:", err);
 			removeNavigationLock();
+			const fallbackScore = answers.filter(
+				(answer, index) =>
+					normalize(answer) === normalize(questions[index]?.answer)
+			).length;
 			router.replace(
-				`/quiz/results?correct=${
-					answers.filter(
-						(answer, index) =>
-							normalize(answer) === normalize(questions[index].answer)
-					).length
-				}&total=${questions.length}`
+				`/quiz/results?correct=${fallbackScore}&total=${questions.length}`
 			);
 		} finally {
 			setIsSubmitting(false);
@@ -374,12 +392,12 @@ const Quiz = ({ initialQuestions, category }) => {
 											whileTap={{ scale: 0.97 }}
 											onClick={() => handleAnswer(option)}
 											className={`py-3 px-4 rounded-2xl text-base font-medium transition-all duration-200 border shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2
-											${
-												answers[currentQuestion] === option
-													? "bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg"
-													: "bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700"
-											}
-										`}>
+												${
+													answers[currentQuestion] === option
+														? "bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg"
+														: "bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700"
+												}
+											`}>
 											{option}
 										</motion.button>
 									))

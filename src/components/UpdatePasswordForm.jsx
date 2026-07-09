@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
@@ -13,13 +13,67 @@ const UpdatePasswordForm = ({ resetCode }) => {
 	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 	const [message, setMessage] = useState("");
 	const [error, setError] = useState("");
+	const [isLoading, setIsLoading] = useState(false);
+	const [sessionReady, setSessionReady] = useState(false);
+	const [exchanging, setExchanging] = useState(true);
 	const router = useRouter();
 
+	// ── STEP 1: Exchange the one-time code for a live session ────────────────
+	// Supabase's PKCE reset flow sends ?code= in the URL. We must exchange it
+	// for a session before updateUser() will work. Without this, the button
+	// appears to do nothing because updateUser() requires an active session.
+	useEffect(() => {
+		const exchangeCode = async () => {
+			if (!resetCode) {
+				setError("No reset code found. Please request a new reset link.");
+				setExchanging(false);
+				return;
+			}
+
+			try {
+				const { data, error: exchangeError } =
+					await supabase.auth.exchangeCodeForSession(resetCode);
+
+				if (exchangeError) {
+					console.error("Code exchange error:", exchangeError);
+					setError(
+						"This reset link has expired or already been used. Please request a new one."
+					);
+					setExchanging(false);
+					return;
+				}
+
+				if (data?.session) {
+					setSessionReady(true);
+				} else {
+					setError(
+						"Could not establish a session. Please request a new reset link."
+					);
+				}
+			} catch (err) {
+				console.error("Unexpected error during code exchange:", err);
+				setError("An unexpected error occurred. Please try again.");
+			} finally {
+				setExchanging(false);
+			}
+		};
+
+		exchangeCode();
+	}, [resetCode]);
+
+	// ── STEP 2: Update the password once session is active ───────────────────
 	const handlePasswordUpdate = async (e) => {
 		e.preventDefault();
+		setError("");
+		setMessage("");
 
 		if (!password || !confirmPassword) {
 			setError("Please fill in all fields.");
+			return;
+		}
+
+		if (password.length < 6) {
+			setError("Password must be at least 6 characters long.");
 			return;
 		}
 
@@ -28,28 +82,40 @@ const UpdatePasswordForm = ({ resetCode }) => {
 			return;
 		}
 
+		if (!sessionReady) {
+			setError("Session not ready. Please refresh and try again.");
+			return;
+		}
+
+		setIsLoading(true);
+
 		try {
 			const { data, error: updateError } = await supabase.auth.updateUser({
 				password,
-				access_token: resetCode, // Pass the code to Supabase
 			});
 
-			if (data) {
-				router.push("/authenticate");
-				console.log(data);
-			}
 			if (updateError) {
 				setError(updateError.message);
 				return;
 			}
 
-			setMessage("Your password has been updated successfully.");
-			setError("");
-			setPassword("");
-			setConfirmPassword("");
+			if (data?.user) {
+				setMessage("Your password has been updated successfully! Redirecting...");
+				setPassword("");
+				setConfirmPassword("");
+				// Sign out so the user logs in fresh with their new password
+				await supabase.auth.signOut();
+				setTimeout(() => {
+					router.push("/authenticate");
+				}, 2000);
+			} else {
+				setError("Password update failed. Please try again.");
+			}
 		} catch (err) {
 			setError("An error occurred. Please try again.");
-			console.log(err);
+			console.error(err);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -84,6 +150,20 @@ const UpdatePasswordForm = ({ resetCode }) => {
 					</p>
 				</motion.div>
 
+				{/* Session exchange loading state */}
+				{exchanging && (
+					<motion.div
+						className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 text-blue-800 rounded-2xl p-6 text-center mb-8 shadow-lg"
+						initial={{ opacity: 0, scale: 0.95 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{ duration: 0.5 }}>
+						<div className="flex items-center justify-center space-x-3">
+							<div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+							<span className="font-semibold text-lg">Verifying reset link...</span>
+						</div>
+					</motion.div>
+				)}
+
 				{/* Messages */}
 				{message && (
 					<motion.div
@@ -104,104 +184,129 @@ const UpdatePasswordForm = ({ resetCode }) => {
 						initial={{ opacity: 0, scale: 0.95 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.5 }}>
-						<div className="flex items-center justify-center space-x-3">
-							<div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
-							<span className="font-semibold text-lg">{error}</span>
+						<div className="flex flex-col items-center space-y-3">
+							<div className="flex items-center justify-center space-x-3">
+								<div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+								<span className="font-semibold text-lg">{error}</span>
+							</div>
+							{/* Show request new link button if session can't be established */}
+							{!sessionReady && !exchanging && (
+								<button
+									onClick={() =>
+										router.push("/authenticate/forgotpassword")
+									}
+									className="mt-2 text-sm underline text-red-700 hover:text-red-900 transition-colors">
+									Request a new reset link
+								</button>
+							)}
 						</div>
 					</motion.div>
 				)}
 
-				<form
-					onSubmit={handlePasswordUpdate}
-					className="space-y-6">
-					{/* New Password */}
-					<motion.div
-						initial={{ y: 10, opacity: 0 }}
-						animate={{ y: 0, opacity: 1 }}
-						transition={{ duration: 0.6, delay: 0.1 }}
-						className="space-y-2">
-						<label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-							<FaLock className="w-4 h-4 text-green-500" />
-							New Password
-							<span className="text-red-500">*</span>
-						</label>
-						<div className="group relative">
-							<div className="absolute inset-0 bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity"></div>
-							<div className="relative">
-								<FaLock className="absolute top-4 left-4 text-xl text-gray-400 group-hover:text-green-500 transition-colors" />
-								<input
-									type={showPassword ? "text" : "password"}
-									value={password}
-									onChange={(e) => setPassword(e.target.value)}
-									className="w-full bg-white/80 backdrop-blur-sm text-gray-700 rounded-2xl py-4 pl-12 pr-12 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 border border-gray-200/50 text-lg"
-									placeholder="Enter new password"
-								/>
-								<button
-									type="button"
-									onClick={() => setShowPassword(!showPassword)}
-									className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-green-600 transition-colors duration-200"
-									aria-label={showPassword ? "Hide password" : "Show password"}>
-									{showPassword ? (
-										<FaEyeSlash className="w-5 h-5" />
-									) : (
-										<FaEye className="w-5 h-5" />
-									)}
-								</button>
+				{/* Form — only shown once session is verified */}
+				{!exchanging && sessionReady && (
+					<form onSubmit={handlePasswordUpdate} className="space-y-6">
+						{/* New Password */}
+						<motion.div
+							initial={{ y: 10, opacity: 0 }}
+							animate={{ y: 0, opacity: 1 }}
+							transition={{ duration: 0.6, delay: 0.1 }}
+							className="space-y-2">
+							<label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+								<FaLock className="w-4 h-4 text-green-500" />
+								New Password
+								<span className="text-red-500">*</span>
+							</label>
+							<div className="group relative">
+								<div className="absolute inset-0 bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity"></div>
+								<div className="relative">
+									<FaLock className="absolute top-4 left-4 text-xl text-gray-400 group-hover:text-green-500 transition-colors" />
+									<input
+										type={showPassword ? "text" : "password"}
+										value={password}
+										onChange={(e) => setPassword(e.target.value)}
+										className="w-full bg-white/80 backdrop-blur-sm text-gray-700 rounded-2xl py-4 pl-12 pr-12 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-all duration-300 border border-gray-200/50 text-lg"
+										placeholder="Enter new password"
+										disabled={isLoading}
+									/>
+									<button
+										type="button"
+										onClick={() => setShowPassword(!showPassword)}
+										className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-green-600 transition-colors duration-200"
+										aria-label={showPassword ? "Hide password" : "Show password"}>
+										{showPassword ? (
+											<FaEyeSlash className="w-5 h-5" />
+										) : (
+											<FaEye className="w-5 h-5" />
+										)}
+									</button>
+								</div>
 							</div>
-						</div>
-					</motion.div>
+						</motion.div>
 
-					{/* Confirm Password */}
-					<motion.div
-						initial={{ y: 10, opacity: 0 }}
-						animate={{ y: 0, opacity: 1 }}
-						transition={{ duration: 0.6, delay: 0.2 }}
-						className="space-y-2">
-						<label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
-							<FaLock className="w-4 h-4 text-blue-500" />
-							Confirm Password
-							<span className="text-red-500">*</span>
-						</label>
-						<div className="group relative">
-							<div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-green-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity"></div>
-							<div className="relative">
-								<FaLock className="absolute top-4 left-4 text-xl text-gray-400 group-hover:text-blue-500 transition-colors" />
-								<input
-									type={showConfirmPassword ? "text" : "password"}
-									value={confirmPassword}
-									onChange={(e) => setConfirmPassword(e.target.value)}
-									className="w-full bg-white/80 backdrop-blur-sm text-gray-700 rounded-2xl py-4 pl-12 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 border border-gray-200/50 text-lg"
-									placeholder="Confirm new password"
-								/>
-								<button
-									type="button"
-									onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-									className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors duration-200"
-									aria-label={
-										showConfirmPassword ? "Hide password" : "Show password"
-									}>
-									{showConfirmPassword ? (
-										<FaEyeSlash className="w-5 h-5" />
-									) : (
-										<FaEye className="w-5 h-5" />
-									)}
-								</button>
+						{/* Confirm Password */}
+						<motion.div
+							initial={{ y: 10, opacity: 0 }}
+							animate={{ y: 0, opacity: 1 }}
+							transition={{ duration: 0.6, delay: 0.2 }}
+							className="space-y-2">
+							<label className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+								<FaLock className="w-4 h-4 text-blue-500" />
+								Confirm Password
+								<span className="text-red-500">*</span>
+							</label>
+							<div className="group relative">
+								<div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-green-600 rounded-2xl blur opacity-20 group-hover:opacity-30 transition-opacity"></div>
+								<div className="relative">
+									<FaLock className="absolute top-4 left-4 text-xl text-gray-400 group-hover:text-blue-500 transition-colors" />
+									<input
+										type={showConfirmPassword ? "text" : "password"}
+										value={confirmPassword}
+										onChange={(e) => setConfirmPassword(e.target.value)}
+										className="w-full bg-white/80 backdrop-blur-sm text-gray-700 rounded-2xl py-4 pl-12 pr-12 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 border border-gray-200/50 text-lg"
+										placeholder="Confirm new password"
+										disabled={isLoading}
+									/>
+									<button
+										type="button"
+										onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+										className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors duration-200"
+										aria-label={
+											showConfirmPassword ? "Hide password" : "Show password"
+										}>
+										{showConfirmPassword ? (
+											<FaEyeSlash className="w-5 h-5" />
+										) : (
+											<FaEye className="w-5 h-5" />
+										)}
+									</button>
+								</div>
 							</div>
-						</div>
-					</motion.div>
+						</motion.div>
 
-					<motion.button
-						whileHover={{ scale: 1.02 }}
-						whileTap={{ scale: 0.98 }}
-						type="submit"
-						className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-semibold py-4 rounded-2xl flex items-center justify-center space-x-3 transition-all duration-300 transform hover:scale-105 hover:shadow-xl shadow-lg text-lg"
-						initial={{ y: 10, opacity: 0 }}
-						animate={{ y: 0, opacity: 1 }}
-						transition={{ duration: 0.6, delay: 0.3 }}>
-						<FaShieldAlt className="text-xl" />
-						<span>Update Password</span>
-					</motion.button>
-				</form>
+						<motion.button
+							whileHover={{ scale: isLoading ? 1 : 1.02 }}
+							whileTap={{ scale: isLoading ? 1 : 0.98 }}
+							type="submit"
+							disabled={isLoading}
+							className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-2xl flex items-center justify-center space-x-3 transition-all duration-300 transform hover:shadow-xl shadow-lg text-lg"
+							initial={{ y: 10, opacity: 0 }}
+							animate={{ y: 0, opacity: 1 }}
+							transition={{ duration: 0.6, delay: 0.3 }}>
+							{isLoading ? (
+								<>
+									<div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+									<span>Updating Password...</span>
+								</>
+							) : (
+								<>
+									<FaShieldAlt className="text-xl" />
+									<span>Update Password</span>
+								</>
+							)}
+						</motion.button>
+					</form>
+				)}
 			</motion.div>
 		</div>
 	);
