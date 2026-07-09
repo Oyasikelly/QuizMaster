@@ -6,6 +6,14 @@ import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash, FaLock, FaShieldAlt } from "react-icons/fa";
 
+const withTimeout = (promise, ms) =>
+	Promise.race([
+		promise,
+		new Promise((_, reject) =>
+			setTimeout(() => reject(new Error(`Request timed out after ${ms}ms. Please check your network.`)), ms)
+		),
+	]);
+
 const UpdatePasswordForm = ({ resetCode }) => {
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
@@ -116,9 +124,10 @@ const UpdatePasswordForm = ({ resetCode }) => {
 		setIsLoading(true);
 
 		try {
-			const { data, error: updateError } = await supabase.auth.updateUser({
-				password,
-			});
+			const { data, error: updateError } = await withTimeout(
+				supabase.auth.updateUser({ password }),
+				15000 // 15 seconds timeout
+			);
 
 			if (updateError) {
 				setError(updateError.message);
@@ -129,7 +138,14 @@ const UpdatePasswordForm = ({ resetCode }) => {
 				setMessage("Password updated successfully! Redirecting to login...");
 				setPassword("");
 				setConfirmPassword("");
-				await supabase.auth.signOut();
+				
+				// Attempt to sign out so they login fresh, but don't block on it
+				try {
+					await withTimeout(supabase.auth.signOut(), 3000);
+				} catch (signOutErr) {
+					console.error("Signout hung or failed, ignoring:", signOutErr);
+				}
+				
 				setTimeout(() => {
 					router.push("/authenticate");
 				}, 2000);
@@ -137,8 +153,8 @@ const UpdatePasswordForm = ({ resetCode }) => {
 				setError("Password update failed. Please try again.");
 			}
 		} catch (err) {
-			setError("An error occurred. Please try again.");
-			console.error(err);
+			setError(err.message || "An error occurred. Please try again.");
+			console.error("Update password error:", err);
 		} finally {
 			setIsLoading(false);
 		}
