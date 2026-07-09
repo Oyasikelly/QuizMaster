@@ -254,8 +254,9 @@ const Quiz = ({ initialQuestions, category }) => {
 
 					console.log("Background DB save — upserting:", resultData);
 
-					// FIX: onConflict must be a string, not an array.
-					// Passing an array caused the upsert to fail silently, blocking the redirect.
+					// Using .upsert() as requested so students' previous scores are overwritten.
+					// IMPORTANT: The database table "quiz_results" MUST have a UNIQUE constraint 
+					// on "student_id" for this to work without throwing an error.
 					const { data: upsertData, error: upsertError } = await withTimeout(
 						supabase
 							.from("quiz_results")
