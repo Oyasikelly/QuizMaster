@@ -15,53 +15,79 @@ const UpdatePasswordForm = ({ resetCode }) => {
 	const [error, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 	const [sessionReady, setSessionReady] = useState(false);
-	const [exchanging, setExchanging] = useState(true);
+	const [verifying, setVerifying] = useState(true);
 	const router = useRouter();
 
-	// ── STEP 1: Exchange the one-time code for a live session ────────────────
-	// Supabase's PKCE reset flow sends ?code= in the URL. We must exchange it
-	// for a session before updateUser() will work. Without this, the button
-	// appears to do nothing because updateUser() requires an active session.
 	useEffect(() => {
-		const exchangeCode = async () => {
-			if (!resetCode) {
-				setError("No reset code found. Please request a new reset link.");
-				setExchanging(false);
-				return;
+		// ── Strategy 1: Listen for PASSWORD_RECOVERY auth state change ────────
+		// With @supabase/auth-helpers-nextjs, the client automatically parses
+		// the URL hash (#access_token=...&type=recovery) and fires this event.
+		const { data: { subscription } } = supabase.auth.onAuthStateChange(
+			(event, session) => {
+				if (event === "PASSWORD_RECOVERY" || (event === "SIGNED_IN" && session)) {
+					setSessionReady(true);
+					setVerifying(false);
+					setError("");
+				}
 			}
+		);
 
+		// ── Strategy 2: Fallback — check if a session already exists ──────────
+		// Handles cases where the user returns to the page after the event
+		// already fired (e.g. page refresh).
+		const checkExistingSession = async () => {
 			try {
-				const { data, error: exchangeError } =
-					await supabase.auth.exchangeCodeForSession(resetCode);
-
-				if (exchangeError) {
-					console.error("Code exchange error:", exchangeError);
-					setError(
-						"This reset link has expired or already been used. Please request a new one."
-					);
-					setExchanging(false);
+				const { data: { session } } = await supabase.auth.getSession();
+				if (session) {
+					setSessionReady(true);
+					setVerifying(false);
 					return;
 				}
 
-				if (data?.session) {
-					setSessionReady(true);
-				} else {
-					setError(
-						"Could not establish a session. Please request a new reset link."
-					);
+				// ── Strategy 3: If ?code= is in the URL, try to exchange it ──────
+				// This handles the PKCE flow if the project is configured for it.
+				if (resetCode) {
+					try {
+						const { data, error: exchangeError } =
+							await supabase.auth.exchangeCodeForSession(resetCode);
+						if (!exchangeError && data?.session) {
+							setSessionReady(true);
+							setVerifying(false);
+							return;
+						}
+					} catch {
+						// exchangeCodeForSession not supported or failed — fall through
+					}
 				}
+
+				// ── No session established — set a timeout to show error ──────────
+				// Give the auth state change event 4 seconds to fire naturally.
+				setTimeout(() => {
+					setVerifying((prev) => {
+						if (prev) {
+							// Still verifying after timeout — show helpful error
+							setError(
+								"Could not verify the reset link. It may have expired or already been used."
+							);
+							return false;
+						}
+						return prev;
+					});
+				}, 4000);
 			} catch (err) {
-				console.error("Unexpected error during code exchange:", err);
+				console.error("Session check error:", err);
+				setVerifying(false);
 				setError("An unexpected error occurred. Please try again.");
-			} finally {
-				setExchanging(false);
 			}
 		};
 
-		exchangeCode();
+		checkExistingSession();
+
+		return () => {
+			subscription?.unsubscribe();
+		};
 	}, [resetCode]);
 
-	// ── STEP 2: Update the password once session is active ───────────────────
 	const handlePasswordUpdate = async (e) => {
 		e.preventDefault();
 		setError("");
@@ -100,10 +126,9 @@ const UpdatePasswordForm = ({ resetCode }) => {
 			}
 
 			if (data?.user) {
-				setMessage("Your password has been updated successfully! Redirecting...");
+				setMessage("Password updated successfully! Redirecting to login...");
 				setPassword("");
 				setConfirmPassword("");
-				// Sign out so the user logs in fresh with their new password
 				await supabase.auth.signOut();
 				setTimeout(() => {
 					router.push("/authenticate");
@@ -150,21 +175,21 @@ const UpdatePasswordForm = ({ resetCode }) => {
 					</p>
 				</motion.div>
 
-				{/* Session exchange loading state */}
-				{exchanging && (
+				{/* Verifying state */}
+				{verifying && (
 					<motion.div
 						className="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 text-blue-800 rounded-2xl p-6 text-center mb-8 shadow-lg"
 						initial={{ opacity: 0, scale: 0.95 }}
 						animate={{ opacity: 1, scale: 1 }}
 						transition={{ duration: 0.5 }}>
 						<div className="flex items-center justify-center space-x-3">
-							<div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+							<div className="w-5 h-5 border-2 border-blue-600 border-t-transparent rounded-full animate-spin flex-shrink-0"></div>
 							<span className="font-semibold text-lg">Verifying reset link...</span>
 						</div>
 					</motion.div>
 				)}
 
-				{/* Messages */}
+				{/* Success message */}
 				{message && (
 					<motion.div
 						className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 text-green-800 rounded-2xl p-6 text-center mb-8 shadow-lg"
@@ -178,6 +203,7 @@ const UpdatePasswordForm = ({ resetCode }) => {
 					</motion.div>
 				)}
 
+				{/* Error message */}
 				{error && (
 					<motion.div
 						className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 text-red-800 rounded-2xl p-6 text-center mb-8 shadow-lg"
@@ -186,15 +212,12 @@ const UpdatePasswordForm = ({ resetCode }) => {
 						transition={{ duration: 0.5 }}>
 						<div className="flex flex-col items-center space-y-3">
 							<div className="flex items-center justify-center space-x-3">
-								<div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+								<div className="w-3 h-3 bg-red-500 rounded-full animate-pulse flex-shrink-0"></div>
 								<span className="font-semibold text-lg">{error}</span>
 							</div>
-							{/* Show request new link button if session can't be established */}
-							{!sessionReady && !exchanging && (
+							{!sessionReady && !verifying && (
 								<button
-									onClick={() =>
-										router.push("/authenticate/forgotpassword")
-									}
+									onClick={() => router.push("/authenticate/forgotpassword")}
 									className="mt-2 text-sm underline text-red-700 hover:text-red-900 transition-colors">
 									Request a new reset link
 								</button>
@@ -203,8 +226,8 @@ const UpdatePasswordForm = ({ resetCode }) => {
 					</motion.div>
 				)}
 
-				{/* Form — only shown once session is verified */}
-				{!exchanging && sessionReady && (
+				{/* Password form — shown once session is confirmed */}
+				{!verifying && sessionReady && (
 					<form onSubmit={handlePasswordUpdate} className="space-y-6">
 						{/* New Password */}
 						<motion.div
@@ -234,11 +257,7 @@ const UpdatePasswordForm = ({ resetCode }) => {
 										onClick={() => setShowPassword(!showPassword)}
 										className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-green-600 transition-colors duration-200"
 										aria-label={showPassword ? "Hide password" : "Show password"}>
-										{showPassword ? (
-											<FaEyeSlash className="w-5 h-5" />
-										) : (
-											<FaEye className="w-5 h-5" />
-										)}
+										{showPassword ? <FaEyeSlash className="w-5 h-5" /> : <FaEye className="w-5 h-5" />}
 									</button>
 								</div>
 							</div>
@@ -271,14 +290,8 @@ const UpdatePasswordForm = ({ resetCode }) => {
 										type="button"
 										onClick={() => setShowConfirmPassword(!showConfirmPassword)}
 										className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600 transition-colors duration-200"
-										aria-label={
-											showConfirmPassword ? "Hide password" : "Show password"
-										}>
-										{showConfirmPassword ? (
-											<FaEyeSlash className="w-5 h-5" />
-										) : (
-											<FaEye className="w-5 h-5" />
-										)}
+										aria-label={showConfirmPassword ? "Hide password" : "Show password"}>
+										{showConfirmPassword ? <FaEyeSlash className="w-5 h-5" /> : <FaEye className="w-5 h-5" />}
 									</button>
 								</div>
 							</div>
@@ -289,7 +302,7 @@ const UpdatePasswordForm = ({ resetCode }) => {
 							whileTap={{ scale: isLoading ? 1 : 0.98 }}
 							type="submit"
 							disabled={isLoading}
-							className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-2xl flex items-center justify-center space-x-3 transition-all duration-300 transform hover:shadow-xl shadow-lg text-lg"
+							className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-4 rounded-2xl flex items-center justify-center space-x-3 transition-all duration-300 hover:shadow-xl shadow-lg text-lg"
 							initial={{ y: 10, opacity: 0 }}
 							animate={{ y: 0, opacity: 1 }}
 							transition={{ duration: 0.6, delay: 0.3 }}>
