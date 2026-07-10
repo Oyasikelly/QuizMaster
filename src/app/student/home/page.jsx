@@ -15,109 +15,29 @@ import {
 } from "react-icons/fa";
 import { Heart, Brain, ArrowRight } from "lucide-react";
 import MenuBar from "../../../components/MenuBar";
-
-const withTimeout = (promise, ms) =>
-	Promise.race([
-		promise,
-		new Promise((_, reject) =>
-			setTimeout(() => reject(new Error(`Request timed out after ${ms}ms`)), ms)
-		),
-	]);
+import { useAuth } from "../../../contexts/AuthContext";
 
 const StudentHome = () => {
-	const [user, setUser] = useState(null);
-	const [loading, setLoading] = useState(true);
-	const [loadError, setLoadError] = useState(false);
+	const { user: authUser, userProfile, loading } = useAuth();
 	const router = useRouter();
 
-	const getUser = async () => {
-		setLoading(true);
-		setLoadError(false);
-		try {
-			const {
-				data: { user },
-				error: authError,
-			} = await withTimeout(supabase.auth.getUser(), 10000);
-
-			if (authError || !user) {
-				router.push("/authenticate");
-				return;
-			}
-
-			// Fetch class as well
-			const { data: profile, error: profileError } = await withTimeout(
-				supabase
-					.from("users_profile")
-					.select("role, name, email, class")
-					.eq("id", user.id)
-					.single(),
-				10000
-			);
-
-			if (profileError || profile?.role !== "student") {
-				router.push("/authenticate");
-				return;
-			}
-
-			setUser({ ...user, ...profile });
-		} catch (error) {
-			console.error("Error fetching user:", error);
-			if (
-				error.message?.includes("timed out") ||
-				error.message?.includes("fetch") ||
-				error.message?.includes("network")
-			) {
-				setLoadError(true);
-			} else {
-				router.push("/authenticate");
-			}
-		} finally {
-			setLoading(false);
-		}
-	};
-
 	useEffect(() => {
-		getUser();
-	}, [router]);
+		if (!loading) {
+			if (!authUser || !userProfile || userProfile.role !== "student") {
+				router.push("/authenticate");
+			}
+		}
+	}, [authUser, userProfile, loading, router]);
 
 	const handleSignOut = async () => {
 		await supabase.auth.signOut();
 		router.push("/");
 	};
 
-	if (loadError) {
-		return (
-			<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-				<div className="text-center bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full border border-gray-100">
-					<FaExclamationTriangle className="text-red-500 text-5xl mx-auto mb-4" />
-					<h2 className="text-2xl font-bold text-gray-800 mb-2">Network Error</h2>
-					<p className="text-gray-600 mb-8 leading-relaxed">
-						We couldn't connect to the server. Please check your internet connection and try again.
-					</p>
-					<button
-						onClick={getUser}
-						className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl shadow-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold">
-						Retry Connection
-					</button>
-				</div>
-			</div>
-		);
-	}
-
-	if (loading) {
-		return (
-			<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
-				<div className="text-center">
-					<div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4 shadow-lg"></div>
-					<p className="text-gray-700 font-medium">Loading Dashboard...</p>
-				</div>
-			</div>
-		);
-	}
-
 	// Quiz options based on class
 	let quizOptions = [];
-	if (user?.class?.toLowerCase() === "yaya") {
+	const userClass = userProfile?.class?.toLowerCase();
+	if (userClass === "yaya") {
 		quizOptions = [
 			{
 				title: "Yaya Quiz",
@@ -137,8 +57,8 @@ const StudentHome = () => {
 			},
 		];
 	} else if (
-		user?.class?.toLowerCase() === "adult" ||
-		user?.class?.toLowerCase() === "adults"
+		userClass === "adult" ||
+		userClass === "adults"
 	) {
 		quizOptions = [
 			{
@@ -173,10 +93,12 @@ const StudentHome = () => {
 								<FaUser className="text-white" />
 							</div>
 							<div>
-								<h1 className="text-xl font-semibold text-gray-900">
-									Welcome, {user?.name || "Student"}!
+								<h1 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
+									Welcome, {loading ? <div className="h-6 w-32 bg-gray-200 animate-pulse rounded inline-block"></div> : (userProfile?.name || "Student")}!
 								</h1>
-								<p className="text-sm text-gray-500">{user?.email}</p>
+								<p className="text-sm text-gray-500 mt-1">
+									{loading ? <span className="h-4 w-48 bg-gray-200 animate-pulse rounded inline-block"></span> : authUser?.email}
+								</p>
 							</div>
 						</div>
 						{/* <div className="flex items-center space-x-4">
@@ -210,35 +132,43 @@ const StudentHome = () => {
 							Ready to Test Your Knowledge?
 						</h2>
 						<p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-							{quizOptions[0]?.description ||
-								"Choose your quiz and start learning!"}
+							{loading 
+								? "Loading your quizzes..." 
+								: (quizOptions[0]?.description || "Choose your quiz and start learning!")}
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-							{quizOptions.map((category, index) => (
-								<motion.div
-									key={category.title}
-									initial={{ opacity: 0, y: 30 }}
-									animate={{ opacity: 1, y: 0 }}
-									transition={{ duration: 0.6, delay: index * 0.2 }}
-									whileHover={{ y: -10, scale: 1.02 }}
-									className="group">
-									<button
-										onClick={() => router.push(category.path)}
-										className={`${category.bgColor} p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/50 backdrop-blur-sm flex flex-col items-center w-64`}>
-										<div
-											className={`w-16 h-16 bg-gradient-to-r ${category.color} rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300`}>
-											{category.icon}
-										</div>
-										<h3 className="text-2xl font-bold text-gray-800 mb-4">
-											{category.title.toUpperCase()}
-										</h3>
-										<div className="flex items-center text-blue-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
-											<span>Start Quiz</span>
-											<ArrowRight className="w-4 h-4 ml-2" />
-										</div>
-									</button>
-								</motion.div>
-							))}
+							{loading ? (
+								<>
+									<div className="bg-white/50 p-8 rounded-3xl shadow-xl border border-white/50 w-64 h-64 animate-pulse"></div>
+									<div className="bg-white/50 p-8 rounded-3xl shadow-xl border border-white/50 w-64 h-64 animate-pulse"></div>
+								</>
+							) : (
+								quizOptions.map((category, index) => (
+									<motion.div
+										key={category.title}
+										initial={{ opacity: 0, y: 30 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ duration: 0.6, delay: index * 0.2 }}
+										whileHover={{ y: -10, scale: 1.02 }}
+										className="group">
+										<button
+											onClick={() => router.push(category.path)}
+											className={`${category.bgColor} p-8 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-white/50 backdrop-blur-sm flex flex-col items-center w-64`}>
+											<div
+												className={`w-16 h-16 bg-gradient-to-r ${category.color} rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300`}>
+												{category.icon}
+											</div>
+											<h3 className="text-2xl font-bold text-gray-800 mb-4">
+												{category.title.toUpperCase()}
+											</h3>
+											<div className="flex items-center text-blue-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
+												<span>Start Quiz</span>
+												<ArrowRight className="w-4 h-4 ml-2" />
+											</div>
+										</button>
+									</motion.div>
+								))
+							)}
 						</div>
 					</motion.div>
 				</div>

@@ -1,41 +1,15 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Suspense, useEffect, useState } from "react";
-import { supabase } from "../lib/supabase";
+import { Suspense } from "react";
 import { FaUser, FaEnvelope, FaGraduationCap } from "react-icons/fa";
+import { useAuth } from "../contexts/AuthContext";
 
 // component
 import SelectTime from "../components/SelectTime";
 
 const Introduction = ({ category }) => {
-	const [userData, setUserData] = useState([]);
-	const [name, setName] = useState({
-		name: "",
-	});
-	useEffect(() => {
-		async function getUser() {
-			const { data, error } = await supabase.auth.getUser();
-			const user_email = data?.user?.email;
-			const { data: userData, error: userError } = await supabase
-				.from("users_profile")
-				.select("email, name, class, denomination") // Select multiple columns
-				.eq("email", user_email);
-
-			if (userData) {
-				setUserData(userData);
-
-				const [userName, ...others] = userData;
-				setName({
-					name: userName.name,
-				});
-				console.log(name);
-			}
-			if (userError) console.error(userError);
-		}
-
-		getUser();
-	}, []);
+	const { userProfile, loading } = useAuth();
 
 	return (
 		<div className="flex flex-col items-center pt-10 pb-16 min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 text-gray-800 px-4 sm:px-8 py-6">
@@ -53,11 +27,15 @@ const Introduction = ({ category }) => {
 				transition={{ duration: 0.8 }}
 				className="relative z-10 text-center max-w-4xl w-full mt-8">
 				{/* <div className="bg-white/80 backdrop-blur-xl border border-white/50 rounded-3xl shadow-2xl p-8 mb-8"> */}
-				<h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
+				<h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold mb-4 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent flex items-center justify-center gap-2">
 					Welcome{" "}
-					<span className="text-blue-600 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
-						{name.name}
-					</span>
+					{loading ? (
+						<div className="h-10 w-48 bg-gray-200 animate-pulse rounded-lg inline-block"></div>
+					) : (
+						<span className="text-blue-600 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+							{userProfile?.name || "Student"}
+						</span>
+					)}
 				</h1>
 				{/* <p className="text-base md:text-lg lg:text-xl mb-6 leading-relaxed text-gray-700">
 					This quiz tests your knowledge on various topics, from life

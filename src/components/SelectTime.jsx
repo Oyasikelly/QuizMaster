@@ -139,9 +139,9 @@ export default function SelectTime() {
 							message:
 								"Quiz is currently not available. Please wait for the next quiz period.",
 						});
-						// Set default values but disable quiz
-						setSelectedTime(60);
-						setSelectedQuestions(100);
+						// Set default values to the real quiz settings, but disable quiz
+						setSelectedTime(currentSettings?.time || 60);
+						setSelectedQuestions(currentSettings?.questions || 100);
 					}
 				}
 			} catch (error) {
