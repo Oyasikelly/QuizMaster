@@ -8,38 +8,7 @@ import { isRealQuizActive } from "../lib/quiz-config";
 
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
-// ---------------------------------------------------------------------------
-// Helpers — defined at module level so they are always available, even inside
-// catch blocks and background async tasks.
-// ---------------------------------------------------------------------------
-const standardizeBibleReference = (text) => {
-	if (!text) return text;
-	let processed = text.replace(/\b(first|second|third)\b/gi, (match) => {
-		const lower = match.toLowerCase();
-		if (lower === "first") return "1";
-		if (lower === "second") return "2";
-		if (lower === "third") return "3";
-		return match;
-	});
-	return processed.replace(
-		/(?:([123]|i{1,3})\s*)?([a-z]{3})[a-z]*\.?\s+(\d+)(?:\s*[:v]\s*|\s+vs\.?\s+|\s+)(\d+(?:\s*-\s*\d+)?)/gi,
-		(match, bookNum, bookName, chapter, verse) => {
-			let num = bookNum ? bookNum.toLowerCase() : "";
-			if (num === "i") num = "1";
-			if (num === "ii") num = "2";
-			if (num === "iii") num = "3";
-			const book = bookName.toLowerCase();
-			const v = verse.replace(/[\s:-]+/g, "");
-			return `${num}${book}${chapter}v${v}`;
-		}
-	);
-};
-
-const normalize = (str) =>
-	standardizeBibleReference(str || "")
-		.trim()
-		.toLowerCase()
-		.replace(/[^\w\s]/g, "");
+import { isAnswerCorrect, normalize } from "../lib/quiz-helpers";
 
 // Wraps a promise with a hard timeout so a stalled network call never hangs.
 const withTimeout = (promise, ms) =>
@@ -153,40 +122,9 @@ const Quiz = ({ initialQuestions, category }) => {
 
 		try {
 			// ── Scoring ─────────────────────────────────────────────────────────
-			const evaluateFillInTheBlank = (question, userAnswer) => {
-				const normalizedUserWords = normalize(userAnswer).split(/\s+/);
-				const rawAnswers = question.answer
-					.split(/,|\/| or | OR /)
-					.map((a) => normalize(a).trim())
-					.filter(Boolean);
-				const normalizedUserAnswerString = normalize(userAnswer);
-
-				let matchCount = 0;
-				for (const correct of rawAnswers) {
-					if (
-						correct.includes(" ")
-							? normalizedUserAnswerString.includes(correct)
-							: normalizedUserWords.includes(correct)
-					) {
-						matchCount++;
-					}
-				}
-
-				const qText = question.question.toLowerCase();
-				if (qText.includes("mention four")) return matchCount >= 4;
-				if (qText.includes("mention three")) return matchCount >= 3;
-				if (qText.includes("mention two")) return matchCount >= 2;
-				if (qText.includes("mention one")) return matchCount >= 1;
-				if (qText.includes("complete")) return matchCount >= 3;
-				return matchCount >= 1;
-			};
-
 			const correctAnswersCount = answers.filter((answer, index) => {
 				const question = questions[index];
-				if (question.type === "fill-in-the-blank") {
-					return evaluateFillInTheBlank(question, answer);
-				}
-				return normalize(answer) === normalize(question.answer);
+				return isAnswerCorrect(question, answer);
 			}).length;
 
 			const normalizedAnswers = answers.map((answer) => normalize(answer));

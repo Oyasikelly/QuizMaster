@@ -12,6 +12,7 @@ import {
 	FiXCircle,
 	FiStar,
 } from "react-icons/fi";
+import { isAnswerCorrect } from "../../../lib/quiz-helpers";
 
 const ResultsContent = () => {
 	const router = useRouter();
@@ -200,14 +201,14 @@ const ResultsContent = () => {
 												Your Answer:
 											</span>
 											<div className="flex items-start space-x-2 mt-1">
-												{answers[index] === question.answer ? (
+												{isAnswerCorrect(question, answers[index]) ? (
 													<FiCheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-1" />
 												) : (
 													<FiXCircle className="w-4 h-4 text-red-500 flex-shrink-0 mt-1" />
 												)}
 												<span
 													className={`font-medium break-words ${
-														answers[index] === question.answer
+														isAnswerCorrect(question, answers[index])
 															? "text-green-600"
 															: "text-red-600"
 													}`}>
@@ -215,7 +216,7 @@ const ResultsContent = () => {
 												</span>
 											</div>
 										</div>
-										{answers[index] !== question.answer && (
+										{!isAnswerCorrect(question, answers[index]) && (
 											<div>
 												<span className="font-semibold text-gray-700 text-sm">
 													Correct Answer:
