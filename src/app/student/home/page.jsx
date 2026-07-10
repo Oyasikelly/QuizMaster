@@ -11,7 +11,6 @@ import {
 	FaHistory,
 	FaPlay,
 	FaChartBar,
-	FaChartBar,
 	FaExclamationTriangle,
 } from "react-icons/fa";
 import { Heart, Brain, ArrowRight } from "lucide-react";
