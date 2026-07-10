@@ -17,11 +17,21 @@ import {
 	FaChartBar,
 	FaQuestionCircle,
 	FaCog,
+	FaExclamationTriangle,
 } from "react-icons/fa";
+
+const withTimeout = (promise, ms) =>
+	Promise.race([
+		promise,
+		new Promise((_, reject) =>
+			setTimeout(() => reject(new Error(`Request timed out after ${ms}ms`)), ms)
+		),
+	]);
 
 const QuizManagement = () => {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [loadError, setLoadError] = useState(false);
 	const [quizzes, setQuizzes] = useState([]);
 	const [showCreateModal, setShowCreateModal] = useState(false);
 	const [editingQuiz, setEditingQuiz] = useState(null);
@@ -42,8 +52,29 @@ const QuizManagement = () => {
 	});
 
 	useEffect(() => {
-		checkAuth();
-		loadQuizzes();
+		const initialize = async () => {
+			setLoading(true);
+			setLoadError(false);
+			try {
+				await checkAuth();
+				await loadQuizzes();
+			} catch (error) {
+				console.error("Initialization error:", error);
+				if (
+					error.message?.includes("timed out") ||
+					error.message?.includes("fetch") ||
+					error.message?.includes("network")
+				) {
+					setLoadError(true);
+				} else {
+					router.push("/authenticate");
+				}
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		initialize();
 
 		// Set up auth state listener
 		const {
@@ -62,65 +93,58 @@ const QuizManagement = () => {
 	}, []);
 
 	const checkAuth = async () => {
-		try {
-			// First check if there's an active session
-			const {
-				data: { session },
-				error: sessionError,
-			} = await supabase.auth.getSession();
+		// First check if there's an active session
+		const {
+			data: { session },
+			error: sessionError,
+		} = await withTimeout(supabase.auth.getSession(), 10000);
 
-			if (sessionError) {
-				console.error("Error getting session:", sessionError);
-				router.push("/authenticate");
-				return;
-			}
+		if (sessionError) {
+			console.error("Error getting session:", sessionError);
+			throw sessionError;
+		}
 
-			// If no session exists, user is not logged in
-			if (!session) {
-				console.log("No active session found");
-				router.push("/authenticate");
-				return;
-			}
+		// If no session exists, user is not logged in
+		if (!session) {
+			console.log("No active session found");
+			throw new Error("No active session");
+		}
 
-			const {
-				data: { user },
-			} = await supabase.auth.getUser();
-			if (!user) {
-				router.push("/authenticate");
-				return;
-			}
+		const {
+			data: { user },
+		} = await withTimeout(supabase.auth.getUser(), 10000);
+		if (!user) {
+			throw new Error("No user found");
+		}
 
-			const { data: profile } = await supabase
+		const { data: profile } = await withTimeout(
+			supabase
 				.from("users_profile")
 				.select("role")
 				.eq("id", user.id)
-				.single();
+				.single(),
+			10000
+		);
 
-			if (profile?.role !== "admin") {
-				router.push("/access-denied");
-				return;
-			}
-
-			setUser(user);
-		} catch (error) {
-			console.error("Auth error:", error);
-		} finally {
-			setLoading(false);
+		if (profile?.role !== "admin") {
+			router.push("/access-denied");
+			throw new Error("Access denied");
 		}
+
+		setUser(user);
 	};
 
 	const loadQuizzes = async () => {
-		try {
-			const { data, error } = await supabase
+		const { data, error } = await withTimeout(
+			supabase
 				.from("quiz_settings")
 				.select("*")
-				.order("created_at", { ascending: false });
+				.order("created_at", { ascending: false }),
+			10000
+		);
 
-			if (error) throw error;
-			setQuizzes(data || []);
-		} catch (error) {
-			console.error("Error loading quizzes:", error);
-		}
+		if (error) throw error;
+		setQuizzes(data || []);
 	};
 
 	const handleCreateQuiz = async () => {
@@ -217,6 +241,25 @@ const QuizManagement = () => {
 			explanation: "",
 		});
 	};
+
+	if (loadError) {
+		return (
+			<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center p-4">
+				<div className="text-center bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full border border-gray-100">
+					<FaExclamationTriangle className="text-red-500 text-5xl mx-auto mb-4" />
+					<h2 className="text-2xl font-bold text-gray-800 mb-2">Network Error</h2>
+					<p className="text-gray-600 mb-8 leading-relaxed">
+						We couldn't connect to the server. Please check your internet connection and try again.
+					</p>
+					<button
+						onClick={() => window.location.reload()}
+						className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg shadow-lg hover:bg-purple-700 transition-colors font-medium">
+						Retry Connection
+					</button>
+				</div>
+			</div>
+		);
+	}
 
 	if (loading) {
 		return (

@@ -52,6 +52,14 @@ import {
 	TrendingUp,
 } from "lucide-react";
 
+const withTimeout = (promise, ms) =>
+	Promise.race([
+		promise,
+		new Promise((_, reject) =>
+			setTimeout(() => reject(new Error(`Request timed out after ${ms}ms`)), ms)
+		),
+	]);
+
 const StudentProfile = () => {
 	const { user, userProfile, signOut } = useAuth();
 	const [loading, setLoading] = useState(true);
@@ -71,88 +79,98 @@ const StudentProfile = () => {
 	});
 	const [error, setError] = useState("");
 	const [successMessage, setSuccessMessage] = useState("");
+	const [loadError, setLoadError] = useState(false);
 	const router = useRouter();
 
-	useEffect(() => {
-		const loadProfileData = async () => {
-			if (!user) {
-				router.push("/authenticate");
-				return;
-			}
+	const loadProfileData = async () => {
+		if (!user) {
+			router.push("/authenticate");
+			return;
+		}
 
-			try {
-				// Load user profile
-				const { data: profile, error: profileError } = await supabase
+		setLoading(true);
+		setLoadError(false);
+		try {
+			// Load user profile
+			const { data: profile, error: profileError } = await withTimeout(
+				supabase
 					.from("users_profile")
 					.select("*")
 					.eq("id", user.id)
-					.single();
+					.single(),
+				10000
+			);
 
-				if (profile) {
-					setEditForm({
-						name: profile.name || "",
-						class: profile.class || "",
-						denomination: profile.denomination || "",
-					});
-					setProfileData(profile); // Store profile data
-				} else if (profileError) {
-					// console.error("Error loading profile:", profileError);
-					setError("Failed to load profile data");
-				}
+			if (profile) {
+				setEditForm({
+					name: profile.name || "",
+					class: profile.class || "",
+					denomination: profile.denomination || "",
+				});
+				setProfileData(profile);
+			} else if (profileError) {
+				setError("Failed to load profile data");
+			}
 
-				// Load quiz history - try both email and student_id
-				// First try with email
-				const { data: quizResultsByEmail } = await supabase
+			// Load quiz history - try email first, then student_id
+			const { data: quizResultsByEmail } = await withTimeout(
+				supabase
 					.from("quiz_results")
 					.select("*")
 					.eq("email", user.email)
-					.order("timestamp", { ascending: false });
+					.order("timestamp", { ascending: false }),
+				10000
+			);
 
-				// If no results by email, try with student_id
-				let quizResults = quizResultsByEmail;
-				if (!quizResultsByEmail || quizResultsByEmail.length === 0) {
-					const { data: quizResultsById } = await supabase
+			// If no results by email, try with student_id
+			let quizResults = quizResultsByEmail;
+			if (!quizResultsByEmail || quizResultsByEmail.length === 0) {
+				const { data: quizResultsById } = await withTimeout(
+					supabase
 						.from("quiz_results")
 						.select("*")
 						.eq("student_id", user.id)
-						.order("timestamp", { ascending: false });
-
-					quizResults = quizResultsById;
-				}
-
-				setQuizHistory(quizResults || []);
-				// Calculate stats
-				if (quizResults && quizResults.length > 0) {
-					const scores = quizResults.map(
-						(q) => (q.score / q.total_questions) * 100
-					);
-					const totalQuizzes = quizResults.length;
-					const averageScore = scores.reduce((a, b) => a + b, 0) / totalQuizzes;
-					const bestScore = Math.max(...scores);
-					const lastQuizDate = quizResults[0]?.timestamp;
-
-					setStats({
-						totalQuizzes,
-						averageScore: Math.round(averageScore),
-						bestScore: Math.round(bestScore),
-						lastQuizDate,
-					});
-				} else {
-					setStats({
-						totalQuizzes: 0,
-						averageScore: 0,
-						bestScore: 0,
-						lastQuizDate: null,
-					});
-				}
-			} catch (error) {
-				console.error("Error loading profile data:", error);
-				setError("Failed to load profile data");
-			} finally {
-				setLoading(false);
+						.order("timestamp", { ascending: false }),
+					10000
+				);
+				quizResults = quizResultsById;
 			}
-		};
 
+			setQuizHistory(quizResults || []);
+			if (quizResults && quizResults.length > 0) {
+				const scores = quizResults.map(
+					(q) => (q.score / q.total_questions) * 100
+				);
+				const totalQuizzes = quizResults.length;
+				const averageScore = scores.reduce((a, b) => a + b, 0) / totalQuizzes;
+				const bestScore = Math.max(...scores);
+				const lastQuizDate = quizResults[0]?.timestamp;
+				setStats({
+					totalQuizzes,
+					averageScore: Math.round(averageScore),
+					bestScore: Math.round(bestScore),
+					lastQuizDate,
+				});
+			} else {
+				setStats({ totalQuizzes: 0, averageScore: 0, bestScore: 0, lastQuizDate: null });
+			}
+		} catch (err) {
+			console.error("Error loading profile data:", err);
+			if (
+				err.message?.includes("timed out") ||
+				err.message?.includes("fetch") ||
+				err.message?.includes("network")
+			) {
+				setLoadError(true);
+			} else {
+				setError("Failed to load profile data");
+			}
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
 		loadProfileData();
 	}, [user, router]);
 
@@ -255,6 +273,25 @@ const StudentProfile = () => {
 	const handleSignOut = async () => {
 		await signOut();
 	};
+
+	if (loadError) {
+		return (
+			<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+				<div className="text-center bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full border border-gray-100">
+					<FaExclamationTriangle className="text-red-500 text-5xl mx-auto mb-4" />
+					<h2 className="text-2xl font-bold text-gray-800 mb-2">Network Error</h2>
+					<p className="text-gray-600 mb-8 leading-relaxed">
+						We couldn't connect to the server. Please check your internet connection and try again.
+					</p>
+					<button
+						onClick={loadProfileData}
+						className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl shadow-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold">
+						Retry Connection
+					</button>
+				</div>
+			</div>
+		);
+	}
 
 	if (loading) {
 		return (

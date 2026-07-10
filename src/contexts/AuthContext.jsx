@@ -5,6 +5,14 @@ import { useRouter } from "next/navigation";
 
 const AuthContext = createContext();
 
+const withTimeout = (promise, ms) =>
+	Promise.race([
+		promise,
+		new Promise((_, reject) =>
+			setTimeout(() => reject(new Error(`Request timed out after ${ms}ms`)), ms)
+		),
+	]);
+
 export const useAuth = () => {
 	const context = useContext(AuthContext);
 	if (!context) {
@@ -24,25 +32,29 @@ export const AuthProvider = ({ children }) => {
 	useEffect(() => {
 		const initializeAuth = async () => {
 			try {
-				// Get current session
+				// Get current session with a 15-second timeout
 				const {
 					data: { session },
-				} = await supabase.auth.getSession();
+				} = await withTimeout(supabase.auth.getSession(), 15000);
 
 				if (session?.user) {
 					setUser(session.user);
 
-					// Fetch user profile
-					const { data: profile } = await supabase
-						.from("users_profile")
-						.select("*")
-						.eq("id", session.user.id)
-						.single();
+					// Fetch user profile with a 10-second timeout
+					const { data: profile } = await withTimeout(
+						supabase
+							.from("users_profile")
+							.select("*")
+							.eq("id", session.user.id)
+							.single(),
+						10000
+					);
 
 					setUserProfile(profile);
 				}
 			} catch (error) {
 				console.error("Auth initialization error:", error);
+				// On timeout, gracefully stop loading so pages can show their own error UI
 			} finally {
 				setLoading(false);
 			}
@@ -59,14 +71,20 @@ export const AuthProvider = ({ children }) => {
 			if (event === "SIGNED_IN" && session?.user) {
 				setUser(session.user);
 
-				// Fetch user profile
-				const { data: profile } = await supabase
-					.from("users_profile")
-					.select("*")
-					.eq("id", session.user.id)
-					.single();
-
-				setUserProfile(profile);
+				// Fetch user profile with timeout
+				try {
+					const { data: profile } = await withTimeout(
+						supabase
+							.from("users_profile")
+							.select("*")
+							.eq("id", session.user.id)
+							.single(),
+						10000
+					);
+					setUserProfile(profile);
+				} catch (profileError) {
+					console.error("Profile fetch on sign-in timed out:", profileError);
+				}
 			} else if (event === "SIGNED_OUT") {
 				setUser(null);
 				setUserProfile(null);

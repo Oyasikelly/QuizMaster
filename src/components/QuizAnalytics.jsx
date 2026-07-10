@@ -19,10 +19,19 @@ import {
 	FaFilter,
 } from "react-icons/fa";
 
+const withTimeout = (promise, ms) =>
+	Promise.race([
+		promise,
+		new Promise((_, reject) =>
+			setTimeout(() => reject(new Error(`Request timed out after ${ms}ms`)), ms)
+		),
+	]);
+
 const QuizAnalytics = () => {
 	const [quizResults, setQuizResults] = useState([]);
 	const [students, setStudents] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const [loadError, setLoadError] = useState(false);
 	const [filterPeriod, setFilterPeriod] = useState("all");
 	const [filterClass, setFilterClass] = useState("all");
 
@@ -33,22 +42,33 @@ const QuizAnalytics = () => {
 	const loadData = async () => {
 		try {
 			setLoading(true);
+			setLoadError(false);
 			// Load quiz results
-			const { data: quizData } = await supabase
-				.from("quiz_results")
-				.select("*")
-				.order("timestamp", { ascending: false });
+			const { data: quizData } = await withTimeout(
+				supabase
+					.from("quiz_results")
+					.select("*")
+					.order("timestamp", { ascending: false }),
+				10000
+			);
 
 			// Load students
-			const { data: studentsData } = await supabase
-				.from("users_profile")
-				.select("*")
-				.eq("role", "student");
+			const { data: studentsData } = await withTimeout(
+				supabase.from("users_profile").select("*").eq("role", "student"),
+				10000
+			);
 
 			setQuizResults(quizData || []);
 			setStudents(studentsData || []);
 		} catch (error) {
 			console.error("Error loading analytics data:", error);
+			if (
+				error.message?.includes("timed out") ||
+				error.message?.includes("fetch") ||
+				error.message?.includes("network")
+			) {
+				setLoadError(true);
+			}
 		} finally {
 			setLoading(false);
 		}
@@ -163,6 +183,25 @@ const QuizAnalytics = () => {
 	const stats = calculateStats(filteredResults);
 	const performanceDistribution = getPerformanceDistribution(filteredResults);
 	const topPerformers = getTopPerformers(filteredResults);
+
+	if (loadError) {
+		return (
+			<div className="flex items-center justify-center py-8">
+				<div className="text-center bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full border border-gray-100">
+					<FaExclamationTriangle className="text-red-500 text-5xl mx-auto mb-4" />
+					<h2 className="text-2xl font-bold text-gray-800 mb-2">Network Error</h2>
+					<p className="text-gray-600 mb-8 leading-relaxed">
+						We couldn't connect to the server. Please check your internet connection and try again.
+					</p>
+					<button
+						onClick={loadData}
+						className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg shadow-lg hover:bg-purple-700 transition-colors font-medium">
+						Retry Connection
+					</button>
+				</div>
+			</div>
+		);
+	}
 
 	if (loading) {
 		return (

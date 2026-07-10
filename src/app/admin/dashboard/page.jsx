@@ -24,7 +24,16 @@ import {
 	FaTimes,
 	FaHistory,
 	FaBars,
+	FaExclamationTriangle,
 } from "react-icons/fa";
+
+const withTimeout = (promise, ms) =>
+	Promise.race([
+		promise,
+		new Promise((_, reject) =>
+			setTimeout(() => reject(new Error(`Request timed out after ${ms}ms`)), ms)
+		),
+	]);
 import {
 	PieChart,
 	Pie,
@@ -40,6 +49,7 @@ import {
 const AdminDashboard = () => {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [loadError, setLoadError] = useState(false);
 	const [stats, setStats] = useState({
 		totalStudents: 0,
 		totalQuizzes: 0,
@@ -59,58 +69,71 @@ const AdminDashboard = () => {
 	const [showExportModal, setShowExportModal] = useState(false);
 	const router = useRouter();
 
-	useEffect(() => {
-		const getUser = async () => {
-			try {
-				// First check if there's an active session
-				const {
-					data: { session },
-					error: sessionError,
-				} = await supabase.auth.getSession();
+	const getUser = async () => {
+		setLoading(true);
+		setLoadError(false);
+		try {
+			// First check if there's an active session
+			const {
+				data: { session },
+				error: sessionError,
+			} = await withTimeout(supabase.auth.getSession(), 10000);
 
-				if (sessionError) {
-					console.error("Error getting session:", sessionError);
-					router.push("/authenticate");
-					return;
-				}
+			if (sessionError) {
+				console.error("Error getting session:", sessionError);
+				router.push("/authenticate");
+				return;
+			}
 
-				// If no session exists, user is not logged in
-				if (!session) {
-					console.log("No active session found");
-					router.push("/authenticate");
-					return;
-				}
+			// If no session exists, user is not logged in
+			if (!session) {
+				console.log("No active session found");
+				router.push("/authenticate");
+				return;
+			}
 
-				const {
-					data: { user },
-				} = await supabase.auth.getUser();
-				if (!user) {
-					router.push("/authenticate");
-					return;
-				}
+			const {
+				data: { user },
+			} = await withTimeout(supabase.auth.getUser(), 10000);
+			if (!user) {
+				router.push("/authenticate");
+				return;
+			}
 
-				// Check if user is actually an admin
-				const { data: profile } = await supabase
+			// Check if user is actually an admin
+			const { data: profile } = await withTimeout(
+				supabase
 					.from("users_profile")
 					.select("role, name, email")
 					.eq("id", user.id)
-					.single();
+					.single(),
+				10000
+			);
 
-				if (profile?.role !== "admin") {
-					router.push("/authenticate");
-					return;
-				}
-
-				setUser({ ...user, ...profile });
-				loadDashboardData();
-			} catch (error) {
-				console.error("Error fetching user:", error);
+			if (profile?.role !== "admin") {
 				router.push("/authenticate");
-			} finally {
-				setLoading(false);
+				return;
 			}
-		};
 
+			setUser({ ...user, ...profile });
+			await loadDashboardData();
+		} catch (error) {
+			console.error("Error fetching user:", error);
+			if (
+				error.message?.includes("timed out") ||
+				error.message?.includes("fetch") ||
+				error.message?.includes("network")
+			) {
+				setLoadError(true);
+			} else {
+				router.push("/authenticate");
+			}
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
 		getUser();
 
 		// Set up auth state listener
@@ -132,10 +155,10 @@ const AdminDashboard = () => {
 	const loadDashboardData = async () => {
 		try {
 			// Load students
-			const { data: studentsData } = await supabase
-				.from("users_profile")
-				.select("*")
-				.eq("role", "student");
+			const { data: studentsData } = await withTimeout(
+				supabase.from("users_profile").select("*").eq("role", "student"),
+				10000
+			);
 
 			// Only keep students in 'yaya' or 'adult' class (case-insensitive)
 			const filteredStudentsData = (studentsData || []).filter((student) => {
@@ -144,10 +167,13 @@ const AdminDashboard = () => {
 			});
 
 			// Load quiz results
-			const { data: quizData } = await supabase
-				.from("quiz_results")
-				.select("*")
-				.order("timestamp", { ascending: false });
+			const { data: quizData } = await withTimeout(
+				supabase
+					.from("quiz_results")
+					.select("*")
+					.order("timestamp", { ascending: false }),
+				10000
+			);
 
 			// Calculate submission counts and quiz stats for each student (match by email)
 			const studentsWithStats =
@@ -211,6 +237,7 @@ const AdminDashboard = () => {
 			});
 		} catch (error) {
 			console.error("Error loading dashboard data:", error);
+			throw error; // Rethrow so getUser can catch network errors
 		}
 	};
 
@@ -689,6 +716,25 @@ const AdminDashboard = () => {
 		},
 		{ label: "Logout", icon: <FaSignOutAlt />, onClick: handleSignOut },
 	];
+
+	if (loadError) {
+		return (
+			<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center p-4">
+				<div className="text-center bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full border border-gray-100">
+					<FaExclamationTriangle className="text-red-500 text-5xl mx-auto mb-4" />
+					<h2 className="text-2xl font-bold text-gray-800 mb-2">Network Error</h2>
+					<p className="text-gray-600 mb-8 leading-relaxed">
+						We couldn't connect to the server. Please check your internet connection and try again.
+					</p>
+					<button
+						onClick={getUser}
+						className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg shadow-lg hover:bg-purple-700 transition-colors font-medium">
+						Retry Connection
+					</button>
+				</div>
+			</div>
+		);
+	}
 
 	if (loading) {
 		return (

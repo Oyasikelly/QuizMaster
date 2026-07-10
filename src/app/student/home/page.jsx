@@ -11,47 +11,73 @@ import {
 	FaHistory,
 	FaPlay,
 	FaChartBar,
+	FaChartBar,
+	FaExclamationTriangle,
 } from "react-icons/fa";
 import { Heart, Brain, ArrowRight } from "lucide-react";
 import MenuBar from "../../../components/MenuBar";
 
+const withTimeout = (promise, ms) =>
+	Promise.race([
+		promise,
+		new Promise((_, reject) =>
+			setTimeout(() => reject(new Error(`Request timed out after ${ms}ms`)), ms)
+		),
+	]);
+
 const StudentHome = () => {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [loadError, setLoadError] = useState(false);
 	const router = useRouter();
 
-	useEffect(() => {
-		const getUser = async () => {
-			try {
-				const {
-					data: { user },
-				} = await supabase.auth.getUser();
-				if (!user) {
-					router.push("/authenticate");
-					return;
-				}
+	const getUser = async () => {
+		setLoading(true);
+		setLoadError(false);
+		try {
+			const {
+				data: { user },
+				error: authError,
+			} = await withTimeout(supabase.auth.getUser(), 10000);
 
-				// Fetch class as well
-				const { data: profile } = await supabase
+			if (authError || !user) {
+				router.push("/authenticate");
+				return;
+			}
+
+			// Fetch class as well
+			const { data: profile, error: profileError } = await withTimeout(
+				supabase
 					.from("users_profile")
 					.select("role, name, email, class")
 					.eq("id", user.id)
-					.single();
+					.single(),
+				10000
+			);
 
-				if (profile?.role !== "student") {
-					router.push("/authenticate");
-					return;
-				}
-
-				setUser({ ...user, ...profile });
-			} catch (error) {
-				console.error("Error fetching user:", error);
+			if (profileError || profile?.role !== "student") {
 				router.push("/authenticate");
-			} finally {
-				setLoading(false);
+				return;
 			}
-		};
 
+			setUser({ ...user, ...profile });
+		} catch (error) {
+			console.error("Error fetching user:", error);
+			if (
+				error.message?.includes("timed out") ||
+				error.message?.includes("fetch") ||
+				error.message?.includes("network")
+			) {
+				setLoadError(true);
+			} else {
+				router.push("/authenticate");
+			}
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
 		getUser();
 	}, [router]);
 
@@ -60,12 +86,31 @@ const StudentHome = () => {
 		router.push("/");
 	};
 
+	if (loadError) {
+		return (
+			<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+				<div className="text-center bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full border border-gray-100">
+					<FaExclamationTriangle className="text-red-500 text-5xl mx-auto mb-4" />
+					<h2 className="text-2xl font-bold text-gray-800 mb-2">Network Error</h2>
+					<p className="text-gray-600 mb-8 leading-relaxed">
+						We couldn't connect to the server. Please check your internet connection and try again.
+					</p>
+					<button
+						onClick={getUser}
+						className="w-full px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl shadow-lg hover:from-blue-600 hover:to-purple-700 transition-all font-semibold">
+						Retry Connection
+					</button>
+				</div>
+			</div>
+		);
+	}
+
 	if (loading) {
 		return (
 			<div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center">
 				<div className="text-center">
-					<div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-					<p className="text-gray-600">Loading...</p>
+					<div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4 shadow-lg"></div>
+					<p className="text-gray-700 font-medium">Loading Dashboard...</p>
 				</div>
 			</div>
 		);

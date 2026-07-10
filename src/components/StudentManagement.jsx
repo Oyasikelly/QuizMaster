@@ -20,6 +20,15 @@ import {
 	FaCheck,
 	FaTimes as FaTimesIcon,
 } from "react-icons/fa";
+import { FaTrophy, FaHistory } from "react-icons/fa";
+
+const withTimeout = (promise, ms) =>
+	Promise.race([
+		promise,
+		new Promise((_, reject) =>
+			setTimeout(() => reject(new Error(`Request timed out after ${ms}ms`)), ms)
+		),
+	]);
 
 const StudentManagement = () => {
 	const [students, setStudents] = useState([]);
@@ -32,6 +41,7 @@ const StudentManagement = () => {
 	const [selectedStudent, setSelectedStudent] = useState(null);
 	const [showStudentDetails, setShowStudentDetails] = useState(false);
 	const [loading, setLoading] = useState(true);
+	const [loadError, setLoadError] = useState(false);
 
 	useEffect(() => {
 		loadData();
@@ -40,16 +50,18 @@ const StudentManagement = () => {
 	const loadData = async () => {
 		try {
 			setLoading(true);
+			setLoadError(false);
 			// Load students
-			const { data: studentsData } = await supabase
-				.from("users_profile")
-				.select("*")
-				.eq("role", "student");
+			const { data: studentsData } = await withTimeout(
+				supabase.from("users_profile").select("*").eq("role", "student"),
+				10000
+			);
 
 			// Load quiz results
-			const { data: quizData } = await supabase
-				.from("quiz_results")
-				.select("*");
+			const { data: quizData } = await withTimeout(
+				supabase.from("quiz_results").select("*"),
+				10000
+			);
 
 			// Calculate submission counts for each student
 			const studentsWithCounts =
@@ -64,6 +76,13 @@ const StudentManagement = () => {
 			setQuizResults(quizData || []);
 		} catch (error) {
 			console.error("Error loading data:", error);
+			if (
+				error.message?.includes("timed out") ||
+				error.message?.includes("fetch") ||
+				error.message?.includes("network")
+			) {
+				setLoadError(true);
+			}
 		} finally {
 			setLoading(false);
 		}
@@ -157,6 +176,25 @@ const StudentManagement = () => {
 			filterClass === "all" || student.class === filterClass;
 		return matchesSearch && matchesFilter;
 	});
+
+	if (loadError) {
+		return (
+			<div className="flex items-center justify-center py-8">
+				<div className="text-center bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full border border-gray-100">
+					<FaExclamationTriangle className="text-red-500 text-5xl mx-auto mb-4" />
+					<h2 className="text-2xl font-bold text-gray-800 mb-2">Network Error</h2>
+					<p className="text-gray-600 mb-8 leading-relaxed">
+						We couldn't connect to the server. Please check your internet connection and try again.
+					</p>
+					<button
+						onClick={loadData}
+						className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg shadow-lg hover:bg-purple-700 transition-colors font-medium">
+						Retry Connection
+					</button>
+				</div>
+			</div>
+		);
+	}
 
 	if (loading) {
 		return (

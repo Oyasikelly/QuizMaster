@@ -300,6 +300,8 @@ const Quiz = ({ initialQuestions, category }) => {
 							Loading Quiz...
 						</p>
 					</motion.div>
+				</div>
+			}>
 				{/* Error Overlay */}
 			{submitError && (
 				<div className="fixed inset-0 z-[100] flex items-center justify-center bg-white/90 backdrop-blur-md">
