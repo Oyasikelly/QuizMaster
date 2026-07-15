@@ -418,5 +418,635 @@
 		],
 		"type": "multiple-choice",
 		"answer": "The set of names of those who will live with God forever"
-	}
+	}, {
+    "question": "'Basileia' is translated as all of the following except",
+    "options": [
+      "Kingdom",
+      "Realm",
+      "Rule",
+      "Mercy"
+    ],
+    "type": "multiple-choice",
+    "answer": "Mercy"
+  },
+  {
+    "question": "According to Genesis 1:26a, Jesus is a member of the",
+    "options": [
+      "Angels",
+      "Godhead",
+      "Prophets",
+      "Disciples"
+    ],
+    "type": "multiple-choice",
+    "answer": "Godhead"
+  },
+  {
+    "question": "Jesus turned water to wine at the wedding in",
+    "options": [
+      "John 9:7",
+      "John 2:7-9",
+      "Matthew 14:25",
+      "John 11:43-44"
+    ],
+    "type": "multiple-choice",
+    "answer": "John 2:7-9"
+  },
+  {
+    "question": "'Hodegeo' is a Greek word meaning",
+    "options": [
+      "Power",
+      "Truth",
+      "Comfort",
+      "Guidance"
+    ],
+    "type": "multiple-choice",
+    "answer": "Guidance"
+  },
+  {
+    "question": "_________ is described as one who declares himself as first and above all and expects people to look up to and honour him (Exodus 5:2)",
+    "type": "fill-in-the-blank",
+    "answer": "Self-pride"
+  },
+  {
+    "question": "To know yourself is to first acknowledge God as your _____________ (Genesis 1:26-27)",
+    "options": [
+      "Manufacturer",
+      "Teacher",
+      "Friend only",
+      "Judge"
+    ],
+    "type": "multiple-choice",
+    "answer": "Manufacturer"
+  },
+  {
+    "question": "Which of these is NOT a reason Christians should forgive?",
+    "options": [
+      "It is a command (Mark 11:25; Ephesians 4:32)",
+      "We are the light of the world (Matthew 5:14; 5:16)",
+      "God is angry with us when we refuse to forgive (Matthew 18:32-35)",
+      "So that we can hold grudges longer"
+    ],
+    "type": "multiple-choice",
+    "answer": "So that we can hold grudges longer"
+  },
+  {
+    "question": "Science is the discovery and orderly classification of the phenomena called",
+    "options": [
+      "Religion",
+      "Nature",
+      "Faith",
+      "Dreams"
+    ],
+    "type": "multiple-choice",
+    "answer": "Nature"
+  },
+  {
+    "question": "Prophecy is defined as the act of speaking God's words under ___________",
+    "type": "fill-in-the-blank",
+    "answer": "Divine inspiration"
+  },
+  {
+    "question": "A spiritually immature believer is described as 'Gifted but lacking the corresponding fruit of the Spirit' in",
+    "options": [
+      "1 Corinthians 12:7",
+      "Proverbs 12:18",
+      "1 Corinthians 10:10",
+      "John 8:7"
+    ],
+    "type": "multiple-choice",
+    "answer": "1 Corinthians 12:7"
+  },
+  {
+    "question": "According to lesson 11, Workplace Ministry refers to living out a ministry-focused life through",
+    "options": [
+      "Sunday services only",
+      "Missions trips abroad",
+      "Everyday work",
+      "Social media only"
+    ],
+    "type": "multiple-choice",
+    "answer": "Everyday work"
+  },
+  {
+    "question": "Through prayer, believers gain access to",
+    "options": [
+      "Human strategies and divine Grace",
+      "Divine wisdom, courage and strength",
+      "Divine strategies, power and intervention",
+      "Divine power, talent and intervention"
+    ],
+    "type": "multiple-choice",
+    "answer": "Divine strategies, power and intervention"
+  },
+  {
+    "question": "According to 1 Corinthians 15:33, peer influence can lead people to make decisions that",
+    "options": [
+      "Strengthen their values",
+      "Make them richer",
+      "Contradict their values or beliefs",
+      "Improve their grades"
+    ],
+    "type": "multiple-choice",
+    "answer": "Contradict their values or beliefs"
+  },
+  {
+    "question": "According to 1 Peter 2:16a 'Lawlessness' as a brand of untoward freedom is described as freedom that __________ God's will, leading to disorder and chaos",
+    "type": "fill-in-the-blank",
+    "answer": "Opposes"
+  },
+  {
+    "question": "Destiny is described as God's Divine purpose and __________ destination for a person's life (Jeremiah 1:5)",
+    "type": "fill-in-the-blank",
+    "answer": "Pre-planned"
+  },
+  {
+    "question": "We will be ingrates if we fail to acknowledge God's goodness as referenced in",
+    "options": [
+      "Romans 8:28",
+      "1 Thessalonians 5:18",
+      "James 1:13",
+      "Psalm 8:4-6"
+    ],
+    "type": "multiple-choice",
+    "answer": "1 Thessalonians 5:18"
+  },
+  {
+    "question": "Without specific and measurable goals, planning becomes _________ (Proverbs 21:5)",
+    "options": [
+      "More spiritual",
+      "Vague and unproductive",
+      "Easier",
+      "Faster"
+    ],
+    "type": "multiple-choice",
+    "answer": "Vague and unproductive"
+  },
+  {
+    "question": "Time is described as one of the greatest resources for",
+    "options": [
+      "Success",
+      "Rest",
+      "Wealth",
+      "Fame"
+    ],
+    "type": "multiple-choice",
+    "answer": "Success"
+  },
+  {
+    "question": "As seen in Joshua 1:9, ___________ which is faith in God and courage challenges the status quo.",
+    "type": "fill-in-the-blank",
+    "answer": "Boldness"
+  },
+  {
+    "question": "It is unrealistic to expect righteousness from the unrighteous as stated in",
+    "options": [
+      "Proverbs 29:2",
+      "Matthew 7:16-18",
+      "Ecclesiastes 10:5-7",
+      "Titus 1:15"
+    ],
+    "type": "multiple-choice",
+    "answer": "Matthew 7:16-18"
+  },
+  {
+    "question": "The Bible passage for the lesson 24 is",
+    "options": [
+      "Daniel 5:11",
+      "Matthew 5:13-16",
+      "Galatians 4:1, 7",
+      "Romans 13:1"
+    ],
+    "type": "multiple-choice",
+    "answer": "Matthew 5:13-16"
+  },
+  {
+    "question": "The memory verse for Lesson 25 is __________",
+    "options": [
+      "Words can save or put one in trouble... Proverbs 6:2",
+      "For we all stumble in many things. If anyone does not stumble in word, he is a perfect man, able also to bridle the whole body. James 3:2 NKJV",
+      "Be slow to speak... James 1:19",
+      "A fool's mouth is his destruction... Proverbs 18:7"
+    ],
+    "type": "multiple-choice",
+    "answer": "For we all stumble in many things. If anyone does not stumble in word, he is a perfect man, able also to bridle the whole body. James 3:2 NKJV"
+  },
+  {
+    "question": "The 'get-rich-quick syndrome' refers to an intense and _________ desire to accumulate wealth rapidly, often without considering the consequences.",
+    "type": "fill-in-the-blank",
+    "answer": "Irrational"
+  },
+  {
+    "question": "One serious negative consequence of the get-rich-quick syndrome is",
+    "options": [
+      "Increase in educational standards",
+      "Stronger traditional values",
+      "Rapid loss of wealth is not mentioned",
+      "A rise in crimes like murder, kidnapping, and robbery"
+    ],
+    "type": "multiple-choice",
+    "answer": "A rise in crimes like murder, kidnapping, and robbery"
+  },
+  {
+    "question": "The two outlines in lesson 28 are",
+    "options": [
+      "INTRODUCTION and CONCLUSION",
+      "A MASTERPIECE and SELF-AFFECTION",
+      "LOVE and NEIGHBOUR",
+      "DNA and THUMBPRINT"
+    ],
+    "type": "multiple-choice",
+    "answer": "A MASTERPIECE and SELF-AFFECTION"
+  },
+  {
+    "question": "Loss is described as an ___________ part of life and it takes many forms like the death of a loved one, broken relationships, major life changes, etc. Ecclesiastes 3:1-2, 4",
+    "type": "fill-in-the-blank",
+    "answer": "Inevitable"
+  },
+  {
+    "question": "Good health brings glory to God in",
+    "options": [
+      "Proverbs 31:17",
+      "Mark 5:25-26",
+      "Acts 3:8-10",
+      "Philippians 2:25-28"
+    ],
+    "type": "multiple-choice",
+    "answer": "Acts 3:8-10"
+  },
+  {
+    "question": "Self-worth connotes the core beliefs you have about your",
+    "options": [
+      "Money only",
+      "Job title",
+      "Friends",
+      "Values"
+    ],
+    "type": "multiple-choice",
+    "answer": "Values"
+  },
+  {
+    "question": "A normal and correct intentional premarital relationship/courtship must have marriage as a",
+    "options": [
+      "Option",
+      "Destination",
+      "Fear",
+      "Mistake"
+    ],
+    "type": "multiple-choice",
+    "answer": "Destination"
+  },
+  {
+    "question": "One of the dangers of social media romance listed is Emotional _________ : Online relationships can create strong emotional attachments based on limited or incomplete knowledge",
+    "type": "fill-in-the-blank",
+    "answer": "Entanglement"
+  },
+  {
+    "question": "The prodigal son asking for his inheritance and delinquent behaviours are traits common under (Luke 15:12)",
+    "options": [
+      "Authoritative parenting",
+      "Permissive parenting",
+      "Neglectful parenting",
+      "Authoritarian parenting"
+    ],
+    "type": "multiple-choice",
+    "answer": "Permissive parenting"
+  },
+  {
+    "question": "A parenting style simply refers to",
+    "options": [
+      "Your age as related to managing your children",
+      "Your approach to parenting",
+      "How to control your",
+      "how to check your children"
+    ],
+    "type": "multiple-choice",
+    "answer": "Your approach to parenting"
+  },
+  {
+    "question": "The word 'homosexual' is from the Greek word",
+    "options": [
+      "Agape",
+      "Arsenokoites",
+      "Eroskosites",
+      "Philiakosites"
+    ],
+    "type": "multiple-choice",
+    "answer": "Arsenokoites"
+  },
+  {
+    "question": "Without an awareness of their ____________, there will be no repentance 2 Corinthians 4:3-4",
+    "type": "fill-in-the-blank",
+    "answer": "Sinfulness"
+  },
+  {
+    "question": "Rahab, in Hebrew, means",
+    "options": [
+      "Faithful",
+      "Wide",
+      "Strong",
+      "Brave"
+    ],
+    "type": "multiple-choice",
+    "answer": "Wide"
+  },
+  {
+    "question": "God-given talents and skills should be leveraged for wealth creation as seen in",
+    "options": [
+      "Genesis 47:3-4",
+      "Exodus 36:1",
+      "Proverbs 14:23",
+      "James 2:18-20"
+    ],
+    "type": "multiple-choice",
+    "answer": "Exodus 36:1"
+  },
+  {
+    "question": "Purchasing property or building to earn rental income or sell it at a higher price is",
+    "options": [
+      "Stocks",
+      "Real Estate",
+      "Crypto currency",
+      "Mutual Funds"
+    ],
+    "type": "multiple-choice",
+    "answer": "Real Estate"
+  },
+  {
+    "question": "Lending money to governments or corporations for a set period in exchange for periodic interest payments is ___________",
+    "type": "fill-in-the-blank",
+    "answer": "Bonds"
+  },
+  {
+    "question": "Doubt is defined as",
+    "options": [
+      "Complete confidence in God",
+      "A state of being unsure of something",
+      "The end of faith",
+      "Lack of assurance"
+    ],
+    "type": "multiple-choice",
+    "answer": "A state of being unsure of something"
+  },
+  {
+    "question": "Naaman almost missed his healing because he doubted God’s instructions in",
+    "options": [
+      "Luke 1:11-20",
+      "2 Kings 5:10-14",
+      "2 Kings 7:19-20",
+      "John 20:27"
+    ],
+    "type": "multiple-choice",
+    "answer": "2 Kings 5:10-14"
+  },
+  {
+    "question": "The Bible tells us that God's kindness leads people to repentance in",
+    "options": [
+      "Matthew 14:14",
+      "Romans 2:4",
+      "Luke 5:29",
+      "Galatians 6:10"
+    ],
+    "type": "multiple-choice",
+    "answer": "Romans 2:4"
+  },
+  {
+    "question": "In Luke 5:29, Levi made a great feast after meeting with Jesus, and Jesus was also at the feast to minister to all the people who attended, most of whom were sinners. This is a form of",
+    "options": [
+      "Prison evangelism",
+      "Welfare evangelism",
+      "Hospital evangelism",
+      "Orphanage evangelism"
+    ],
+    "type": "multiple-choice",
+    "answer": "Welfare evangelism"
+  },
+  {
+    "question": "God’s kingdom is inclusive, embracing people from every tribe, nation, and ______ as seen in Revelation 7:9",
+    "type": "fill-in-the-blank",
+    "answer": "Culture"
+  },
+  {
+    "question": "Diverse gifts help believers grow, learn, and sharpen one another’s perspectives according to",
+    "options": [
+      "John 13:34-35",
+      "Proverbs 27:17",
+      "Psalm 86:9",
+      "Revelation 7:9"
+    ],
+    "type": "multiple-choice",
+    "answer": "Proverbs 27:17"
+  },
+  {
+    "question": "Apostle Paul says Christians should 'endure hardness, as a good soldier of Jesus Christ' in",
+    "options": [
+      "Galatians 6:1",
+      "2 Timothy 2:3",
+      "1 Timothy 5:20",
+      "Romans 12:15"
+    ],
+    "type": "multiple-choice",
+    "answer": "2 Timothy 2:3"
+  },
+  {
+    "question": "A Christian soldier may be wounded due to the enemy’s attack, sin, carelessness, backsliding, loss, betrayal, hurt, being aggrieved, backstabbing, etc. The injury must be",
+    "options": [
+      "Not Ignored but tamed with caution",
+      "Treated and the wounded soldier restored so that the person is not completely lost",
+      "prevented from severe contamination",
+      "Hidden and taken to the hospital"
+    ],
+    "type": "multiple-choice",
+    "answer": "Treated and the wounded soldier restored so that the person is not completely lost"
+  },
+  {
+    "question": "_____________ may seem grievous to the offender but it is the sign that the father loves, that he chastises (Proverbs 15:10; Hebrews 12:7-8, 11 )",
+    "type": "fill-in-the-blank",
+    "answer": "Correction"
+  },
+  {
+    "question": "In the restoration process of a wounded soldier, the first requirement listed is",
+    "options": [
+      "Build A Strong Support",
+      "Love",
+      "Punishment",
+      "Isolation"
+    ],
+    "type": "multiple-choice",
+    "answer": "Love"
+  },
+  {
+    "question": "The word 'Armageddon' comes from the Hebrew word",
+    "options": [
+      "'Har-Magedone' meaning 'Mount Megiddo'",
+      "'Armagedom' meaning 'Battle Field'",
+      "'Magedone' meaning 'Valley of Jezreel'",
+      "'Har-Megiddo' meaning 'Plain of Esdraelon'"
+    ],
+    "type": "multiple-choice",
+    "answer": "'Har-Magedone' meaning 'Mount Megiddo'"
+  },
+  {
+    "question": "The book of life is described in Revelation 3:5 as the book containing",
+    "options": [
+      "The records of all sinners",
+      "The set of names of those who will live with God forever",
+      "The deeds of all men",
+      "Only Old Testament saints"
+    ],
+    "type": "multiple-choice",
+    "answer": "The set of names of those who will live with God forever"
+  },
+  {
+    "question": "What is the memory verse for Lesson 47?",
+    "options": [
+      "Gal. 2:10",
+      "Matt. 5:17",
+      "Gal. 6:1",
+      "Acts 5:13"
+    ],
+    "type": "multiple-choice",
+    "answer": "Gal. 6:1"
+  },
+  {
+    "question": "The second death is one of the final events in the Bible described as the eternal death in _________________",
+    "options": [
+      "\"the lake of fire\"",
+      "\"the fire that never ends\"",
+      "\"the lake which burn with fire and brimstone\"",
+      "\"the lake which burns unend with brimstone\""
+    ],
+    "type": "multiple-choice",
+    "answer": "\"the lake which burn with fire and brimstone\""
+  },
+  {
+    "question": "What is the Bible text for lesson 50?",
+    "options": [
+      "John 2:9-12",
+      "Is. 5:10-20",
+      "John 5:28-29"
+    ],
+    "type": "multiple-choice",
+    "answer": "John 5:28-29"
+  },
+  {
+    "question": "The scripture according to Revelation 20:4-6 mentions a 'first resurrection' and identifies those involved as ________________",
+    "options": [
+      "Strong and holy",
+      "Blessed and gifted",
+      "Blessed and purified",
+      "Blessed and holy"
+    ],
+    "type": "multiple-choice",
+    "answer": "Blessed and purified"
+  },
+  {
+    "question": "What is the Bible text for lesson 49?",
+    "options": [
+      "Rev. 10:11-16",
+      "Jude 1-6",
+      "Rev. 20:11-15",
+      "Micah 2:4-8"
+    ],
+    "type": "multiple-choice",
+    "answer": "Rev. 20:11-15"
+  },
+  {
+    "question": "The scripture establishes two kinds of eternity: eternal life and eternal _____________",
+    "options": [
+      "Death",
+      "Rescue",
+      "Torture",
+      "Damnation"
+    ],
+    "type": "multiple-choice",
+    "answer": "Damnation"
+  },
+  {
+    "question": "What is the memory verse for lesson 11?",
+    "options": [
+      "Col. 3:23",
+      "Heb. 4:6",
+      "John 5:10",
+      "Col. 11:5"
+    ],
+    "type": "multiple-choice",
+    "answer": "Col. 3:23"
+  },
+  {
+    "question": "What's the Bible text for lesson 23?",
+    "options": [
+      "Matt. 5:13-16",
+      "Eccl. 10:5-7",
+      "Prov. 29:10-13",
+      "Matt. 5:20-24"
+    ],
+    "type": "multiple-choice",
+    "answer": "Eccl. 10:5-7"
+  },
+  {
+    "question": "What is the conclusion for lesson 32?",
+    "options": [
+      "What we eat matters and would determine how far we live.",
+      "What we eat or drink is our first medicine. Take good care of yourself.",
+      "Take good care of yourself to avoid being a danger to your own health.",
+      "None of the above."
+    ],
+    "type": "multiple-choice",
+    "answer": "What we eat or drink is our first medicine. Take good care of yourself."
+  },
+  {
+    "question": "Pneuma is a Greek word meaning ____________",
+    "options": [
+      "Jesus",
+      "Guidance",
+      "Holy Spirit",
+      "Messenger"
+    ],
+    "type": "multiple-choice",
+    "answer": "Holy Spirit"
+  },
+  {
+    "question": "What is the memory verse for Lesson 17?",
+    "options": [
+      "1 Thess. 4:3",
+      "2 Thess. 5:17",
+      "2 Tim. 2:8",
+      "1 Pet. 4:9"
+    ],
+    "type": "multiple-choice",
+    "answer": "1 Thess. 4:3"
+  },
+  {
+    "question": "What is the Greek word for the Gospel?",
+    "options": [
+      "Evangelion",
+      "Euangelion",
+      "Etalegion",
+      "Evajekion"
+    ],
+    "type": "multiple-choice",
+    "answer": "Euangelion"
+  },
+  {
+    "question": "What is the 2nd lesson outline for lesson 40?",
+    "options": [
+      "His character",
+      "Understanding resourcefulness",
+      "Achievements and lessons from her life.",
+      "Overcoming negative self-perception."
+    ],
+    "type": "multiple-choice",
+    "answer": "Achievements and lessons from her life."
+  },
+  {
+    "question": "What is the Bible text for lesson 36?",
+    "options": [
+      "Joshua 4:5-18",
+      "Esther 2:7, 10-11",
+      "Nahum 2:3-9",
+      "Esther 2:7, 15-18"
+    ],
+    "type": "multiple-choice",
+    "answer": "Esther 2:7, 10-11"
+  }
 ]
