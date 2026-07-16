@@ -1,17 +1,21 @@
 # QuizMaster
 
-QuizMaster is a dynamic and engaging Bible quiz application designed to test and enhance users' knowledge of biblical principles, stories, and teachings. With a sleek and responsive user interface, it offers a seamless experience for users of all ages.
+QuizMaster is a dynamic, full-featured Bible quiz application designed to test and enhance users' knowledge of biblical principles, stories, and teachings. With a sleek and responsive user interface, it offers a seamless experience for students and powerful management tools for administrators.
 
 ## Features
 
-- **User Authentication**: Secure sign-up and login functionality.
-- **Dynamic Quiz Categories**: Tailored quizzes for adults, teenagers, and children.
-- **Customizable Quiz Options**:
-  - Select time duration for quizzes.
-  - Choose the number of questions.
-- **User Data Integration**: Fetch and display user-specific information from the database.
-- **Responsive Design**: Optimized for all devices.
-- **Framer Motion Animations**: Smooth and captivating animations for an enhanced user experience.
+- **User Authentication**: Secure sign-up and login functionality powered by Supabase.
+- **Dynamic Quiz Categories**: Tailored quizzes for different classes such as Adults and YAYA (Young Adults and Youth Affairs).
+- **Dual Quiz Modes**:
+  - **Practice Mode**: Students can practice specific lessons or the entire year's curriculum with adjustable difficulties (Normal, Medium, Hard).
+  - **Real Mode**: Timed, official quizzes for assessment.
+- **Advanced Admin Dashboard**:
+  - Comprehensive analytics and charts.
+  - Student performance tracking and detailed history views.
+  - CSV exports for all quiz results and student data.
+  - Dynamic application configuration settings.
+- **Optimized Data Architecture**: Uses a highly efficient, consolidated single-row database schema to track all student attempts (Real, Practice Normal, Medium, Hard, and Entire Year) without cluttering the database.
+- **Responsive Design & UX**: Optimized for all devices with skeleton loading states and smooth Framer Motion animations.
 
 ## Installation
 
@@ -50,19 +54,18 @@ QuizMaster is a dynamic and engaging Bible quiz application designed to test and
 
 ## Technologies Used
 
-- **Frontend**: React.js with Next.js
+- **Frontend**: React.js with Next.js (App Router)
 - **Styling**: Tailwind CSS
 - **Animations**: Framer Motion
-- **Database**: Supabase
+- **Icons**: React Icons & Lucide React
+- **Charts**: Recharts
+- **Database & Auth**: Supabase
 - **Deployment**: Vercel
 
 ## How to Use
 
-1. Sign up or log in to your account.
-2. Select your preferred quiz category (e.g., Adults, Teenagers, Kids).
-3. Customize your quiz by choosing the time duration and number of questions.
-4. Start the quiz and answer the questions within the selected time.
-5. View your score and track your progress.
+1. **For Students**: Sign up, choose your class (Adult or YAYA), and start taking Practice or Real quizzes from your dashboard.
+2. **For Admins**: Log in with an admin account to access the `/admin/dashboard`. From there, you can view analytics, manage students, export results, and adjust system settings.
 
 ## Contributing
 
