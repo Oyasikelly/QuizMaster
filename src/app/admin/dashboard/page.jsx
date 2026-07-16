@@ -1857,16 +1857,14 @@ const AdminDashboard = () => {
 													<thead>
 														<tr className="bg-gray-100">
 															<th className="py-2 px-3 text-left">Date</th>
+															<th className="py-2 px-3 text-left">Quiz / Mode</th>
 															<th className="py-2 px-3 text-left">Score</th>
 															<th className="py-2 px-3 text-left">Questions</th>
 															<th className="py-2 px-3 text-left">Status</th>
-															<th className="py-2 px-3 text-left">
-																Performance
-															</th>
 														</tr>
 													</thead>
 													<tbody>
-														{studentQuizResults.slice(0, 5).map((result) => {
+														{studentQuizResults.map((result) => {
 															const scorePercentage = Math.round(
 																(result.score / result.total_questions) * 100
 															);
@@ -1888,36 +1886,26 @@ const AdminDashboard = () => {
 																		result.timestamp
 																	}`}
 																	className="border-b hover:bg-gray-50">
-																	<td className="py-2 px-3 text-gray-600">
-																		{new Date(
-																			result.timestamp
-																		).toLocaleDateString()}
+																	<td className="py-2 px-3 text-gray-500 text-xs">
+																		{new Date(result.timestamp).toLocaleDateString()}
 																	</td>
 																	<td className="py-2 px-3">
-																		<span
-																			className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
-																				scorePercentage
-																			)}`}>
+																		<span className={`px-2 py-1 rounded-full text-xs font-medium ${result.mode === "Real Quiz" ? "bg-indigo-100 text-indigo-800" : "bg-purple-100 text-purple-700"}`}>
+																			{result.quiz_title || result.mode}
+																		</span>
+																	</td>
+																	<td className="py-2 px-3">
+																		<span className={`px-2 py-1 rounded-full text-xs font-bold ${getStatusColor(scorePercentage)}`}>
 																			{scorePercentage}%
 																		</span>
 																	</td>
-																	<td className="py-2 px-3 text-gray-600">
+																	<td className="py-2 px-3 text-gray-600 text-xs">
 																		{result.score}/{result.total_questions}
 																	</td>
 																	<td className="py-2 px-3">
-																		<span
-																			className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
-																				scorePercentage
-																			)}`}>
-																			{scorePercentage >= 80
-																				? "Excellent"
-																				: scorePercentage >= 60
-																				? "Good"
-																				: "Needs Improvement"}
+																		<span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(scorePercentage)}`}>
+																			{scorePercentage >= 80 ? "Excellent" : scorePercentage >= 60 ? "Good" : "Needs Improvement"}
 																		</span>
-																	</td>
-																	<td className="py-2 px-3 text-lg">
-																		{getPerformanceIcon(scorePercentage)}
 																	</td>
 																</tr>
 															);
