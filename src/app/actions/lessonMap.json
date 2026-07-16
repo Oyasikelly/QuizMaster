@@ -1,0 +1,250 @@
+{
+  "academicYears": {
+    "adults": [
+      "2025-2026",
+      "2024-2025"
+    ],
+    "yaya": [
+      "2025-2026",
+      "2024-2025"
+    ]
+  },
+  "lessons": {
+    "adults_2025-2026_hard": [
+      {
+        "id": "lesson1",
+        "title": "lesson1"
+      }
+    ],
+    "adults_2025-2026_medium": [
+      {
+        "id": "lesson1",
+        "title": "lesson1"
+      }
+    ],
+    "adults_2025-2026_normal": [
+      {
+        "id": "Lesson_01",
+        "title": "Lesson_01"
+      }
+    ],
+    "adults_2025-2026_practice": [
+      {
+        "id": "adult-questions",
+        "title": "adult-questions"
+      }
+    ],
+    "yaya_2025-2026_hard": [
+      {
+        "id": "lesson1",
+        "title": "lesson1"
+      }
+    ],
+    "yaya_2025-2026_medium": [
+      {
+        "id": "lesson1",
+        "title": "lesson1"
+      }
+    ],
+    "yaya_2025-2026_normal": [
+      {
+        "id": "Lesson_01_THEOS_BASILEIA_Quiz",
+        "title": "Lesson 01: Theos Basileia"
+      },
+      {
+        "id": "Lesson_02_THE_DEITY_OF_JESUS_Part_1_Quiz",
+        "title": "Lesson 02: The Deity Of Jesus Part 1"
+      },
+      {
+        "id": "Lesson_03_THE_DEITY_OF_JESUS_Part_2_Quiz",
+        "title": "Lesson 03: The Deity Of Jesus Part 2"
+      },
+      {
+        "id": "Lesson_04_HODEGEO_PNEUMA_Quiz",
+        "title": "Lesson 04: Hodegeo Pneuma"
+      },
+      {
+        "id": "Lesson_05_MY_ENEMY_THE_FLESH_Quiz",
+        "title": "Lesson 05: My Enemy The Flesh"
+      },
+      {
+        "id": "Lesson_06_KNOW_YOURSELF_Quiz",
+        "title": "Lesson 06: Know Yourself"
+      },
+      {
+        "id": "Lesson_07_FORGIVENESS_Quiz",
+        "title": "Lesson 07: Forgiveness"
+      },
+      {
+        "id": "Lesson_08_FAITH_AND_SCIENCE_Quiz",
+        "title": "Lesson 08: Faith And Science"
+      },
+      {
+        "id": "Lesson_09_PROPHECY_Quiz",
+        "title": "Lesson 09: Prophecy"
+      },
+      {
+        "id": "Lesson_10_SPIRITUAL_MATURITY_Quiz",
+        "title": "Lesson 10: Spiritual Maturity"
+      },
+      {
+        "id": "Lesson_11_WORKPLACE_MINISTRY_Quiz",
+        "title": "Lesson 11: Workplace Ministry"
+      },
+      {
+        "id": "Lesson_12_DOMINION_THROUGH_PRAYERS_Quiz",
+        "title": "Lesson 12: Dominion Through Prayers"
+      },
+      {
+        "id": "Lesson_14_PEER_PRESSURE_Quiz",
+        "title": "Lesson 14: Peer Pressure"
+      },
+      {
+        "id": "Lesson_15_UNTOWARD_FREEDOM_Quiz",
+        "title": "Lesson 15: Untoward Freedom"
+      },
+      {
+        "id": "Lesson_16_DESTINY_DESTROYERS_Quiz",
+        "title": "Lesson 16: Destiny Destroyers"
+      },
+      {
+        "id": "Lesson_17_STAY_PURE_Quiz",
+        "title": "Lesson 17: Stay Pure"
+      },
+      {
+        "id": "Lesson_18_THE_ATTITUDE_OF_THANKSGIVING_Quiz",
+        "title": "Lesson 18: The Attitude Of Thanksgiving"
+      },
+      {
+        "id": "Lesson_19_EFFECTIVE_PLANNING_Quiz",
+        "title": "Lesson 19: Effective Planning"
+      },
+      {
+        "id": "Lesson_20_RESOURCEFULNESS_Quiz",
+        "title": "Lesson 20: Resourcefulness"
+      },
+      {
+        "id": "Lesson_21_TIME_MANAGEMENT_Quiz",
+        "title": "Lesson 21: Time Management"
+      },
+      {
+        "id": "Lesson_22_AGENTS_OF_TRANSFORMATION_Quiz",
+        "title": "Lesson 22: Agents Of Transformation"
+      },
+      {
+        "id": "Lesson_23_CHRISTIANS_AND_POLITICS_CHANGING_THE_NARRATIVES_Quiz",
+        "title": "Lesson 23: Christians And Politics Changing The Narratives"
+      },
+      {
+        "id": "Lesson_24_CHRISTIANS_AND_POLITICS_BE_INVOLVED_Quiz",
+        "title": "Lesson 24: Christians And Politics Be Involved"
+      },
+      {
+        "id": "Lesson_25_STRENGTH_IN_QUIETNESS_Quiz",
+        "title": "Lesson 25: Strength In Quietness"
+      },
+      {
+        "id": "Lesson_27_GETRICHQUICK_SYNDROME_Quiz",
+        "title": "Lesson 27: Getrichquick Syndrome"
+      },
+      {
+        "id": "Lesson_28_SELFWORTH_Quiz",
+        "title": "Lesson 28: Selfworth"
+      },
+      {
+        "id": "Lesson_29_DEALING_WITH_LOSS_Quiz",
+        "title": "Lesson 29: Dealing With Loss"
+      },
+      {
+        "id": "Lesson_30_CRISIS_MANAGEMENT_Quiz",
+        "title": "Lesson 30: Crisis Management"
+      },
+      {
+        "id": "Lesson_31_SELFWORTH_Quiz",
+        "title": "Lesson 31: Selfworth"
+      },
+      {
+        "id": "Lesson_32_LIVE_HEALTHY_Quiz",
+        "title": "Lesson 32: Live Healthy"
+      },
+      {
+        "id": "Lesson_33_DEFINE_YOUR_RELATIONSHIP_Quiz",
+        "title": "Lesson 33: Define Your Relationship"
+      },
+      {
+        "id": "Lesson_34_SOCIAL_MEDIA_ROMANCE_Quiz",
+        "title": "Lesson 34: Social Media Romance"
+      },
+      {
+        "id": "Lesson_35_PARENTING_STYLES_Part_1_Quiz",
+        "title": "Lesson 35: Parenting Styles Part 1"
+      },
+      {
+        "id": "Lesson_36_PARENTING_STYLES_Part_2_Quiz",
+        "title": "Lesson 36: Parenting Styles Part 2"
+      },
+      {
+        "id": "Lesson_37_CHRISTIANITY_AND_HOMOSEXUALITY_Part_1_Quiz",
+        "title": "Lesson 37: Christianity And Homosexuality Part 1"
+      },
+      {
+        "id": "Lesson_38_CHRISTIANITY_AND_HOMOSEXUALITY_Part_2_Quiz",
+        "title": "Lesson 38: Christianity And Homosexuality Part 2"
+      },
+      {
+        "id": "Lesson_40_RAHAB_Quiz",
+        "title": "Lesson 40: Rahab"
+      },
+      {
+        "id": "Lesson_41_STRATEGIC_LEADERSHIP_Quiz",
+        "title": "Lesson 41: Strategic Leadership"
+      },
+      {
+        "id": "Lesson_42_WEALTH_CREATION_Quiz",
+        "title": "Lesson 42: Wealth Creation"
+      },
+      {
+        "id": "Lesson_43_CHRISTIANS_AND_INVESTMENT_Quiz",
+        "title": "Lesson 43: Christians And Investment"
+      },
+      {
+        "id": "Lesson_44_DEALING_WITH_DOUBT_Quiz",
+        "title": "Lesson 44: Dealing With Doubt"
+      },
+      {
+        "id": "Lesson_45_WELFARE_EVANGELISM_Quiz",
+        "title": "Lesson 45: Welfare Evangelism"
+      },
+      {
+        "id": "Lesson_46_EMBRACING_DIVERSITY_Quiz",
+        "title": "Lesson 46: Embracing Diversity"
+      },
+      {
+        "id": "Lesson_47_WOUNDED_SOLDIER_Quiz",
+        "title": "Lesson 47: Wounded Soldier"
+      },
+      {
+        "id": "Lesson_48_THE_BATTLE_OF_ARMAGEDDON_Quiz",
+        "title": "Lesson 48: The Battle Of Armageddon"
+      },
+      {
+        "id": "Lesson_49_THE_BOOK_OF_LIFE_Quiz",
+        "title": "Lesson 49: The Book Of Life"
+      },
+      {
+        "id": "Lesson_50_THE_RESURRECTION_Quiz",
+        "title": "Lesson 50: The Resurrection"
+      },
+      {
+        "id": "Lesson_51_THE_SECOND_DEATH_Quiz",
+        "title": "Lesson 51: The Second Death"
+      }
+    ],
+    "yaya_2025-2026_practice": [
+      {
+        "id": "yaya-questions",
+        "title": "yaya-questions"
+      }
+    ]
+  }
+}
