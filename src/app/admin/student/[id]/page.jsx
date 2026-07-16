@@ -153,7 +153,7 @@ const StudentDetail = () => {
 			}
 
 			// Load student's quiz results
-			const { data: quizData, error: quizError } = await withTimeout(
+			const { data: rawQuizData, error: quizError } = await withTimeout(
 				supabase
 					.from("quiz_results")
 					.select("*")
@@ -166,8 +166,20 @@ const StudentDetail = () => {
 				console.error("Error loading quiz results:", quizError);
 			}
 
+			const extractAttempts = (results) => {
+				const attempts = [];
+				(results || []).forEach((row) => {
+					if (row.real_total > 0) attempts.push({ id: 1, student_id: row.student_id, timestamp: row.timestamp, score: row.real_score, total_questions: row.real_total, mode: "Real Quiz" });
+					if (row.practice_normal_total > 0) attempts.push({ id: 2, student_id: row.student_id, timestamp: row.timestamp, score: row.practice_normal_score, total_questions: row.practice_normal_total, mode: "Practice (Normal)" });
+					if (row.practice_medium_total > 0) attempts.push({ id: 3, student_id: row.student_id, timestamp: row.timestamp, score: row.practice_medium_score, total_questions: row.practice_medium_total, mode: "Practice (Medium)" });
+					if (row.practice_hard_total > 0) attempts.push({ id: 4, student_id: row.student_id, timestamp: row.timestamp, score: row.practice_hard_score, total_questions: row.practice_hard_total, mode: "Practice (Hard)" });
+					if (row.practice_entire_total > 0) attempts.push({ id: 5, student_id: row.student_id, timestamp: row.timestamp, score: row.practice_entire_score, total_questions: row.practice_entire_total, mode: "Practice (Entire Year)" });
+				});
+				return attempts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+			};
+
 			setStudent(studentData);
-			setQuizResults(quizData || []);
+			setQuizResults(extractAttempts(rawQuizData));
 		} catch (error) {
 			console.error("Error loading student data:", error);
 			throw error; // Rethrow to let getUser handle network errors
@@ -470,6 +482,9 @@ const StudentDetail = () => {
 											Date
 										</th>
 										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Mode
+										</th>
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
 											Score
 										</th>
 										<th className="text-left py-3 px-4 font-medium text-gray-900">
@@ -501,6 +516,9 @@ const StudentDetail = () => {
 												className="border-b border-gray-100 hover:bg-gray-50">
 												<td className="py-3 px-4 text-gray-600">
 													{new Date(result.timestamp).toLocaleDateString()}
+												</td>
+												<td className="py-3 px-4 font-medium text-gray-900">
+													{result.mode}
 												</td>
 												<td className="py-3 px-4 text-gray-900">
 													{result.score}/{result.total_questions}

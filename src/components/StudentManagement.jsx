@@ -63,12 +63,18 @@ const StudentManagement = () => {
 				10000
 			);
 
-			// Calculate submission counts for each student
+			// Calculate submission counts for each student based on the unified row
 			const studentsWithCounts =
 				studentsData?.map((student) => {
-					const submissionCount =
-						quizData?.filter((result) => result.student_id === student.id)
-							.length || 0;
+					const resultRow = quizData?.find((result) => result.student_id === student.id);
+					let submissionCount = 0;
+					if (resultRow) {
+						if (resultRow.real_total > 0) submissionCount++;
+						if (resultRow.practice_normal_total > 0) submissionCount++;
+						if (resultRow.practice_medium_total > 0) submissionCount++;
+						if (resultRow.practice_hard_total > 0) submissionCount++;
+						if (resultRow.practice_entire_total > 0) submissionCount++;
+					}
 					return { ...student, submissionCount };
 				}) || [];
 
@@ -251,7 +257,7 @@ const StudentManagement = () => {
 									Denomination
 								</th>
 								<th className="text-left py-3 px-4 font-medium text-gray-900">
-									Quiz Submissions
+									Quiz Modes Completed
 								</th>
 								<th className="text-left py-3 px-4 font-medium text-gray-900">
 									Actions
@@ -504,17 +510,19 @@ const StudentManagement = () => {
 												</label>
 												<p className="text-2xl font-bold text-green-600">
 													{(() => {
-														const studentResults = quizResults.filter(
-															(result) =>
-																result.student_id === selectedStudent.id
+														const resultRow = quizResults.find(
+															(result) => result.student_id === selectedStudent.id
 														);
-														if (studentResults.length === 0) return "N/A";
-														const avgScore =
-															studentResults.reduce(
-																(sum, result) =>
-																	sum + result.score / result.total_questions,
-																0
-															) / studentResults.length;
+														if (!resultRow) return "N/A";
+														const attempts = [];
+														if (resultRow.real_total > 0) attempts.push(resultRow.real_score / resultRow.real_total);
+														if (resultRow.practice_normal_total > 0) attempts.push(resultRow.practice_normal_score / resultRow.practice_normal_total);
+														if (resultRow.practice_medium_total > 0) attempts.push(resultRow.practice_medium_score / resultRow.practice_medium_total);
+														if (resultRow.practice_hard_total > 0) attempts.push(resultRow.practice_hard_score / resultRow.practice_hard_total);
+														if (resultRow.practice_entire_total > 0) attempts.push(resultRow.practice_entire_score / resultRow.practice_entire_total);
+														
+														if (attempts.length === 0) return "N/A";
+														const avgScore = attempts.reduce((a, b) => a + b, 0) / attempts.length;
 														return `${Math.round(avgScore * 100)}%`;
 													})()}
 												</p>
@@ -525,17 +533,19 @@ const StudentManagement = () => {
 												</label>
 												<p className="text-2xl font-bold text-purple-600">
 													{(() => {
-														const studentResults = quizResults.filter(
-															(result) =>
-																result.student_id === selectedStudent.id
+														const resultRow = quizResults.find(
+															(result) => result.student_id === selectedStudent.id
 														);
-														if (studentResults.length === 0) return "N/A";
-														const bestScore = Math.max(
-															...studentResults.map(
-																(result) =>
-																	result.score / result.total_questions
-															)
-														);
+														if (!resultRow) return "N/A";
+														const attempts = [];
+														if (resultRow.real_total > 0) attempts.push(resultRow.real_score / resultRow.real_total);
+														if (resultRow.practice_normal_total > 0) attempts.push(resultRow.practice_normal_score / resultRow.practice_normal_total);
+														if (resultRow.practice_medium_total > 0) attempts.push(resultRow.practice_medium_score / resultRow.practice_medium_total);
+														if (resultRow.practice_hard_total > 0) attempts.push(resultRow.practice_hard_score / resultRow.practice_hard_total);
+														if (resultRow.practice_entire_total > 0) attempts.push(resultRow.practice_entire_score / resultRow.practice_entire_total);
+														
+														if (attempts.length === 0) return "N/A";
+														const bestScore = Math.max(...attempts);
 														return `${Math.round(bestScore * 100)}%`;
 													})()}
 												</p>
@@ -560,6 +570,9 @@ const StudentManagement = () => {
 														Date
 													</th>
 													<th className="text-left py-3 px-6 font-medium text-gray-900">
+														Mode
+													</th>
+													<th className="text-left py-3 px-6 font-medium text-gray-900">
 														Score
 													</th>
 													<th className="text-left py-3 px-6 font-medium text-gray-900">
@@ -575,28 +588,38 @@ const StudentManagement = () => {
 											</thead>
 											<tbody>
 												{(() => {
-													const studentResults = quizResults.filter(
+													const resultRow = quizResults.find(
 														(result) => result.student_id === selectedStudent.id
 													);
-													if (studentResults.length === 0) {
+													
+													const attempts = [];
+													if (resultRow) {
+														if (resultRow.real_total > 0) attempts.push({ id: 1, mode: "Real Quiz", score: resultRow.real_score, total: resultRow.real_total, timestamp: resultRow.timestamp });
+														if (resultRow.practice_normal_total > 0) attempts.push({ id: 2, mode: "Practice (Normal)", score: resultRow.practice_normal_score, total: resultRow.practice_normal_total, timestamp: resultRow.timestamp });
+														if (resultRow.practice_medium_total > 0) attempts.push({ id: 3, mode: "Practice (Medium)", score: resultRow.practice_medium_score, total: resultRow.practice_medium_total, timestamp: resultRow.timestamp });
+														if (resultRow.practice_hard_total > 0) attempts.push({ id: 4, mode: "Practice (Hard)", score: resultRow.practice_hard_score, total: resultRow.practice_hard_total, timestamp: resultRow.timestamp });
+														if (resultRow.practice_entire_total > 0) attempts.push({ id: 5, mode: "Practice (Entire Year)", score: resultRow.practice_entire_score, total: resultRow.practice_entire_total, timestamp: resultRow.timestamp });
+													}
+
+													if (attempts.length === 0) {
 														return (
 															<tr>
 																<td
-																	colSpan="5"
+																	colSpan="6"
 																	className="py-8 text-center text-gray-500">
 																	No quiz submissions found for this student.
 																</td>
 															</tr>
 														);
 													}
-													return studentResults
+													return attempts
 														.sort(
 															(a, b) =>
 																new Date(b.timestamp) - new Date(a.timestamp)
 														)
-														.map((result) => {
+														.map((attempt) => {
 															const percentage =
-																(result.score / result.total_questions) * 100;
+																(attempt.score / attempt.total) * 100;
 															const status =
 																percentage >= 80
 																	? "Excellent"
@@ -616,18 +639,21 @@ const StudentManagement = () => {
 
 															return (
 																<tr
-																	key={result.id}
+																	key={attempt.id}
 																	className="border-b border-gray-100 hover:bg-gray-50">
 																	<td className="py-3 px-6 text-gray-900">
 																		{new Date(
-																			result.timestamp
+																			attempt.timestamp
 																		).toLocaleDateString()}
 																	</td>
-																	<td className="py-3 px-6 text-gray-900">
-																		{result.score}/{result.total_questions}
+																	<td className="py-3 px-6 font-medium text-gray-900">
+																		{attempt.mode}
 																	</td>
 																	<td className="py-3 px-6 text-gray-900">
-																		{result.total_questions}
+																		{attempt.score}/{attempt.total}
+																	</td>
+																	<td className="py-3 px-6 text-gray-900">
+																		{attempt.total}
 																	</td>
 																	<td className="py-3 px-6">
 																		<span
@@ -669,17 +695,19 @@ const StudentManagement = () => {
 												<p className="text-sm opacity-90">Average Score</p>
 												<p className="text-2xl font-bold">
 													{(() => {
-														const studentResults = quizResults.filter(
-															(result) =>
-																result.student_id === selectedStudent.id
+														const resultRow = quizResults.find(
+															(result) => result.student_id === selectedStudent.id
 														);
-														if (studentResults.length === 0) return "N/A";
-														const avgScore =
-															studentResults.reduce(
-																(sum, result) =>
-																	sum + result.score / result.total_questions,
-																0
-															) / studentResults.length;
+														if (!resultRow) return "N/A";
+														const attempts = [];
+														if (resultRow.real_total > 0) attempts.push(resultRow.real_score / resultRow.real_total);
+														if (resultRow.practice_normal_total > 0) attempts.push(resultRow.practice_normal_score / resultRow.practice_normal_total);
+														if (resultRow.practice_medium_total > 0) attempts.push(resultRow.practice_medium_score / resultRow.practice_medium_total);
+														if (resultRow.practice_hard_total > 0) attempts.push(resultRow.practice_hard_score / resultRow.practice_hard_total);
+														if (resultRow.practice_entire_total > 0) attempts.push(resultRow.practice_entire_score / resultRow.practice_entire_total);
+														
+														if (attempts.length === 0) return "N/A";
+														const avgScore = attempts.reduce((a, b) => a + b, 0) / attempts.length;
 														return `${Math.round(avgScore * 100)}%`;
 													})()}
 												</p>
@@ -693,17 +721,19 @@ const StudentManagement = () => {
 												<p className="text-sm opacity-90">Best Performance</p>
 												<p className="text-2xl font-bold">
 													{(() => {
-														const studentResults = quizResults.filter(
-															(result) =>
-																result.student_id === selectedStudent.id
+														const resultRow = quizResults.find(
+															(result) => result.student_id === selectedStudent.id
 														);
-														if (studentResults.length === 0) return "N/A";
-														const bestScore = Math.max(
-															...studentResults.map(
-																(result) =>
-																	result.score / result.total_questions
-															)
-														);
+														if (!resultRow) return "N/A";
+														const attempts = [];
+														if (resultRow.real_total > 0) attempts.push(resultRow.real_score / resultRow.real_total);
+														if (resultRow.practice_normal_total > 0) attempts.push(resultRow.practice_normal_score / resultRow.practice_normal_total);
+														if (resultRow.practice_medium_total > 0) attempts.push(resultRow.practice_medium_score / resultRow.practice_medium_total);
+														if (resultRow.practice_hard_total > 0) attempts.push(resultRow.practice_hard_score / resultRow.practice_hard_total);
+														if (resultRow.practice_entire_total > 0) attempts.push(resultRow.practice_entire_score / resultRow.practice_entire_total);
+														
+														if (attempts.length === 0) return "N/A";
+														const bestScore = Math.max(...attempts);
 														return `${Math.round(bestScore * 100)}%`;
 													})()}
 												</p>

@@ -1,7 +1,7 @@
 "use client";
 import { Suspense, useEffect } from "react";
 import Quiz from "../../../../components/Quiz";
-import yayaQuestions from "../../../questions/yayaQuestions.json";
+import yayaQuestions from "../../../questions/real/yaya/yayaQuestions.json";
 
 const YAYAQuiz = () => {
 	useEffect(() => {

@@ -20,6 +20,9 @@ const ResultsContent = () => {
 
 	const correctAnswers = parseInt(searchParams?.get("correct") || "0", 10);
 	const totalQuestions = parseInt(searchParams?.get("total") || "0", 10);
+	const category = searchParams?.get("category") || "";
+	const lesson = searchParams?.get("lesson") || "";
+	const difficulty = searchParams?.get("difficulty") || "";
 
 	const [answers, setAnswers] = useState([]);
 	const [questions, setQuestions] = useState([]);
@@ -121,6 +124,14 @@ const ResultsContent = () => {
 						Quiz Results
 					</h1>
 					<p className="text-gray-600">Here's how you performed in your quiz</p>
+					{(category || lesson || difficulty) && (
+						<div className="flex flex-wrap justify-center gap-2 mt-4">
+							{category && <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-sm font-semibold">{category}</span>}
+							{lesson && <span className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm font-semibold">{lesson.replace(/-/g, " ").toUpperCase()}</span>}
+							{difficulty && <span className="px-3 py-1 bg-pink-100 text-pink-700 rounded-full text-sm font-semibold">{difficulty.toUpperCase()}</span>}
+							{!lesson && !difficulty && category && <span className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-semibold">REAL QUIZ</span>}
+						</div>
+					)}
 				</motion.div>
 
 				{/* Score Display */}

@@ -69,6 +69,18 @@ const AdminDashboard = () => {
 	const [showExportModal, setShowExportModal] = useState(false);
 	const router = useRouter();
 
+	const extractAttempts = (results) => {
+		const attempts = [];
+		(results || []).forEach((row) => {
+			if (row.real_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.real_score, total_questions: row.real_total, mode: "Real Quiz" });
+			if (row.practice_normal_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_normal_score, total_questions: row.practice_normal_total, mode: "Practice (Normal)" });
+			if (row.practice_medium_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_medium_score, total_questions: row.practice_medium_total, mode: "Practice (Medium)" });
+			if (row.practice_hard_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_hard_score, total_questions: row.practice_hard_total, mode: "Practice (Hard)" });
+			if (row.practice_entire_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_entire_score, total_questions: row.practice_entire_total, mode: "Practice (Entire Year)" });
+		});
+		return attempts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+	};
+
 	const getUser = async () => {
 		setLoading(true);
 		setLoadError(false);
@@ -167,13 +179,15 @@ const AdminDashboard = () => {
 			});
 
 			// Load quiz results
-			const { data: quizData } = await withTimeout(
+			const { data: rawQuizData } = await withTimeout(
 				supabase
 					.from("quiz_results")
 					.select("*")
 					.order("timestamp", { ascending: false }),
 				10000
 			);
+
+			const quizData = extractAttempts(rawQuizData);
 
 			// Calculate submission counts and quiz stats for each student (match by email)
 			const studentsWithStats =
@@ -249,7 +263,7 @@ const AdminDashboard = () => {
 	const handleViewStudent = async (student) => {
 		try {
 			// Get detailed student quiz results
-			const { data: studentResults, error } = await supabase
+			const { data: rawStudentResults, error } = await supabase
 				.from("quiz_results")
 				.select("*")
 				.eq("email", student.email)
@@ -261,7 +275,7 @@ const AdminDashboard = () => {
 			}
 
 			setSelectedStudent(student);
-			setStudentQuizResults(studentResults || []);
+			setStudentQuizResults(extractAttempts(rawStudentResults || []));
 			setShowStudentModal(true);
 		} catch (error) {
 			console.error("Error viewing student:", error);

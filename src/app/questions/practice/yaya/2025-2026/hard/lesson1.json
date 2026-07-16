@@ -1,0 +1,25 @@
+{
+  "normal": [
+    {
+      "question": "What is the memory verse for lesson 1?",
+      "options": ["John 3:16", "Genesis 1:1", "Proverbs 3:5-6", "Psalm 23:1"],
+      "type": "multiple-choice",
+      "answer": "Proverbs 3:5-6"
+    }
+  ],
+  "medium": [
+    {
+      "question": "Which of these is a key theme in lesson 1?",
+      "options": ["Faith", "Grace", "Obedience", "All of the above"],
+      "type": "multiple-choice",
+      "answer": "All of the above"
+    }
+  ],
+  "hard": [
+    {
+      "question": "Summarize the core doctrine of lesson 1 in one word.",
+      "type": "fill-in-the-blank",
+      "answer": "Salvation"
+    }
+  ]
+}

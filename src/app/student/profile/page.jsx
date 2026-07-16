@@ -123,7 +123,7 @@ const StudentProfile = () => {
 			);
 
 			// If no results by email, try with student_id
-			let quizResults = quizResultsByEmail;
+			let rawQuizResults = quizResultsByEmail;
 			if (!quizResultsByEmail || quizResultsByEmail.length === 0) {
 				const { data: quizResultsById } = await withTimeout(
 					supabase
@@ -133,8 +133,22 @@ const StudentProfile = () => {
 						.order("timestamp", { ascending: false }),
 					10000
 				);
-				quizResults = quizResultsById;
+				rawQuizResults = quizResultsById;
 			}
+
+			const extractAttempts = (results) => {
+				const attempts = [];
+				(results || []).forEach((row) => {
+					if (row.real_total > 0) attempts.push({ id: 1, student_id: row.student_id, timestamp: row.timestamp, score: row.real_score, total_questions: row.real_total, mode: "Real Quiz", category: row.category });
+					if (row.practice_normal_total > 0) attempts.push({ id: 2, student_id: row.student_id, timestamp: row.timestamp, score: row.practice_normal_score, total_questions: row.practice_normal_total, mode: "Practice (Normal)", category: row.category });
+					if (row.practice_medium_total > 0) attempts.push({ id: 3, student_id: row.student_id, timestamp: row.timestamp, score: row.practice_medium_score, total_questions: row.practice_medium_total, mode: "Practice (Medium)", category: row.category });
+					if (row.practice_hard_total > 0) attempts.push({ id: 4, student_id: row.student_id, timestamp: row.timestamp, score: row.practice_hard_score, total_questions: row.practice_hard_total, mode: "Practice (Hard)", category: row.category });
+					if (row.practice_entire_total > 0) attempts.push({ id: 5, student_id: row.student_id, timestamp: row.timestamp, score: row.practice_entire_score, total_questions: row.practice_entire_total, mode: "Practice (Entire Year)", category: row.category });
+				});
+				return attempts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+			};
+
+			const quizResults = extractAttempts(rawQuizResults);
 
 			setQuizHistory(quizResults || []);
 			if (quizResults && quizResults.length > 0) {
@@ -626,7 +640,7 @@ const StudentProfile = () => {
 													</div>
 													<div>
 														<p className="font-medium text-gray-900">
-															{quiz.category || "Quiz"} #{index + 1}
+															{quiz.category || "Quiz"} - <span className="text-blue-600">{quiz.mode}</span>
 														</p>
 														<p className="text-sm text-gray-500">
 															{new Date(quiz.timestamp).toLocaleDateString()}

@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
 import { FiAward, FiLock } from "react-icons/fi";
 import { isRealQuizActive } from "../lib/quiz-config";
+import { getQuestions } from "../app/actions/getQuestions";
 
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
@@ -26,20 +27,43 @@ const Quiz = ({ initialQuestions, category }) => {
 	const searchParams = useSearchParams();
 	const userTime = parseInt(searchParams.get("time"), 10);
 	const numQuestions = parseInt(searchParams.get("questions"), 10);
+	const lesson = searchParams.get("lesson") || "";
+	const difficulty = searchParams.get("difficulty") || "";
+	const year = searchParams.get("year") || "";
 	const [isRealQuiz, setIsRealQuiz] = useState(false);
+	const [questionsLoading, setQuestionsLoading] = useState(true);
 
 	useEffect(() => {
 		const checkQuizMode = async () => {
 			try {
 				const isReal = await isRealQuizActive(supabase);
 				setIsRealQuiz(isReal);
+				
+				// Fetch questions dynamically
+				const fetchedQuestions = await getQuestions(category, lesson, difficulty, year, isReal);
+				
+				// Use fetched questions or fallback to initialQuestions if fetched is empty
+				const baseQuestions = fetchedQuestions && fetchedQuestions.length > 0 
+					? fetchedQuestions 
+					: (initialQuestions || []);
+
+				const slicedQuestions = shuffleArray(baseQuestions)
+					.slice(0, numQuestions)
+					.map((q) => ({
+						...q,
+						options: q.type === "multiple-choice" ? shuffleArray(q.options) : [],
+					}));
+				setQuestions(slicedQuestions);
+				setAnswers(Array(slicedQuestions.length).fill(null));
+				setQuestionsLoading(false);
 			} catch (error) {
-				console.error("Error checking quiz mode:", error);
+				console.error("Error checking quiz mode or fetching questions:", error);
 				setIsRealQuiz(false);
+				setQuestionsLoading(false);
 			}
 		};
 		checkQuizMode();
-	}, []);
+	}, [category, lesson, difficulty, year, numQuestions, initialQuestions]);
 
 	const [time, setTime] = useState(userTime * 60);
 	const [questions, setQuestions] = useState([]);
@@ -78,16 +102,8 @@ const Quiz = ({ initialQuestions, category }) => {
 		return removeNavigationLock; // Cleanup on unmount
 	}, []);
 
-	useEffect(() => {
-		const slicedQuestions = shuffleArray(initialQuestions)
-			.slice(0, numQuestions)
-			.map((q) => ({
-				...q,
-				options: q.type === "multiple-choice" ? shuffleArray(q.options) : [],
-			}));
-		setQuestions(slicedQuestions);
-		setAnswers(Array(slicedQuestions.length).fill(null));
-	}, [initialQuestions, numQuestions]);
+	// The setup of questions is now handled in the first useEffect to ensure it waits for the server action
+	// and doesn't run before we know if it's a real quiz or not.
 
 	useEffect(() => {
 		if (timerRunning && time > 0) {
@@ -171,15 +187,42 @@ const Quiz = ({ initialQuestions, category }) => {
 
 			const userProfile = usersData && usersData[0];
 
-			const resultData = {
+			const { data: existingData } = await withTimeout(
+				supabase.from("quiz_results").select("*").eq("student_id", student_id).single(),
+				10000
+			);
+
+			const baseData = {
 				student_id,
 				email: userProfile?.email || userEmail,
 				name: userProfile?.name || "Unknown",
 				class: userProfile?.class || "Unknown",
 				category,
-				score: correctAnswersCount,
-				total_questions: questions.length,
 				timestamp: new Date().toISOString(),
+			};
+
+			let newScoreData = {};
+			if (isRealQuiz) {
+				newScoreData = {
+					real_score: correctAnswersCount,
+					real_total: questions.length,
+				};
+			} else {
+				if (difficulty === "normal") {
+					newScoreData = { practice_normal_score: correctAnswersCount, practice_normal_total: questions.length };
+				} else if (difficulty === "medium") {
+					newScoreData = { practice_medium_score: correctAnswersCount, practice_medium_total: questions.length };
+				} else if (difficulty === "hard") {
+					newScoreData = { practice_hard_score: correctAnswersCount, practice_hard_total: questions.length };
+				} else if (difficulty === "practice") {
+					newScoreData = { practice_entire_score: correctAnswersCount, practice_entire_total: questions.length };
+				}
+			}
+
+			const resultData = {
+				...(existingData || {}),
+				...baseData,
+				...newScoreData,
 			};
 
 			console.log("Saving DB synchronously:", resultData);
@@ -202,9 +245,13 @@ const Quiz = ({ initialQuestions, category }) => {
 
 			// ── STEP 3: Navigate to results ONLY if DB save succeeds ───────────
 			removeNavigationLock();
-			router.replace(
-				`/quiz/results?correct=${correctAnswersCount}&total=${questions.length}`
-			);
+			
+			// Pass lesson and difficulty to the results page
+			let resultsUrl = `/quiz/results?correct=${correctAnswersCount}&total=${questions.length}&category=${category}`;
+			if (!isRealQuiz) {
+				resultsUrl += `&lesson=${lesson}&difficulty=${difficulty}&year=${year}`;
+			}
+			router.replace(resultsUrl);
 		} catch (err) {
 			console.error("An error occurred during submission:", err);
 			setSubmitError(
@@ -240,7 +287,28 @@ const Quiz = ({ initialQuestions, category }) => {
 					</motion.div>
 				</div>
 			}>
-				{/* Error Overlay */}
+			
+			{/* Wait for questions to load */}
+			{questionsLoading && (
+				<div className="fixed inset-0 z-[100] flex items-center justify-center bg-white/80 backdrop-blur-sm">
+					<motion.div
+						initial={{ opacity: 0, scale: 0.8 }}
+						animate={{ opacity: 1, scale: 1 }}
+						transition={{ duration: 0.5 }}
+						className="flex flex-col items-center justify-center gap-6 bg-white rounded-3xl shadow-2xl p-10 border border-gray-200">
+						<div className="w-20 h-20 rounded-full bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 animate-spin-slow flex items-center justify-center shadow-xl">
+							<span className="text-white text-3xl animate-pulse font-bold">
+								Q
+							</span>
+						</div>
+						<p className="text-gray-700 text-xl font-bold tracking-wide animate-pulse">
+							Loading Questions...
+						</p>
+					</motion.div>
+				</div>
+			)}
+			
+			{/* Error Overlay */}
 			{submitError && (
 				<div className="fixed inset-0 z-[100] flex items-center justify-center bg-white/90 backdrop-blur-md">
 					<motion.div

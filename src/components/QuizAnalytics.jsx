@@ -105,6 +105,18 @@ const QuizAnalytics = () => {
 		return filtered;
 	};
 
+	const extractAttempts = (results) => {
+		const attempts = [];
+		results.forEach((row) => {
+			if (row.real_total > 0) attempts.push({ student_id: row.student_id, timestamp: row.timestamp, score: row.real_score, total_questions: row.real_total, mode: "Real Quiz" });
+			if (row.practice_normal_total > 0) attempts.push({ student_id: row.student_id, timestamp: row.timestamp, score: row.practice_normal_score, total_questions: row.practice_normal_total, mode: "Practice (Normal)" });
+			if (row.practice_medium_total > 0) attempts.push({ student_id: row.student_id, timestamp: row.timestamp, score: row.practice_medium_score, total_questions: row.practice_medium_total, mode: "Practice (Medium)" });
+			if (row.practice_hard_total > 0) attempts.push({ student_id: row.student_id, timestamp: row.timestamp, score: row.practice_hard_score, total_questions: row.practice_hard_total, mode: "Practice (Hard)" });
+			if (row.practice_entire_total > 0) attempts.push({ student_id: row.student_id, timestamp: row.timestamp, score: row.practice_entire_score, total_questions: row.practice_entire_total, mode: "Practice (Entire Year)" });
+		});
+		return attempts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+	};
+
 	const calculateStats = (results) => {
 		if (!results.length)
 			return {
@@ -180,9 +192,10 @@ const QuizAnalytics = () => {
 	};
 
 	const filteredResults = getFilteredResults();
-	const stats = calculateStats(filteredResults);
-	const performanceDistribution = getPerformanceDistribution(filteredResults);
-	const topPerformers = getTopPerformers(filteredResults);
+	const allAttempts = extractAttempts(filteredResults);
+	const stats = calculateStats(allAttempts);
+	const performanceDistribution = getPerformanceDistribution(allAttempts);
+	const topPerformers = getTopPerformers(allAttempts);
 
 	if (loadError) {
 		return (
@@ -484,6 +497,9 @@ const QuizAnalytics = () => {
 									Score
 								</th>
 								<th className="text-left py-3 px-4 font-medium text-gray-900">
+									Mode
+								</th>
+								<th className="text-left py-3 px-4 font-medium text-gray-900">
 									Questions
 								</th>
 								<th className="text-left py-3 px-4 font-medium text-gray-900">
@@ -495,7 +511,7 @@ const QuizAnalytics = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{filteredResults.slice(0, 10).map((result, index) => {
+							{allAttempts.slice(0, 10).map((result, index) => {
 								const student = students.find(
 									(s) => s.id === result.student_id
 								);
@@ -527,6 +543,9 @@ const QuizAnalytics = () => {
 										</td>
 										<td className="py-3 px-4 text-gray-900">
 											{result.score}/{result.total_questions}
+										</td>
+										<td className="py-3 px-4 font-medium text-gray-900">
+											{result.mode}
 										</td>
 										<td className="py-3 px-4 text-gray-600">
 											{result.total_questions}

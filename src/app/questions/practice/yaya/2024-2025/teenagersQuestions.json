@@ -1,0 +1,222 @@
+[
+  {
+    "question": "What is the first book of the Bible?",
+    "options": ["Genesis", "Exodus", "Leviticus", "Numbers"],
+    "answer": "Genesis"
+  },
+  {
+    "question": "Who was swallowed by a big fish?",
+    "options": ["Jonah", "Moses", "Noah", "Elijah"],
+    "answer": "Jonah"
+  },
+  {
+    "question": "Who led the Israelites out of Egypt?",
+    "options": ["Moses", "Joshua", "Aaron", "Joseph"],
+    "answer": "Moses"
+  },
+  {
+    "question": "What is the shortest verse in the Bible?",
+    "options": [
+      "Jesus wept",
+      "God is love",
+      "Rejoice always",
+      "Love one another"
+    ],
+    "answer": "Jesus wept"
+  },
+  {
+    "question": "Who killed Goliath?",
+    "options": ["David", "Saul", "Solomon", "Jonathan"],
+    "answer": "David"
+  },
+  {
+    "question": "What was Jesus’ first miracle?",
+    "options": [
+      "Turning water into wine",
+      "Feeding 5,000 people",
+      "Healing the blind man",
+      "Walking on water"
+    ],
+    "answer": "Turning water into wine"
+  },
+  {
+    "question": "Who built the ark?",
+    "options": ["Noah", "Abraham", "Moses", "Elijah"],
+    "answer": "Noah"
+  },
+  {
+    "question": "What did God give Moses on Mount Sinai?",
+    "options": ["The Ten Commandments", "A rod", "Manna", "A crown"],
+    "answer": "The Ten Commandments"
+  },
+  {
+    "question": "Who betrayed Jesus for 30 pieces of silver?",
+    "options": ["Judas", "Peter", "Thomas", "John"],
+    "answer": "Judas"
+  },
+  {
+    "question": "Who was the strongest man in the Bible?",
+    "options": ["Samson", "David", "Goliath", "Saul"],
+    "answer": "Samson"
+  },
+  {
+    "question": "What weapon did David use to kill Goliath?",
+    "options": ["A sling and a stone", "A sword", "A spear", "A bow and arrow"],
+    "answer": "A sling and a stone"
+  },
+  {
+    "question": "Who was thrown into the lions' den?",
+    "options": ["Daniel", "Joseph", "Moses", "Shadrach"],
+    "answer": "Daniel"
+  },
+  {
+    "question": "What is the longest book in the Bible?",
+    "options": ["Psalms", "Isaiah", "Genesis", "Matthew"],
+    "answer": "Psalms"
+  },
+  {
+    "question": "Who baptized Jesus?",
+    "options": ["John the Baptist", "Peter", "Paul", "James"],
+    "answer": "John the Baptist"
+  },
+  {
+    "question": "Who was the first man created by God?",
+    "options": ["Adam", "Noah", "Abraham", "Moses"],
+    "answer": "Adam"
+  },
+  {
+    "question": "What is the last book of the Bible?",
+    "options": ["Revelation", "Hebrews", "John", "Acts"],
+    "answer": "Revelation"
+  },
+  {
+    "question": "Who walked on water with Jesus?",
+    "options": ["Peter", "John", "James", "Andrew"],
+    "answer": "Peter"
+  },
+  {
+    "question": "What did Jesus use to feed 5,000 people?",
+    "options": [
+      "Loaves and fishes",
+      "Manna",
+      "Bread and wine",
+      "Corn and fish"
+    ],
+    "answer": "Loaves and fishes"
+  },
+  {
+    "question": "What is the golden rule?",
+    "options": [
+      "Love your neighbor as yourself",
+      "Do unto others as you would have them do unto you",
+      "Honor your parents",
+      "Seek first the kingdom of God"
+    ],
+    "answer": "Do unto others as you would have them do unto you"
+  },
+  {
+    "question": "Who was the first woman created by God?",
+    "options": ["Eve", "Sarah", "Ruth", "Mary"],
+    "answer": "Eve"
+  },
+  {
+    "question": "What is the first commandment?",
+    "options": [
+      "You shall have no other gods before me",
+      "You shall not steal",
+      "Honor your father and mother",
+      "You shall not kill"
+    ],
+    "answer": "You shall have no other gods before me"
+  },
+  {
+    "question": "Who was known as the friend of God?",
+    "options": ["Abraham", "David", "Noah", "Moses"],
+    "answer": "Abraham"
+  },
+  {
+    "question": "Which disciple denied Jesus three times?",
+    "options": ["Peter", "John", "Thomas", "Judas"],
+    "answer": "Peter"
+  },
+  {
+    "question": "What did God create on the seventh day?",
+    "options": ["He rested", "Land", "Animals", "Man"],
+    "answer": "He rested"
+  },
+  {
+    "question": "What is the shortest book in the Bible?",
+    "options": ["Obadiah", "Jude", "Philemon", "2 John"],
+    "answer": "Obadiah"
+  },
+  {
+    "question": "How many days did God take to create the world?",
+    "options": ["6", "7", "8", "10"],
+    "answer": "6"
+  },
+  {
+    "question": "Who is known as the father of many nations?",
+    "options": ["Abraham", "Isaac", "Jacob", "Joseph"],
+    "answer": "Abraham"
+  },
+  {
+    "question": "Which Old Testament book has the story of the walls of Jericho?",
+    "options": ["Joshua", "Judges", "Exodus", "Numbers"],
+    "answer": "Joshua"
+  },
+  {
+    "question": "What was the name of the sea God parted for the Israelites?",
+    "options": ["Red Sea", "Dead Sea", "Sea of Galilee", "Mediterranean Sea"],
+    "answer": "Red Sea"
+  },
+  {
+    "question": "Who wrote the majority of the New Testament letters?",
+    "options": ["Paul", "Peter", "John", "Luke"],
+    "answer": "Paul"
+  },
+  {
+    "question": "What is the name of the promised land?",
+    "options": ["Canaan", "Eden", "Egypt", "Jerusalem"],
+    "answer": "Canaan"
+  },
+  {
+    "question": "Who was the first king of Israel?",
+    "options": ["Saul", "David", "Solomon", "Samuel"],
+    "answer": "Saul"
+  },
+  {
+    "question": "What is the second commandment?",
+    "options": [
+      "You shall not make idols",
+      "Honor your parents",
+      "Keep the Sabbath day holy",
+      "You shall not lie"
+    ],
+    "answer": "You shall not make idols"
+  },
+  {
+    "question": "Who interpreted Pharaoh’s dream in Egypt?",
+    "options": ["Joseph", "Moses", "Daniel", "Aaron"],
+    "answer": "Joseph"
+  },
+  {
+    "question": "How many books are in the Bible?",
+    "options": ["66", "72", "39", "27"],
+    "answer": "66"
+  },
+  {
+    "question": "What is the greatest commandment?",
+    "options": [
+      "Love the Lord your God with all your heart",
+      "Honor your father and mother",
+      "Do not steal",
+      "Keep the Sabbath day holy"
+    ],
+    "answer": "Love the Lord your God with all your heart"
+  },
+  {
+    "question": "What was the name of the giant David defeated?",
+    "options": ["Goliath", "Saul", "Samson", "Eli"],
+    "answer": "Goliath"
+  }
+]

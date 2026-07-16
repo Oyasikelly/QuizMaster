@@ -2,6 +2,9 @@
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { getLessons, getAcademicYears } from "../app/actions/getLessons";
+import { getQuestionCount } from "../app/actions/getQuestions";
+
 import {
 	FaClock,
 	FaPlay,
@@ -44,6 +47,81 @@ export default function SelectTime() {
 		message: "",
 	});
 	const [user, setUser] = useState(null);
+	const [lessons, setLessons] = useState([]);
+	const [selectedLesson, setSelectedLesson] = useState("");
+	const [selectedDifficulty, setSelectedDifficulty] = useState("normal");
+	const [academicYears, setAcademicYears] = useState([]);
+	const [selectedYear, setSelectedYear] = useState("");
+	const [maxAvailableQuestions, setMaxAvailableQuestions] = useState(200);
+	const [countLoading, setCountLoading] = useState(false);
+	const [yearsLoading, setYearsLoading] = useState(true);
+	const [lessonsLoading, setLessonsLoading] = useState(false);
+
+	// Fetch available academic years, then lessons
+	useEffect(() => {
+		const fetchYearsAndLessons = async () => {
+			setYearsLoading(true);
+			const selectedCategory = Categories.find(
+				(cat) => pathname === cat.pathname
+			);
+			if (selectedCategory) {
+				const years = await getAcademicYears(selectedCategory.name);
+				setAcademicYears(years);
+				const firstYear = years[0] || "";
+				setSelectedYear(firstYear);
+				if (firstYear) {
+					setLessonsLoading(true);
+					const availableLessons = await getLessons(selectedCategory.name, firstYear, "normal");
+					setLessons(availableLessons);
+					if (availableLessons.length > 0) setSelectedLesson(availableLessons[0].id);
+					setLessonsLoading(false);
+				}
+			}
+			setYearsLoading(false);
+		};
+		fetchYearsAndLessons();
+	}, [pathname]);
+
+	// Re-fetch lessons when year or difficulty changes
+	useEffect(() => {
+		if (!selectedYear) return;
+		const selectedCategory = Categories.find((cat) => pathname === cat.pathname);
+		if (!selectedCategory) return;
+		const fetchLessons = async () => {
+			setLessonsLoading(true);
+			const availableLessons = await getLessons(selectedCategory.name, selectedYear, selectedDifficulty);
+			setLessons(availableLessons);
+			if (availableLessons.length > 0) setSelectedLesson(availableLessons[0].id);
+			else setSelectedLesson("");
+			setLessonsLoading(false);
+		};
+		fetchLessons();
+	}, [selectedYear, selectedDifficulty, pathname]);
+
+	// Fetch question count whenever lesson, difficulty, year or category changes
+	useEffect(() => {
+		if (!selectedLesson || !selectedDifficulty || !selectedYear) return;
+		const selectedCategory = Categories.find((cat) => pathname === cat.pathname);
+		if (!selectedCategory) return;
+
+		const fetchCount = async () => {
+			setCountLoading(true);
+			const count = await getQuestionCount(
+				selectedCategory.name,
+				selectedLesson,
+				selectedDifficulty,
+				selectedYear
+			);
+			setMaxAvailableQuestions(count);
+			// Auto-set defaults: all questions, time = 1.5 min per question (rounded to 5)
+			const suggestedQ = count;
+			const suggestedT = Math.max(5, Math.ceil((count * 1.5) / 5) * 5);
+			setSelectedQuestions(suggestedQ);
+			setSelectedTime(suggestedT);
+			setCountLoading(false);
+		};
+		fetchCount();
+	}, [selectedLesson, selectedDifficulty, selectedYear, pathname]);
 
 	// Remove loading overlay if returning from quiz page
 	useEffect(() => {
@@ -177,9 +255,25 @@ export default function SelectTime() {
 		if (selectedCategory) {
 			// Give overlay time to show before navigating
 			setTimeout(() => {
-				router.push(
-					`${selectedCategory.pathname}/quiz?time=${selectedTime}&questions=${selectedQuestions}`
-				);
+				let url = `${selectedCategory.pathname}/quiz?time=${selectedTime}&questions=${selectedQuestions}`;
+				if (!quizState.isRealQuiz) {
+					url += `&lesson=${selectedLesson}&difficulty=${selectedDifficulty}&year=${selectedYear}`;
+				}
+				router.push(url);
+			}, 300);
+		}
+	};
+
+	const handlePracticeEntireYear = () => {
+		setLoading(true);
+		const selectedCategory = Categories.find(
+			(cat) => pathname === cat.pathname
+		);
+		if (selectedCategory) {
+			setTimeout(() => {
+				const lessonName = selectedCategory.name === 'adults' ? 'adult-questions' : `${selectedCategory.name}-questions`;
+				const url = `${selectedCategory.pathname}/quiz?time=${selectedTime}&questions=${selectedQuestions}&lesson=${lessonName}&difficulty=practice&year=${selectedYear}`;
+				router.push(url);
 			}, 300);
 		}
 	};
@@ -189,8 +283,9 @@ export default function SelectTime() {
 			? `${Math.floor(min / 60)}h ${min % 60 ? (min % 60) + "m" : ""}`.trim()
 			: `${min} min`;
 
-	const canStart =
-		selectedTime > 0 && selectedQuestions > 0 && quizState.canTakeQuiz;
+	const canStart = quizState.isRealQuiz
+		? selectedTime > 0 && selectedQuestions > 0 && quizState.canTakeQuiz
+		: selectedTime > 0 && selectedQuestions > 0 && quizState.canTakeQuiz && selectedLesson !== "" && selectedYear !== "" && !countLoading;
 
 	return (
 		<div className="flex flex-col items-center w-full p-6 relative">
@@ -276,6 +371,75 @@ export default function SelectTime() {
 						</div>
 					)}
 				</motion.div>
+
+				{/* Practice Mode Selections: Year, Lesson & Difficulty */}
+				{!quizState.isRealQuiz && quizState.canTakeQuiz && (
+					<div className="flex flex-col gap-6 w-full px-4">
+						{/* Academic Year */}
+						<div className="flex flex-col">
+							<label className="text-sm font-semibold text-gray-700 mb-2">
+								📅 Academic Year
+							</label>
+							<select
+								value={selectedYear}
+								onChange={(e) => setSelectedYear(e.target.value)}
+								disabled={yearsLoading}
+								className={`p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-400 focus:outline-none bg-white/50 backdrop-blur-sm shadow-sm ${yearsLoading ? 'opacity-60 cursor-wait' : ''}`}
+							>
+								{yearsLoading ? (
+									<option value="">Loading years...</option>
+								) : academicYears.length > 0 ? (
+									academicYears.map((year, idx) => (
+										<option key={idx} value={year}>{year}</option>
+									))
+								) : (
+									<option value="">No academic years available</option>
+								)}
+							</select>
+						</div>
+						{/* Lesson & Difficulty side by side */}
+						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+							<div className="flex flex-col">
+								<label className="text-sm font-semibold text-gray-700 mb-2">
+									📖 Select Lesson
+								</label>
+								<select
+									value={selectedLesson}
+									onChange={(e) => setSelectedLesson(e.target.value)}
+									disabled={lessonsLoading}
+									className={`p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:outline-none bg-white/50 backdrop-blur-sm shadow-sm ${lessonsLoading ? 'opacity-60 cursor-wait' : ''}`}
+								>
+									{lessonsLoading ? (
+										<option value="">Loading lessons...</option>
+									) : lessons.length > 0 ? (
+										lessons.map((lesson, idx) => (
+											<option key={idx} value={lesson.id}>
+												{lesson.title}
+											</option>
+										))
+									) : (
+										<option value="">No lessons available</option>
+									)}
+								</select>
+							</div>
+							<div className="flex flex-col">
+								<label className="text-sm font-semibold text-gray-700 mb-2">
+									🎯 Select Difficulty
+								</label>
+								<select
+									value={selectedDifficulty}
+									onChange={(e) => setSelectedDifficulty(e.target.value)}
+									className="p-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-400 focus:outline-none bg-white/50 backdrop-blur-sm shadow-sm"
+								>
+									<option value="normal">🟢 Normal</option>
+									<option value="medium">🟡 Medium</option>
+									<option value="hard">🔴 Hard</option>
+								</select>
+							</div>
+						</div>
+					</div>
+				)}
+
 				{/* Select Time */}
 				<div className="text-center space-y-4">
 					<h3 className="text-base font-semibold flex items-center justify-center gap-2 text-gray-800">
@@ -299,18 +463,14 @@ export default function SelectTime() {
 							className={`w-2/3 md:w-1/3 ${
 								quizState.isRealQuiz || !quizState.canTakeQuiz
 									? "opacity-50 cursor-not-allowed"
-									: "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent"
+									: ""
 							}`}
 						/>
 						{quizState.isRealQuiz && (
-							<p className="text-xs text-red-600">
-								Time is fixed for real quiz
-							</p>
+							<p className="text-xs text-red-600">Time is fixed for real quiz</p>
 						)}
 						{!quizState.canTakeQuiz && !quizState.isRealQuiz && (
-							<p className="text-xs text-gray-600">
-								Quiz is currently unavailable
-							</p>
+							<p className="text-xs text-gray-600">Quiz is currently unavailable</p>
 						)}
 					</div>
 				</div>
@@ -320,51 +480,60 @@ export default function SelectTime() {
 					<h3 className="text-base font-semibold flex items-center justify-center gap-2 text-gray-800">
 						<FaQuestionCircle className="text-blue-500" /> Number of Questions
 					</h3>
-					<div className="flex flex-wrap justify-center gap-3">
-						{/* Question presets removed for simplicity */}
-					</div>
+
+					{/* Available questions badge */}
+					{!quizState.isRealQuiz && maxAvailableQuestions > 0 && (
+						<div className="flex items-center justify-center gap-2">
+							{countLoading ? (
+								<span className="text-xs text-gray-400 animate-pulse">Checking question bank...</span>
+							) : (
+								<span className="px-3 py-1 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold rounded-full">
+									📦 {maxAvailableQuestions} questions available in this lesson
+								</span>
+							)}
+						</div>
+					)}
 
 					{/* Optional Slider */}
 					<div className="flex flex-col items-center space-y-1">
 						<label className="text-sm text-gray-600">
 							{quizState.isRealQuiz ? "Fixed: " : "Custom: "}
 							{selectedQuestions} Questions
+							{!quizState.isRealQuiz && maxAvailableQuestions > 0 && (
+								<span className="ml-2 text-gray-400">(max {maxAvailableQuestions})</span>
+							)}
 						</label>
 						<input
 							type="range"
-							min={5}
-							max={200}
-							step={5}
+							min={1}
+							max={quizState.isRealQuiz ? 200 : maxAvailableQuestions || 200}
+							step={1}
 							value={selectedQuestions}
 							onChange={(e) => setSelectedQuestions(Number(e.target.value))}
-							disabled={quizState.isRealQuiz || !quizState.canTakeQuiz}
+							disabled={quizState.isRealQuiz || !quizState.canTakeQuiz || countLoading}
 							className={`w-2/3 md:w-1/3 ${
 								quizState.isRealQuiz || !quizState.canTakeQuiz
 									? "opacity-50 cursor-not-allowed"
-									: "bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent"
+									: ""
 							}`}
 						/>
 						{quizState.isRealQuiz && (
-							<p className="text-xs text-red-600">
-								Questions are fixed for real quiz
-							</p>
+							<p className="text-xs text-red-600">Questions are fixed for real quiz</p>
 						)}
 						{!quizState.canTakeQuiz && !quizState.isRealQuiz && (
-							<p className="text-xs text-gray-600">
-								Quiz is currently unavailable
-							</p>
+							<p className="text-xs text-gray-600">Quiz is currently unavailable</p>
 						)}
-					</div>
-				</div>
+			</div>
+			</div>
 
-				{/* Start Button */}
-				<div className="flex justify-center">
+			{/* Start Button */}
+				<div className="flex flex-col items-center gap-4">
 					<motion.button
 						whileHover={canStart ? { scale: 1.05 } : {}}
 						whileTap={canStart ? { scale: 0.95 } : {}}
 						onClick={canStart ? handleStartQuiz : undefined}
 						disabled={!canStart}
-						className={`py-4 px-8 rounded-full flex items-center justify-center gap-3 text-white font-semibold text-lg shadow-xl transition-all duration-300 ${
+						className={`py-4 px-8 rounded-full flex items-center justify-center gap-3 text-white font-semibold text-lg shadow-xl transition-all duration-300 w-full max-w-sm ${
 							quizState.isRealQuiz
 								? "bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-600 hover:to-orange-700"
 								: quizState.canTakeQuiz
@@ -384,6 +553,21 @@ export default function SelectTime() {
 							? "Start Practice Quiz"
 							: "Quiz Unavailable"}
 					</motion.button>
+
+					{!quizState.isRealQuiz && quizState.canTakeQuiz && selectedYear && (
+						<motion.button
+							whileHover={canStart ? { scale: 1.05 } : {}}
+							whileTap={canStart ? { scale: 0.95 } : {}}
+							onClick={canStart ? handlePracticeEntireYear : undefined}
+							disabled={!canStart}
+							className={`py-3 px-6 rounded-full flex items-center justify-center gap-3 text-purple-700 bg-purple-100 border border-purple-300 font-medium text-md shadow-md transition-all duration-300 w-full max-w-sm ${
+								!canStart ? "opacity-50 cursor-not-allowed" : "hover:bg-purple-200"
+							}`}
+						>
+							<FaPlay className="text-sm" />
+							Practice Entire Year
+						</motion.button>
+					)}
 				</div>
 			</motion.div>
 		</div>

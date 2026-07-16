@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect } from "react";
 import Quiz from "../../../../components/Quiz";
-import adultsQuestions from "../../../questions/adultsQuestions.json";
+import adultsQuestions from "../../../questions/real/adults/adultsQuestions.json";
 
 const AdultsQuiz = () => {
 	useEffect(() => {
