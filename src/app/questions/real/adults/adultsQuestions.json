@@ -1,548 +1,14 @@
 [
 	{
-		"question": "Omnificence is defined as",
+		"question": "What is the conclusion for lesson 40?",
 		"options": [
-			"The ability to know all things",
-			"The ability to be everywhere",
-			"The ability to create all things",
-			"The ability to forgive sins"
+			"Love God always and your enemies will not prevail.",
+			"Remain in God and your enemies will flee.",
+			"Remain in God and your enemies will not prevail against you.",
+			"Pray always and watch God disgrace your enemies."
 		],
 		"type": "multiple-choice",
-		"answer": "The ability to create all things"
-	},
-	{
-		"question": "Although man is not omnificent, God gave man",
-		"options": [
-			"The ability to forgive sins",
-			"Tremendous creative ability",
-			"The power to judge",
-			"The power to be everywhere"
-		],
-		"type": "multiple-choice",
-		"answer": "Tremendous creative ability"
-	},
-
-	{
-		"question": "Jesus had always been God according to",
-		"options": ["John 1:14", "John 8:58, 10:30", "Matthew 28:18", "Luke 1:35"],
-		"type": "multiple-choice",
-		"answer": "John 8:58, 10:30"
-	},
-	{
-		"question": "The humanity of Jesus is as important as His",
-		"options": ["Ministry", "Deity", "Miracles", "Parables"],
-		"type": "multiple-choice",
-		"answer": "Deity"
-	},
-	{
-		"question": "The Spirit of God is linked with creation in",
-		"options": [
-			"Genesis 1:2",
-			"Isaiah 32:14-17",
-			"Matthew 3:16",
-			"Psalm 104:30"
-		],
-		"type": "multiple-choice",
-		"answer": "Psalm 104:30"
-	},
-
-	{
-		"question": "The Spirit of God helped _________ to prevail against the Mesopotamian king in Judges 3:10",
-		"type": "fill-in-the-blank",
-		"answer": "Othniel"
-	},
-	{
-		"question": "The Greek word for 'temple' is ___________",
-		"options": ["Naos", "Pneuma", "Logos", "Hagios"],
-		"type": "multiple-choice",
-		"answer": "Naos"
-	},
-	{
-		"question": "The verse for believers offering spiritual sacrifices is",
-		"options": [
-			"1 Peter 2:5",
-			"1 Corinthians 3:17",
-			"2 Corinthians 3:18",
-			"Ephesians 2:22"
-		],
-		"type": "multiple-choice",
-		"answer": "1 Peter 2:5"
-	},
-
-	{
-		"question": "Contention is a potent weapon Satan uses to subdue the power in _________",
-		"type": "fill-in-the-blank",
-		"answer": "Unity"
-	},
-
-	{
-		"question": "The date of the lesson is _______",
-		"options": [
-			"5th October, 2025",
-			"28th September, 2025",
-			"19th October, 2025",
-			"12th October, 2025"
-		],
-		"type": "multiple-choice",
-		"answer": "12th October, 2025"
-	},
-	{
-		"question": "Moses built an altar in",
-		"options": ["Genesis 35:7", "Genesis 8:20", "Exodus 17:15", "Genesis 22:9"],
-		"type": "multiple-choice",
-		"answer": "Exodus 17:15"
-	},
-	{
-		"question": "Examples of spiritual gifts include prophecy, healing, teaching, serving, giving, and",
-		"options": ["Joy", "Leadership", "Peace", "Love"],
-		"type": "multiple-choice",
-		"answer": "Leadership"
-	},
-	{
-		"question": "Prophecy is defined as the act of speaking God’s words under ____________",
-		"type": "fill-in-the-blank",
-		"answer": "Divine inspiration"
-	},
-	{
-		"question": "Water from the Rock is recorded in",
-		"options": [
-			"Exodus 16:4,15",
-			"2 Kings 5:14",
-			"Joshua 10:12-14",
-			"Numbers 20:2, 6-11"
-		],
-		"type": "multiple-choice",
-		"answer": "Numbers 20:2, 6-11"
-	},
-	{
-		"question": "Workplace Ministry is also known as",
-		"options": [
-			"Church Ministry",
-			"Marketplace Ministry",
-			"Missionary Ministry",
-			"Pastoral Ministry"
-		],
-		"type": "multiple-choice",
-		"answer": "Marketplace Ministry"
-	},
-	{
-		"question": "God gave the 'law and commandments' written on tablets of stone in",
-		"options": [
-			"Exodus 24:12",
-			"Exodus 20:1-17",
-			"Deuteronomy 5:22",
-			"Leviticus 26:46"
-		],
-		"type": "multiple-choice",
-		"answer": "Exodus 24:12"
-	},
-
-	{
-		"question": "The eye is described as the Light of the _________",
-		"type": "fill-in-the-blank",
-		"answer": "Body"
-	},
-
-	{
-		"question": "Hebrews 5:11 describes some people as having",
-		"options": ["Sharp ears", "Dull ears", "Open ears", "Closed ears"],
-		"type": "multiple-choice",
-		"answer": "Dull ears"
-	},
-	{
-		"question": "According to the outline of the Topic “Game changer” the outline 1 is ________",
-		"options": ["Qualities", "Upshots", "Conclusion", "Questions"],
-		"type": "multiple-choice",
-		"answer": "Qualities"
-	},
-
-	{
-		"question": "There are how many main types of criticism mentioned in the lesson?",
-		"options": ["One", "Three", "Two", "Four"],
-		"type": "multiple-choice",
-		"answer": "Two"
-	},
-	{
-		"question": "The memory verse for the lesson 'THE ATTITUDE OF THANKSGIVING' is from _________",
-		"type": "fill-in-the-blank",
-		"answer": "1 Thes 5:18"
-	},
-
-	{
-		"question": "The lesson topic for Lesson 19 is _________",
-		"options": [
-			"Maintain Humility",
-			"Maintain Prayer",
-			"Maintain Faith",
-			"Maintain Excellence"
-		],
-		"type": "multiple-choice",
-		"answer": "Maintain Excellence"
-	},
-	{
-		"question": "The two main groups of resources mentioned are",
-		"options": [
-			"Capital and natural resources",
-			"Spiritual and physical",
-			"Human and animal resources",
-			"Public and private resources"
-		],
-		"type": "multiple-choice",
-		"answer": "Spiritual and physical"
-	},
-
-	{
-		"question": "Integrity is described as one of the",
-		"options": [
-			"Least important traits",
-			"Optional traits",
-			"Whole moral character",
-			"Social skills"
-		],
-		"type": "multiple-choice",
-		"answer": "Whole moral character"
-	},
-	{
-		"question": "The lesson topic for 22 is ________",
-		"type": "fill-in-the-blank",
-		"answer": "Self-worth"
-	},
-	{
-		"question": "Titus 1:15 says to the pure, all things are",
-		"options": ["Dirty", "Pure", "Forbidden", "Sinful"],
-		"type": "multiple-choice",
-		"answer": "Pure"
-	},
-	{
-		"question": "1 Peter 4:10 says we should volunteer our talents and time to",
-		"options": [
-			"Gain wisdom",
-			"Contribute to community development",
-			"Gain recognition",
-			"engage in work"
-		],
-		"type": "multiple-choice",
-		"answer": "Contribute to community development"
-	},
-	{
-		"question": "Mordecai was first introduced in Esther 2:5 as a Jew who lived in",
-		"options": ["Shushan", "Jerusalem", "Babylon", "Egypt"],
-		"type": "multiple-choice",
-		"answer": "Shushan"
-	},
-	{
-		"question": "The outline 2 of Lesson 41 is ________",
-		"options": [
-			"His Character and Achievements",
-			"Questions from His wisdom",
-			"Further Readings",
-			"Lessons from His Life"
-		],
-		"type": "multiple-choice",
-		"answer": "Lessons from His Life"
-	},
-	{
-		"question": "The introduction of Lesson 42 states that there is a significant moment in life that will happen according to God's _______",
-		"type": "fill-in-the-blank",
-		"answer": "will"
-	},
-	{
-		"question": "The first biblical principle is to pray for divine guidance before investing, seen in",
-		"options": [
-			"Genesis 41:33-37",
-			"Psalm 32:8",
-			"Proverbs 3:5-6",
-			"James 1:5"
-		],
-		"type": "multiple-choice",
-		"answer": "Proverbs 3:5-6"
-	},
-	{
-		"question": "The word 'occupy' in Luke 19:13 literally means",
-		"options": ["Sit and wait", "Do business", "Pray", "Rest"],
-		"type": "multiple-choice",
-		"answer": "Do business"
-	},
-	{
-		"question": "The consequence of wrong attitude or inaction is expressed in",
-		"options": [
-			"Luke 19:22-24",
-			"Matthew 25:26-27",
-			"Luke 19:26-27",
-			"Matthew 25:28-30"
-		],
-		"type": "multiple-choice",
-		"answer": "Matthew 25:28-30"
-	},
-	{
-		"question": "In Christ, all believers are united, regardless of background, seen in",
-		"options": [
-			"Galatians 3:28",
-			"Ephesians 2:14-16",
-			"Colossians 3:11",
-			"All of the above"
-		],
-		"type": "multiple-choice",
-		"answer": "Galatians 3:28"
-	},
-	{
-		"question": "Galatians 6:1 says if a person is overtaken in a fault, you who are spiritual should restore such a one in the spirit of ________",
-		"type": "fill-in-the-blank",
-		"answer": "Meekness"
-	},
-	{
-		"question": "Judges 6:33-7:25 describes Gideon's victory over the Midianites at",
-		"options": ["Jezreel", "Megiddo", "Gilboa", "Gilgal"],
-		"type": "multiple-choice",
-		"answer": "Jezreel"
-	},
-	{
-		"question": "The 'books' versus the 'Book of Life' are described in",
-		"options": [
-			"Revelation 20:11-15",
-			"Revelation 21:27",
-			"Revelation 3:5",
-			"Philippians 4:3"
-		],
-		"type": "multiple-choice",
-		"answer": "Revelation 20:11-15"
-	},
-	{
-		"question": "John 5:28-29 says Jesus Christ Himself, the first fruit of them that slept, promised the resurrection takes place at various",
-		"options": ["Times", "Events", "Moments", "Stages"],
-		"type": "multiple-choice",
-		"answer": "Stages"
-	},
-	{
-		"question": "The memory verse for the lesson 51 is from ________",
-		"type": "fill-in-the-blank",
-		"answer": "Rev 21:8"
-	},
-	{
-		"question": "One consequence of the get-rich-quick syndrome is",
-		"options": [
-			"Increase in honesty",
-			"Erosion of traditional values like honesty and hard work",
-			"Improvement in educational standards",
-			"Genuine satisfaction"
-		],
-		"type": "multiple-choice",
-		"answer": "Erosion of traditional values like honesty and hard work"
-	},
-	{
-		"question": "Paul used the Greek word 'philodonos' to mean",
-		"options": [
-			"Lovers of pleasures",
-			"Haters of God",
-			"Lovers of money",
-			"Lovers of righteousness"
-		],
-		"type": "multiple-choice",
-		"answer": "Lovers of pleasures"
-	},
-	{
-		"question": "Issachar was the",
-		"options": [
-			"First son of Jacob and Rachel",
-			"Seventh son of Jacob",
-			"Twelfth son of Jacob",
-			"Fifth son of Jacob"
-		],
-		"type": "multiple-choice",
-		"answer": "Fifth son of Jacob"
-	},
-	{
-		"question": "The differences in creation eradicated potential __________",
-		"type": "fill-in-the-blank",
-		"answer": "Boredom"
-	},
-	{
-		"question": "Etiquette makes one behave in a responsible way distinct from",
-		"options": ["Angels", "Children", "Animals", "Elders"],
-		"type": "multiple-choice",
-		"answer": "Animals"
-	},
-	{
-		"question": "God created us as spirit beings after His image according to",
-		"options": [
-			"Genesis 2:7",
-			"Jeremiah 30:17",
-			"Genesis 1:26-27",
-			"1 Corinthians 6:19"
-		],
-		"type": "multiple-choice",
-		"answer": "Genesis 1:26-27"
-	},
-	{
-		"question": "Some men tactically leave most household chores to ________ 1 Timothy 5:8",
-		"options": [
-			"The children",
-			"The wife",
-			"The househelp only",
-			"The neighbors"
-		],
-		"type": "multiple-choice",
-		"answer": "The wife"
-	},
-	{
-		"question": "Acts of fornication, extramarital sex with another person apart from one’s legal spouse is described in _____________ ",
-		"type": "fill-in-the-blank",
-		"answer": "1 Cor 10 or Rom 1:27-28"
-	},
-	{
-		"question": "Permissive Parents are high in 'responsiveness/love' but low in",
-		"options": ["Demandingness/discipline", "Love", "Money", "Prayer"],
-		"type": "multiple-choice",
-		"answer": "Demandingness/discipline"
-	},
-	{
-		"question": "The Bible reference for discipline in parenting is",
-		"options": [
-			"Proverbs 31:15, 21",
-			"Ephesians 6:4",
-			"Proverbs 22:6",
-			"Proverbs 23:13-14"
-		],
-		"type": "multiple-choice",
-		"answer": "Proverbs 23:13-14"
-	},
-	{
-		"question": "In Genesis 25:28, Preferring a child over others can create a divided home like that of",
-		"options": [
-			"Abraham and Sarah",
-			"Isaac and Rebecca",
-			"Jacob and Rachel",
-			"Elkanah and Hannah"
-		],
-		"type": "multiple-choice",
-		"answer": "Elkanah and Hannah"
-	},
-	{
-		"question": "According to __________ God is the Father to the fatherless and the protector of widows",
-		"type": "fill-in-the-blank",
-		"answer": "Psalm 68:5"
-	},
-	{
-		"question": "Omnificence is defined as",
-		"options": [
-			"The ability to know all things",
-			"The ability to be everywhere",
-			"The ability to create all things",
-			"The ability to forgive sins"
-		],
-		"type": "multiple-choice",
-		"answer": "The ability to create all things"
-	},
-	{
-		"question": "Although man is not omnificent, God gave man",
-		"options": [
-			"The ability to forgive sins",
-			"Tremendous creative ability",
-			"The power to judge",
-			"The power to be everywhere"
-		],
-		"type": "multiple-choice",
-		"answer": "Tremendous creative ability"
-	},
-	{
-		"question": "Jesus had always been God according to",
-		"options": ["John 1:14", "John 8:58, 10:30", "Matthew 28:18", "Luke 1:35"],
-		"type": "multiple-choice",
-		"answer": "John 8:58, 10:30"
-	},
-	{
-		"question": "The humanity of Jesus is as important as His",
-		"options": ["Ministry", "Deity", "Miracles", "Parables"],
-		"type": "multiple-choice",
-		"answer": "Deity"
-	},
-	{
-		"question": "The Spirit of God is linked with creation in",
-		"options": [
-			"Genesis 1:2",
-			"Isaiah 32:14-17",
-			"Matthew 3:16",
-			"Psalm 104:30"
-		],
-		"type": "multiple-choice",
-		"answer": "Genesis 1:2"
-	},
-	{
-		"question": "The Spirit of God helped _________ to prevail against the Mesopotamian king in Judges 3:10",
-		"type": "fill-in-the-blank",
-		"answer": "Othniel"
-	},
-	{
-		"question": "The Greek word for 'temple' is ___________",
-		"options": ["Naos", "Pneuma", "Logos", "Hagios"],
-		"type": "multiple-choice",
-		"answer": "Naos"
-	},
-	{
-		"question": "The verse for believers offering spiritual sacrifices is",
-		"options": [
-			"1 Peter 2:5",
-			"1 Corinthians 3:17",
-			"2 Corinthians 3:18",
-			"Ephesians 2:22"
-		],
-		"type": "multiple-choice",
-		"answer": "1 Peter 2:5"
-	},
-	{
-		"question": "Contention is a potent weapon Satan uses to subdue the power in _________",
-		"type": "fill-in-the-blank",
-		"answer": "Unity"
-	},
-	{
-		"question": "The date of the lesson is _______",
-		"options": [
-			"5th October, 2025",
-			"28th September, 2025",
-			"19th October, 2025",
-			"12th October, 2025"
-		],
-		"type": "multiple-choice",
-		"answer": "12th October, 2025"
-	},
-	{
-		"question": "Moses built an altar in",
-		"options": ["Genesis 35:7", "Genesis 8:20", "Exodus 17:15", "Genesis 22:9"],
-		"type": "multiple-choice",
-		"answer": "Exodus 17:15"
-	},
-	{
-		"question": "Examples of spiritual gifts include prophecy, healing, teaching, serving, giving, and",
-		"options": ["Joy", "Leadership", "Peace", "Love"],
-		"type": "multiple-choice",
-		"answer": "Leadership"
-	},
-	{
-		"question": "Prophecy is defined as the act of speaking God’s words under ____________",
-		"type": "fill-in-the-blank",
-		"answer": "Divine inspiration"
-	},
-	{
-		"question": "Water from the Rock is recorded in",
-		"options": [
-			"Exodus 16:4,15",
-			"2 Kings 5:14",
-			"Joshua 10:12-14",
-			"Numbers 20:2, 6-11"
-		],
-		"type": "multiple-choice",
-		"answer": "Numbers 20:2, 6-11"
-	},
-	{
-		"question": "Workplace Ministry is also known as",
-		"options": [
-			"Church Ministry",
-			"Marketplace Ministry",
-			"Missionary Ministry",
-			"Pastoral Ministry"
-		],
-		"type": "multiple-choice",
-		"answer": "Marketplace Ministry"
+		"answer": "Remain in God and your enemies will not prevail against you."
 	},
 	{
 		"question": "God gave the 'law and commandments' written on tablets of stone in",
@@ -556,32 +22,58 @@
 		"answer": "Exodus 20:1-17"
 	},
 	{
-		"question": "The eye is described as the Light of the _________",
+		"question": "Prophecy is defined as the act of speaking God’s words under ____________",
 		"type": "fill-in-the-blank",
-		"answer": "Body"
+		"answer": "Divine inspiration"
 	},
 	{
-		"question": "Hebrews 5:11 describes some people as having",
-		"options": ["Sharp ears", "Dull ears", "Open ears", "Closed ears"],
-		"type": "multiple-choice",
-		"answer": "Dull ears"
-	},
-	{
-		"question": "According to the outline of the Topic “Game changer” the outline 1 is ________",
-		"options": ["Qualities", "Upshots", "Conclusion", "Questions"],
-		"type": "multiple-choice",
-		"answer": "Qualities"
-	},
-	{
-		"question": "There are how many main types of criticism mentioned in the lesson?",
-		"options": ["One", "Three", "Two", "Four"],
-		"type": "multiple-choice",
-		"answer": "Two"
-	},
-	{
-		"question": "The memory verse for the lesson 'THE ATTITUDE OF THANKSGIVING' is from _________",
+		"question": "The Spirit of God helped _________ to prevail against the Mesopotamian king in Judges 3:10",
 		"type": "fill-in-the-blank",
-		"answer": "1 Thes 5:18"
+		"answer": "Othniel"
+	},
+	{
+		"question": "In Christ, all believers are united, regardless of background, seen in",
+		"options": [
+			"Galatians 3:28",
+			"Ephesians 2:14-16",
+			"Colossians 3:11",
+			"All of the above"
+		],
+		"type": "multiple-choice",
+		"answer": "Galatians 3:28"
+	},
+	{
+		"question": "Omnificence is defined as",
+		"options": [
+			"The ability to know all things",
+			"The ability to be everywhere",
+			"The ability to create all things",
+			"The ability to forgive sins"
+		],
+		"type": "multiple-choice",
+		"answer": "The ability to create all things"
+	},
+	{
+		"question": "John 5:28-29 says Jesus Christ Himself, the first fruit of them that slept, promised the resurrection takes place at various",
+		"options": [
+			"Times",
+			"Events",
+			"Moments",
+			"Stages"
+		],
+		"type": "multiple-choice",
+		"answer": "Stages"
+	},
+	{
+		"question": "Etiquette makes one behave in a responsible way distinct from",
+		"options": [
+			"Angels",
+			"Children",
+			"Animals",
+			"Elders"
+		],
+		"type": "multiple-choice",
+		"answer": "Animals"
 	},
 	{
 		"question": "The lesson topic for Lesson 19 is _________",
@@ -595,15 +87,15 @@
 		"answer": "Maintain Excellence"
 	},
 	{
-		"question": "The two main groups of resources mentioned are",
+		"question": "What is the topic for lesson 17?",
 		"options": [
-			"Capital and natural resources",
-			"Spiritual and physical",
-			"Human and animal resources",
-			"Public and private resources"
+			"Repairing the altar",
+			"Self-worth",
+			"Handling criticism",
+			"Integrity"
 		],
 		"type": "multiple-choice",
-		"answer": "Spiritual and physical"
+		"answer": "Handling criticism"
 	},
 	{
 		"question": "Integrity is described as one of the",
@@ -617,142 +109,59 @@
 		"answer": "Whole moral character"
 	},
 	{
-		"question": "The lesson topic for 22 is ________",
-		"type": "fill-in-the-blank",
-		"answer": "Self-worth"
-	},
-	{
-		"question": "Titus 1:15 says to the pure, all things are",
-		"options": ["Dirty", "Pure", "Forbidden", "Sinful"],
-		"type": "multiple-choice",
-		"answer": "Pure"
-	},
-	{
-		"question": "1 Peter 4:10 says we should volunteer our talents and time to",
-		"options": [
-			"Gain wisdom",
-			"Contribute to community development",
-			"Gain recognition",
-			"engage in work"
-		],
-		"type": "multiple-choice",
-		"answer": "Contribute to community development"
-	},
-	{
 		"question": "Mordecai was first introduced in Esther 2:5 as a Jew who lived in",
-		"options": ["Shushan", "Jerusalem", "Babylon", "Egypt"],
+		"options": [
+			"Shushan",
+			"Jerusalem",
+			"Babylon",
+			"Egypt"
+		],
 		"type": "multiple-choice",
 		"answer": "Shushan"
 	},
 	{
-		"question": "The outline 2 of Lesson 41 is ________",
+		"question": "Omnificence is defined as",
 		"options": [
-			"His Character and Achievements",
-			"Questions from His wisdom",
-			"Further Readings",
-			"Lessons from His Life"
+			"The ability to know all things",
+			"The ability to be everywhere",
+			"The ability to create all things",
+			"The ability to forgive sins"
 		],
 		"type": "multiple-choice",
-		"answer": "Lessons from His Life"
+		"answer": "The ability to create all things"
 	},
 	{
-		"question": "The introduction of Lesson 42 states that there is a significant moment in life that will happen according to God's _______",
-		"type": "fill-in-the-blank",
-		"answer": "Divine will"
-	},
-	{
-		"question": "The first biblical principle is to pray for divine guidance before investing, seen in",
+		"question": "According to the outline of the Topic “Game changer” the outline 1 is ________",
 		"options": [
-			"Genesis 41:33-37",
-			"Psalm 32:8",
-			"Proverbs 3:5-6",
-			"James 1:5"
+			"Qualities",
+			"Upshots",
+			"Conclusion",
+			"Questions"
 		],
 		"type": "multiple-choice",
-		"answer": "Proverbs 3:5-6"
+		"answer": "Qualities"
 	},
 	{
-		"question": "The word 'occupy' in Luke 19:13 literally means",
-		"options": ["Sit and wait", "Do business", "Pray", "Rest"],
-		"type": "multiple-choice",
-		"answer": "Do business"
-	},
-	{
-		"question": "The consequence of wrong attitude or inaction is expressed in",
+		"question": "God gave the 'law and commandments' written on tablets of stone in",
 		"options": [
-			"Luke 19:22-24",
-			"Matthew 25:26-27",
-			"Luke 19:26-27",
-			"Matthew 25:28-30"
+			"Exodus 24:12",
+			"Exodus 20:1-17",
+			"Deuteronomy 5:22",
+			"Leviticus 26:46"
 		],
 		"type": "multiple-choice",
-		"answer": "Matthew 25:28-30"
+		"answer": "Exodus 24:12"
 	},
 	{
-		"question": "In Christ, all believers are united, regardless of background, seen in",
+		"question": "What is the Bible text for lesson 49?",
 		"options": [
-			"Galatians 3:28",
-			"Ephesians 2:14-16",
-			"Colossians 3:11",
-			"All of the above"
+			"Rev. 10:11-16",
+			"Jude 1-6",
+			"Rev. 20:11-15",
+			"Micah 2:4-8"
 		],
 		"type": "multiple-choice",
-		"answer": "All of the above"
-	},
-	{
-		"question": "Galatians 6:1 says if a person is overtaken in a fault, you who are spiritual should restore such a one in the spirit of ________",
-		"type": "fill-in-the-blank",
-		"answer": "Meekness"
-	},
-	{
-		"question": "Judges 6:33-7:25 describes Gideon's victory over the Midianites at",
-		"options": ["Jezreel", "Megiddo", "Gilboa", "Gilgal"],
-		"type": "multiple-choice",
-		"answer": "Jezreel"
-	},
-	{
-		"question": "The 'books' versus the 'Book of Life' are described in",
-		"options": [
-			"Revelation 20:11-15",
-			"Revelation 21:27",
-			"Revelation 3:5",
-			"Philippians 4:3"
-		],
-		"type": "multiple-choice",
-		"answer": "Revelation 20:11-15"
-	},
-	{
-		"question": "John 5:28-29 says Jesus Christ Himself, the first fruit of them that slept, promised the resurrection takes place at various",
-		"options": ["Times", "Events", "Moments", "Stages"],
-		"type": "multiple-choice",
-		"answer": "Stages"
-	},
-	{
-		"question": "The memory verse for the lesson 51 is from ________",
-		"type": "fill-in-the-blank",
-		"answer": "Rev 21:8"
-	},
-	{
-		"question": "One consequence of the get-rich-quick syndrome is",
-		"options": [
-			"Increase in honesty",
-			"Erosion of traditional values like honesty and hard work",
-			"Improvement in educational standards",
-			"Genuine satisfaction"
-		],
-		"type": "multiple-choice",
-		"answer": "Erosion of traditional values like honesty and hard work"
-	},
-	{
-		"question": "Paul used the Greek word 'philodonos' to mean",
-		"options": [
-			"Lovers of pleasures",
-			"Haters of God",
-			"Lovers of money",
-			"Lovers of righteousness"
-		],
-		"type": "multiple-choice",
-		"answer": "Lovers of pleasures"
+		"answer": "Rev. 20:11-15"
 	},
 	{
 		"question": "Issachar was the",
@@ -766,155 +175,26 @@
 		"answer": "Fifth son of Jacob"
 	},
 	{
-		"question": "The differences in creation eradicated potential __________",
-		"type": "fill-in-the-blank",
-		"answer": "Boredom"
-	},
-	{
-		"question": "Etiquette makes one behave in a responsible way distinct from",
-		"options": ["Angels", "Children", "Animals", "Elders"],
-		"type": "multiple-choice",
-		"answer": "Animals"
-	},
-	{
-		"question": "God created us as spirit beings after His image according to",
+		"question": "Moses built an altar in",
 		"options": [
-			"Genesis 2:7",
-			"Jeremiah 30:17",
-			"Genesis 1:26-27",
-			"1 Corinthians 6:19"
+			"Genesis 35:7",
+			"Genesis 8:20",
+			"Exodus 17:15",
+			"Genesis 22:9"
 		],
 		"type": "multiple-choice",
-		"answer": "Genesis 1:26-27"
+		"answer": "Exodus 17:15"
 	},
 	{
-		"question": "Some men tactically leave most household chores to ________ 1 Timothy 5:8",
+		"question": "Judges 6:33-7:25 describes Gideon's victory over the Midianites at",
 		"options": [
-			"The children",
-			"The wife",
-			"The househelp only",
-			"The neighbors"
+			"Jezreel",
+			"Megiddo",
+			"Gilboa",
+			"Gilgal"
 		],
 		"type": "multiple-choice",
-		"answer": "The wife"
-	},
-	{
-		"question": "Acts of fornication, extramarital sex with another person apart from one’s legal spouse is described in _____________ ",
-		"type": "fill-in-the-blank",
-		"answer": "1 Cor 10 or Rom 1:27-28"
-	},
-	{
-		"question": "Permissive Parents are high in 'responsiveness/love' but low in",
-		"options": ["Demandingness/discipline", "Love", "Money", "Prayer"],
-		"type": "multiple-choice",
-		"answer": "Demandingness/discipline"
-	},
-	{
-		"question": "The Bible reference for discipline in parenting is",
-		"options": [
-			"Proverbs 31:15, 21",
-			"Ephesians 6:4",
-			"Proverbs 22:6",
-			"Proverbs 23:13-14"
-		],
-		"type": "multiple-choice",
-		"answer": "Proverbs 23:13-14"
-	},
-	{
-		"question": "In Genesis 25:28, Preferring a child over others can create a divided home like that of",
-		"options": [
-			"Abraham and Sarah",
-			"Isaac and Rebecca",
-			"Jacob and Rachel",
-			"Elkanah and Hannah"
-		],
-		"type": "multiple-choice",
-		"answer": "Isaac and Rebecca"
-	},
-	{
-		"question": "According to __________ God is the Father to the fatherless and the protector of widows",
-		"type": "fill-in-the-blank",
-		"answer": "Psalm 68:5"
-	},
-	{
-		"question": "What is the memory verse for Lesson 47?",
-		"options": ["Gal. 2:10", "Matt. 5:17", "Gal. 6:1", "Acts 5:13"],
-		"type": "multiple-choice",
-		"answer": "Gal. 6:1"
-	},
-	{
-		"question": "The word 'Armageddon' comes from the Hebrew word ________________",
-		"options": ["Megiddo", "Gedone", "Ashermeni", "Har-Magedone"],
-		"type": "multiple-choice",
-		"answer": "Har-Magedone"
-	},
-	{
-		"question": "The second death is one of the final events in the Bible described as the eternal death in _________________",
-		"options": [
-			"\"the lake of fire\"",
-			"\"the fire that never ends\"",
-			"\"the lake which burn with fire and brimstone\"",
-			"\"the lake which burns unend with brimstone\""
-		],
-		"type": "multiple-choice",
-		"answer": "\"the lake which burn with fire and brimstone\""
-	},
-	{
-		"question": "What is the Bible text for lesson 50?",
-		"options": ["John 2:9-12", "Is. 5:10-20", "John 5:28-29"],
-		"type": "multiple-choice",
-		"answer": "John 5:28-29"
-	},
-	{
-		"question": "The scripture according to Revelation 20:4-6 mentions a 'first resurrection' and identifies those involved as ________________",
-		"options": [
-			"Strong and holy",
-			"Blessed and gifted",
-			"Blessed and purified",
-			"Blessed and holy"
-		],
-		"type": "multiple-choice",
-		"answer": "Blessed and holy"
-	},
-	{
-		"question": "What is the Bible text for lesson 49?",
-		"options": ["Rev. 10:11-16", "Jude 1-6", "Rev. 20:11-15", "Micah 2:4-8"],
-		"type": "multiple-choice",
-		"answer": "Rev. 20:11-15"
-	},
-	{
-		"question": "The scripture establishes two kinds of eternity: eternal life and eternal _____________",
-		"options": ["Death", "Rescue", "Torture", "Damnation"],
-		"type": "multiple-choice",
-		"answer": "Damnation"
-	},
-	{
-		"question": "What is the memory verse for lesson 11?",
-		"options": ["Col. 3:23", "Heb. 4:6", "John 5:10", "Col. 11:5"],
-		"type": "multiple-choice",
-		"answer": "Col. 3:23"
-	},
-	{
-		"question": "What's the Bible text for lesson 23?",
-		"options": [
-			"Matt. 5:13-16",
-			"Eccl. 10:5-7",
-			"Prov. 29:10-13",
-			"Matt. 5:20-24"
-		],
-		"type": "multiple-choice",
-		"answer": "Eccl. 10:5-7"
-	},
-	{
-		"question": "What is the conclusion for lesson 32?",
-		"options": [
-			"What we eat matters and would determine how far we live.",
-			"What we eat or drink is our first medicine. Take good care of yourself.",
-			"Take good care of yourself to avoid being a danger to your own health.",
-			"None of the above."
-		],
-		"type": "multiple-choice",
-		"answer": "What we eat or drink is our first medicine. Take good care of yourself."
+		"answer": "Jezreel"
 	},
 	{
 		"question": "What is the Bible text for lesson 37?",
@@ -928,21 +208,215 @@
 		"answer": "1 Cor. 5:6-8"
 	},
 	{
+		"question": "Hebrews 5:11 describes some people as having",
+		"options": [
+			"Sharp ears",
+			"Dull ears",
+			"Open ears",
+			"Closed ears"
+		],
+		"type": "multiple-choice",
+		"answer": "Dull ears"
+	},
+	{
+		"question": "Judges 6:33-7:25 describes Gideon's victory over the Midianites at",
+		"options": [
+			"Jezreel",
+			"Megiddo",
+			"Gilboa",
+			"Gilgal"
+		],
+		"type": "multiple-choice",
+		"answer": "Jezreel"
+	},
+	{
+		"question": "Some men tactically leave most household chores to ________ 1 Timothy 5:8",
+		"options": [
+			"The children",
+			"The wife",
+			"The househelp only",
+			"The neighbors"
+		],
+		"type": "multiple-choice",
+		"answer": "The wife"
+	},
+	{
+		"question": "Issachar was the",
+		"options": [
+			"First son of Jacob and Rachel",
+			"Seventh son of Jacob",
+			"Twelfth son of Jacob",
+			"Fifth son of Jacob"
+		],
+		"type": "multiple-choice",
+		"answer": "Fifth son of Jacob"
+	},
+	{
+		"question": "Acts of fornication, extramarital sex with another person apart from one’s legal spouse is described in _____________ ",
+		"type": "fill-in-the-blank",
+		"answer": "1 Cor 10 or Rom 1:27-28"
+	},
+	{
+		"question": "Some men tactically leave most household chores to ________ 1 Timothy 5:8",
+		"options": [
+			"The children",
+			"The wife",
+			"The househelp only",
+			"The neighbors"
+		],
+		"type": "multiple-choice",
+		"answer": "The wife"
+	},
+	{
+		"question": "The differences in creation eradicated potential __________",
+		"type": "fill-in-the-blank",
+		"answer": "Boredom"
+	},
+	{
+		"question": "The Spirit of God helped _________ to prevail against the Mesopotamian king in Judges 3:10",
+		"type": "fill-in-the-blank",
+		"answer": "Othniel"
+	},
+	{
+		"question": "The memory verse for the lesson 51 is from ________",
+		"type": "fill-in-the-blank",
+		"answer": "Rev 21:8"
+	},
+	{
+		"question": "The lesson topic for Lesson 19 is _________",
+		"options": [
+			"Maintain Humility",
+			"Maintain Prayer",
+			"Maintain Faith",
+			"Maintain Excellence"
+		],
+		"type": "multiple-choice",
+		"answer": "Maintain Excellence"
+	},
+	{
+		"question": "Paul used the Greek word 'philodonos' to mean",
+		"options": [
+			"Lovers of pleasures",
+			"Haters of God",
+			"Lovers of money",
+			"Lovers of righteousness"
+		],
+		"type": "multiple-choice",
+		"answer": "Lovers of pleasures"
+	},
+	{
+		"question": "In Genesis 25:28, Preferring a child over others can create a divided home like that of",
+		"options": [
+			"Abraham and Sarah",
+			"Isaac and Rebecca",
+			"Jacob and Rachel",
+			"Elkanah and Hannah"
+		],
+		"type": "multiple-choice",
+		"answer": "Elkanah and Hannah"
+	},
+	{
+		"question": "Mordecai was first introduced in Esther 2:5 as a Jew who lived in",
+		"options": [
+			"Shushan",
+			"Jerusalem",
+			"Babylon",
+			"Egypt"
+		],
+		"type": "multiple-choice",
+		"answer": "Shushan"
+	},
+	{
+		"question": "The scripture according to Revelation 20:4-6 mentions a 'first resurrection' and identifies those involved as ________________",
+		"options": [
+			"Strong and holy",
+			"Blessed and gifted",
+			"Blessed and purified",
+			"Blessed and holy"
+		],
+		"type": "multiple-choice",
+		"answer": "Blessed and holy"
+	},
+	{
+		"question": "What is the memory verse for Lesson 47?",
+		"options": [
+			"Gal. 2:10",
+			"Matt. 5:17",
+			"Gal. 6:1",
+			"Acts 5:13"
+		],
+		"type": "multiple-choice",
+		"answer": "Gal. 6:1"
+	},
+	{
+		"question": "Paul used the Greek word 'philodonos' to mean",
+		"options": [
+			"Lovers of pleasures",
+			"Haters of God",
+			"Lovers of money",
+			"Lovers of righteousness"
+		],
+		"type": "multiple-choice",
+		"answer": "Lovers of pleasures"
+	},
+	{
+		"question": "In Christ, all believers are united, regardless of background, seen in",
+		"options": [
+			"Galatians 3:28",
+			"Ephesians 2:14-16",
+			"Colossians 3:11",
+			"All of the above"
+		],
+		"type": "multiple-choice",
+		"answer": "All of the above"
+	},
+	{
+		"question": "What's the Bible text for lesson 23?",
+		"options": [
+			"Matt. 5:13-16",
+			"Eccl. 10:5-7",
+			"Prov. 29:10-13",
+			"Matt. 5:20-24"
+		],
+		"type": "multiple-choice",
+		"answer": "Eccl. 10:5-7"
+	},
+	{
+		"question": "According to __________ God is the Father to the fatherless and the protector of widows",
+		"type": "fill-in-the-blank",
+		"answer": "Psalm 68:5"
+	},
+	{
+		"question": "God created us as spirit beings after His image according to",
+		"options": [
+			"Genesis 2:7",
+			"Jeremiah 30:17",
+			"Genesis 1:26-27",
+			"1 Corinthians 6:19"
+		],
+		"type": "multiple-choice",
+		"answer": "Genesis 1:26-27"
+	},
+	{
+		"question": "Prophecy is defined as the act of speaking God’s words under ____________",
+		"type": "fill-in-the-blank",
+		"answer": "Divine inspiration"
+	},
+	{
 		"question": "According to Eph. 5:9; \"...the fruit of the Spirit is in all goodness and righteousness and _____________\"",
-		"options": ["Love", "Power", "Truth", "Light"],
+		"options": [
+			"Love",
+			"Power",
+			"Truth",
+			"Light"
+		],
 		"type": "multiple-choice",
 		"answer": "Truth"
 	},
 	{
-		"question": "What is the topic for lesson 17?",
-		"options": [
-			"Repairing the altar",
-			"Self-worth",
-			"Handling criticism",
-			"Integrity"
-		],
-		"type": "multiple-choice",
-		"answer": "Handling criticism"
+		"question": "Galatians 6:1 says if a person is overtaken in a fault, you who are spiritual should restore such a one in the spirit of ________",
+		"type": "fill-in-the-blank",
+		"answer": "Meekness"
 	},
 	{
 		"question": "What is the 1st lesson outline for lesson 30?",
@@ -956,14 +430,715 @@
 		"answer": "God's role"
 	},
 	{
-		"question": "What is the conclusion for lesson 40?",
+		"question": "God created us as spirit beings after His image according to",
 		"options": [
-			"Love God always and your enemies will not prevail.",
-			"Remain in God and your enemies will flee.",
-			"Remain in God and your enemies will not prevail against you.",
-			"Pray always and watch God disgrace your enemies."
+			"Genesis 2:7",
+			"Jeremiah 30:17",
+			"Genesis 1:26-27",
+			"1 Corinthians 6:19"
 		],
 		"type": "multiple-choice",
-		"answer": "Remain in God and your enemies will not prevail against you."
+		"answer": "Genesis 1:26-27"
+	},
+	{
+		"question": "Examples of spiritual gifts include prophecy, healing, teaching, serving, giving, and",
+		"options": [
+			"Joy",
+			"Leadership",
+			"Peace",
+			"Love"
+		],
+		"type": "multiple-choice",
+		"answer": "Leadership"
+	},
+	{
+		"question": "Although man is not omnificent, God gave man",
+		"options": [
+			"The ability to forgive sins",
+			"Tremendous creative ability",
+			"The power to judge",
+			"The power to be everywhere"
+		],
+		"type": "multiple-choice",
+		"answer": "Tremendous creative ability"
+	},
+	{
+		"question": "The verse for believers offering spiritual sacrifices is",
+		"options": [
+			"1 Peter 2:5",
+			"1 Corinthians 3:17",
+			"2 Corinthians 3:18",
+			"Ephesians 2:22"
+		],
+		"type": "multiple-choice",
+		"answer": "1 Peter 2:5"
+	},
+	{
+		"question": "Moses built an altar in",
+		"options": [
+			"Genesis 35:7",
+			"Genesis 8:20",
+			"Exodus 17:15",
+			"Genesis 22:9"
+		],
+		"type": "multiple-choice",
+		"answer": "Exodus 17:15"
+	},
+	{
+		"question": "The Greek word for 'temple' is ___________",
+		"options": [
+			"Naos",
+			"Pneuma",
+			"Logos",
+			"Hagios"
+		],
+		"type": "multiple-choice",
+		"answer": "Naos"
+	},
+	{
+		"question": "The Greek word for 'temple' is ___________",
+		"options": [
+			"Naos",
+			"Pneuma",
+			"Logos",
+			"Hagios"
+		],
+		"type": "multiple-choice",
+		"answer": "Naos"
+	},
+	{
+		"question": "Hebrews 5:11 describes some people as having",
+		"options": [
+			"Sharp ears",
+			"Dull ears",
+			"Open ears",
+			"Closed ears"
+		],
+		"type": "multiple-choice",
+		"answer": "Dull ears"
+	},
+	{
+		"question": "The first biblical principle is to pray for divine guidance before investing, seen in",
+		"options": [
+			"Genesis 41:33-37",
+			"Psalm 32:8",
+			"Proverbs 3:5-6",
+			"James 1:5"
+		],
+		"type": "multiple-choice",
+		"answer": "Proverbs 3:5-6"
+	},
+	{
+		"question": "Workplace Ministry is also known as",
+		"options": [
+			"Church Ministry",
+			"Marketplace Ministry",
+			"Missionary Ministry",
+			"Pastoral Ministry"
+		],
+		"type": "multiple-choice",
+		"answer": "Marketplace Ministry"
+	},
+	{
+		"question": "1 Peter 4:10 says we should volunteer our talents and time to",
+		"options": [
+			"Gain wisdom",
+			"Contribute to community development",
+			"Gain recognition",
+			"engage in work"
+		],
+		"type": "multiple-choice",
+		"answer": "Contribute to community development"
+	},
+	{
+		"question": "The date of the lesson is _______",
+		"options": [
+			"5th October, 2025",
+			"28th September, 2025",
+			"19th October, 2025",
+			"12th October, 2025"
+		],
+		"type": "multiple-choice",
+		"answer": "12th October, 2025"
+	},
+	{
+		"question": "Water from the Rock is recorded in",
+		"options": [
+			"Exodus 16:4,15",
+			"2 Kings 5:14",
+			"Joshua 10:12-14",
+			"Numbers 20:2, 6-11"
+		],
+		"type": "multiple-choice",
+		"answer": "Numbers 20:2, 6-11"
+	},
+	{
+		"question": "The Bible reference for discipline in parenting is",
+		"options": [
+			"Proverbs 31:15, 21",
+			"Ephesians 6:4",
+			"Proverbs 22:6",
+			"Proverbs 23:13-14"
+		],
+		"type": "multiple-choice",
+		"answer": "Proverbs 23:13-14"
+	},
+	{
+		"question": "The introduction of Lesson 42 states that there is a significant moment in life that will happen according to God's _______",
+		"type": "fill-in-the-blank",
+		"answer": "will"
+	},
+	{
+		"question": "The outline 2 of Lesson 41 is ________",
+		"options": [
+			"His Character and Achievements",
+			"Questions from His wisdom",
+			"Further Readings",
+			"Lessons from His Life"
+		],
+		"type": "multiple-choice",
+		"answer": "Lessons from His Life"
+	},
+	{
+		"question": "The memory verse for the lesson 'THE ATTITUDE OF THANKSGIVING' is from _________",
+		"type": "fill-in-the-blank",
+		"answer": "1 Thes 5:18"
+	},
+	{
+		"question": "Etiquette makes one behave in a responsible way distinct from",
+		"options": [
+			"Angels",
+			"Children",
+			"Animals",
+			"Elders"
+		],
+		"type": "multiple-choice",
+		"answer": "Animals"
+	},
+	{
+		"question": "The two main groups of resources mentioned are",
+		"options": [
+			"Capital and natural resources",
+			"Spiritual and physical",
+			"Human and animal resources",
+			"Public and private resources"
+		],
+		"type": "multiple-choice",
+		"answer": "Spiritual and physical"
+	},
+	{
+		"question": "What is the Bible text for lesson 50?",
+		"options": [
+			"John 2:9-12",
+			"Is. 5:10-20",
+			"John 5:28-29"
+		],
+		"type": "multiple-choice",
+		"answer": "John 5:28-29"
+	},
+	{
+		"question": "The Spirit of God is linked with creation in",
+		"options": [
+			"Genesis 1:2",
+			"Isaiah 32:14-17",
+			"Matthew 3:16",
+			"Psalm 104:30"
+		],
+		"type": "multiple-choice",
+		"answer": "Psalm 104:30"
+	},
+	{
+		"question": "The eye is described as the Light of the _________",
+		"type": "fill-in-the-blank",
+		"answer": "Body"
+	},
+	{
+		"question": "Integrity is described as one of the",
+		"options": [
+			"Least important traits",
+			"Optional traits",
+			"Whole moral character",
+			"Social skills"
+		],
+		"type": "multiple-choice",
+		"answer": "Whole moral character"
+	},
+	{
+		"question": "According to __________ God is the Father to the fatherless and the protector of widows",
+		"type": "fill-in-the-blank",
+		"answer": "Psalm 68:5"
+	},
+	{
+		"question": "The humanity of Jesus is as important as His",
+		"options": [
+			"Ministry",
+			"Deity",
+			"Miracles",
+			"Parables"
+		],
+		"type": "multiple-choice",
+		"answer": "Deity"
+	},
+	{
+		"question": "The differences in creation eradicated potential __________",
+		"type": "fill-in-the-blank",
+		"answer": "Boredom"
+	},
+	{
+		"question": "Jesus had always been God according to",
+		"options": [
+			"John 1:14",
+			"John 8:58, 10:30",
+			"Matthew 28:18",
+			"Luke 1:35"
+		],
+		"type": "multiple-choice",
+		"answer": "John 8:58, 10:30"
+	},
+	{
+		"question": "Galatians 6:1 says if a person is overtaken in a fault, you who are spiritual should restore such a one in the spirit of ________",
+		"type": "fill-in-the-blank",
+		"answer": "Meekness"
+	},
+	{
+		"question": "The lesson topic for 22 is ________",
+		"type": "fill-in-the-blank",
+		"answer": "Self-worth"
+	},
+	{
+		"question": "The 'books' versus the 'Book of Life' are described in",
+		"options": [
+			"Revelation 20:11-15",
+			"Revelation 21:27",
+			"Revelation 3:5",
+			"Philippians 4:3"
+		],
+		"type": "multiple-choice",
+		"answer": "Revelation 20:11-15"
+	},
+	{
+		"question": "Although man is not omnificent, God gave man",
+		"options": [
+			"The ability to forgive sins",
+			"Tremendous creative ability",
+			"The power to judge",
+			"The power to be everywhere"
+		],
+		"type": "multiple-choice",
+		"answer": "Tremendous creative ability"
+	},
+	{
+		"question": "The consequence of wrong attitude or inaction is expressed in",
+		"options": [
+			"Luke 19:22-24",
+			"Matthew 25:26-27",
+			"Luke 19:26-27",
+			"Matthew 25:28-30"
+		],
+		"type": "multiple-choice",
+		"answer": "Matthew 25:28-30"
+	},
+	{
+		"question": "The consequence of wrong attitude or inaction is expressed in",
+		"options": [
+			"Luke 19:22-24",
+			"Matthew 25:26-27",
+			"Luke 19:26-27",
+			"Matthew 25:28-30"
+		],
+		"type": "multiple-choice",
+		"answer": "Matthew 25:28-30"
+	},
+	{
+		"question": "The outline 2 of Lesson 41 is ________",
+		"options": [
+			"His Character and Achievements",
+			"Questions from His wisdom",
+			"Further Readings",
+			"Lessons from His Life"
+		],
+		"type": "multiple-choice",
+		"answer": "Lessons from His Life"
+	},
+	{
+		"question": "What is the conclusion for lesson 32?",
+		"options": [
+			"What we eat matters and would determine how far we live.",
+			"What we eat or drink is our first medicine. Take good care of yourself.",
+			"Take good care of yourself to avoid being a danger to your own health.",
+			"None of the above."
+		],
+		"type": "multiple-choice",
+		"answer": "What we eat or drink is our first medicine. Take good care of yourself."
+	},
+	{
+		"question": "The word 'occupy' in Luke 19:13 literally means",
+		"options": [
+			"Sit and wait",
+			"Do business",
+			"Pray",
+			"Rest"
+		],
+		"type": "multiple-choice",
+		"answer": "Do business"
+	},
+	{
+		"question": "The first biblical principle is to pray for divine guidance before investing, seen in",
+		"options": [
+			"Genesis 41:33-37",
+			"Psalm 32:8",
+			"Proverbs 3:5-6",
+			"James 1:5"
+		],
+		"type": "multiple-choice",
+		"answer": "Proverbs 3:5-6"
+	},
+	{
+		"question": "What is the memory verse for lesson 11?",
+		"options": [
+			"Col. 3:23",
+			"Heb. 4:6",
+			"John 5:10",
+			"Col. 11:5"
+		],
+		"type": "multiple-choice",
+		"answer": "Col. 3:23"
+	},
+	{
+		"question": "The introduction of Lesson 42 states that there is a significant moment in life that will happen according to God's _______",
+		"type": "fill-in-the-blank",
+		"answer": "Divine will"
+	},
+	{
+		"question": "The humanity of Jesus is as important as His",
+		"options": [
+			"Ministry",
+			"Deity",
+			"Miracles",
+			"Parables"
+		],
+		"type": "multiple-choice",
+		"answer": "Deity"
+	},
+	{
+		"question": "One consequence of the get-rich-quick syndrome is",
+		"options": [
+			"Increase in honesty",
+			"Erosion of traditional values like honesty and hard work",
+			"Improvement in educational standards",
+			"Genuine satisfaction"
+		],
+		"type": "multiple-choice",
+		"answer": "Erosion of traditional values like honesty and hard work"
+	},
+	{
+		"question": "There are how many main types of criticism mentioned in the lesson?",
+		"options": [
+			"One",
+			"Three",
+			"Two",
+			"Four"
+		],
+		"type": "multiple-choice",
+		"answer": "Two"
+	},
+	{
+		"question": "The verse for believers offering spiritual sacrifices is",
+		"options": [
+			"1 Peter 2:5",
+			"1 Corinthians 3:17",
+			"2 Corinthians 3:18",
+			"Ephesians 2:22"
+		],
+		"type": "multiple-choice",
+		"answer": "1 Peter 2:5"
+	},
+	{
+		"question": "There are how many main types of criticism mentioned in the lesson?",
+		"options": [
+			"One",
+			"Three",
+			"Two",
+			"Four"
+		],
+		"type": "multiple-choice",
+		"answer": "Two"
+	},
+	{
+		"question": "The second death is one of the final events in the Bible described as the eternal death in _________________",
+		"options": [
+			"\"the lake of fire\"",
+			"\"the fire that never ends\"",
+			"\"the lake which burn with fire and brimstone\"",
+			"\"the lake which burns unend with brimstone\""
+		],
+		"type": "multiple-choice",
+		"answer": "\"the lake which burn with fire and brimstone\""
+	},
+	{
+		"question": "The two main groups of resources mentioned are",
+		"options": [
+			"Capital and natural resources",
+			"Spiritual and physical",
+			"Human and animal resources",
+			"Public and private resources"
+		],
+		"type": "multiple-choice",
+		"answer": "Spiritual and physical"
+	},
+	{
+		"question": "The memory verse for the lesson 'THE ATTITUDE OF THANKSGIVING' is from _________",
+		"type": "fill-in-the-blank",
+		"answer": "1 Thes 5:18"
+	},
+	{
+		"question": "The 'books' versus the 'Book of Life' are described in",
+		"options": [
+			"Revelation 20:11-15",
+			"Revelation 21:27",
+			"Revelation 3:5",
+			"Philippians 4:3"
+		],
+		"type": "multiple-choice",
+		"answer": "Revelation 20:11-15"
+	},
+	{
+		"question": "One consequence of the get-rich-quick syndrome is",
+		"options": [
+			"Increase in honesty",
+			"Erosion of traditional values like honesty and hard work",
+			"Improvement in educational standards",
+			"Genuine satisfaction"
+		],
+		"type": "multiple-choice",
+		"answer": "Erosion of traditional values like honesty and hard work"
+	},
+	{
+		"question": "Permissive Parents are high in 'responsiveness/love' but low in",
+		"options": [
+			"Demandingness/discipline",
+			"Love",
+			"Money",
+			"Prayer"
+		],
+		"type": "multiple-choice",
+		"answer": "Demandingness/discipline"
+	},
+	{
+		"question": "The lesson topic for 22 is ________",
+		"type": "fill-in-the-blank",
+		"answer": "Self-worth"
+	},
+	{
+		"question": "The memory verse for the lesson 51 is from ________",
+		"type": "fill-in-the-blank",
+		"answer": "Rev 21:8"
+	},
+	{
+		"question": "According to the outline of the Topic “Game changer” the outline 1 is ________",
+		"options": [
+			"Qualities",
+			"Upshots",
+			"Conclusion",
+			"Questions"
+		],
+		"type": "multiple-choice",
+		"answer": "Qualities"
+	},
+	{
+		"question": "Permissive Parents are high in 'responsiveness/love' but low in",
+		"options": [
+			"Demandingness/discipline",
+			"Love",
+			"Money",
+			"Prayer"
+		],
+		"type": "multiple-choice",
+		"answer": "Demandingness/discipline"
+	},
+	{
+		"question": "The scripture establishes two kinds of eternity: eternal life and eternal _____________",
+		"options": [
+			"Death",
+			"Rescue",
+			"Torture",
+			"Damnation"
+		],
+		"type": "multiple-choice",
+		"answer": "Damnation"
+	},
+	{
+		"question": "1 Peter 4:10 says we should volunteer our talents and time to",
+		"options": [
+			"Gain wisdom",
+			"Contribute to community development",
+			"Gain recognition",
+			"engage in work"
+		],
+		"type": "multiple-choice",
+		"answer": "Contribute to community development"
+	},
+	{
+		"question": "The word 'occupy' in Luke 19:13 literally means",
+		"options": [
+			"Sit and wait",
+			"Do business",
+			"Pray",
+			"Rest"
+		],
+		"type": "multiple-choice",
+		"answer": "Do business"
+	},
+	{
+		"question": "The Bible reference for discipline in parenting is",
+		"options": [
+			"Proverbs 31:15, 21",
+			"Ephesians 6:4",
+			"Proverbs 22:6",
+			"Proverbs 23:13-14"
+		],
+		"type": "multiple-choice",
+		"answer": "Proverbs 23:13-14"
+	},
+	{
+		"question": "Titus 1:15 says to the pure, all things are",
+		"options": [
+			"Dirty",
+			"Pure",
+			"Forbidden",
+			"Sinful"
+		],
+		"type": "multiple-choice",
+		"answer": "Pure"
+	},
+	{
+		"question": "The Spirit of God is linked with creation in",
+		"options": [
+			"Genesis 1:2",
+			"Isaiah 32:14-17",
+			"Matthew 3:16",
+			"Psalm 104:30"
+		],
+		"type": "multiple-choice",
+		"answer": "Genesis 1:2"
+	},
+	{
+		"question": "Jesus had always been God according to",
+		"options": [
+			"John 1:14",
+			"John 8:58, 10:30",
+			"Matthew 28:18",
+			"Luke 1:35"
+		],
+		"type": "multiple-choice",
+		"answer": "John 8:58, 10:30"
+	},
+	{
+		"question": "Contention is a potent weapon Satan uses to subdue the power in _________",
+		"type": "fill-in-the-blank",
+		"answer": "Unity"
+	},
+	{
+		"question": "The eye is described as the Light of the _________",
+		"type": "fill-in-the-blank",
+		"answer": "Body"
+	},
+	{
+		"question": "Acts of fornication, extramarital sex with another person apart from one’s legal spouse is described in _____________ ",
+		"type": "fill-in-the-blank",
+		"answer": "1 Cor 10 or Rom 1:27-28"
+	},
+	{
+		"question": "Contention is a potent weapon Satan uses to subdue the power in _________",
+		"type": "fill-in-the-blank",
+		"answer": "Unity"
+	},
+	{
+		"question": "Examples of spiritual gifts include prophecy, healing, teaching, serving, giving, and",
+		"options": [
+			"Joy",
+			"Leadership",
+			"Peace",
+			"Love"
+		],
+		"type": "multiple-choice",
+		"answer": "Leadership"
+	},
+	{
+		"question": "In Genesis 25:28, Preferring a child over others can create a divided home like that of",
+		"options": [
+			"Abraham and Sarah",
+			"Isaac and Rebecca",
+			"Jacob and Rachel",
+			"Elkanah and Hannah"
+		],
+		"type": "multiple-choice",
+		"answer": "Isaac and Rebecca"
+	},
+	{
+		"question": "The date of the lesson is _______",
+		"options": [
+			"5th October, 2025",
+			"28th September, 2025",
+			"19th October, 2025",
+			"12th October, 2025"
+		],
+		"type": "multiple-choice",
+		"answer": "12th October, 2025"
+	},
+	{
+		"question": "Water from the Rock is recorded in",
+		"options": [
+			"Exodus 16:4,15",
+			"2 Kings 5:14",
+			"Joshua 10:12-14",
+			"Numbers 20:2, 6-11"
+		],
+		"type": "multiple-choice",
+		"answer": "Numbers 20:2, 6-11"
+	},
+	{
+		"question": "Titus 1:15 says to the pure, all things are",
+		"options": [
+			"Dirty",
+			"Pure",
+			"Forbidden",
+			"Sinful"
+		],
+		"type": "multiple-choice",
+		"answer": "Pure"
+	},
+	{
+		"question": "Workplace Ministry is also known as",
+		"options": [
+			"Church Ministry",
+			"Marketplace Ministry",
+			"Missionary Ministry",
+			"Pastoral Ministry"
+		],
+		"type": "multiple-choice",
+		"answer": "Marketplace Ministry"
+	},
+	{
+		"question": "John 5:28-29 says Jesus Christ Himself, the first fruit of them that slept, promised the resurrection takes place at various",
+		"options": [
+			"Times",
+			"Events",
+			"Moments",
+			"Stages"
+		],
+		"type": "multiple-choice",
+		"answer": "Stages"
+	},
+	{
+		"question": "The word 'Armageddon' comes from the Hebrew word ________________",
+		"options": [
+			"Megiddo",
+			"Gedone",
+			"Ashermeni",
+			"Har-Magedone"
+		],
+		"type": "multiple-choice",
+		"answer": "Har-Magedone"
 	}
 ]
