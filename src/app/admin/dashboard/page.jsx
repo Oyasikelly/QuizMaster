@@ -73,9 +73,9 @@ const AdminDashboard = () => {
 		const attempts = [];
 		(results || []).forEach((row) => {
 			if (row.real_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.real_score, total_questions: row.real_total, mode: "Real Quiz", quiz_title: "Real Quiz", category: row.category });
-			if (row.practice_normal_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_normal_score, total_questions: row.practice_normal_total, mode: "Practice (Normal)", quiz_title: "Practice (Normal)", category: row.category });
-			if (row.practice_medium_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_medium_score, total_questions: row.practice_medium_total, mode: "Practice (Medium)", quiz_title: "Practice (Medium)", category: row.category });
-			if (row.practice_hard_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_hard_score, total_questions: row.practice_hard_total, mode: "Practice (Hard)", quiz_title: "Practice (Hard)", category: row.category });
+			if (row.practice_normal_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_normal_score, total_questions: row.practice_normal_total, mode: "Practice (Normal)", quiz_title: row.lesson ? `Practice: ${row.lesson}` : "Practice (Normal)", category: row.category });
+			if (row.practice_medium_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_medium_score, total_questions: row.practice_medium_total, mode: "Practice (Medium)", quiz_title: row.lesson ? `Practice: ${row.lesson}` : "Practice (Medium)", category: row.category });
+			if (row.practice_hard_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_hard_score, total_questions: row.practice_hard_total, mode: "Practice (Hard)", quiz_title: row.lesson ? `Practice: ${row.lesson}` : "Practice (Hard)", category: row.category });
 			if (row.practice_entire_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_entire_score, total_questions: row.practice_entire_total, mode: "Practice (Entire Year)", quiz_title: "Practice (Entire Year)", category: row.category });
 		});
 		return attempts.sort((a, b) => {
@@ -259,7 +259,7 @@ const AdminDashboard = () => {
 				totalStudents,
 				totalQuizzes,
 				averageScore,
-				recentActivity: filteredRealQuizData.slice(0, 5) || [],
+				recentActivity: filteredQuizData.slice(0, 5) || [],
 			});
 		} catch (error) {
 			console.error("Error loading dashboard data:", error);
@@ -1139,6 +1139,9 @@ const AdminDashboard = () => {
 											Class
 										</th>
 										<th className="text-left py-3 px-4 font-medium text-gray-900">
+											Quiz Mode
+										</th>
+										<th className="text-left py-3 px-4 font-medium text-gray-900">
 											Score
 										</th>
 										<th className="text-left py-3 px-4 font-medium text-gray-900">
@@ -1169,6 +1172,11 @@ const AdminDashboard = () => {
 												</td>
 												<td className="py-3 px-4 text-gray-600">
 													{student?.class || "Not set"}
+												</td>
+												<td className="py-3 px-4">
+													<span className={`px-2 py-1 rounded-full text-xs font-medium ${result.mode === "Real Quiz" ? "bg-indigo-100 text-indigo-800" : "bg-purple-100 text-purple-800"}`}>
+														{result.quiz_title || result.mode}
+													</span>
 												</td>
 												<td className="py-3 px-4">
 													<span

@@ -6,14 +6,8 @@ import path from "path";
 // Get available academic years for a category
 export async function getAcademicYears(category) {
   try {
-    const categoryDir = path.join(
-      process.cwd(),
-      "src",
-      "app",
-      "questions",
-      "practice",
-      category.toLowerCase()
-    );
+    const baseDir = path.join(process.cwd(), "src", "app", "questions", "practice");
+    const categoryDir = path.join(baseDir, category.toLowerCase());
 
     if (!fs.existsSync(categoryDir)) return [];
 
@@ -33,12 +27,9 @@ export async function getAcademicYears(category) {
 // Get available lessons for a category, year, and difficulty
 export async function getLessons(category, year, difficulty = "normal") {
   try {
+    const baseDir = path.join(process.cwd(), "src", "app", "questions", "practice");
     const lessonsDir = path.join(
-      process.cwd(),
-      "src",
-      "app",
-      "questions",
-      "practice",
+      baseDir,
       category.toLowerCase(),
       year,
       difficulty.toLowerCase()

@@ -583,9 +583,9 @@ const StudentManagement = () => {
 													const attempts = [];
 													if (resultRow) {
 														if (resultRow.real_total > 0) attempts.push({ id: 1, mode: "Real Quiz", score: resultRow.real_score, total: resultRow.real_total, timestamp: resultRow.timestamp });
-														if (resultRow.practice_normal_total > 0) attempts.push({ id: 2, mode: "Practice (Normal)", score: resultRow.practice_normal_score, total: resultRow.practice_normal_total, timestamp: resultRow.timestamp });
-														if (resultRow.practice_medium_total > 0) attempts.push({ id: 3, mode: "Practice (Medium)", score: resultRow.practice_medium_score, total: resultRow.practice_medium_total, timestamp: resultRow.timestamp });
-														if (resultRow.practice_hard_total > 0) attempts.push({ id: 4, mode: "Practice (Hard)", score: resultRow.practice_hard_score, total: resultRow.practice_hard_total, timestamp: resultRow.timestamp });
+														if (resultRow.practice_normal_total > 0) attempts.push({ id: 2, mode: resultRow.lesson ? `Practice: ${resultRow.lesson}` : "Practice (Normal)", score: resultRow.practice_normal_score, total: resultRow.practice_normal_total, timestamp: resultRow.timestamp });
+														if (resultRow.practice_medium_total > 0) attempts.push({ id: 3, mode: resultRow.lesson ? `Practice: ${resultRow.lesson}` : "Practice (Medium)", score: resultRow.practice_medium_score, total: resultRow.practice_medium_total, timestamp: resultRow.timestamp });
+														if (resultRow.practice_hard_total > 0) attempts.push({ id: 4, mode: resultRow.lesson ? `Practice: ${resultRow.lesson}` : "Practice (Hard)", score: resultRow.practice_hard_score, total: resultRow.practice_hard_total, timestamp: resultRow.timestamp });
 														if (resultRow.practice_entire_total > 0) attempts.push({ id: 5, mode: "Practice (Entire Year)", score: resultRow.practice_entire_score, total: resultRow.practice_entire_total, timestamp: resultRow.timestamp });
 													}
 
