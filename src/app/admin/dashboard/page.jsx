@@ -72,13 +72,19 @@ const AdminDashboard = () => {
 	const extractAttempts = (results) => {
 		const attempts = [];
 		(results || []).forEach((row) => {
-			if (row.real_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.real_score, total_questions: row.real_total, mode: "Real Quiz" });
-			if (row.practice_normal_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_normal_score, total_questions: row.practice_normal_total, mode: "Practice (Normal)" });
-			if (row.practice_medium_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_medium_score, total_questions: row.practice_medium_total, mode: "Practice (Medium)" });
-			if (row.practice_hard_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_hard_score, total_questions: row.practice_hard_total, mode: "Practice (Hard)" });
-			if (row.practice_entire_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_entire_score, total_questions: row.practice_entire_total, mode: "Practice (Entire Year)" });
+			if (row.real_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.real_score, total_questions: row.real_total, mode: "Real Quiz", quiz_title: "Real Quiz", category: row.category });
+			if (row.practice_normal_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_normal_score, total_questions: row.practice_normal_total, mode: "Practice (Normal)", quiz_title: "Practice (Normal)", category: row.category });
+			if (row.practice_medium_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_medium_score, total_questions: row.practice_medium_total, mode: "Practice (Medium)", quiz_title: "Practice (Medium)", category: row.category });
+			if (row.practice_hard_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_hard_score, total_questions: row.practice_hard_total, mode: "Practice (Hard)", quiz_title: "Practice (Hard)", category: row.category });
+			if (row.practice_entire_total > 0) attempts.push({ student_id: row.student_id, email: row.email, timestamp: row.timestamp, score: row.practice_entire_score, total_questions: row.practice_entire_total, mode: "Practice (Entire Year)", quiz_title: "Practice (Entire Year)", category: row.category });
 		});
-		return attempts.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+		return attempts.sort((a, b) => {
+			const timeDiff = new Date(b.timestamp) - new Date(a.timestamp);
+			if (timeDiff !== 0) return timeDiff;
+			if (a.mode === "Real Quiz") return -1;
+			if (b.mode === "Real Quiz") return 1;
+			return 0;
+		});
 	};
 
 	const getUser = async () => {
@@ -194,13 +200,14 @@ const AdminDashboard = () => {
 				filteredStudentsData?.map((student) => {
 					const studentResults =
 						quizData?.filter((result) => result.email === student.email) || [];
+					const realResults = studentResults.filter(r => r.mode === "Real Quiz");
 
 					const submissionCount = studentResults.length;
 					let averageScore = 0,
 						bestScore = 0,
 						recentScore = 0;
-					if (submissionCount > 0) {
-						const scores = studentResults.map(
+					if (realResults.length > 0) {
+						const scores = realResults.map(
 							(q) => (q.score / q.total_questions) * 100
 						);
 						averageScore = Math.round(
@@ -208,7 +215,7 @@ const AdminDashboard = () => {
 						);
 						bestScore = Math.round(Math.max(...scores));
 						recentScore = Math.round(
-							(studentResults[0].score / studentResults[0].total_questions) *
+							(realResults[0].score / realResults[0].total_questions) *
 								100
 						);
 					}
@@ -223,21 +230,26 @@ const AdminDashboard = () => {
 
 			// Calculate stats
 			const totalStudents = studentsWithStats.length;
+			const realQuizData = quizData?.filter(q => q.mode === "Real Quiz") || [];
 			const totalQuizzes =
-				quizData?.filter((q) =>
+				realQuizData.filter((q) =>
 					filteredStudentsData.some((s) => s.email === q.email)
 				).length || 0;
 			const filteredQuizData =
 				quizData?.filter((q) =>
 					filteredStudentsData.some((s) => s.email === q.email)
 				) || [];
+			const filteredRealQuizData =
+				realQuizData.filter((q) =>
+					filteredStudentsData.some((s) => s.email === q.email)
+				) || [];
 			const averageScore =
-				filteredQuizData.length > 0
+				filteredRealQuizData.length > 0
 					? Math.round(
-							filteredQuizData.reduce(
+							filteredRealQuizData.reduce(
 								(sum, quiz) => sum + (quiz.score / quiz.total_questions) * 100,
 								0
-							) / filteredQuizData.length
+							) / filteredRealQuizData.length
 					  )
 					: 0;
 
@@ -247,7 +259,7 @@ const AdminDashboard = () => {
 				totalStudents,
 				totalQuizzes,
 				averageScore,
-				recentActivity: filteredQuizData.slice(0, 5) || [],
+				recentActivity: filteredRealQuizData.slice(0, 5) || [],
 			});
 		} catch (error) {
 			console.error("Error loading dashboard data:", error);
@@ -294,15 +306,20 @@ const AdminDashboard = () => {
 			};
 		}
 
-		const totalQuizzes = results.length;
-		const scores = results.map(
-			(quiz) => (quiz.score / quiz.total_questions) * 100
-		);
-		const averageScore = Math.round(
-			scores.reduce((sum, score) => sum + score, 0) / totalQuizzes
-		);
-		const bestScore = Math.max(...scores);
-		const worstScore = Math.min(...scores);
+		const realResults = results.filter((q) => q.mode === "Real Quiz");
+		const totalQuizzes = realResults.length;
+		
+		let averageScore = 0, bestScore = 0, worstScore = 0;
+		if (totalQuizzes > 0) {
+			const scores = realResults.map(
+				(quiz) => (quiz.score / quiz.total_questions) * 100
+			);
+			averageScore = Math.round(
+				scores.reduce((sum, score) => sum + score, 0) / totalQuizzes
+			);
+			bestScore = Math.max(...scores);
+			worstScore = Math.min(...scores);
+		}
 
 		// Calculate recent activity (last 7 days)
 		const recentActivity = results.filter(
@@ -410,6 +427,7 @@ const AdminDashboard = () => {
 					"Student Name": student?.name || "Unknown",
 					Email: result.email,
 					Class: student?.class || "Not set",
+					Mode: result.mode,
 					Score: `${result.score}/${result.total_questions}`,
 					Percentage: `${scorePercentage}%`,
 					Performance:
@@ -441,6 +459,7 @@ const AdminDashboard = () => {
 				"Student Name",
 				"Email",
 				"Class",
+				"Mode",
 				"Score",
 				"Percentage",
 				"Performance",
@@ -501,6 +520,7 @@ const AdminDashboard = () => {
 					"Student Name": student?.name || "Unknown",
 					Email: result.email,
 					Class: student?.class || "Not set",
+					Mode: result.mode,
 					Score: `${result.score}/${result.total_questions}`,
 					Percentage: `${scorePercentage}%`,
 					Performance:
@@ -559,6 +579,7 @@ const AdminDashboard = () => {
 					"Student Name",
 					"Email",
 					"Class",
+					"Mode",
 					"Score",
 					"Percentage",
 					"Performance",

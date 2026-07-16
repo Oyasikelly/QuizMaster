@@ -68,14 +68,18 @@ const StudentManagement = () => {
 				studentsData?.map((student) => {
 					const resultRow = quizData?.find((result) => result.student_id === student.id);
 					let submissionCount = 0;
+					let realScore = null;
 					if (resultRow) {
-						if (resultRow.real_total > 0) submissionCount++;
+						if (resultRow.real_total > 0) {
+							submissionCount++;
+							realScore = Math.round((resultRow.real_score / resultRow.real_total) * 100);
+						}
 						if (resultRow.practice_normal_total > 0) submissionCount++;
 						if (resultRow.practice_medium_total > 0) submissionCount++;
 						if (resultRow.practice_hard_total > 0) submissionCount++;
 						if (resultRow.practice_entire_total > 0) submissionCount++;
 					}
-					return { ...student, submissionCount };
+					return { ...student, submissionCount, realScore };
 				}) || [];
 
 			setStudents(studentsWithCounts);
@@ -257,7 +261,7 @@ const StudentManagement = () => {
 									Denomination
 								</th>
 								<th className="text-left py-3 px-4 font-medium text-gray-900">
-									Quiz Modes Completed
+									Real Quiz Score
 								</th>
 								<th className="text-left py-3 px-4 font-medium text-gray-900">
 									Actions
@@ -355,9 +359,9 @@ const StudentManagement = () => {
 									</td>
 									<td className="py-3 px-4">
 										<span className="flex items-center space-x-2">
-											<FaClipboardList className="text-blue-500" />
+											<FaTrophy className={student.realScore !== null ? "text-yellow-500" : "text-gray-400"} />
 											<span className="font-medium text-gray-900">
-												{student.submissionCount || 0}
+												{student.realScore !== null ? `${student.realScore}%` : "Not Taken"}
 											</span>
 										</span>
 									</td>
@@ -513,16 +517,8 @@ const StudentManagement = () => {
 														const resultRow = quizResults.find(
 															(result) => result.student_id === selectedStudent.id
 														);
-														if (!resultRow) return "N/A";
-														const attempts = [];
-														if (resultRow.real_total > 0) attempts.push(resultRow.real_score / resultRow.real_total);
-														if (resultRow.practice_normal_total > 0) attempts.push(resultRow.practice_normal_score / resultRow.practice_normal_total);
-														if (resultRow.practice_medium_total > 0) attempts.push(resultRow.practice_medium_score / resultRow.practice_medium_total);
-														if (resultRow.practice_hard_total > 0) attempts.push(resultRow.practice_hard_score / resultRow.practice_hard_total);
-														if (resultRow.practice_entire_total > 0) attempts.push(resultRow.practice_entire_score / resultRow.practice_entire_total);
-														
-														if (attempts.length === 0) return "N/A";
-														const avgScore = attempts.reduce((a, b) => a + b, 0) / attempts.length;
+														if (!resultRow || !resultRow.real_total) return "N/A";
+														const avgScore = resultRow.real_score / resultRow.real_total;
 														return `${Math.round(avgScore * 100)}%`;
 													})()}
 												</p>
@@ -536,16 +532,8 @@ const StudentManagement = () => {
 														const resultRow = quizResults.find(
 															(result) => result.student_id === selectedStudent.id
 														);
-														if (!resultRow) return "N/A";
-														const attempts = [];
-														if (resultRow.real_total > 0) attempts.push(resultRow.real_score / resultRow.real_total);
-														if (resultRow.practice_normal_total > 0) attempts.push(resultRow.practice_normal_score / resultRow.practice_normal_total);
-														if (resultRow.practice_medium_total > 0) attempts.push(resultRow.practice_medium_score / resultRow.practice_medium_total);
-														if (resultRow.practice_hard_total > 0) attempts.push(resultRow.practice_hard_score / resultRow.practice_hard_total);
-														if (resultRow.practice_entire_total > 0) attempts.push(resultRow.practice_entire_score / resultRow.practice_entire_total);
-														
-														if (attempts.length === 0) return "N/A";
-														const bestScore = Math.max(...attempts);
+														if (!resultRow || !resultRow.real_total) return "N/A";
+														const bestScore = resultRow.real_score / resultRow.real_total;
 														return `${Math.round(bestScore * 100)}%`;
 													})()}
 												</p>
