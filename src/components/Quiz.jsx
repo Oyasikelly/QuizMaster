@@ -187,17 +187,13 @@ const Quiz = ({ initialQuestions, category }) => {
 
 			const userProfile = usersData && usersData[0];
 
-			const { data: existingData } = await withTimeout(
-				supabase.from("quiz_results").select("*").eq("student_id", student_id).single(),
-				10000
-			);
-
 			const baseData = {
 				student_id,
 				email: userProfile?.email || userEmail,
 				name: userProfile?.name || "Unknown",
 				class: userProfile?.class || "Unknown",
 				category,
+				lesson: isRealQuiz ? null : lesson,
 				timestamp: new Date().toISOString(),
 			};
 
@@ -220,19 +216,16 @@ const Quiz = ({ initialQuestions, category }) => {
 			}
 
 			const resultData = {
-				...(existingData || {}),
 				...baseData,
 				...newScoreData,
 			};
 
 			console.log("Saving DB synchronously:", resultData);
 
-			// IMPORTANT: The database table "quiz_results" MUST have a UNIQUE constraint 
-			// on "student_id" for this to work without throwing an error.
 			const { data: upsertData, error: upsertError } = await withTimeout(
 				supabase
 					.from("quiz_results")
-					.upsert([resultData], { onConflict: "student_id" })
+					.insert([resultData])
 					.select(),
 				20000 // 20s timeout to allow maximum chance to succeed
 			);

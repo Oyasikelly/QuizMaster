@@ -66,19 +66,23 @@ const StudentManagement = () => {
 			// Calculate submission counts for each student based on the unified row
 			const studentsWithCounts =
 				studentsData?.map((student) => {
-					const resultRow = quizData?.find((result) => result.student_id === student.id);
+					const studentRows = quizData?.filter((result) => result.student_id === student.id) || [];
 					let submissionCount = 0;
 					let realScore = null;
-					if (resultRow) {
+					
+					studentRows.forEach(resultRow => {
 						if (resultRow.real_total > 0) {
 							submissionCount++;
-							realScore = Math.round((resultRow.real_score / resultRow.real_total) * 100);
+							if (realScore === null) {
+								realScore = Math.round((resultRow.real_score / resultRow.real_total) * 100);
+							}
 						}
 						if (resultRow.practice_normal_total > 0) submissionCount++;
 						if (resultRow.practice_medium_total > 0) submissionCount++;
 						if (resultRow.practice_hard_total > 0) submissionCount++;
 						if (resultRow.practice_entire_total > 0) submissionCount++;
-					}
+					});
+
 					return { ...student, submissionCount, realScore };
 				}) || [];
 
