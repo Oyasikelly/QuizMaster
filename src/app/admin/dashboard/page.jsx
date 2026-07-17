@@ -1148,7 +1148,7 @@ const AdminDashboard = () => {
 											Questions
 										</th>
 										<th className="text-left py-3 px-4 font-medium text-gray-900">
-											Date
+											Date & Time
 										</th>
 										<th className="text-left py-3 px-4 font-medium text-gray-900">
 											Actions
@@ -1196,8 +1196,13 @@ const AdminDashboard = () => {
 												<td className="py-3 px-4 text-gray-600">
 													{result.score}/{result.total_questions}
 												</td>
-												<td className="py-3 px-4 text-gray-600">
-													{new Date(result.timestamp).toLocaleDateString()}
+												<td className="py-3 px-4 text-gray-600 whitespace-nowrap">
+													<div className="text-sm">
+														{new Date(result.timestamp).toLocaleDateString()}
+													</div>
+													<div className="text-xs text-gray-400 mt-0.5">
+														{new Date(result.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+													</div>
 												</td>
 												<td className="py-3 px-4">
 													{student ? (
@@ -1856,7 +1861,7 @@ const AdminDashboard = () => {
 												<table className="w-full text-sm border rounded-lg">
 													<thead>
 														<tr className="bg-gray-100">
-															<th className="py-2 px-3 text-left">Date</th>
+															<th className="py-2 px-3 text-left">Date & Time</th>
 															<th className="py-2 px-3 text-left">Quiz / Mode</th>
 															<th className="py-2 px-3 text-left">Score</th>
 															<th className="py-2 px-3 text-left">Questions</th>
@@ -1886,8 +1891,13 @@ const AdminDashboard = () => {
 																		result.timestamp
 																	}`}
 																	className="border-b hover:bg-gray-50">
-																	<td className="py-2 px-3 text-gray-500 text-xs">
-																		{new Date(result.timestamp).toLocaleDateString()}
+																	<td className="py-2 px-3 whitespace-nowrap">
+																		<div className="text-gray-600 text-sm">
+																			{new Date(result.timestamp).toLocaleDateString()}
+																		</div>
+																		<div className="text-gray-400 text-xs mt-0.5">
+																			{new Date(result.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+																		</div>
 																	</td>
 																	<td className="py-2 px-3">
 																		<span className={`px-2 py-1 rounded-full text-xs font-medium ${result.mode === "Real Quiz" ? "bg-indigo-100 text-indigo-800" : "bg-purple-100 text-purple-700"}`}>
