@@ -20,7 +20,7 @@ import {
 	FaCheck,
 	FaTimes as FaTimesIcon,
 } from "react-icons/fa";
-import { FaTrophy, FaHistory } from "react-icons/fa";
+import { FaTrophy, FaHistory, FaChartBar } from "react-icons/fa";
 
 const withTimeout = (promise, ms) =>
 	Promise.race([
