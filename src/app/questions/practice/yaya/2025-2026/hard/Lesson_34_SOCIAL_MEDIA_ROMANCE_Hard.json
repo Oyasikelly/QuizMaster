@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Which is NOT listed among the dangers of social media romance?",
+    "options": [
+      "Emotional Entanglement",
+      "False Intimacy",
+      "Lack of Accountability",
+      "Financial Gain"
+    ],
+    "type": "multiple-choice",
+    "answer": "Financial Gain"
+  },
+  {
+    "question": "Believers should not be unequally yoked with unbelievers in romantic relationships, per",
+    "options": [
+      "2 Corinthians 6:14",
+      "Amos 3:3",
+      "Proverbs 18:22",
+      "1 Thessalonians 4:3"
+    ],
+    "type": "multiple-choice",
+    "answer": "2 Corinthians 6:14"
+  },
+  {
+    "question": "Oneness in purpose is vital for a thriving relationship, per",
+    "options": [
+      "Amos 3:3",
+      "1 Corinthians 13:4",
+      "James 1:5",
+      "Proverbs 20:18"
+    ],
+    "type": "multiple-choice",
+    "answer": "Amos 3:3"
+  },
+  {
+    "question": "Without the full context of a person's life, you might find yourself emotionally ________ in a relationship that is not as stable as it appears",
+    "type": "fill-in-the-blank",
+    "answer": "Invested"
+  },
+  {
+    "question": "Private online relationships may not have the same level of ________ as real-world relationships",
+    "type": "fill-in-the-blank",
+    "answer": "Accountability"
+  },
+  {
+    "question": "Believers are called unto holiness and not ________",
+    "type": "fill-in-the-blank",
+    "answer": "Uncleanness"
+  },
+  {
+    "question": "Without the involvement of trusted friends or family, it can be easy for hidden motives or harmful behaviour to go",
+    "options": [
+      "unnoticed",
+      "undetected",
+      "unseen",
+      "unchecked"
+    ],
+    "type": "multiple-choice",
+    "answer": "unnoticed"
+  },
+  {
+    "question": "Balancing online interactions with real-life connections, accountability, and careful discernment can help protect you from these",
+    "options": [
+      "dangers",
+      "risks",
+      "threats",
+      "challenges"
+    ],
+    "type": "multiple-choice",
+    "answer": "dangers"
+  },
+  {
+    "question": "Social media romance refers to the emotional or romantic connections formed",
+    "options": [
+      "online",
+      "in person",
+      "through family",
+      "at church"
+    ],
+    "type": "multiple-choice",
+    "answer": "online"
+  },
+  {
+    "question": "The danger where online relationships create strong attachments based on limited knowledge is",
+    "options": [
+      "Emotional Entanglement",
+      "False Intimacy",
+      "Lack of Accountability",
+      "Security Risks"
+    ],
+    "type": "multiple-choice",
+    "answer": "Emotional Entanglement"
+  }
+]

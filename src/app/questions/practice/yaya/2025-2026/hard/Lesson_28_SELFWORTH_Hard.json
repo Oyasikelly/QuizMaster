@@ -1,0 +1,112 @@
+[
+  {
+    "question": "Between any two humans, the amount of genetic variation is about",
+    "options": [
+      "one per cent",
+      "two per cent",
+      "five per cent",
+      "ten per cent"
+    ],
+    "type": "multiple-choice",
+    "answer": "one per cent"
+  },
+  {
+    "question": "The human brain has about how many nerve cells?",
+    "options": [
+      "100 billion",
+      "1 billion",
+      "10 billion",
+      "50 billion"
+    ],
+    "type": "multiple-choice",
+    "answer": "100 billion"
+  },
+  {
+    "question": "The hairs on your head are numbered according to",
+    "options": [
+      "Matthew 10:30",
+      "Matthew 5:36",
+      "Isaiah 64:8",
+      "Psalm 139:14"
+    ],
+    "type": "multiple-choice",
+    "answer": "Matthew 10:30"
+  },
+  {
+    "question": "To love yourself, avoid comparing yourself to others, per",
+    "options": [
+      "2 Corinthians 10:12",
+      "Psalm 139:14",
+      "Proverbs 12:24",
+      "Proverbs 16:16"
+    ],
+    "type": "multiple-choice",
+    "answer": "2 Corinthians 10:12"
+  },
+  {
+    "question": "To love yourself, recognise your unique identity as a distinct personality, per",
+    "options": [
+      "Psalm 139:14",
+      "2 Corinthians 10:12",
+      "Proverbs 12:24",
+      "Proverbs 16:16"
+    ],
+    "type": "multiple-choice",
+    "answer": "Psalm 139:14"
+  },
+  {
+    "question": "The colour of the hair on your head is divinely created according to",
+    "options": [
+      "Matthew 5:36",
+      "Matthew 10:30",
+      "Psalm 139:14",
+      "Isaiah 64:8"
+    ],
+    "type": "multiple-choice",
+    "answer": "Matthew 5:36"
+  },
+  {
+    "question": "You have been designed and configured by God for a reason; you are not a victim of",
+    "options": [
+      "circumstance",
+      "fate",
+      "chance",
+      "destiny"
+    ],
+    "type": "multiple-choice",
+    "answer": "circumstance"
+  },
+  {
+    "question": "The two lesson outlines for Lesson 28 are 'A Masterpiece' and",
+    "options": [
+      "Self-Affection",
+      "Self-Acceptance",
+      "Self-Awareness",
+      "Self-Discovery"
+    ],
+    "type": "multiple-choice",
+    "answer": "Self-Affection"
+  },
+  {
+    "question": "Every human creature is distinctly moulded by God who is the Chief",
+    "options": [
+      "Sculptor",
+      "Creator",
+      "Designer",
+      "Maker"
+    ],
+    "type": "multiple-choice",
+    "answer": "Sculptor"
+  },
+  {
+    "question": "Between any two humans, the amount of genetic variation (biochemical individuality) is about",
+    "options": [
+      "one per cent",
+      "two per cent",
+      "five per cent",
+      "ten per cent"
+    ],
+    "type": "multiple-choice",
+    "answer": "one per cent"
+  }
+]

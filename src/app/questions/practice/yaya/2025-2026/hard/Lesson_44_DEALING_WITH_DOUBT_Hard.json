@@ -1,0 +1,106 @@
+[
+  {
+    "question": "Who was struck mute for doubting God's message?",
+    "options": [
+      "Zechariah",
+      "Naaman",
+      "Thomas",
+      "Peter"
+    ],
+    "type": "multiple-choice",
+    "answer": "Zechariah"
+  },
+  {
+    "question": "Reflecting on God's past faithfulness strengthens faith in doubt (Lamentations ________)",
+    "type": "fill-in-the-blank",
+    "answer": "3:21-23"
+  },
+  {
+    "question": "Naaman's story is found in",
+    "options": [
+      "2 Kings 5:10-14",
+      "James 1:6",
+      "Matthew 14:31",
+      "Mark 9:24"
+    ],
+    "type": "multiple-choice",
+    "answer": "2 Kings 5:10-14"
+  },
+  {
+    "question": "Doubt can also emerge when expectations do not match",
+    "options": [
+      "reality",
+      "faith",
+      "hope",
+      "promises"
+    ],
+    "type": "multiple-choice",
+    "answer": "reality"
+  },
+  {
+    "question": "Doubt does not have to mark the end of",
+    "options": [
+      "faith",
+      "hope",
+      "life",
+      "salvation"
+    ],
+    "type": "multiple-choice",
+    "answer": "faith"
+  },
+  {
+    "question": "Trusting God sometimes means leaning on Him even when we do not have all the",
+    "options": [
+      "answers",
+      "facts",
+      "solutions",
+      "details"
+    ],
+    "type": "multiple-choice",
+    "answer": "answers"
+  },
+  {
+    "question": "Regular and in-depth study of the scriptures helps bring clarity and understanding where doubts and conflicting teachings",
+    "options": [
+      "arise",
+      "exist",
+      "persist",
+      "occur"
+    ],
+    "type": "multiple-choice",
+    "answer": "arise"
+  },
+  {
+    "question": "When approached rightly, doubt can become an opportunity for spiritual growth and deeper",
+    "options": [
+      "understanding",
+      "faith",
+      "wisdom",
+      "knowledge"
+    ],
+    "type": "multiple-choice",
+    "answer": "understanding"
+  },
+  {
+    "question": "Doubt is defined as",
+    "options": [
+      "complete confidence in God",
+      "a state of being unsure of something",
+      "the end of faith",
+      "lack of assurance"
+    ],
+    "type": "multiple-choice",
+    "answer": "a state of being unsure of something"
+  },
+  {
+    "question": "Doubt often arises during times of uncertainty and",
+    "options": [
+      "suffering",
+      "joy",
+      "peace",
+      "abundance"
+    ],
+    "type": "multiple-choice",
+    "answer": "suffering"
+  }
+]

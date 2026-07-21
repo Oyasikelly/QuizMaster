@@ -1,0 +1,94 @@
+[
+  {
+    "question": "Who is named in the lesson as explaining botanical, zoological and aquatic phenomena in 1 Kings 4:33?",
+    "options": [
+      "Solomon",
+      "Noah",
+      "Daniel",
+      "Job"
+    ],
+    "type": "multiple-choice",
+    "answer": "Solomon"
+  },
+  {
+    "question": "Daniel was trained in the wisdom and knowledge of the Babylonians which included ________",
+    "type": "fill-in-the-blank",
+    "answer": "Astronomy"
+  },
+  {
+    "question": "Faith provides meaning, purpose and moral guidance according to",
+    "options": [
+      "Hebrews 11:1, 7-8",
+      "Colossians 1:17",
+      "Daniel 1:3-4",
+      "Psalm 19:1-6"
+    ],
+    "type": "multiple-choice",
+    "answer": "Hebrews 11:1, 7-8"
+  },
+  {
+    "question": "Faith motivated the inquiry of great scientists, and their discoveries did not diminish their belief in ________",
+    "type": "fill-in-the-blank",
+    "answer": "God"
+  },
+  {
+    "question": "Faith involves accepting truths that may not be practically provable but are embraced through spiritual ________",
+    "type": "fill-in-the-blank",
+    "answer": "Conviction"
+  },
+  {
+    "question": "According to the lesson, while science says trees grow by taking in sunlight and water, faith provides insight into God creating trees to provide ________ for man",
+    "options": [
+      "food",
+      "shade",
+      "oxygen",
+      "beauty"
+    ],
+    "type": "multiple-choice",
+    "answer": "food"
+  },
+  {
+    "question": "Science is the discovery and orderly classification of the phenomena called",
+    "options": [
+      "faith",
+      "nature",
+      "religion",
+      "dreams"
+    ],
+    "type": "multiple-choice",
+    "answer": "nature"
+  },
+  {
+    "question": "Faith is a personal and spiritual belief, often centred on trust in a higher power or",
+    "options": [
+      "divine being",
+      "natural law",
+      "human reason",
+      "tradition"
+    ],
+    "type": "multiple-choice",
+    "answer": "divine being"
+  },
+  {
+    "question": "Who explained botanical, zoological and even aquatic phenomena in 1 Kings 4:33?",
+    "options": [
+      "Noah",
+      "Daniel",
+      "Solomon",
+      "Job"
+    ],
+    "type": "multiple-choice",
+    "answer": "Solomon"
+  },
+  {
+    "question": "Who followed precise measurement and construction instructions revealing engineering skill that saved lives?",
+    "options": [
+      "Noah",
+      "Solomon",
+      "Daniel",
+      "Job"
+    ],
+    "type": "multiple-choice",
+    "answer": "Noah"
+  }
+]

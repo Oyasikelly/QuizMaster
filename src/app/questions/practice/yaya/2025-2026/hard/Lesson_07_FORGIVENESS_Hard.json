@@ -1,0 +1,100 @@
+[
+  {
+    "question": "In the REACH model, which stage involves making one's decision public with an accountability partner?",
+    "options": [
+      "Commit",
+      "Hold",
+      "Recall",
+      "Empathise"
+    ],
+    "type": "multiple-choice",
+    "answer": "Commit"
+  },
+  {
+    "question": "Which is NOT listed among the reasons Christians should forgive?",
+    "options": [
+      "It is a command",
+      "Lack of forgiveness hinders prayers",
+      "We are the light of the world",
+      "It guarantees earthly wealth"
+    ],
+    "type": "multiple-choice",
+    "answer": "It guarantees earthly wealth"
+  },
+  {
+    "question": "The Bible makes it clear that those who refuse to forgive men will not be forgiven by God, according to",
+    "options": [
+      "Matthew 6:14-15",
+      "Colossians 3:13",
+      "Mark 11:25",
+      "Ephesians 4:32"
+    ],
+    "type": "multiple-choice",
+    "answer": "Matthew 6:14-15"
+  },
+  {
+    "question": "One of the fundamental obligations of a Christian is to follow peace with all men, according to",
+    "options": [
+      "Hebrews 12:14-15",
+      "Mark 11:25",
+      "Matthew 5:14",
+      "Ephesians 4:32"
+    ],
+    "type": "multiple-choice",
+    "answer": "Hebrews 12:14-15"
+  },
+  {
+    "question": "Forgiveness is a command according to",
+    "options": [
+      "Mark 11:25; Ephesians 4:32",
+      "Matthew 5:14",
+      "Matthew 18:32-35",
+      "Hebrews 12:14-15"
+    ],
+    "type": "multiple-choice",
+    "answer": "Mark 11:25; Ephesians 4:32"
+  },
+  {
+    "question": "God is angry with us when we refuse to forgive, according to",
+    "options": [
+      "Matthew 18:32-35",
+      "Mark 11:25",
+      "Matthew 5:14",
+      "Ephesians 4:32"
+    ],
+    "type": "multiple-choice",
+    "answer": "Matthew 18:32-35"
+  },
+  {
+    "question": "We are the light of the world, a living example that others follow, according to",
+    "options": [
+      "Matthew 5:14; 5:16",
+      "Mark 11:25",
+      "Matthew 18:32-35",
+      "Ephesians 4:32"
+    ],
+    "type": "multiple-choice",
+    "answer": "Matthew 5:14; 5:16"
+  },
+  {
+    "question": "Which is NOT one of the major reasons Christians should forgive?",
+    "options": [
+      "It is a command",
+      "Lack of forgiveness hinders prayers",
+      "We need to be forgiven",
+      "So that we can hold grudges longer"
+    ],
+    "type": "multiple-choice",
+    "answer": "So that we can hold grudges longer"
+  },
+  {
+    "question": "As Christians, we should not only forgive but we should ________ (Genesis 45:1-15)",
+    "type": "fill-in-the-blank",
+    "answer": "Heal"
+  },
+  {
+    "question": "In the Recall stage, it is not to wallow in self-pity or to hold a ________ against the offender",
+    "type": "fill-in-the-blank",
+    "answer": "Grudge"
+  }
+]

@@ -1,0 +1,100 @@
+[
+  {
+    "question": "In the SMART acronym for goals, the 'A' stands for",
+    "options": [
+      "Attainable",
+      "Achievable",
+      "Actionable",
+      "Accurate"
+    ],
+    "type": "multiple-choice",
+    "answer": "Attainable"
+  },
+  {
+    "question": "Every purpose in life has a time attached (Ecclesiastes ________)",
+    "type": "fill-in-the-blank",
+    "answer": "3:1"
+  },
+  {
+    "question": "Do not just be busy without having something to show for the hours used; be productive and fulfil your",
+    "options": [
+      "purpose",
+      "goals",
+      "tasks",
+      "duties"
+    ],
+    "type": "multiple-choice",
+    "answer": "purpose"
+  },
+  {
+    "question": "Do not just work hard but work ________",
+    "type": "fill-in-the-blank",
+    "answer": "Smart"
+  },
+  {
+    "question": "The opening prayer for Lesson 21 declares, 'I will not be ________ in Jesus' name'",
+    "options": [
+      "wasteful",
+      "lazy",
+      "late",
+      "idle"
+    ],
+    "type": "multiple-choice",
+    "answer": "wasteful"
+  },
+  {
+    "question": "Being punctual is being available to do something at the agreed or proper",
+    "options": [
+      "time",
+      "place",
+      "moment",
+      "hour"
+    ],
+    "type": "multiple-choice",
+    "answer": "time"
+  },
+  {
+    "question": "Time is described as one of the greatest resources for",
+    "options": [
+      "success",
+      "wealth",
+      "rest",
+      "fame"
+    ],
+    "type": "multiple-choice",
+    "answer": "success"
+  },
+  {
+    "question": "Time is evenly distributed across board, irrespective of age, race, gender or",
+    "options": [
+      "status",
+      "wealth",
+      "position",
+      "class"
+    ],
+    "type": "multiple-choice",
+    "answer": "status"
+  },
+  {
+    "question": "Time management is the way you organise and plan how long you will spend on specific",
+    "options": [
+      "activities",
+      "tasks",
+      "jobs",
+      "duties"
+    ],
+    "type": "multiple-choice",
+    "answer": "activities"
+  },
+  {
+    "question": "Time management is about making the best use of your time productively and",
+    "options": [
+      "efficiently",
+      "wisely",
+      "carefully",
+      "effectively"
+    ],
+    "type": "multiple-choice",
+    "answer": "efficiently"
+  }
+]

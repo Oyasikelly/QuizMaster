@@ -36,214 +36,590 @@
     ],
     "yaya_2025-2026_hard": [
       {
-        "id": "lesson1",
-        "title": "lesson1"
+        "id": "Lesson_01_THEOS_BASILEIA_Hard",
+        "title": "Lesson 01: Theos Basileia Hard"
+      },
+      {
+        "id": "Lesson_02_THE_DEITY_OF_JESUS_Part_1_Hard",
+        "title": "Lesson 02: The Deity Of Jesus Part 1 Hard"
+      },
+      {
+        "id": "Lesson_03_THE_DEITY_OF_JESUS_Part_2_Hard",
+        "title": "Lesson 03: The Deity Of Jesus Part 2 Hard"
+      },
+      {
+        "id": "Lesson_04_HODEGEO_PNEUMA_Hard",
+        "title": "Lesson 04: Hodegeo Pneuma Hard"
+      },
+      {
+        "id": "Lesson_05_MY_ENEMY_THE_FLESH_Hard",
+        "title": "Lesson 05: My Enemy The Flesh Hard"
+      },
+      {
+        "id": "Lesson_06_KNOW_YOURSELF_Hard",
+        "title": "Lesson 06: Know Yourself Hard"
+      },
+      {
+        "id": "Lesson_07_FORGIVENESS_Hard",
+        "title": "Lesson 07: Forgiveness Hard"
+      },
+      {
+        "id": "Lesson_08_FAITH_AND_SCIENCE_Hard",
+        "title": "Lesson 08: Faith And Science Hard"
+      },
+      {
+        "id": "Lesson_09_PROPHECY_Hard",
+        "title": "Lesson 09: Prophecy Hard"
+      },
+      {
+        "id": "Lesson_10_SPIRITUAL_MATURITY_Hard",
+        "title": "Lesson 10: Spiritual Maturity Hard"
+      },
+      {
+        "id": "Lesson_11_WORKPLACE_MINISTRY_Hard",
+        "title": "Lesson 11: Workplace Ministry Hard"
+      },
+      {
+        "id": "Lesson_12_DOMINION_THROUGH_PRAYERS_Hard",
+        "title": "Lesson 12: Dominion Through Prayers Hard"
+      },
+      {
+        "id": "Lesson_14_PEER_PRESSURE_Hard",
+        "title": "Lesson 14: Peer Pressure Hard"
+      },
+      {
+        "id": "Lesson_15_UNTOWARD_FREEDOM_Hard",
+        "title": "Lesson 15: Untoward Freedom Hard"
+      },
+      {
+        "id": "Lesson_16_DESTINY_DESTROYERS_Hard",
+        "title": "Lesson 16: Destiny Destroyers Hard"
+      },
+      {
+        "id": "Lesson_17_STAY_PURE_Hard",
+        "title": "Lesson 17: Stay Pure Hard"
+      },
+      {
+        "id": "Lesson_18_THE_ATTITUDE_OF_THANKSGIVING_Hard",
+        "title": "Lesson 18: The Attitude Of Thanksgiving Hard"
+      },
+      {
+        "id": "Lesson_19_EFFECTIVE_PLANNING_Hard",
+        "title": "Lesson 19: Effective Planning Hard"
+      },
+      {
+        "id": "Lesson_20_RESOURCEFULNESS_Hard",
+        "title": "Lesson 20: Resourcefulness Hard"
+      },
+      {
+        "id": "Lesson_21_TIME_MANAGEMENT_Hard",
+        "title": "Lesson 21: Time Management Hard"
+      },
+      {
+        "id": "Lesson_22_AGENTS_OF_TRANSFORMATION_Hard",
+        "title": "Lesson 22: Agents Of Transformation Hard"
+      },
+      {
+        "id": "Lesson_23_CHRISTIANS_AND_POLITICS_CHANGING_THE_N_Hard",
+        "title": "Lesson 23: Christians And Politics Changing The N Hard"
+      },
+      {
+        "id": "Lesson_24_CHRISTIANS_AND_POLITICS_BE_INVOLVED_Hard",
+        "title": "Lesson 24: Christians And Politics Be Involved Hard"
+      },
+      {
+        "id": "Lesson_25_STRENGTH_IN_QUIETNESS_Hard",
+        "title": "Lesson 25: Strength In Quietness Hard"
+      },
+      {
+        "id": "Lesson_27_GETRICHQUICK_SYNDROME_Hard",
+        "title": "Lesson 27: Getrichquick Syndrome Hard"
+      },
+      {
+        "id": "Lesson_28_SELFWORTH_Hard",
+        "title": "Lesson 28: Selfworth Hard"
+      },
+      {
+        "id": "Lesson_29_DEALING_WITH_LOSS_Hard",
+        "title": "Lesson 29: Dealing With Loss Hard"
+      },
+      {
+        "id": "Lesson_30_CRISIS_MANAGEMENT_Hard",
+        "title": "Lesson 30: Crisis Management Hard"
+      },
+      {
+        "id": "Lesson_31_SELFWORTH_Hard",
+        "title": "Lesson 31: Selfworth Hard"
+      },
+      {
+        "id": "Lesson_32_LIVE_HEALTHY_Hard",
+        "title": "Lesson 32: Live Healthy Hard"
+      },
+      {
+        "id": "Lesson_33_DEFINE_YOUR_RELATIONSHIP_Hard",
+        "title": "Lesson 33: Define Your Relationship Hard"
+      },
+      {
+        "id": "Lesson_34_SOCIAL_MEDIA_ROMANCE_Hard",
+        "title": "Lesson 34: Social Media Romance Hard"
+      },
+      {
+        "id": "Lesson_35_PARENTING_STYLES_Part_1_Hard",
+        "title": "Lesson 35: Parenting Styles Part 1 Hard"
+      },
+      {
+        "id": "Lesson_36_PARENTING_STYLES_Part_2_Hard",
+        "title": "Lesson 36: Parenting Styles Part 2 Hard"
+      },
+      {
+        "id": "Lesson_37_CHRISTIANITY_AND_HOMOSEXUALITY_Part_1_Hard",
+        "title": "Lesson 37: Christianity And Homosexuality Part 1 Hard"
+      },
+      {
+        "id": "Lesson_38_CHRISTIANITY_AND_HOMOSEXUALITY_Part_2_Hard",
+        "title": "Lesson 38: Christianity And Homosexuality Part 2 Hard"
+      },
+      {
+        "id": "Lesson_40_RAHAB_Hard",
+        "title": "Lesson 40: Rahab Hard"
+      },
+      {
+        "id": "Lesson_41_STRATEGIC_LEADERSHIP_Hard",
+        "title": "Lesson 41: Strategic Leadership Hard"
+      },
+      {
+        "id": "Lesson_42_WEALTH_CREATION_Hard",
+        "title": "Lesson 42: Wealth Creation Hard"
+      },
+      {
+        "id": "Lesson_43_CHRISTIANS_AND_INVESTMENT_Hard",
+        "title": "Lesson 43: Christians And Investment Hard"
+      },
+      {
+        "id": "Lesson_44_DEALING_WITH_DOUBT_Hard",
+        "title": "Lesson 44: Dealing With Doubt Hard"
+      },
+      {
+        "id": "Lesson_45_WELFARE_EVANGELISM_Hard",
+        "title": "Lesson 45: Welfare Evangelism Hard"
+      },
+      {
+        "id": "Lesson_46_EMBRACING_DIVERSITY_Hard",
+        "title": "Lesson 46: Embracing Diversity Hard"
+      },
+      {
+        "id": "Lesson_47_WOUNDED_SOLDIER_Hard",
+        "title": "Lesson 47: Wounded Soldier Hard"
+      },
+      {
+        "id": "Lesson_48_THE_BATTLE_OF_ARMAGEDDON_Hard",
+        "title": "Lesson 48: The Battle Of Armageddon Hard"
+      },
+      {
+        "id": "Lesson_49_THE_BOOK_OF_LIFE_Hard",
+        "title": "Lesson 49: The Book Of Life Hard"
+      },
+      {
+        "id": "Lesson_50_THE_RESURRECTION_Hard",
+        "title": "Lesson 50: The Resurrection Hard"
+      },
+      {
+        "id": "Lesson_51_THE_SECOND_DEATH_Hard",
+        "title": "Lesson 51: The Second Death Hard"
       }
     ],
     "yaya_2025-2026_medium": [
       {
-        "id": "lesson1",
-        "title": "lesson1"
+        "id": "Lesson_01_THEOS_BASILEIA_Medium",
+        "title": "Lesson 01: Theos Basileia Medium"
+      },
+      {
+        "id": "Lesson_02_THE_DEITY_OF_JESUS_Part_1_Medium",
+        "title": "Lesson 02: The Deity Of Jesus Part 1 Medium"
+      },
+      {
+        "id": "Lesson_03_THE_DEITY_OF_JESUS_Part_2_Medium",
+        "title": "Lesson 03: The Deity Of Jesus Part 2 Medium"
+      },
+      {
+        "id": "Lesson_04_HODEGEO_PNEUMA_Medium",
+        "title": "Lesson 04: Hodegeo Pneuma Medium"
+      },
+      {
+        "id": "Lesson_05_MY_ENEMY_THE_FLESH_Medium",
+        "title": "Lesson 05: My Enemy The Flesh Medium"
+      },
+      {
+        "id": "Lesson_06_KNOW_YOURSELF_Medium",
+        "title": "Lesson 06: Know Yourself Medium"
+      },
+      {
+        "id": "Lesson_07_FORGIVENESS_Medium",
+        "title": "Lesson 07: Forgiveness Medium"
+      },
+      {
+        "id": "Lesson_08_FAITH_AND_SCIENCE_Medium",
+        "title": "Lesson 08: Faith And Science Medium"
+      },
+      {
+        "id": "Lesson_09_PROPHECY_Medium",
+        "title": "Lesson 09: Prophecy Medium"
+      },
+      {
+        "id": "Lesson_10_SPIRITUAL_MATURITY_Medium",
+        "title": "Lesson 10: Spiritual Maturity Medium"
+      },
+      {
+        "id": "Lesson_11_WORKPLACE_MINISTRY_Medium",
+        "title": "Lesson 11: Workplace Ministry Medium"
+      },
+      {
+        "id": "Lesson_12_DOMINION_THROUGH_PRAYERS_Medium",
+        "title": "Lesson 12: Dominion Through Prayers Medium"
+      },
+      {
+        "id": "Lesson_14_PEER_PRESSURE_Medium",
+        "title": "Lesson 14: Peer Pressure Medium"
+      },
+      {
+        "id": "Lesson_15_UNTOWARD_FREEDOM_Medium",
+        "title": "Lesson 15: Untoward Freedom Medium"
+      },
+      {
+        "id": "Lesson_16_DESTINY_DESTROYERS_Medium",
+        "title": "Lesson 16: Destiny Destroyers Medium"
+      },
+      {
+        "id": "Lesson_17_STAY_PURE_Medium",
+        "title": "Lesson 17: Stay Pure Medium"
+      },
+      {
+        "id": "Lesson_18_THE_ATTITUDE_OF_THANKSGIVING_Medium",
+        "title": "Lesson 18: The Attitude Of Thanksgiving Medium"
+      },
+      {
+        "id": "Lesson_19_EFFECTIVE_PLANNING_Medium",
+        "title": "Lesson 19: Effective Planning Medium"
+      },
+      {
+        "id": "Lesson_20_RESOURCEFULNESS_Medium",
+        "title": "Lesson 20: Resourcefulness Medium"
+      },
+      {
+        "id": "Lesson_21_TIME_MANAGEMENT_Medium",
+        "title": "Lesson 21: Time Management Medium"
+      },
+      {
+        "id": "Lesson_22_AGENTS_OF_TRANSFORMATION_Medium",
+        "title": "Lesson 22: Agents Of Transformation Medium"
+      },
+      {
+        "id": "Lesson_23_CHRISTIANS_AND_POLITICS_CHANGING_THE_N_Medium",
+        "title": "Lesson 23: Christians And Politics Changing The N Medium"
+      },
+      {
+        "id": "Lesson_24_CHRISTIANS_AND_POLITICS_BE_INVOLVED_Medium",
+        "title": "Lesson 24: Christians And Politics Be Involved Medium"
+      },
+      {
+        "id": "Lesson_25_STRENGTH_IN_QUIETNESS_Medium",
+        "title": "Lesson 25: Strength In Quietness Medium"
+      },
+      {
+        "id": "Lesson_27_GETRICHQUICK_SYNDROME_Medium",
+        "title": "Lesson 27: Getrichquick Syndrome Medium"
+      },
+      {
+        "id": "Lesson_28_SELFWORTH_Medium",
+        "title": "Lesson 28: Selfworth Medium"
+      },
+      {
+        "id": "Lesson_29_DEALING_WITH_LOSS_Medium",
+        "title": "Lesson 29: Dealing With Loss Medium"
+      },
+      {
+        "id": "Lesson_30_CRISIS_MANAGEMENT_Medium",
+        "title": "Lesson 30: Crisis Management Medium"
+      },
+      {
+        "id": "Lesson_31_SELFWORTH_Medium",
+        "title": "Lesson 31: Selfworth Medium"
+      },
+      {
+        "id": "Lesson_32_LIVE_HEALTHY_Medium",
+        "title": "Lesson 32: Live Healthy Medium"
+      },
+      {
+        "id": "Lesson_33_DEFINE_YOUR_RELATIONSHIP_Medium",
+        "title": "Lesson 33: Define Your Relationship Medium"
+      },
+      {
+        "id": "Lesson_34_SOCIAL_MEDIA_ROMANCE_Medium",
+        "title": "Lesson 34: Social Media Romance Medium"
+      },
+      {
+        "id": "Lesson_35_PARENTING_STYLES_Part_1_Medium",
+        "title": "Lesson 35: Parenting Styles Part 1 Medium"
+      },
+      {
+        "id": "Lesson_36_PARENTING_STYLES_Part_2_Medium",
+        "title": "Lesson 36: Parenting Styles Part 2 Medium"
+      },
+      {
+        "id": "Lesson_37_CHRISTIANITY_AND_HOMOSEXUALITY_Part_1_Medium",
+        "title": "Lesson 37: Christianity And Homosexuality Part 1 Medium"
+      },
+      {
+        "id": "Lesson_38_CHRISTIANITY_AND_HOMOSEXUALITY_Part_2_Medium",
+        "title": "Lesson 38: Christianity And Homosexuality Part 2 Medium"
+      },
+      {
+        "id": "Lesson_40_RAHAB_Medium",
+        "title": "Lesson 40: Rahab Medium"
+      },
+      {
+        "id": "Lesson_41_STRATEGIC_LEADERSHIP_Medium",
+        "title": "Lesson 41: Strategic Leadership Medium"
+      },
+      {
+        "id": "Lesson_42_WEALTH_CREATION_Medium",
+        "title": "Lesson 42: Wealth Creation Medium"
+      },
+      {
+        "id": "Lesson_43_CHRISTIANS_AND_INVESTMENT_Medium",
+        "title": "Lesson 43: Christians And Investment Medium"
+      },
+      {
+        "id": "Lesson_44_DEALING_WITH_DOUBT_Medium",
+        "title": "Lesson 44: Dealing With Doubt Medium"
+      },
+      {
+        "id": "Lesson_45_WELFARE_EVANGELISM_Medium",
+        "title": "Lesson 45: Welfare Evangelism Medium"
+      },
+      {
+        "id": "Lesson_46_EMBRACING_DIVERSITY_Medium",
+        "title": "Lesson 46: Embracing Diversity Medium"
+      },
+      {
+        "id": "Lesson_47_WOUNDED_SOLDIER_Medium",
+        "title": "Lesson 47: Wounded Soldier Medium"
+      },
+      {
+        "id": "Lesson_48_THE_BATTLE_OF_ARMAGEDDON_Medium",
+        "title": "Lesson 48: The Battle Of Armageddon Medium"
+      },
+      {
+        "id": "Lesson_49_THE_BOOK_OF_LIFE_Medium",
+        "title": "Lesson 49: The Book Of Life Medium"
+      },
+      {
+        "id": "Lesson_50_THE_RESURRECTION_Medium",
+        "title": "Lesson 50: The Resurrection Medium"
+      },
+      {
+        "id": "Lesson_51_THE_SECOND_DEATH_Medium",
+        "title": "Lesson 51: The Second Death Medium"
       }
     ],
     "yaya_2025-2026_normal": [
       {
-        "id": "Lesson_01_THEOS_BASILEIA_Quiz",
-        "title": "Lesson 01: Theos Basileia"
+        "id": "Lesson_01_THEOS_BASILEIA_Normal",
+        "title": "Lesson 01: Theos Basileia Normal"
       },
       {
-        "id": "Lesson_02_THE_DEITY_OF_JESUS_Part_1_Quiz",
-        "title": "Lesson 02: The Deity Of Jesus Part 1"
+        "id": "Lesson_02_THE_DEITY_OF_JESUS_Part_1_Normal",
+        "title": "Lesson 02: The Deity Of Jesus Part 1 Normal"
       },
       {
-        "id": "Lesson_03_THE_DEITY_OF_JESUS_Part_2_Quiz",
-        "title": "Lesson 03: The Deity Of Jesus Part 2"
+        "id": "Lesson_03_THE_DEITY_OF_JESUS_Part_2_Normal",
+        "title": "Lesson 03: The Deity Of Jesus Part 2 Normal"
       },
       {
-        "id": "Lesson_04_HODEGEO_PNEUMA_Quiz",
-        "title": "Lesson 04: Hodegeo Pneuma"
+        "id": "Lesson_04_HODEGEO_PNEUMA_Normal",
+        "title": "Lesson 04: Hodegeo Pneuma Normal"
       },
       {
-        "id": "Lesson_05_MY_ENEMY_THE_FLESH_Quiz",
-        "title": "Lesson 05: My Enemy The Flesh"
+        "id": "Lesson_05_MY_ENEMY_THE_FLESH_Normal",
+        "title": "Lesson 05: My Enemy The Flesh Normal"
       },
       {
-        "id": "Lesson_06_KNOW_YOURSELF_Quiz",
-        "title": "Lesson 06: Know Yourself"
+        "id": "Lesson_06_KNOW_YOURSELF_Normal",
+        "title": "Lesson 06: Know Yourself Normal"
       },
       {
-        "id": "Lesson_07_FORGIVENESS_Quiz",
-        "title": "Lesson 07: Forgiveness"
+        "id": "Lesson_07_FORGIVENESS_Normal",
+        "title": "Lesson 07: Forgiveness Normal"
       },
       {
-        "id": "Lesson_08_FAITH_AND_SCIENCE_Quiz",
-        "title": "Lesson 08: Faith And Science"
+        "id": "Lesson_08_FAITH_AND_SCIENCE_Normal",
+        "title": "Lesson 08: Faith And Science Normal"
       },
       {
-        "id": "Lesson_09_PROPHECY_Quiz",
-        "title": "Lesson 09: Prophecy"
+        "id": "Lesson_09_PROPHECY_Normal",
+        "title": "Lesson 09: Prophecy Normal"
       },
       {
-        "id": "Lesson_10_SPIRITUAL_MATURITY_Quiz",
-        "title": "Lesson 10: Spiritual Maturity"
+        "id": "Lesson_10_SPIRITUAL_MATURITY_Normal",
+        "title": "Lesson 10: Spiritual Maturity Normal"
       },
       {
-        "id": "Lesson_11_WORKPLACE_MINISTRY_Quiz",
-        "title": "Lesson 11: Workplace Ministry"
+        "id": "Lesson_11_WORKPLACE_MINISTRY_Normal",
+        "title": "Lesson 11: Workplace Ministry Normal"
       },
       {
-        "id": "Lesson_12_DOMINION_THROUGH_PRAYERS_Quiz",
-        "title": "Lesson 12: Dominion Through Prayers"
+        "id": "Lesson_12_DOMINION_THROUGH_PRAYERS_Normal",
+        "title": "Lesson 12: Dominion Through Prayers Normal"
       },
       {
-        "id": "Lesson_14_PEER_PRESSURE_Quiz",
-        "title": "Lesson 14: Peer Pressure"
+        "id": "Lesson_14_PEER_PRESSURE_Normal",
+        "title": "Lesson 14: Peer Pressure Normal"
       },
       {
-        "id": "Lesson_15_UNTOWARD_FREEDOM_Quiz",
-        "title": "Lesson 15: Untoward Freedom"
+        "id": "Lesson_15_UNTOWARD_FREEDOM_Normal",
+        "title": "Lesson 15: Untoward Freedom Normal"
       },
       {
-        "id": "Lesson_16_DESTINY_DESTROYERS_Quiz",
-        "title": "Lesson 16: Destiny Destroyers"
+        "id": "Lesson_16_DESTINY_DESTROYERS_Normal",
+        "title": "Lesson 16: Destiny Destroyers Normal"
       },
       {
-        "id": "Lesson_17_STAY_PURE_Quiz",
-        "title": "Lesson 17: Stay Pure"
+        "id": "Lesson_17_STAY_PURE_Normal",
+        "title": "Lesson 17: Stay Pure Normal"
       },
       {
-        "id": "Lesson_18_THE_ATTITUDE_OF_THANKSGIVING_Quiz",
-        "title": "Lesson 18: The Attitude Of Thanksgiving"
+        "id": "Lesson_18_THE_ATTITUDE_OF_THANKSGIVING_Normal",
+        "title": "Lesson 18: The Attitude Of Thanksgiving Normal"
       },
       {
-        "id": "Lesson_19_EFFECTIVE_PLANNING_Quiz",
-        "title": "Lesson 19: Effective Planning"
+        "id": "Lesson_19_EFFECTIVE_PLANNING_Normal",
+        "title": "Lesson 19: Effective Planning Normal"
       },
       {
-        "id": "Lesson_20_RESOURCEFULNESS_Quiz",
-        "title": "Lesson 20: Resourcefulness"
+        "id": "Lesson_20_RESOURCEFULNESS_Normal",
+        "title": "Lesson 20: Resourcefulness Normal"
       },
       {
-        "id": "Lesson_21_TIME_MANAGEMENT_Quiz",
-        "title": "Lesson 21: Time Management"
+        "id": "Lesson_21_TIME_MANAGEMENT_Normal",
+        "title": "Lesson 21: Time Management Normal"
       },
       {
-        "id": "Lesson_22_AGENTS_OF_TRANSFORMATION_Quiz",
-        "title": "Lesson 22: Agents Of Transformation"
+        "id": "Lesson_22_AGENTS_OF_TRANSFORMATION_Normal",
+        "title": "Lesson 22: Agents Of Transformation Normal"
       },
       {
-        "id": "Lesson_23_CHRISTIANS_AND_POLITICS_CHANGING_THE_NARRATIVES_Quiz",
-        "title": "Lesson 23: Christians And Politics Changing The Narratives"
+        "id": "Lesson_23_CHRISTIANS_AND_POLITICS_CHANGING_THE_N_Normal",
+        "title": "Lesson 23: Christians And Politics Changing The N Normal"
       },
       {
-        "id": "Lesson_24_CHRISTIANS_AND_POLITICS_BE_INVOLVED_Quiz",
-        "title": "Lesson 24: Christians And Politics Be Involved"
+        "id": "Lesson_24_CHRISTIANS_AND_POLITICS_BE_INVOLVED_Normal",
+        "title": "Lesson 24: Christians And Politics Be Involved Normal"
       },
       {
-        "id": "Lesson_25_STRENGTH_IN_QUIETNESS_Quiz",
-        "title": "Lesson 25: Strength In Quietness"
+        "id": "Lesson_25_STRENGTH_IN_QUIETNESS_Normal",
+        "title": "Lesson 25: Strength In Quietness Normal"
       },
       {
-        "id": "Lesson_27_GETRICHQUICK_SYNDROME_Quiz",
-        "title": "Lesson 27: Getrichquick Syndrome"
+        "id": "Lesson_27_GETRICHQUICK_SYNDROME_Normal",
+        "title": "Lesson 27: Getrichquick Syndrome Normal"
       },
       {
-        "id": "Lesson_28_SELFWORTH_Quiz",
-        "title": "Lesson 28: Selfworth"
+        "id": "Lesson_28_SELFWORTH_Normal",
+        "title": "Lesson 28: Selfworth Normal"
       },
       {
-        "id": "Lesson_29_DEALING_WITH_LOSS_Quiz",
-        "title": "Lesson 29: Dealing With Loss"
+        "id": "Lesson_29_DEALING_WITH_LOSS_Normal",
+        "title": "Lesson 29: Dealing With Loss Normal"
       },
       {
-        "id": "Lesson_30_CRISIS_MANAGEMENT_Quiz",
-        "title": "Lesson 30: Crisis Management"
+        "id": "Lesson_30_CRISIS_MANAGEMENT_Normal",
+        "title": "Lesson 30: Crisis Management Normal"
       },
       {
-        "id": "Lesson_31_SELFWORTH_Quiz",
-        "title": "Lesson 31: Selfworth"
+        "id": "Lesson_31_SELFWORTH_Normal",
+        "title": "Lesson 31: Selfworth Normal"
       },
       {
-        "id": "Lesson_32_LIVE_HEALTHY_Quiz",
-        "title": "Lesson 32: Live Healthy"
+        "id": "Lesson_32_LIVE_HEALTHY_Normal",
+        "title": "Lesson 32: Live Healthy Normal"
       },
       {
-        "id": "Lesson_33_DEFINE_YOUR_RELATIONSHIP_Quiz",
-        "title": "Lesson 33: Define Your Relationship"
+        "id": "Lesson_33_DEFINE_YOUR_RELATIONSHIP_Normal",
+        "title": "Lesson 33: Define Your Relationship Normal"
       },
       {
-        "id": "Lesson_34_SOCIAL_MEDIA_ROMANCE_Quiz",
-        "title": "Lesson 34: Social Media Romance"
+        "id": "Lesson_34_SOCIAL_MEDIA_ROMANCE_Normal",
+        "title": "Lesson 34: Social Media Romance Normal"
       },
       {
-        "id": "Lesson_35_PARENTING_STYLES_Part_1_Quiz",
-        "title": "Lesson 35: Parenting Styles Part 1"
+        "id": "Lesson_35_PARENTING_STYLES_Part_1_Normal",
+        "title": "Lesson 35: Parenting Styles Part 1 Normal"
       },
       {
-        "id": "Lesson_36_PARENTING_STYLES_Part_2_Quiz",
-        "title": "Lesson 36: Parenting Styles Part 2"
+        "id": "Lesson_36_PARENTING_STYLES_Part_2_Normal",
+        "title": "Lesson 36: Parenting Styles Part 2 Normal"
       },
       {
-        "id": "Lesson_37_CHRISTIANITY_AND_HOMOSEXUALITY_Part_1_Quiz",
-        "title": "Lesson 37: Christianity And Homosexuality Part 1"
+        "id": "Lesson_37_CHRISTIANITY_AND_HOMOSEXUALITY_Part_1_Normal",
+        "title": "Lesson 37: Christianity And Homosexuality Part 1 Normal"
       },
       {
-        "id": "Lesson_38_CHRISTIANITY_AND_HOMOSEXUALITY_Part_2_Quiz",
-        "title": "Lesson 38: Christianity And Homosexuality Part 2"
+        "id": "Lesson_38_CHRISTIANITY_AND_HOMOSEXUALITY_Part_2_Normal",
+        "title": "Lesson 38: Christianity And Homosexuality Part 2 Normal"
       },
       {
-        "id": "Lesson_40_RAHAB_Quiz",
-        "title": "Lesson 40: Rahab"
+        "id": "Lesson_40_RAHAB_Normal",
+        "title": "Lesson 40: Rahab Normal"
       },
       {
-        "id": "Lesson_41_STRATEGIC_LEADERSHIP_Quiz",
-        "title": "Lesson 41: Strategic Leadership"
+        "id": "Lesson_41_STRATEGIC_LEADERSHIP_Normal",
+        "title": "Lesson 41: Strategic Leadership Normal"
       },
       {
-        "id": "Lesson_42_WEALTH_CREATION_Quiz",
-        "title": "Lesson 42: Wealth Creation"
+        "id": "Lesson_42_WEALTH_CREATION_Normal",
+        "title": "Lesson 42: Wealth Creation Normal"
       },
       {
-        "id": "Lesson_43_CHRISTIANS_AND_INVESTMENT_Quiz",
-        "title": "Lesson 43: Christians And Investment"
+        "id": "Lesson_43_CHRISTIANS_AND_INVESTMENT_Normal",
+        "title": "Lesson 43: Christians And Investment Normal"
       },
       {
-        "id": "Lesson_44_DEALING_WITH_DOUBT_Quiz",
-        "title": "Lesson 44: Dealing With Doubt"
+        "id": "Lesson_44_DEALING_WITH_DOUBT_Normal",
+        "title": "Lesson 44: Dealing With Doubt Normal"
       },
       {
-        "id": "Lesson_45_WELFARE_EVANGELISM_Quiz",
-        "title": "Lesson 45: Welfare Evangelism"
+        "id": "Lesson_45_WELFARE_EVANGELISM_Normal",
+        "title": "Lesson 45: Welfare Evangelism Normal"
       },
       {
-        "id": "Lesson_46_EMBRACING_DIVERSITY_Quiz",
-        "title": "Lesson 46: Embracing Diversity"
+        "id": "Lesson_46_EMBRACING_DIVERSITY_Normal",
+        "title": "Lesson 46: Embracing Diversity Normal"
       },
       {
-        "id": "Lesson_47_WOUNDED_SOLDIER_Quiz",
-        "title": "Lesson 47: Wounded Soldier"
+        "id": "Lesson_47_WOUNDED_SOLDIER_Normal",
+        "title": "Lesson 47: Wounded Soldier Normal"
       },
       {
-        "id": "Lesson_48_THE_BATTLE_OF_ARMAGEDDON_Quiz",
-        "title": "Lesson 48: The Battle Of Armageddon"
+        "id": "Lesson_48_THE_BATTLE_OF_ARMAGEDDON_Normal",
+        "title": "Lesson 48: The Battle Of Armageddon Normal"
       },
       {
-        "id": "Lesson_49_THE_BOOK_OF_LIFE_Quiz",
-        "title": "Lesson 49: The Book Of Life"
+        "id": "Lesson_49_THE_BOOK_OF_LIFE_Normal",
+        "title": "Lesson 49: The Book Of Life Normal"
       },
       {
-        "id": "Lesson_50_THE_RESURRECTION_Quiz",
-        "title": "Lesson 50: The Resurrection"
+        "id": "Lesson_50_THE_RESURRECTION_Normal",
+        "title": "Lesson 50: The Resurrection Normal"
       },
       {
-        "id": "Lesson_51_THE_SECOND_DEATH_Quiz",
-        "title": "Lesson 51: The Second Death"
+        "id": "Lesson_51_THE_SECOND_DEATH_Normal",
+        "title": "Lesson 51: The Second Death Normal"
       }
     ],
     "yaya_2025-2026_practice": [
       {
-        "id": "yaya-questions",
-        "title": "yaya-questions"
+        "id": "YAYA_Standard_Practice_Quiz_100",
+        "title": "YAYA Standard: Practice Quiz 100"
       }
     ]
   }

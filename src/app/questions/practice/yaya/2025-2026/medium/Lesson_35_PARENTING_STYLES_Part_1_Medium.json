@@ -1,0 +1,116 @@
+[
+  {
+    "question": "Neglectful/Uninvolved parents are low in 'responsiveness/love' and low in",
+    "options": [
+      "demandingness/discipline",
+      "care",
+      "control",
+      "attention"
+    ],
+    "type": "multiple-choice",
+    "answer": "demandingness/discipline"
+  },
+  {
+    "question": "Children from neglectful parents tend to be self-dependent while exhibiting truancy and emotional",
+    "options": [
+      "withdrawal",
+      "instability",
+      "struggle",
+      "confusion"
+    ],
+    "type": "multiple-choice",
+    "answer": "withdrawal"
+  },
+  {
+    "question": "Authoritarian parents are high in 'demandingness/discipline' but low in",
+    "options": [
+      "responsiveness/love",
+      "control",
+      "structure",
+      "rules"
+    ],
+    "type": "multiple-choice",
+    "answer": "responsiveness/love"
+  },
+  {
+    "question": "This rigid parenting style uses harsh discipline, justified as",
+    "options": [
+      "'tough love'",
+      "'strict love'",
+      "'firm love'",
+      "'hard love'"
+    ],
+    "type": "multiple-choice",
+    "answer": "'tough love'"
+  },
+  {
+    "question": "The result of authoritarian parenting includes low self-esteem, depression, aggression, and poor ________ skills",
+    "type": "fill-in-the-blank",
+    "answer": "Social"
+  },
+  {
+    "question": "Authoritative parents are high in 'responsiveness/love' and high in",
+    "options": [
+      "demandingness/discipline",
+      "control",
+      "freedom",
+      "independence"
+    ],
+    "type": "multiple-choice",
+    "answer": "demandingness/discipline"
+  },
+  {
+    "question": "Authoritative parents set clear rules and expectations while they practice flexibility and",
+    "options": [
+      "understanding",
+      "control",
+      "discipline",
+      "strictness"
+    ],
+    "type": "multiple-choice",
+    "answer": "understanding"
+  },
+  {
+    "question": "Children who have authoritative parents tend to be self-disciplined, socially competent and can",
+    "options": [
+      "think for themselves",
+      "obey easily",
+      "follow rules",
+      "avoid conflict"
+    ],
+    "type": "multiple-choice",
+    "answer": "think for themselves"
+  },
+  {
+    "question": "Which biblical figures are given as examples raised under authoritative parenting: Mordecai and Esther, Naomi and ________",
+    "type": "fill-in-the-blank",
+    "answer": "Ruth"
+  },
+  {
+    "question": "Permissive parenting has the potential to increase self-esteem and",
+    "options": [
+      "creativity",
+      "discipline",
+      "independence",
+      "confidence"
+    ],
+    "type": "multiple-choice",
+    "answer": "creativity"
+  },
+  {
+    "question": "Neglectful parents find it difficult to form close relationships as a result of personal experience and ________",
+    "type": "fill-in-the-blank",
+    "answer": "Stress"
+  },
+  {
+    "question": "Authoritarian parents enforce strict rules with little consideration of their children's socio-emotional",
+    "options": [
+      "needs",
+      "feelings",
+      "desires",
+      "wishes"
+    ],
+    "type": "multiple-choice",
+    "answer": "needs"
+  }
+]

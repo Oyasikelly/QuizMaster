@@ -1,0 +1,94 @@
+[
+  {
+    "question": "A fool utters his entire mind, according to",
+    "options": [
+      "Proverbs 29:11",
+      "Proverbs 18:6",
+      "Proverbs 19:1",
+      "Proverbs 17:28"
+    ],
+    "type": "multiple-choice",
+    "answer": "Proverbs 29:11"
+  },
+  {
+    "question": "In the multitude of words there wanteth not sin: but he that refraineth his lips is wise (Proverbs ________)",
+    "type": "fill-in-the-blank",
+    "answer": "10:19"
+  },
+  {
+    "question": "A fool is not trusted because of irregularity in speech, per",
+    "options": [
+      "Proverbs 19:1",
+      "Proverbs 18:6",
+      "Proverbs 29:11",
+      "Proverbs 17:28"
+    ],
+    "type": "multiple-choice",
+    "answer": "Proverbs 19:1"
+  },
+  {
+    "question": "A fool does not take to instruction and rejects responsibilities, per",
+    "options": [
+      "Ecclesiastes 10:12",
+      "Proverbs 20:3",
+      "Proverbs 18:7",
+      "Proverbs 29:11"
+    ],
+    "type": "multiple-choice",
+    "answer": "Ecclesiastes 10:12"
+  },
+  {
+    "question": "Words are powerful and can make or mar, per",
+    "options": [
+      "Proverbs 6:2",
+      "James 3:2",
+      "James 1:19",
+      "Proverbs 18:7"
+    ],
+    "type": "multiple-choice",
+    "answer": "Proverbs 6:2"
+  },
+  {
+    "question": "A fool's mouth is used to engage in ceaseless and unprofitable arguments, per",
+    "options": [
+      "Proverbs 18:6",
+      "Proverbs 18:7",
+      "Proverbs 17:28",
+      "Proverbs 19:1"
+    ],
+    "type": "multiple-choice",
+    "answer": "Proverbs 18:6"
+  },
+  {
+    "question": "A fool utters his entire mind, per",
+    "options": [
+      "Proverbs 29:11",
+      "Proverbs 19:1",
+      "Proverbs 18:6",
+      "Proverbs 17:28"
+    ],
+    "type": "multiple-choice",
+    "answer": "Proverbs 29:11"
+  },
+  {
+    "question": "In the multitude of words there wanteth not sin: but he that refraineth his lips is ________ (Proverbs 10:19)",
+    "type": "fill-in-the-blank",
+    "answer": "Wise"
+  },
+  {
+    "question": "The memory verse says if anyone does not stumble in word, he is a perfect man, able also to bridle the whole ________",
+    "type": "fill-in-the-blank",
+    "answer": "Body"
+  },
+  {
+    "question": "It takes forte, maturity and self-discipline to be a person of few words spoken in",
+    "options": [
+      "wisdom",
+      "truth",
+      "love",
+      "grace"
+    ],
+    "type": "multiple-choice",
+    "answer": "wisdom"
+  }
+]

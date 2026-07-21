@@ -1,0 +1,116 @@
+[
+  {
+    "question": "Loving yourself involves taking care of your physical and emotional",
+    "options": [
+      "well-being",
+      "health",
+      "state",
+      "condition"
+    ],
+    "type": "multiple-choice",
+    "answer": "well-being"
+  },
+  {
+    "question": "To love yourself, dress well, look good and stay",
+    "options": [
+      "cheerful",
+      "happy",
+      "confident",
+      "positive"
+    ],
+    "type": "multiple-choice",
+    "answer": "cheerful"
+  },
+  {
+    "question": "To love yourself, eliminate negativity such as bitterness, envy, and",
+    "options": [
+      "toxic relationships",
+      "bad company",
+      "evil desires",
+      "negative thoughts"
+    ],
+    "type": "multiple-choice",
+    "answer": "toxic relationships"
+  },
+  {
+    "question": "Furthermore, love God",
+    "options": [
+      "passionately",
+      "deeply",
+      "truly",
+      "sincerely"
+    ],
+    "type": "multiple-choice",
+    "answer": "passionately"
+  },
+  {
+    "question": "True self-love involves recognising God's ________ position in your life",
+    "options": [
+      "supreme",
+      "first",
+      "rightful",
+      "central"
+    ],
+    "type": "multiple-choice",
+    "answer": "supreme"
+  },
+  {
+    "question": "The human brain controls 'high order' activities such as thoughts, reasoning and",
+    "options": [
+      "abstraction",
+      "logic",
+      "memory",
+      "imagination"
+    ],
+    "type": "multiple-choice",
+    "answer": "abstraction"
+  },
+  {
+    "question": "To love yourself, seek wisdom, be a good team player, be proactive and always",
+    "options": [
+      "encourage yourself",
+      "believe in yourself",
+      "trust yourself",
+      "value yourself"
+    ],
+    "type": "multiple-choice",
+    "answer": "encourage yourself"
+  },
+  {
+    "question": "The memory verse for Lesson 28 is from",
+    "options": [
+      "Psalm 139:13-18",
+      "Matthew 22:39",
+      "Isaiah 64:8",
+      "2 Corinthians 10:12"
+    ],
+    "type": "multiple-choice",
+    "answer": "Matthew 22:39"
+  },
+  {
+    "question": "To love yourself, eat healthily, ________, and sleep well",
+    "type": "fill-in-the-blank",
+    "answer": "Exercise"
+  },
+  {
+    "question": "The lesson says you are a treasure and a neatly wrapped ________ which is uncommon in every sphere",
+    "type": "fill-in-the-blank",
+    "answer": "Package"
+  },
+  {
+    "question": "Your ________ pattern and DNA is like no one else",
+    "type": "fill-in-the-blank",
+    "answer": "Voice"
+  },
+  {
+    "question": "The conclusion of Lesson 28 says loving yourself is recognition of your uniqueness as God's creature to fulfil your",
+    "options": [
+      "purpose in life",
+      "destiny",
+      "calling",
+      "potential"
+    ],
+    "type": "multiple-choice",
+    "answer": "purpose in life"
+  }
+]

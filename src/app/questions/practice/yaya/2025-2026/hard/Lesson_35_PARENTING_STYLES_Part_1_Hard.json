@@ -1,0 +1,112 @@
+[
+  {
+    "question": "Which parenting style is high in demandingness but low in responsiveness?",
+    "options": [
+      "Authoritarian",
+      "Authoritative",
+      "Permissive",
+      "Neglectful"
+    ],
+    "type": "multiple-choice",
+    "answer": "Authoritarian"
+  },
+  {
+    "question": "Which parenting style is low in both responsiveness and demandingness?",
+    "options": [
+      "Neglectful/Uninvolved",
+      "Permissive",
+      "Authoritarian",
+      "Authoritative"
+    ],
+    "type": "multiple-choice",
+    "answer": "Neglectful/Uninvolved"
+  },
+  {
+    "question": "Authoritative parents allow natural consequences to occur, especially for wrong-doings, and use those opportunities to help their children",
+    "options": [
+      "reflect and learn",
+      "feel guilty",
+      "be punished",
+      "obey better"
+    ],
+    "type": "multiple-choice",
+    "answer": "reflect and learn"
+  },
+  {
+    "question": "The Bible passage suggests which priest's style of parenting and his manner of handling his children's misbehaviour?",
+    "options": [
+      "Eli",
+      "Samuel",
+      "Aaron",
+      "Levi"
+    ],
+    "type": "multiple-choice",
+    "answer": "Eli"
+  },
+  {
+    "question": "Authoritative parents communicate frequently and take into consideration their children's thoughts, feelings and",
+    "options": [
+      "opinions",
+      "desires",
+      "wishes",
+      "dreams"
+    ],
+    "type": "multiple-choice",
+    "answer": "opinions"
+  },
+  {
+    "question": "Parents are encouraged to study their children individually since each child may respond differently to a given",
+    "options": [
+      "parenting style",
+      "instruction",
+      "correction",
+      "rule"
+    ],
+    "type": "multiple-choice",
+    "answer": "parenting style"
+  },
+  {
+    "question": "A parent is a person responsible for the care, upbringing and well-being of a",
+    "options": [
+      "child",
+      "family",
+      "household",
+      "home"
+    ],
+    "type": "multiple-choice",
+    "answer": "child"
+  },
+  {
+    "question": "Parenting styles are understood through the degrees of 'responsiveness' and",
+    "options": [
+      "demandingness",
+      "discipline",
+      "control",
+      "authority"
+    ],
+    "type": "multiple-choice",
+    "answer": "demandingness"
+  },
+  {
+    "question": "'Responsiveness' is the extent to which parents are warm and",
+    "options": [
+      "sensitive",
+      "strict",
+      "caring",
+      "attentive"
+    ],
+    "type": "multiple-choice",
+    "answer": "sensitive"
+  },
+  {
+    "question": "'Demandingness' is the extent of ________ parents put on their children",
+    "options": [
+      "control",
+      "discipline",
+      "rules",
+      "expectations"
+    ],
+    "type": "multiple-choice",
+    "answer": "control"
+  }
+]

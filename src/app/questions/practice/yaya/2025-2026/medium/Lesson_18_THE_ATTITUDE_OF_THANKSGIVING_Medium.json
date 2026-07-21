@@ -1,0 +1,116 @@
+[
+  {
+    "question": "God created all things for His",
+    "options": [
+      "pleasure",
+      "glory",
+      "kingdom",
+      "purpose"
+    ],
+    "type": "multiple-choice",
+    "answer": "pleasure"
+  },
+  {
+    "question": "God empowers and blesses the",
+    "options": [
+      "diligent",
+      "faithful",
+      "righteous",
+      "obedient"
+    ],
+    "type": "multiple-choice",
+    "answer": "diligent"
+  },
+  {
+    "question": "God makes all things beautiful in His",
+    "options": [
+      "time",
+      "way",
+      "will",
+      "plan"
+    ],
+    "type": "multiple-choice",
+    "answer": "time"
+  },
+  {
+    "question": "Thanksgiving is a call to rise above discouragement, doubt, envy and",
+    "options": [
+      "self-pity",
+      "fear",
+      "worry",
+      "anger"
+    ],
+    "type": "multiple-choice",
+    "answer": "self-pity"
+  },
+  {
+    "question": "The Psalmist charges the people to sing unto the LORD and make a joyful noise to the rock of our",
+    "options": [
+      "salvation",
+      "strength",
+      "refuge",
+      "redemption"
+    ],
+    "type": "multiple-choice",
+    "answer": "salvation"
+  },
+  {
+    "question": "Our hope will be renewed when we remember past blessings and receive the future with",
+    "options": [
+      "gratitude",
+      "faith",
+      "hope",
+      "joy"
+    ],
+    "type": "multiple-choice",
+    "answer": "gratitude"
+  },
+  {
+    "question": "If we take stock of His goodness and mercy, the best thing to do is make thanksgiving part of our ________ life",
+    "type": "fill-in-the-blank",
+    "answer": "Everyday"
+  },
+  {
+    "question": "Thanksgiving is a call to reach a new level of hope for the blessings which the Lord will",
+    "options": [
+      "pour upon us",
+      "give us",
+      "provide",
+      "send"
+    ],
+    "type": "multiple-choice",
+    "answer": "pour upon us"
+  },
+  {
+    "question": "Giving thanks in all circumstances reflects trust in God's",
+    "options": [
+      "sovereignty",
+      "goodness",
+      "mercy",
+      "faithfulness"
+    ],
+    "type": "multiple-choice",
+    "answer": "sovereignty"
+  },
+  {
+    "question": "The memory verse for Lesson 18 is from",
+    "options": [
+      "Psalm 95:1-6",
+      "1 Thessalonians 5:18",
+      "Psalm 65:11",
+      "Psalm 34:1"
+    ],
+    "type": "multiple-choice",
+    "answer": "1 Thessalonians 5:18"
+  },
+  {
+    "question": "We must realise that God makes all things work together for ________ for His children (Romans 8:28)",
+    "type": "fill-in-the-blank",
+    "answer": "Good"
+  },
+  {
+    "question": "God is good according to Psalm 73:1 and Psalm ________:1",
+    "type": "fill-in-the-blank",
+    "answer": "106"
+  }
+]

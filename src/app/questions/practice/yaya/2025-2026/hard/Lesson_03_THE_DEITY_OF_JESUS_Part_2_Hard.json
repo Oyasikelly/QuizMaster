@@ -1,0 +1,106 @@
+[
+  {
+    "question": "Which miracle reference is correctly matched?",
+    "options": [
+      "Walking on water - Matthew 14:25",
+      "Water to wine - John 9:7",
+      "Healing the blind - John 6:11-13",
+      "Raising the dead - Mark 2:3, 11"
+    ],
+    "type": "multiple-choice",
+    "answer": "Walking on water - Matthew 14:25"
+  },
+  {
+    "question": "According to Psalm 119:142, truth represents the ________ of God",
+    "type": "fill-in-the-blank",
+    "answer": "Law"
+  },
+  {
+    "question": "Being in the form of God and equal with God is stated in",
+    "options": [
+      "Philippians 2:6",
+      "John 14:6",
+      "John 10:38",
+      "John 1:1"
+    ],
+    "type": "multiple-choice",
+    "answer": "Philippians 2:6"
+  },
+  {
+    "question": "Jesus turned water to wine at the wedding in",
+    "options": [
+      "John 6:11-13",
+      "John 2:7-9",
+      "Matthew 14:25",
+      "John 9:7"
+    ],
+    "type": "multiple-choice",
+    "answer": "John 2:7-9"
+  },
+  {
+    "question": "Jesus walked on water according to",
+    "options": [
+      "Matthew 14:25",
+      "John 2:7-9",
+      "John 6:11-13",
+      "Mark 2:3, 11"
+    ],
+    "type": "multiple-choice",
+    "answer": "Matthew 14:25"
+  },
+  {
+    "question": "Jesus multiplied a meal according to",
+    "options": [
+      "John 6:11-13",
+      "John 2:7-9",
+      "Matthew 14:25",
+      "John 9:7"
+    ],
+    "type": "multiple-choice",
+    "answer": "John 6:11-13"
+  },
+  {
+    "question": "Jesus raised people from the dead according to",
+    "options": [
+      "John 11:43-44; Luke 7:13-15",
+      "John 9:7",
+      "Mark 2:3, 11",
+      "John 2:7-9"
+    ],
+    "type": "multiple-choice",
+    "answer": "John 11:43-44; Luke 7:13-15"
+  },
+  {
+    "question": "Jesus used the definite article to distinguish Himself as 'the Way, the Truth, and the Life' in",
+    "options": [
+      "John 14:6",
+      "John 14:1-3",
+      "Acts 4:12",
+      "John 1:1"
+    ],
+    "type": "multiple-choice",
+    "answer": "John 14:6"
+  },
+  {
+    "question": "According to the lesson, there is no other path to Heaven except",
+    "options": [
+      "Jesus",
+      "the church",
+      "good works",
+      "the law"
+    ],
+    "type": "multiple-choice",
+    "answer": "Jesus"
+  },
+  {
+    "question": "Jesus said He came to fulfil the demands of the law and the prophets in",
+    "options": [
+      "Matthew 5:17",
+      "John 14:6",
+      "Psalm 119:142",
+      "John 1:1"
+    ],
+    "type": "multiple-choice",
+    "answer": "Matthew 5:17"
+  }
+]

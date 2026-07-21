@@ -1,0 +1,110 @@
+[
+  {
+    "question": "We need to surround ourselves with a supportive community e.g. family, friends, and",
+    "options": [
+      "support groups",
+      "church members",
+      "counsellors",
+      "neighbours"
+    ],
+    "type": "multiple-choice",
+    "answer": "support groups"
+  },
+  {
+    "question": "Engaging in simple daily tasks can provide ________ during an emotionally challenging time",
+    "options": [
+      "stability",
+      "comfort",
+      "peace",
+      "strength"
+    ],
+    "type": "multiple-choice",
+    "answer": "stability"
+  },
+  {
+    "question": "Finding healthy ways to express grief such as journaling, tourism, art, music, or physical exercise can be",
+    "options": [
+      "therapeutic",
+      "helpful",
+      "comforting",
+      "healing"
+    ],
+    "type": "multiple-choice",
+    "answer": "therapeutic"
+  },
+  {
+    "question": "Psalm 34:18 says the LORD is near to those who have a broken heart and saves such as have a contrite",
+    "options": [
+      "spirit",
+      "heart",
+      "soul",
+      "mind"
+    ],
+    "type": "multiple-choice",
+    "answer": "spirit"
+  },
+  {
+    "question": "Engaging with a faith community can provide a sense of belonging and be a source of comfort and",
+    "options": [
+      "support",
+      "strength",
+      "hope",
+      "peace"
+    ],
+    "type": "multiple-choice",
+    "answer": "support"
+  },
+  {
+    "question": "Prayer can be a source of solace, offering peace in times of",
+    "options": [
+      "turmoil",
+      "trouble",
+      "distress",
+      "difficulty"
+    ],
+    "type": "multiple-choice",
+    "answer": "turmoil"
+  },
+  {
+    "question": "The Bible is filled with verses that speak to loss and grief, offering comfort and",
+    "options": [
+      "hope",
+      "peace",
+      "strength",
+      "comfort"
+    ],
+    "type": "multiple-choice",
+    "answer": "hope"
+  },
+  {
+    "question": "The memory verse for Lesson 29 is from",
+    "options": [
+      "Job 1:20-22",
+      "2 Samuel 1:12",
+      "Ecclesiastes 3:1-2",
+      "Psalm 34:18"
+    ],
+    "type": "multiple-choice",
+    "answer": "2 Samuel 1:12"
+  },
+  {
+    "question": "Allowing ourselves to feel the ________ is essential for healing",
+    "type": "fill-in-the-blank",
+    "answer": "Grief"
+  },
+  {
+    "question": "________ is a powerful tool when grieving, providing a direct line of communication with God",
+    "type": "fill-in-the-blank",
+    "answer": "Prayer"
+  },
+  {
+    "question": "It is important to meditate on the promises of God and reflect on the eternal hope offered through ________",
+    "type": "fill-in-the-blank",
+    "answer": "Christ"
+  },
+  {
+    "question": "Having people to talk to can ease the burden of ________",
+    "type": "fill-in-the-blank",
+    "answer": "Grief"
+  }
+]

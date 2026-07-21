@@ -1,0 +1,128 @@
+[
+  {
+    "question": "Resourceful persons think creatively, thinking outside the box and questioning the",
+    "options": [
+      "status quo",
+      "authority",
+      "system",
+      "norm"
+    ],
+    "type": "multiple-choice",
+    "answer": "status quo"
+  },
+  {
+    "question": "To become resourceful, you have to develop a positive mindset and believe that every problem has a",
+    "options": [
+      "solution",
+      "answer",
+      "reason",
+      "purpose"
+    ],
+    "type": "multiple-choice",
+    "answer": "solution"
+  },
+  {
+    "question": "To become resourceful, seek knowledge and be open to new",
+    "options": [
+      "ideas",
+      "people",
+      "methods",
+      "ways"
+    ],
+    "type": "multiple-choice",
+    "answer": "ideas"
+  },
+  {
+    "question": "To become resourceful, practice adaptability by embracing",
+    "options": [
+      "change",
+      "challenges",
+      "risk",
+      "growth"
+    ],
+    "type": "multiple-choice",
+    "answer": "change"
+  },
+  {
+    "question": "To become resourceful, stay persistent and keep trying different strategies until you find",
+    "options": [
+      "success",
+      "victory",
+      "answers",
+      "results"
+    ],
+    "type": "multiple-choice",
+    "answer": "success"
+  },
+  {
+    "question": "Above all, to become resourceful, allow the ________ to help you",
+    "options": [
+      "Holy Spirit",
+      "Lord",
+      "word",
+      "church"
+    ],
+    "type": "multiple-choice",
+    "answer": "Holy Spirit"
+  },
+  {
+    "question": "Resourcefulness is a skill essential for both personal and professional",
+    "options": [
+      "growth",
+      "success",
+      "development",
+      "achievement"
+    ],
+    "type": "multiple-choice",
+    "answer": "growth"
+  },
+  {
+    "question": "Being resourceful drives innovation, increases efficiency, and maintains a high level of ________ despite constraints",
+    "type": "fill-in-the-blank",
+    "answer": "Productivity"
+  },
+  {
+    "question": "Resourcefulness entails being flexible enough to adapt or adjust quickly to new conditions and",
+    "options": [
+      "challenges",
+      "problems",
+      "situations",
+      "demands"
+    ],
+    "type": "multiple-choice",
+    "answer": "challenges"
+  },
+  {
+    "question": "Resourceful believers trust that God can multiply the little they have, as seen in the miracle of the",
+    "options": [
+      "loaves and fishes",
+      "oil and flour",
+      "widow's mite",
+      "five loaves"
+    ],
+    "type": "multiple-choice",
+    "answer": "loaves and fishes"
+  },
+  {
+    "question": "The memory verse for Lesson 20 is from",
+    "options": [
+      "Numbers 13:27-31",
+      "Colossians 2:3",
+      "1 Samuel 17:49",
+      "Proverbs 18:15"
+    ],
+    "type": "multiple-choice",
+    "answer": "Colossians 2:3"
+  },
+  {
+    "question": "The Bible passage for Lesson 20 is the account of the report of the spies who went to check the land of",
+    "options": [
+      "Canaan",
+      "Egypt",
+      "Jericho",
+      "Moab"
+    ],
+    "type": "multiple-choice",
+    "answer": "Canaan"
+  }
+]

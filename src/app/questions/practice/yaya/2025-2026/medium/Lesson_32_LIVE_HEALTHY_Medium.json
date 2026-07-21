@@ -1,0 +1,122 @@
+[
+  {
+    "question": "Our bodies are described as God's ________ (1 Corinthians 6:19)",
+    "options": [
+      "temple",
+      "vessel",
+      "house",
+      "instrument"
+    ],
+    "type": "multiple-choice",
+    "answer": "temple"
+  },
+  {
+    "question": "For how many days did Daniel and his friends request to be fed with vegetables (pulse) and water?",
+    "options": [
+      "Ten",
+      "Seven",
+      "Forty",
+      "Three"
+    ],
+    "type": "multiple-choice",
+    "answer": "Ten"
+  },
+  {
+    "question": "Good health is less expensive than",
+    "options": [
+      "ill-health",
+      "medicine",
+      "hospital bills",
+      "doctor visits"
+    ],
+    "type": "multiple-choice",
+    "answer": "ill-health"
+  },
+  {
+    "question": "God will ensure that we are healthy when we obey/fear Him and depart from",
+    "options": [
+      "evil",
+      "sin",
+      "the world",
+      "temptation"
+    ],
+    "type": "multiple-choice",
+    "answer": "evil"
+  },
+  {
+    "question": "It is important to renew our minds because negative thoughts and mindsets can be detrimental to our",
+    "options": [
+      "health",
+      "spirit",
+      "body",
+      "faith"
+    ],
+    "type": "multiple-choice",
+    "answer": "health"
+  },
+  {
+    "question": "We should eat more of whole grains, fruits and",
+    "options": [
+      "vegetables",
+      "meat",
+      "dairy",
+      "sweets"
+    ],
+    "type": "multiple-choice",
+    "answer": "vegetables"
+  },
+  {
+    "question": "We must engage in regular exercise to aid ________ circulation in the body (1 Timothy 4:8a)",
+    "options": [
+      "blood",
+      "body",
+      "air",
+      "energy"
+    ],
+    "type": "multiple-choice",
+    "answer": "blood"
+  },
+  {
+    "question": "We must ensure that we walk more than sit in one position for long periods as this is detrimental to our",
+    "options": [
+      "health",
+      "posture",
+      "strength",
+      "energy"
+    ],
+    "type": "multiple-choice",
+    "answer": "health"
+  },
+  {
+    "question": "We must spend time outdoors and reduce screen time to prevent eye problems and brain",
+    "options": [
+      "malfunction",
+      "damage",
+      "fatigue",
+      "strain"
+    ],
+    "type": "multiple-choice",
+    "answer": "malfunction"
+  },
+  {
+    "question": "Our bodies enable us to exist and interact with the physical world without which we would be unable to fulfil God's ________",
+    "type": "fill-in-the-blank",
+    "answer": "Purpose"
+  },
+  {
+    "question": "The memory verse for Lesson 32 is from",
+    "options": [
+      "Daniel 1:12-15",
+      "1 Timothy 4:8",
+      "Jeremiah 30:17",
+      "1 Corinthians 6:19"
+    ],
+    "type": "multiple-choice",
+    "answer": "1 Timothy 4:8"
+  },
+  {
+    "question": "We must minimise the intake of sugar and ________ food",
+    "type": "fill-in-the-blank",
+    "answer": "Processed"
+  }
+]

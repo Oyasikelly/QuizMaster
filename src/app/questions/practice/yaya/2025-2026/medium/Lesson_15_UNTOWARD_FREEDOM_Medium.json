@@ -1,0 +1,134 @@
+[
+  {
+    "question": "The possible outcomes of untoward freedom include sin, lawlessness, and breakdown of moral and spiritual",
+    "options": [
+      "order",
+      "authority",
+      "structure",
+      "law"
+    ],
+    "type": "multiple-choice",
+    "answer": "order"
+  },
+  {
+    "question": "True freedom should be exercised within the boundaries of God's will, leading to life, peace and",
+    "options": [
+      "righteousness",
+      "holiness",
+      "joy",
+      "grace"
+    ],
+    "type": "multiple-choice",
+    "answer": "righteousness"
+  },
+  {
+    "question": "True and total freedom is found in",
+    "options": [
+      "Christ Jesus",
+      "the law",
+      "self-control",
+      "the church"
+    ],
+    "type": "multiple-choice",
+    "answer": "Christ Jesus"
+  },
+  {
+    "question": "Christ gives us victory over sin, enabling us to live righteously; this is 'Freedom from'",
+    "options": [
+      "Sin",
+      "Oppression",
+      "Sickness",
+      "Bondage"
+    ],
+    "type": "multiple-choice",
+    "answer": "Sin"
+  },
+  {
+    "question": "Jesus delivers us from all forms of oppression, offering peace and restoration; this is 'Freedom from'",
+    "options": [
+      "Oppression",
+      "Sin",
+      "Sickness",
+      "Curses"
+    ],
+    "type": "multiple-choice",
+    "answer": "Oppression"
+  },
+  {
+    "question": "Through Jesus, we are healed and made whole; this is 'Freedom from'",
+    "options": [
+      "Sickness",
+      "Oppression",
+      "Bondage",
+      "Fear"
+    ],
+    "type": "multiple-choice",
+    "answer": "Sickness"
+  },
+  {
+    "question": "Christ redeemed us from curses and offered blessings instead; this is 'Freedom from'",
+    "options": [
+      "Curses",
+      "Sin",
+      "Fear",
+      "Bondage"
+    ],
+    "type": "multiple-choice",
+    "answer": "Curses"
+  },
+  {
+    "question": "Through the Holy Spirit, we receive power, love, and a sound mind, overcoming fear; this is 'Freedom from'",
+    "options": [
+      "Fear",
+      "Bondage",
+      "Curses",
+      "Sickness"
+    ],
+    "type": "multiple-choice",
+    "answer": "Fear"
+  },
+  {
+    "question": "The brand of untoward freedom involving unlawful or immoral activities under the pretence of freedom is",
+    "options": [
+      "Evil Practices",
+      "Flout",
+      "Rebellion",
+      "Lawlessness"
+    ],
+    "type": "multiple-choice",
+    "answer": "Evil Practices"
+  },
+  {
+    "question": "When we accept Jesus and live to obey Him, we experience freedom within the boundaries of His",
+    "options": [
+      "word",
+      "law",
+      "will",
+      "grace"
+    ],
+    "type": "multiple-choice",
+    "answer": "word"
+  },
+  {
+    "question": "Through faith in Christ, we are given eternal life, free from condemnation; this is 'Freedom from Everlasting'",
+    "options": [
+      "Punishment",
+      "Death",
+      "Bondage",
+      "Sin"
+    ],
+    "type": "multiple-choice",
+    "answer": "Punishment"
+  },
+  {
+    "question": "Jesus sets us free from all forms of spiritual and physical bondage; this is 'Freedom from'",
+    "options": [
+      "Bondage",
+      "Sin",
+      "Curses",
+      "Fear"
+    ],
+    "type": "multiple-choice",
+    "answer": "Bondage"
+  }
+]

@@ -1,0 +1,112 @@
+[
+  {
+    "question": "Which investment type involves pooling money with other investors for a diversified portfolio?",
+    "options": [
+      "Mutual Funds",
+      "Stocks",
+      "Bonds",
+      "Commodities"
+    ],
+    "type": "multiple-choice",
+    "answer": "Mutual Funds"
+  },
+  {
+    "question": "Which is NOT listed among the biblical principles of wise investment?",
+    "options": [
+      "Divine guidance",
+      "Good Planning",
+      "Kingdom-Focused Investments",
+      "Guaranteed Returns"
+    ],
+    "type": "multiple-choice",
+    "answer": "Guaranteed Returns"
+  },
+  {
+    "question": "Import and export of goods and services such as charcoal, wood and dry fish is mentioned with reference to",
+    "options": [
+      "Acts 16:14",
+      "Genesis 41:33-37",
+      "Proverbs 21:20",
+      "Ecclesiastes 11:4-6"
+    ],
+    "type": "multiple-choice",
+    "answer": "Acts 16:14"
+  },
+  {
+    "question": "Investing should not be for personal gain alone but also to further God's kingdom; this is",
+    "options": [
+      "Kingdom-Focused Investments",
+      "Divine guidance",
+      "Honesty",
+      "Knowledge"
+    ],
+    "type": "multiple-choice",
+    "answer": "Kingdom-Focused Investments"
+  },
+  {
+    "question": "Investment refers to the act of allocating money or resources to an asset, project, etc. with the expectation of generating",
+    "options": [
+      "profit over time",
+      "quick returns",
+      "security",
+      "stability"
+    ],
+    "type": "multiple-choice",
+    "answer": "profit over time"
+  },
+  {
+    "question": "The evaluation for Lesson 43 asks students to state the biblical principles of wise",
+    "options": [
+      "investing",
+      "saving",
+      "spending",
+      "planning"
+    ],
+    "type": "multiple-choice",
+    "answer": "investing"
+  },
+  {
+    "question": "In the Bible passage, who gave Pharaoh a novel idea that eventually generated income/profit for the land?",
+    "options": [
+      "Joseph",
+      "Daniel",
+      "Moses",
+      "Isaac"
+    ],
+    "type": "multiple-choice",
+    "answer": "Joseph"
+  },
+  {
+    "question": "Buying shares of a company for partial ownership is called",
+    "options": [
+      "Stocks",
+      "Bonds",
+      "Real Estate",
+      "Mutual Funds"
+    ],
+    "type": "multiple-choice",
+    "answer": "Stocks"
+  },
+  {
+    "question": "Purchasing property or building to earn rental income or sell it at a higher price is",
+    "options": [
+      "Real Estate",
+      "Stocks",
+      "Bonds",
+      "Commodities"
+    ],
+    "type": "multiple-choice",
+    "answer": "Real Estate"
+  },
+  {
+    "question": "Lending money to governments or corporations for a set period in exchange for periodic interest payments is",
+    "options": [
+      "Bonds",
+      "Stocks",
+      "Real Estate",
+      "Mutual Funds"
+    ],
+    "type": "multiple-choice",
+    "answer": "Bonds"
+  }
+]

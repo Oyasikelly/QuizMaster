@@ -1,0 +1,100 @@
+[
+  {
+    "question": "Whose wrestling with an angel led to a transformation in his identity?",
+    "options": [
+      "Jacob",
+      "Daniel",
+      "Elijah",
+      "Hannah"
+    ],
+    "type": "multiple-choice",
+    "answer": "Jacob"
+  },
+  {
+    "question": "Jacob's transformation and shift from deceit to divine favour is recorded in Genesis ________",
+    "type": "fill-in-the-blank",
+    "answer": "32:24-28"
+  },
+  {
+    "question": "Dominion, as God's original intention for mankind, is stated in",
+    "options": [
+      "Genesis 1:26",
+      "Matthew 18:18",
+      "1 Kings 17:1-7",
+      "Mark 11:24"
+    ],
+    "type": "multiple-choice",
+    "answer": "Genesis 1:26"
+  },
+  {
+    "question": "Jacob's transformation and shift from deceit to divine favour is recorded in",
+    "options": [
+      "Genesis 32:24-28",
+      "Daniel 6:10-23",
+      "1 Samuel 1:10-20",
+      "Luke 22:39-44"
+    ],
+    "type": "multiple-choice",
+    "answer": "Genesis 32:24-28"
+  },
+  {
+    "question": "Prayer with faith is emphasised in",
+    "options": [
+      "Mark 11:24",
+      "1 John 5:14-15",
+      "Luke 18:1-8",
+      "Ephesians 6:18"
+    ],
+    "type": "multiple-choice",
+    "answer": "Mark 11:24"
+  },
+  {
+    "question": "Praying according to God's will is emphasised in",
+    "options": [
+      "1 John 5:14-15",
+      "Mark 11:24",
+      "Luke 18:1-8",
+      "Psalm 66:18"
+    ],
+    "type": "multiple-choice",
+    "answer": "1 John 5:14-15"
+  },
+  {
+    "question": "Persistent prayer is emphasised in",
+    "options": [
+      "Luke 18:1-8",
+      "Mark 11:24",
+      "1 John 5:14-15",
+      "Ephesians 6:18"
+    ],
+    "type": "multiple-choice",
+    "answer": "Luke 18:1-8"
+  },
+  {
+    "question": "Dominion is not just physical but ________, requiring a connection with God",
+    "type": "fill-in-the-blank",
+    "answer": "Spiritual"
+  },
+  {
+    "question": "Which prophet declared over the nation that there would be no rain until he said otherwise?",
+    "options": [
+      "Elisha",
+      "Elijah",
+      "Daniel",
+      "Samuel"
+    ],
+    "type": "multiple-choice",
+    "answer": "Elijah"
+  },
+  {
+    "question": "Whose persistent prayer and wrestling with an angel led to a transformation in his identity?",
+    "options": [
+      "Daniel",
+      "Jacob",
+      "Hannah",
+      "Elijah"
+    ],
+    "type": "multiple-choice",
+    "answer": "Jacob"
+  }
+]

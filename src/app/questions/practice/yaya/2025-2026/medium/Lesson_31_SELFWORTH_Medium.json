@@ -1,0 +1,122 @@
+[
+  {
+    "question": "Self-worth is usually a product of one's background and life",
+    "options": [
+      "experiences",
+      "achievements",
+      "relationships",
+      "beliefs"
+    ],
+    "type": "multiple-choice",
+    "answer": "experiences"
+  },
+  {
+    "question": "The three major components of self-worth are self-awareness, self-acceptance and",
+    "options": [
+      "self-love",
+      "self-discipline",
+      "self-control",
+      "self-esteem"
+    ],
+    "type": "multiple-choice",
+    "answer": "self-love"
+  },
+  {
+    "question": "Self-awareness refers to the ability to recognise our",
+    "options": [
+      "emotional triggers and habits",
+      "strengths only",
+      "weaknesses only",
+      "goals and dreams"
+    ],
+    "type": "multiple-choice",
+    "answer": "emotional triggers and habits"
+  },
+  {
+    "question": "Self-acceptance removes anxiety and can make us feel confident and",
+    "options": [
+      "secure",
+      "happy",
+      "proud",
+      "strong"
+    ],
+    "type": "multiple-choice",
+    "answer": "secure"
+  },
+  {
+    "question": "Self-love pushes us to deliberately make an effort at eating healthy, listening to our body, and",
+    "options": [
+      "taking good care of ourselves",
+      "working hard",
+      "achieving goals",
+      "seeking approval"
+    ],
+    "type": "multiple-choice",
+    "answer": "taking good care of ourselves"
+  },
+  {
+    "question": "Avoid comparing yourself to others, as comparison breeds discontent and",
+    "options": [
+      "insecurity",
+      "weakness",
+      "fear",
+      "doubt"
+    ],
+    "type": "multiple-choice",
+    "answer": "insecurity"
+  },
+  {
+    "question": "The attitude of gratitude helps shift focus away from negative thoughts to God's",
+    "options": [
+      "blessings",
+      "promises",
+      "grace",
+      "mercy"
+    ],
+    "type": "multiple-choice",
+    "answer": "blessings"
+  },
+  {
+    "question": "Self-worth is vital in marriage, corporate setting, ministry and other areas of",
+    "options": [
+      "life",
+      "service",
+      "work",
+      "ministry"
+    ],
+    "type": "multiple-choice",
+    "answer": "life"
+  },
+  {
+    "question": "David assured the King that God would give him victory over the",
+    "options": [
+      "enemy of His people",
+      "Philistine army",
+      "giant",
+      "lion"
+    ],
+    "type": "multiple-choice",
+    "answer": "enemy of His people"
+  },
+  {
+    "question": "The memory verse for Lesson 31 is from",
+    "options": [
+      "1 Samuel 17:33-36",
+      "Psalm 139:14",
+      "Genesis 1:26-27",
+      "Isaiah 43:4"
+    ],
+    "type": "multiple-choice",
+    "answer": "Psalm 139:14"
+  },
+  {
+    "question": "With self-acceptance comes patience, ________ and kindness to us",
+    "type": "fill-in-the-blank",
+    "answer": "Compassion"
+  },
+  {
+    "question": "Negative self-perception often begins in the ________ (Proverbs 4:23)",
+    "type": "fill-in-the-blank",
+    "answer": "Mind"
+  }
+]

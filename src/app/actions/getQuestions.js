@@ -32,15 +32,13 @@ export async function getQuestions(category, lesson, difficulty, year, isRealQui
 
     // ── Real Quiz ──────────────────────────────────────────────────────────
     if (isRealQuiz || !lesson || !difficulty) {
-      const realDir = path.join(
-        process.cwd(), "src", "app", "questions", "real", categoryFolder
+      const fileName = `REAL_${categoryFolder.toUpperCase()}_QUIZ.json`;
+      const realFilePath = path.join(
+        process.cwd(), "src", "app", "questions", "real", categoryFolder, fileName
       );
-      if (fs.existsSync(realDir)) {
-        const files = fs.readdirSync(realDir).filter((f) => f.endsWith(".json"));
-        if (files.length > 0) {
-          const data = readJsonFile(path.join(realDir, files[0]));
-          return Array.isArray(data) ? data : [];
-        }
+      if (fs.existsSync(realFilePath)) {
+        const data = readJsonFile(realFilePath);
+        return Array.isArray(data) ? data : [];
       }
       return [];
     }

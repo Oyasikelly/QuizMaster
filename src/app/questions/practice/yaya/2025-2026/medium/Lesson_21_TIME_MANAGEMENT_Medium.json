@@ -1,0 +1,116 @@
+[
+  {
+    "question": "Every purpose in life has a ________ attached (Ecclesiastes 3:1)",
+    "options": [
+      "time",
+      "season",
+      "reason",
+      "plan"
+    ],
+    "type": "multiple-choice",
+    "answer": "time"
+  },
+  {
+    "question": "To effectively manage time, set SMART goals that are Specific, Measurable, Attainable, Relevant and",
+    "options": [
+      "Time-bound",
+      "Realistic",
+      "Achievable",
+      "Practical"
+    ],
+    "type": "multiple-choice",
+    "answer": "Time-bound"
+  },
+  {
+    "question": "To manage time, stay focused and shun",
+    "options": [
+      "distractions",
+      "laziness",
+      "excuses",
+      "delays"
+    ],
+    "type": "multiple-choice",
+    "answer": "distractions"
+  },
+  {
+    "question": "To manage time, be disciplined and",
+    "options": [
+      "punctual",
+      "diligent",
+      "consistent",
+      "focused"
+    ],
+    "type": "multiple-choice",
+    "answer": "punctual"
+  },
+  {
+    "question": "To manage time, know when to say",
+    "options": [
+      "'NO'",
+      "'YES'",
+      "'STOP'",
+      "'WAIT'"
+    ],
+    "type": "multiple-choice",
+    "answer": "'NO'"
+  },
+  {
+    "question": "Saying 'No' sometimes is an act of respect for your",
+    "options": [
+      "person",
+      "time",
+      "values",
+      "priorities"
+    ],
+    "type": "multiple-choice",
+    "answer": "person"
+  },
+  {
+    "question": "When time is wasted, the purpose is no longer",
+    "options": [
+      "guaranteed",
+      "achieved",
+      "fulfilled",
+      "possible"
+    ],
+    "type": "multiple-choice",
+    "answer": "guaranteed"
+  },
+  {
+    "question": "Time is of the essence to a man who counts it important to fulfil purpose and reach his",
+    "options": [
+      "goals",
+      "dreams",
+      "destiny",
+      "vision"
+    ],
+    "type": "multiple-choice",
+    "answer": "goals"
+  },
+  {
+    "question": "The memory verse for Lesson 21 is from",
+    "options": [
+      "Ephesians 5:15-17",
+      "Ephesians 5:16",
+      "John 9:4",
+      "Proverbs 6:6-11"
+    ],
+    "type": "multiple-choice",
+    "answer": "Ephesians 5:16"
+  },
+  {
+    "question": "Discipline is the effective use of your time, energy and resources in the pursuit of your ________",
+    "type": "fill-in-the-blank",
+    "answer": "Task"
+  },
+  {
+    "question": "The acronym SMART means goals that are Specific, Measurable, Attainable, Relevant and Time-________",
+    "type": "fill-in-the-blank",
+    "answer": "Bound"
+  },
+  {
+    "question": "Time is very slippery, though it comes our way every ________",
+    "type": "fill-in-the-blank",
+    "answer": "Day"
+  }
+]

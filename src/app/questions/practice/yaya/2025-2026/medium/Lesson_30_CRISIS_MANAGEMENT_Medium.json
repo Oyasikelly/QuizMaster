@@ -1,0 +1,122 @@
+[
+  {
+    "question": "The form of crisis that challenges one's faith or sense of purpose is",
+    "options": [
+      "Spiritual crisis",
+      "Health crisis",
+      "Financial crisis",
+      "Social crisis"
+    ],
+    "type": "multiple-choice",
+    "answer": "Spiritual crisis"
+  },
+  {
+    "question": "The form of crisis that comes as physical illness or death of a loved one is",
+    "options": [
+      "Health crisis",
+      "Spiritual crisis",
+      "Financial crisis",
+      "Family crisis"
+    ],
+    "type": "multiple-choice",
+    "answer": "Health crisis"
+  },
+  {
+    "question": "The form of crisis where an individual, business or economy experiences severe financial distress is",
+    "options": [
+      "Financial crisis",
+      "Health crisis",
+      "Social crisis",
+      "Family crisis"
+    ],
+    "type": "multiple-choice",
+    "answer": "Financial crisis"
+  },
+  {
+    "question": "The form of crisis arising from divergent opinions and conflict of interest while relating in society is",
+    "options": [
+      "Social crisis",
+      "Family crisis",
+      "Spiritual crisis",
+      "Health crisis"
+    ],
+    "type": "multiple-choice",
+    "answer": "Social crisis"
+  },
+  {
+    "question": "The form of crisis where a family faces significant emotional or financial distress through divorce or infidelity is ________ crisis",
+    "type": "fill-in-the-blank",
+    "answer": "Family"
+  },
+  {
+    "question": "Causes of spiritual crisis may include unanswered prayers, false teachings, and",
+    "options": [
+      "doubts",
+      "fears",
+      "worries",
+      "struggles"
+    ],
+    "type": "multiple-choice",
+    "answer": "doubts"
+  },
+  {
+    "question": "Pray and communicate the problems and solutions to all parties in a way that elicits their contributions to the ________",
+    "type": "fill-in-the-blank",
+    "answer": "Solutions"
+  },
+  {
+    "question": "Take action with faith that as a light, every crisis is an opportunity to prove yourself as a",
+    "options": [
+      "solution provider",
+      "problem solver",
+      "peacemaker",
+      "leader"
+    ],
+    "type": "multiple-choice",
+    "answer": "solution provider"
+  },
+  {
+    "question": "The first thing the Jews did to manage the threat of their enemies was that they",
+    "options": [
+      "prayed to God",
+      "built the wall",
+      "set a watch",
+      "armed themselves"
+    ],
+    "type": "multiple-choice",
+    "answer": "prayed to God"
+  },
+  {
+    "question": "Be willing to declare your God-inspired convictions during a",
+    "options": [
+      "crisis",
+      "conflict",
+      "problem",
+      "challenge"
+    ],
+    "type": "multiple-choice",
+    "answer": "crisis"
+  },
+  {
+    "question": "A believer's response to crisis should reflect calmness rooted in trust in",
+    "options": [
+      "God",
+      "self",
+      "others",
+      "circumstances"
+    ],
+    "type": "multiple-choice",
+    "answer": "God"
+  },
+  {
+    "question": "The memory verse for Lesson 30 is from",
+    "options": [
+      "Nehemiah 4:6-9",
+      "Psalm 46:1",
+      "Job 14:1",
+      "Romans 8:28"
+    ],
+    "type": "multiple-choice",
+    "answer": "Psalm 46:1"
+  }
+]
