@@ -264,14 +264,22 @@ export default function SelectTime() {
 		}
 	};
 
-	const handlePracticeEntireYear = () => {
+	const handlePracticeEntireYear = async () => {
 		setLoading(true);
 		const selectedCategory = Categories.find(
 			(cat) => pathname === cat.pathname
 		);
 		if (selectedCategory) {
+			let lessonName = selectedCategory.name === 'adults' ? 'adult-questions' : `${selectedCategory.name}-questions`;
+			try {
+				const availableLessons = await getLessons(selectedCategory.name, selectedYear, "practice");
+				if (availableLessons && availableLessons.length > 0) {
+					lessonName = availableLessons[0].id;
+				}
+			} catch (e) {
+				console.error("Error getting practice lesson", e);
+			}
 			setTimeout(() => {
-				const lessonName = selectedCategory.name === 'adults' ? 'adult-questions' : `${selectedCategory.name}-questions`;
 				const url = `${selectedCategory.pathname}/quiz?time=${selectedTime}&questions=${selectedQuestions}&lesson=${lessonName}&difficulty=practice&year=${selectedYear}`;
 				router.push(url);
 			}, 300);

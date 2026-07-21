@@ -31,7 +31,7 @@ export async function getQuestions(category, lesson, difficulty, year, isRealQui
     const categoryFolder = category.toLowerCase();
 
     // ── Real Quiz ──────────────────────────────────────────────────────────
-    if (isRealQuiz || !lesson || !difficulty) {
+    if (isRealQuiz) {
       const fileName = `REAL_${categoryFolder.toUpperCase()}_QUIZ.json`;
       const realFilePath = path.join(
         process.cwd(), "src", "app", "questions", "real", categoryFolder, fileName
@@ -44,6 +44,10 @@ export async function getQuestions(category, lesson, difficulty, year, isRealQui
     }
 
     // ── Practice Quiz ──────────────────────────────────────────────────────
+    if (!lesson || !difficulty) {
+      return [];
+    }
+
     const lessonFile = buildLessonPath(category, year, difficulty, lesson);
     const lessonData = readJsonFile(lessonFile);
 

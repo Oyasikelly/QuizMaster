@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "../lib/supabase";
-import { FiAward, FiLock } from "react-icons/fi";
+import { FiAward, FiLock, FiAlertCircle } from "react-icons/fi";
 import { isRealQuizActive } from "../lib/quiz-config";
 import { getQuestions } from "../app/actions/getQuestions";
 
@@ -42,10 +42,16 @@ const Quiz = ({ initialQuestions, category }) => {
 				// Fetch questions dynamically
 				const fetchedQuestions = await getQuestions(category, lesson, difficulty, year, isReal);
 				
-				// Use fetched questions or fallback to initialQuestions if fetched is empty
-				const baseQuestions = fetchedQuestions && fetchedQuestions.length > 0 
-					? fetchedQuestions 
-					: (initialQuestions || []);
+				// Only fallback to initialQuestions (the real quiz) if we are in real quiz mode.
+				// In practice mode, an empty result should remain empty, not leak the real quiz.
+				let baseQuestions = [];
+				if (isReal) {
+					baseQuestions = fetchedQuestions && fetchedQuestions.length > 0 
+						? fetchedQuestions 
+						: (initialQuestions || []);
+				} else {
+					baseQuestions = fetchedQuestions || [];
+				}
 
 				const slicedQuestions = shuffleArray(baseQuestions)
 					.slice(0, numQuestions)
@@ -389,7 +395,7 @@ const Quiz = ({ initialQuestions, category }) => {
 					animate={{ scale: 1, opacity: 1 }}
 					transition={{ duration: 0.6 }}
 					className="w-full max-w-2xl bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-8 border border-white/50">
-					{questions.length > 0 && (
+					{questions.length > 0 ? (
 						<>
 							<h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
 								{questions[currentQuestion].question}
@@ -452,6 +458,22 @@ const Quiz = ({ initialQuestions, category }) => {
 								)}
 							</div>
 						</>
+					) : (
+						<div className="flex flex-col items-center justify-center py-10 text-center space-y-4">
+							<FiAlertCircle className="text-6xl text-gray-400 mb-2" />
+							<h2 className="text-2xl font-bold text-gray-800">No Questions Found</h2>
+							<p className="text-gray-600 max-w-md">
+								We couldn't load the questions for this quiz. The practice configuration might be invalid, or the questions are temporarily unavailable.
+							</p>
+							<button
+								onClick={() => {
+									removeNavigationLock();
+									router.push("/student/dashboard");
+								}}
+								className="mt-6 py-3 px-8 rounded-full text-base font-semibold bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 shadow-md transition-all duration-200">
+								Return to Dashboard
+							</button>
+						</div>
 					)}
 				</motion.div>
 			</div>
