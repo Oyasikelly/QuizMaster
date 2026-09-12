@@ -1,0 +1,82 @@
+[
+  {
+    "question": "What is the topic of Lesson 2?",
+    "options": [
+      "The Immanence Of God",
+      "Atonement",
+      "Theos Basileia",
+      "The Resurrection"
+    ],
+    "type": "multiple-choice",
+    "answer": "Atonement"
+  },
+  {
+    "question": "The memory verse for Lesson 2 (Atonement) is taken from",
+    "options": [
+      "2 Corinthians 5:21",
+      "Colossians 1:17",
+      "1 John 2:2",
+      "Romans 5:8"
+    ],
+    "type": "multiple-choice",
+    "answer": "2 Corinthians 5:21"
+  },
+  {
+    "question": "The Bible passage for Lesson 2 (Atonement) is",
+    "options": [
+      "Psalm 139:1-5",
+      "Hebrews 9:12-14",
+      "1 John 2:1-6",
+      "Romans 5:8-11"
+    ],
+    "type": "multiple-choice",
+    "answer": "1 John 2:1-6"
+  },
+  {
+    "question": "The lesson with the topic 'Atonement' is Lesson",
+    "options": [
+      "1",
+      "2",
+      "13",
+      "52"
+    ],
+    "type": "multiple-choice",
+    "answer": "2"
+  },
+  {
+    "question": "The memory verse of the lesson titled 'Atonement' is found in ________",
+    "type": "fill-in-the-blank",
+    "answer": "2 Corinthians 5:21"
+  },
+  {
+    "question": "The Bible passage studied in the lesson 'Atonement' is ________",
+    "type": "fill-in-the-blank",
+    "answer": "1 John 2:1-6"
+  },
+  {
+    "question": "The memory verse says, 'For he hath made him to be sin for us, who knew no ________'",
+    "type": "fill-in-the-blank",
+    "answer": "Sin"
+  },
+  {
+    "question": "Atonement is the process or act of making ________ for a wrong, harm or injury",
+    "type": "fill-in-the-blank",
+    "answer": "Amends"
+  },
+  {
+    "question": "In 1 John 2:1, Jesus Christ the righteous is presented as our",
+    "options": [
+      "Advocate with the Father",
+      "Shepherd and Bishop",
+      "Elder Brother",
+      "Chief Cornerstone"
+    ],
+    "type": "multiple-choice",
+    "answer": "Advocate with the Father"
+  },
+  {
+    "question": "1 John 2:2 says, 'And he is the ________ for our sins: and not for ours only, but also for the sins of the whole world'",
+    "type": "fill-in-the-blank",
+    "answer": "Propitiation"
+  }
+]

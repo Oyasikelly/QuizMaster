@@ -1,0 +1,974 @@
+[
+  {
+    "question": "What is the topic of Lesson 1?",
+    "options": [
+      "The Transcendence of God",
+      "The Immanence of God",
+      "Theos Basileia",
+      "Destiny Destroyers"
+    ],
+    "type": "multiple-choice",
+    "answer": "The Immanence of God"
+  },
+  {
+    "question": "The Bible passage for Lesson 1 (The Immanence of God) is",
+    "options": [
+      "Psalms 139:1-5",
+      "Psalms 139:7-12",
+      "1 Chronicles 29:10-12",
+      "Colossians 1:15-20"
+    ],
+    "type": "multiple-choice",
+    "answer": "Psalms 139:1-5"
+  },
+  {
+    "question": "The memory verse for Lesson 1 (The Immanence of God) is taken from",
+    "options": [
+      "Acts 17:28",
+      "John 1:14",
+      "Colossians 1:17",
+      "Hebrews 12:6"
+    ],
+    "type": "multiple-choice",
+    "answer": "Colossians 1:17"
+  },
+  {
+    "question": "The lesson with the topic 'The Immanence of God' is Lesson",
+    "options": [
+      "1",
+      "12",
+      "35",
+      "50"
+    ],
+    "type": "multiple-choice",
+    "answer": "1"
+  },
+  {
+    "question": "The memory verse of the lesson titled 'The Immanence of God' is found in ________",
+    "type": "fill-in-the-blank",
+    "answer": "Colossians 1:17"
+  },
+  {
+    "question": "The Bible passage studied in the lesson 'The Immanence of God' is ________",
+    "type": "fill-in-the-blank",
+    "answer": "Psalms 139:1-5"
+  },
+  {
+    "question": "The memory verse says, 'And He is before all things, and in Him all things ________'",
+    "type": "fill-in-the-blank",
+    "answer": "Consist"
+  },
+  {
+    "question": "The immanence of God refers to His presence, nearness and",
+    "options": [
+      "Active involvement in His creation",
+      "Separation from His creation",
+      "Silence over His creation",
+      "Judgement of His creation"
+    ],
+    "type": "multiple-choice",
+    "answer": "Active involvement in His creation"
+  },
+  {
+    "question": "The immanence of God is different from His ________, which means God is above, infinitely greater and separate from the material universe",
+    "type": "fill-in-the-blank",
+    "answer": "Transcendence"
+  },
+  {
+    "question": "The aim of Lesson 1 is",
+    "options": [
+      "To understand the concept of God's immanence",
+      "To memorise the whole of Psalm 139",
+      "To prove that God exists",
+      "To explain the doctrine of the Trinity"
+    ],
+    "type": "multiple-choice",
+    "answer": "To understand the concept of God's immanence"
+  },
+  {
+    "question": "Psalm 139:1 says, 'O Lord, You have searched me and ________ me'",
+    "type": "fill-in-the-blank",
+    "answer": "Known"
+  },
+  {
+    "question": "According to Psalm 139:2, God knows my sitting down and my",
+    "options": [
+      "Rising up",
+      "Going out",
+      "Coming in",
+      "Lying down"
+    ],
+    "type": "multiple-choice",
+    "answer": "Rising up"
+  },
+  {
+    "question": "At creation, God formed Adam from the ________ and breathed life into him",
+    "type": "fill-in-the-blank",
+    "answer": "Dust"
+  },
+  {
+    "question": "In Genesis 3:8, God's voice was heard walking in the",
+    "options": [
+      "Garden",
+      "Temple",
+      "Wilderness",
+      "Tabernacle"
+    ],
+    "type": "multiple-choice",
+    "answer": "Garden"
+  },
+  {
+    "question": "The burning bush reveals God's personal call to ________ (Exodus 3:4)",
+    "type": "fill-in-the-blank",
+    "answer": "Moses"
+  },
+  {
+    "question": "'Immanuel' means",
+    "options": [
+      "God with us",
+      "God is mighty",
+      "God our provider",
+      "God our healer"
+    ],
+    "type": "multiple-choice",
+    "answer": "God with us"
+  },
+  {
+    "question": "Matthew 1:23 says 'Immanuel' means 'God ________ us'",
+    "type": "fill-in-the-blank",
+    "answer": "With"
+  },
+  {
+    "question": "According to Exodus 25:8, God's presence dwelt among Israel in the",
+    "options": [
+      "Tabernacle",
+      "Ark of Noah",
+      "Upper room",
+      "Palace of Pharaoh"
+    ],
+    "type": "multiple-choice",
+    "answer": "Tabernacle"
+  },
+  {
+    "question": "Jesus promised that the ________ would come to dwell in believers (John 14:17)",
+    "type": "fill-in-the-blank",
+    "answer": "Holy Spirit"
+  },
+  {
+    "question": "Which of the following is an implication of God's immanence?",
+    "options": [
+      "God is accessible",
+      "God is unreachable",
+      "God is indifferent",
+      "God is silent"
+    ],
+    "type": "multiple-choice",
+    "answer": "God is accessible"
+  },
+  {
+    "question": "God is ________ - we can pray and hear from Him (1 John 5:14-15)",
+    "type": "fill-in-the-blank",
+    "answer": "Accessible"
+  },
+  {
+    "question": "God is personal - He knows our thoughts, fears and",
+    "options": [
+      "Desires",
+      "Enemies",
+      "Possessions",
+      "Friends"
+    ],
+    "type": "multiple-choice",
+    "answer": "Desires"
+  },
+  {
+    "question": "God is ________ - He sees suffering and acts accordingly (Exodus 3:7-8)",
+    "type": "fill-in-the-blank",
+    "answer": "Compassionate"
+  },
+  {
+    "question": "God disciplines and guides as a ________ does (Hebrews 12:6-7)",
+    "type": "fill-in-the-blank",
+    "answer": "Father"
+  },
+  {
+    "question": "In the New Heavens and New Earth, God will dwell fully and ________ with His people (Revelation 21:3)",
+    "type": "fill-in-the-blank",
+    "answer": "Forever"
+  },
+  {
+    "question": "The conclusion states that in Him we live and move and have our",
+    "options": [
+      "Being",
+      "Hope",
+      "Reward",
+      "Rest"
+    ],
+    "type": "multiple-choice",
+    "answer": "Being"
+  },
+  {
+    "question": "The conclusion of Lesson 1 is drawn from Acts ________",
+    "type": "fill-in-the-blank",
+    "answer": "17:27-28"
+  },
+  {
+    "question": "The evaluation of Lesson 1 asks students to mention how many implications of God's immanence?",
+    "options": [
+      "Two",
+      "Three",
+      "Four",
+      "Five"
+    ],
+    "type": "multiple-choice",
+    "answer": "Four"
+  },
+  {
+    "question": "God is worthy of ________, not just as Creator but as a loving Father (Revelation 15:4)",
+    "type": "fill-in-the-blank",
+    "answer": "Worship"
+  },
+  {
+    "question": "Jesus becoming God in the flesh (John 1:14) is described as the ultimate act of",
+    "options": [
+      "Divine immanence",
+      "Divine transcendence",
+      "Divine judgement",
+      "Divine silence"
+    ],
+    "type": "multiple-choice",
+    "answer": "Divine immanence"
+  },
+  {
+    "question": "Which two Scriptures are cited in the introduction to illustrate God's transcendence?",
+    "options": [
+      "Jeremiah 23:23 and Isaiah 55:9",
+      "Genesis 2:7 and Genesis 3:8",
+      "Exodus 3:4 and Exodus 3:7",
+      "Psalm 139:7 and Acts 17:28"
+    ],
+    "type": "multiple-choice",
+    "answer": "Jeremiah 23:23 and Isaiah 55:9"
+  },
+  {
+    "question": "God's transcendence is supported in the lesson by Jeremiah 23:23 and Isaiah ________",
+    "type": "fill-in-the-blank",
+    "answer": "55:9"
+  },
+  {
+    "question": "Which passage records that God formed Adam from the dust and breathed life into him?",
+    "options": [
+      "Genesis 1:26",
+      "Genesis 2:7",
+      "Genesis 3:8",
+      "Genesis 5:1"
+    ],
+    "type": "multiple-choice",
+    "answer": "Genesis 2:7"
+  },
+  {
+    "question": "God's voice was heard walking in the garden in Genesis ________",
+    "type": "fill-in-the-blank",
+    "answer": "3:8"
+  },
+  {
+    "question": "Exodus 3:4 records",
+    "options": [
+      "God's personal call to Moses at the burning bush",
+      "The parting of the Red Sea",
+      "The giving of the Ten Commandments",
+      "The plague of locusts"
+    ],
+    "type": "multiple-choice",
+    "answer": "God's personal call to Moses at the burning bush"
+  },
+  {
+    "question": "Exodus 3:7 reveals God's awareness, ________ and active response to the affliction of His people",
+    "type": "fill-in-the-blank",
+    "answer": "Compassion"
+  },
+  {
+    "question": "Which reference shows God's presence dwelling among Israel in the tabernacle?",
+    "options": [
+      "Exodus 25:8",
+      "Exodus 3:7",
+      "1 Kings 8:10-11",
+      "Psalm 139:7"
+    ],
+    "type": "multiple-choice",
+    "answer": "Exodus 25:8"
+  },
+  {
+    "question": "Which passage records God's glory visibly filling the temple?",
+    "options": [
+      "1 Kings 8:10-11",
+      "1 Kings 19:12",
+      "2 Chronicles 20:15",
+      "Exodus 25:8"
+    ],
+    "type": "multiple-choice",
+    "answer": "1 Kings 8:10-11"
+  },
+  {
+    "question": "In Psalm 139:7 David declares God's ________ nearness, whether in the heavens, depths or darkness",
+    "type": "fill-in-the-blank",
+    "answer": "Inescapable"
+  },
+  {
+    "question": "1 Kings 19:12 reveals God's personal and intimate way of",
+    "options": [
+      "Speaking to His prophets",
+      "Judging the nations",
+      "Filling the temple",
+      "Calling the Gentiles"
+    ],
+    "type": "multiple-choice",
+    "answer": "Speaking to His prophets"
+  },
+  {
+    "question": "John 1:14 speaks of Jesus becoming God in the ________",
+    "type": "fill-in-the-blank",
+    "answer": "Flesh"
+  },
+  {
+    "question": "The name 'Immanuel' is found in which verse?",
+    "options": [
+      "Matthew 1:23",
+      "Matthew 4:17",
+      "Matthew 28:20",
+      "John 14:17"
+    ],
+    "type": "multiple-choice",
+    "answer": "Matthew 1:23"
+  },
+  {
+    "question": "Which verse contains the promise that the Holy Spirit would come to dwell in believers?",
+    "options": [
+      "John 14:17",
+      "John 14:26",
+      "John 1:14",
+      "Acts 17:28"
+    ],
+    "type": "multiple-choice",
+    "answer": "John 14:17"
+  },
+  {
+    "question": "According to John 14:26, the Spirit is not just near but indwelling, guiding and ________ us",
+    "type": "fill-in-the-blank",
+    "answer": "Teaching"
+  },
+  {
+    "question": "Which verse assures that Christ remains present with His people through the Holy Spirit?",
+    "options": [
+      "Matthew 28:20",
+      "Matthew 1:23",
+      "Revelation 15:4",
+      "Hebrews 12:6"
+    ],
+    "type": "multiple-choice",
+    "answer": "Matthew 28:20"
+  },
+  {
+    "question": "Revelation 21:3 teaches that in the New Heavens and New Earth God will",
+    "options": [
+      "Dwell fully and forever with His people",
+      "Withdraw from the earth",
+      "Speak only through prophets",
+      "Send angels to rule in His place"
+    ],
+    "type": "multiple-choice",
+    "answer": "Dwell fully and forever with His people"
+  },
+  {
+    "question": "1 John 5:14-15 is used in the lesson to support the point that God is ________",
+    "type": "fill-in-the-blank",
+    "answer": "Accessible"
+  },
+  {
+    "question": "Psalm 139:1-3 is used to support which implication of God's immanence?",
+    "options": [
+      "God is personal",
+      "God is accessible",
+      "God is compassionate",
+      "God is worthy of worship"
+    ],
+    "type": "multiple-choice",
+    "answer": "God is personal"
+  },
+  {
+    "question": "Exodus 3:7-8 is used to support which implication of God's immanence?",
+    "options": [
+      "God is compassionate",
+      "God is accessible",
+      "God disciplines and guides",
+      "God is worthy of worship"
+    ],
+    "type": "multiple-choice",
+    "answer": "God is compassionate"
+  },
+  {
+    "question": "Hebrews 12:6-7 shows that God ________ and guides as a Father does",
+    "type": "fill-in-the-blank",
+    "answer": "Disciplines"
+  },
+  {
+    "question": "Revelation 15:4 is cited to support the implication that",
+    "options": [
+      "God is worthy of worship",
+      "God is accessible",
+      "God is personal",
+      "God is compassionate"
+    ],
+    "type": "multiple-choice",
+    "answer": "God is worthy of worship"
+  },
+  {
+    "question": "God is worthy of worship, not just as Creator but as a loving ________",
+    "type": "fill-in-the-blank",
+    "answer": "Father"
+  },
+  {
+    "question": "How many implications of God's immanence are listed in Lesson Outline 2?",
+    "options": [
+      "Three",
+      "Four",
+      "Five",
+      "Six"
+    ],
+    "type": "multiple-choice",
+    "answer": "Five"
+  },
+  {
+    "question": "Class Activity 1 asks the class to discuss whether God is truly present and involved in the world today, especially with the ________ occurrences",
+    "type": "fill-in-the-blank",
+    "answer": "Negative"
+  },
+  {
+    "question": "Class Activity 2 asks",
+    "options": [
+      "Which implications of God's character people find hard to believe or experience",
+      "Whether God still speaks through prophets today",
+      "How many times God appeared to Moses",
+      "Why the temple was destroyed"
+    ],
+    "type": "multiple-choice",
+    "answer": "Which implications of God's character people find hard to believe or experience"
+  },
+  {
+    "question": "Acts 17:27-28 says, 'for in Him we live and ________ and have our being'",
+    "type": "fill-in-the-blank",
+    "answer": "Move"
+  },
+  {
+    "question": "In Psalm 139:5 the Psalmist says God has",
+    "options": [
+      "Hedged him behind and before",
+      "Covered him with His wings",
+      "Set him upon a rock",
+      "Surrounded him with chariots of fire"
+    ],
+    "type": "multiple-choice",
+    "answer": "Hedged him behind and before"
+  },
+  {
+    "question": "Psalm 139:4 says, 'For there is not a ________ on my tongue, but behold, O Lord, You know it altogether'",
+    "type": "fill-in-the-blank",
+    "answer": "Word"
+  },
+  {
+    "question": "According to Psalm 139:3, God comprehends my path and my lying down, and is acquainted with all my",
+    "options": [
+      "Ways",
+      "Thoughts",
+      "Fears",
+      "Words"
+    ],
+    "type": "multiple-choice",
+    "answer": "Ways"
+  },
+  {
+    "question": "The lesson lists ________ teaching objectives for the students",
+    "type": "fill-in-the-blank",
+    "answer": "Three"
+  },
+  {
+    "question": "Which verse of Psalm 139 states that God has hedged the Psalmist behind and before, and laid His hand upon him?",
+    "options": [
+      "Verse 2",
+      "Verse 3",
+      "Verse 4",
+      "Verse 5"
+    ],
+    "type": "multiple-choice",
+    "answer": "Verse 5"
+  },
+  {
+    "question": "Psalm 139:2 says, 'You understand my thought ________ off'",
+    "type": "fill-in-the-blank",
+    "answer": "Afar"
+  },
+  {
+    "question": "In the text review, 'Thou compassest my path' is drawn from which part of the passage?",
+    "options": [
+      "Verse 2a",
+      "Verse 2b",
+      "Verse 3a",
+      "Verse 3b"
+    ],
+    "type": "multiple-choice",
+    "answer": "Verse 3a"
+  },
+  {
+    "question": "Psalm 139:3b says God is ________ with all my ways",
+    "type": "fill-in-the-blank",
+    "answer": "Acquainted"
+  },
+  {
+    "question": "Psalm 139:2a says, 'You know my ________ down'",
+    "type": "fill-in-the-blank",
+    "answer": "Sitting"
+  },
+  {
+    "question": "Which reference is used specifically for God's glory VISIBLY filling the temple, as distinct from His presence dwelling in the tabernacle?",
+    "options": [
+      "Exodus 25:8",
+      "1 Kings 8:10-11",
+      "Exodus 3:7",
+      "Revelation 21:3"
+    ],
+    "type": "multiple-choice",
+    "answer": "1 Kings 8:10-11"
+  },
+  {
+    "question": "The eternal expression of God's immanence is found in Revelation ________",
+    "type": "fill-in-the-blank",
+    "answer": "21:3"
+  },
+  {
+    "question": "The implication that God is worthy of worship is supported by Revelation ________",
+    "type": "fill-in-the-blank",
+    "answer": "15:4"
+  },
+  {
+    "question": "Which of the following is NOT one of the teaching objectives of Lesson 1?",
+    "options": [
+      "Explain the concept of God's immanence",
+      "Give biblical instances of God's immanence",
+      "Highlight the implications of God's immanence",
+      "Compare God's immanence with the beliefs of other religions"
+    ],
+    "type": "multiple-choice",
+    "answer": "Compare God's immanence with the beliefs of other religions"
+  },
+  {
+    "question": "The introduction describes God's transcendence as being above, infinitely greater, more powerful, distant and ________ from the material universe",
+    "type": "fill-in-the-blank",
+    "answer": "Separate"
+  },
+  {
+    "question": "The introduction describes God's immanence as God being close, attentive, connected and ________",
+    "type": "fill-in-the-blank",
+    "answer": "Relational"
+  },
+  {
+    "question": "Which point is treated LAST in Lesson Outline 1 (Biblical Instances)?",
+    "options": [
+      "God's presence in creation and with Israel",
+      "Jesus as the ultimate act of divine immanence",
+      "God dwelling with His people in the New Heavens and New Earth",
+      "The burning bush encounter with Moses"
+    ],
+    "type": "multiple-choice",
+    "answer": "God dwelling with His people in the New Heavens and New Earth"
+  },
+  {
+    "question": "In Lesson Outline 1B, Jesus becoming God in the flesh is called the ultimate act of divine ________",
+    "type": "fill-in-the-blank",
+    "answer": "Immanence"
+  },
+  {
+    "question": "The evaluation of Lesson 1 requires students to mention ________ implications of God's immanence",
+    "type": "fill-in-the-blank",
+    "answer": "Four"
+  },
+  {
+    "question": "The assignment at the end of Lesson 1 carries",
+    "options": [
+      "No mark",
+      "One mark",
+      "Two marks",
+      "Five marks"
+    ],
+    "type": "multiple-choice",
+    "answer": "No mark"
+  },
+  {
+    "question": "The opening prayer of Lesson 1 asks the Father for help to understand His nearness and active involvement in",
+    "options": [
+      "My affairs",
+      "The nations",
+      "The church",
+      "The world"
+    ],
+    "type": "multiple-choice",
+    "answer": "My affairs"
+  },
+  {
+    "question": "The closing prayer asks the Father for more of His presence, nearness and active involvement in my life in ________ name",
+    "type": "fill-in-the-blank",
+    "answer": "Jesus'"
+  },
+  {
+    "question": "Which of the following is NOT listed among the biblical instances of God's immanence in this lesson?",
+    "options": [
+      "God's voice walking in the garden",
+      "The burning bush",
+      "Jacob's ladder at Bethel",
+      "God's glory filling the temple"
+    ],
+    "type": "multiple-choice",
+    "answer": "Jacob's ladder at Bethel"
+  },
+  {
+    "question": "The implication 'God is compassionate' states that He sees ________ and acts accordingly",
+    "type": "fill-in-the-blank",
+    "answer": "Suffering"
+  },
+  {
+    "question": "Isaiah 55:9 is cited in the lesson to support",
+    "options": [
+      "God's transcendence",
+      "God's immanence",
+      "God's compassion",
+      "God's discipline"
+    ],
+    "type": "multiple-choice",
+    "answer": "God's transcendence"
+  },
+  {
+    "question": "Jeremiah 23:23 is used in the lesson in relation to",
+    "options": [
+      "God's transcendence",
+      "God's indwelling Spirit",
+      "God's tabernacle",
+      "God's worship"
+    ],
+    "type": "multiple-choice",
+    "answer": "God's transcendence"
+  },
+  {
+    "question": "According to John 14:17, the Spirit is not just near but ________",
+    "type": "fill-in-the-blank",
+    "answer": "Indwelling"
+  },
+  {
+    "question": "Which statement best distinguishes God's immanence from His transcendence?",
+    "options": [
+      "Immanence is His nearness and involvement; transcendence is His greatness and separateness",
+      "Immanence is His power; transcendence is His mercy",
+      "Immanence applies to the Old Testament; transcendence to the New Testament",
+      "Immanence is His holiness; transcendence is His justice"
+    ],
+    "type": "multiple-choice",
+    "answer": "Immanence is His nearness and involvement; transcendence is His greatness and separateness"
+  },
+  {
+    "question": "Lesson Outline 1A states that God has always been present with and involved in the world He created, especially with",
+    "options": [
+      "His people",
+      "His angels",
+      "The kings of the earth",
+      "The prophets only"
+    ],
+    "type": "multiple-choice",
+    "answer": "His people"
+  },
+  {
+    "question": "The lesson states that Jesus came to the earth, walked, talked, healed, ________ and ate with people",
+    "type": "fill-in-the-blank",
+    "answer": "Cried"
+  },
+  {
+    "question": "Which implication is placed FIRST in the list of implications of God's immanence?",
+    "options": [
+      "God is accessible",
+      "God is personal",
+      "God is compassionate",
+      "God is worthy of worship"
+    ],
+    "type": "multiple-choice",
+    "answer": "God is accessible"
+  },
+  {
+    "question": "The memory verse declares that He is ________ all things, and in Him all things consist",
+    "type": "fill-in-the-blank",
+    "answer": "Before"
+  },
+  {
+    "question": "The conclusion of the lesson affirms that God is not far from",
+    "options": [
+      "Believers in Christ",
+      "The nations of the world",
+      "The priests and Levites",
+      "Those who keep the law"
+    ],
+    "type": "multiple-choice",
+    "answer": "Believers in Christ"
+  },
+  {
+    "question": "The text review notes that God's knowledge of the Psalmist, and by implication of all men, is all ________",
+    "type": "fill-in-the-blank",
+    "answer": "Encompassing"
+  },
+  {
+    "question": "The assignment asks students to identify the area(s) in which they want God to show His",
+    "options": [
+      "Immanence",
+      "Transcendence",
+      "Judgement",
+      "Holiness"
+    ],
+    "type": "multiple-choice",
+    "answer": "Immanence"
+  },
+  {
+    "question": "What is the topic of Lesson 2?",
+    "options": [
+      "The Immanence Of God",
+      "Atonement",
+      "Theos Basileia",
+      "The Resurrection"
+    ],
+    "type": "multiple-choice",
+    "answer": "Atonement"
+  },
+  {
+    "question": "The memory verse for Lesson 2 (Atonement) is taken from",
+    "options": [
+      "2 Corinthians 5:21",
+      "Colossians 1:17",
+      "1 John 2:2",
+      "Romans 5:8"
+    ],
+    "type": "multiple-choice",
+    "answer": "2 Corinthians 5:21"
+  },
+  {
+    "question": "The Bible passage for Lesson 2 (Atonement) is",
+    "options": [
+      "Psalm 139:1-5",
+      "Hebrews 9:12-14",
+      "1 John 2:1-6",
+      "Romans 5:8-11"
+    ],
+    "type": "multiple-choice",
+    "answer": "1 John 2:1-6"
+  },
+  {
+    "question": "The lesson with the topic 'Atonement' is Lesson",
+    "options": [
+      "1",
+      "2",
+      "13",
+      "52"
+    ],
+    "type": "multiple-choice",
+    "answer": "2"
+  },
+  {
+    "question": "The memory verse of the lesson titled 'Atonement' is found in ________",
+    "type": "fill-in-the-blank",
+    "answer": "2 Corinthians 5:21"
+  },
+  {
+    "question": "The Bible passage studied in the lesson 'Atonement' is ________",
+    "type": "fill-in-the-blank",
+    "answer": "1 John 2:1-6"
+  },
+  {
+    "question": "The memory verse says, 'For he hath made him to be sin for us, who knew no ________'",
+    "type": "fill-in-the-blank",
+    "answer": "Sin"
+  },
+  {
+    "question": "Atonement is the process or act of making ________ for a wrong, harm or injury",
+    "type": "fill-in-the-blank",
+    "answer": "Amends"
+  },
+  {
+    "question": "In 1 John 2:1, Jesus Christ the righteous is presented as our",
+    "options": [
+      "Advocate with the Father",
+      "Shepherd and Bishop",
+      "Elder Brother",
+      "Chief Cornerstone"
+    ],
+    "type": "multiple-choice",
+    "answer": "Advocate with the Father"
+  },
+  {
+    "question": "1 John 2:2 says, 'And he is the ________ for our sins: and not for ours only, but also for the sins of the whole world'",
+    "type": "fill-in-the-blank",
+    "answer": "Propitiation"
+  },
+  {
+    "question": "Which component of atonement means that Christ took the place of man to bear the punishment for sin?",
+    "options": [
+      "Redemption",
+      "Reconciliation",
+      "Substitution",
+      "Satisfaction"
+    ],
+    "type": "multiple-choice",
+    "answer": "Substitution"
+  },
+  {
+    "question": "________ is the act of giving a life as an offering to pay for sins (Ephesians 5:2)",
+    "type": "fill-in-the-blank",
+    "answer": "Sacrifice"
+  },
+  {
+    "question": "________ is the act of paying a price to free someone from an obligation or sin (Ephesians 1:7; Hebrews 9:12)",
+    "type": "fill-in-the-blank",
+    "answer": "Redemption"
+  },
+  {
+    "question": "Propitiation connotes the process of appeasing God's",
+    "options": [
+      "Mercy",
+      "Wrath",
+      "Justice",
+      "Silence"
+    ],
+    "type": "multiple-choice",
+    "answer": "Wrath"
+  },
+  {
+    "question": "________ is the restoration of a relationship, which is a goal or result of atonement",
+    "type": "fill-in-the-blank",
+    "answer": "Reconciliation"
+  },
+  {
+    "question": "To partake of the provision of atonement, a sinner must confess his sin with his mouth according to",
+    "options": [
+      "1 John 1:9",
+      "Romans 6:23",
+      "Proverbs 28:13",
+      "Hebrews 9:26"
+    ],
+    "type": "multiple-choice",
+    "answer": "1 John 1:9"
+  },
+  {
+    "question": "Apart from confessing his sin, a sinner must also decide to ________ his old sinful lifestyle",
+    "type": "fill-in-the-blank",
+    "answer": "Forsake"
+  },
+  {
+    "question": "Atonement facilitates reconciliation through the sacrifice of Jesus, turning human condemnation to divine",
+    "options": [
+      "Sanctification",
+      "Glorification",
+      "Justification",
+      "Adoption"
+    ],
+    "type": "multiple-choice",
+    "answer": "Justification"
+  },
+  {
+    "question": "Atonement makes assurance of ________ possible with the attendant confidence (Romans 8:1)",
+    "type": "fill-in-the-blank",
+    "answer": "Salvation"
+  },
+  {
+    "question": "How many lesson outlines does Lesson 2 (Atonement) have?",
+    "options": [
+      "One",
+      "Two",
+      "Three",
+      "Four"
+    ],
+    "type": "multiple-choice",
+    "answer": "Two"
+  },
+  {
+    "question": "According to the lesson, Christ's sufficient suffering began from the Garden of ________",
+    "type": "fill-in-the-blank",
+    "answer": "Gethsemane"
+  },
+  {
+    "question": "Which references are cited to show that Jesus took the place of man on the cross and bore the excruciating death due to man?",
+    "options": [
+      "Romans 5:8 and 1 John 4:10",
+      "Ephesians 5:2 and Galatians 3:13",
+      "Romans 3:25 and 1 John 2:2",
+      "Hebrews 9:12 and Hebrews 9:26"
+    ],
+    "type": "multiple-choice",
+    "answer": "Romans 5:8 and 1 John 4:10"
+  },
+  {
+    "question": "The declaration that Christ's sacrifice is sufficient and that no other sacrifice is required is found in Hebrews ________",
+    "type": "fill-in-the-blank",
+    "answer": "10:10-14"
+  },
+  {
+    "question": "Which component of atonement is defined as the idea that a debt must be paid, and that this debt is settled through a sufficient offering?",
+    "options": [
+      "Propitiation",
+      "Satisfaction",
+      "Substitution",
+      "Redemption"
+    ],
+    "type": "multiple-choice",
+    "answer": "Satisfaction"
+  },
+  {
+    "question": "Atonement offers divine forgiveness and brings indescribable peace to the human recipient, according to Colossians ________",
+    "type": "fill-in-the-blank",
+    "answer": "1:20"
+  },
+  {
+    "question": "Which references are cited for the truth that atonement turned away the wrath of God from believers?",
+    "options": [
+      "Romans 3:24 and Romans 8:1",
+      "Colossians 1:20 and 2 Corinthians 5:21",
+      "Psalm 85:2-3 and John 3:36",
+      "Romans 5:10 and 2 Corinthians 5:18-19"
+    ],
+    "type": "multiple-choice",
+    "answer": "Psalm 85:2-3 and John 3:36"
+  },
+  {
+    "question": "The turning of human condemnation to divine justification is supported by Romans ________",
+    "type": "fill-in-the-blank",
+    "answer": "3:24"
+  },
+  {
+    "question": "The conclusion warns that the price paid for our salvation must not be taken for granted, citing",
+    "options": [
+      "Hebrews 6:4-6",
+      "Hebrews 9:26",
+      "Romans 6:23",
+      "Ephesians 4:22-24"
+    ],
+    "type": "multiple-choice",
+    "answer": "Hebrews 6:4-6"
+  },
+  {
+    "question": "Substitution is supported in the lesson by 2 Corinthians 5:21 and Galatians ________",
+    "type": "fill-in-the-blank",
+    "answer": "3:13"
+  },
+  {
+    "question": "Which of the following is NOT listed in the lesson as a component of atonement?",
+    "options": [
+      "Propitiation",
+      "Sanctification",
+      "Satisfaction",
+      "Reconciliation"
+    ],
+    "type": "multiple-choice",
+    "answer": "Sanctification"
+  }
+]

@@ -56,10 +56,7 @@ const StudentHome = () => {
 				bgColor: "bg-gradient-to-br from-blue-50 to-cyan-50",
 			},
 		];
-	} else if (
-		userClass === "adult" ||
-		userClass === "adults"
-	) {
+	} else if (userClass === "adult" || userClass === "adults") {
 		quizOptions = [
 			{
 				title: "Adults Quiz",
@@ -94,10 +91,20 @@ const StudentHome = () => {
 							</div>
 							<div>
 								<h1 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-									Welcome, {loading ? <div className="h-6 w-32 bg-gray-200 animate-pulse rounded inline-block"></div> : (userProfile?.name || "Student")}!
+									Welcome,{" "}
+									{loading ? (
+										<div className="h-6 w-32 bg-gray-200 animate-pulse rounded inline-block"></div>
+									) : (
+										userProfile?.name || "Student"
+									)}
+									!
 								</h1>
 								<p className="text-sm text-gray-500 mt-1">
-									{loading ? <span className="h-4 w-48 bg-gray-200 animate-pulse rounded inline-block"></span> : authUser?.email}
+									{loading ? (
+										<span className="h-4 w-48 bg-gray-200 animate-pulse rounded inline-block"></span>
+									) : (
+										authUser?.email
+									)}
 								</p>
 							</div>
 						</div>
@@ -128,13 +135,36 @@ const StudentHome = () => {
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ duration: 0.8 }}
 						className="relative z-10">
+						<div className="w-full overflow-hidden bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 rounded-xl mb-12 shadow-lg">
+							<div className="flex items-center">
+								<div className="relative z-10 flex-shrink-0 bg-gray-900 text-white px-5 py-3 font-bold">
+									📢 NEWS
+								</div>
+
+								<div className="overflow-hidden flex-1">
+									<motion.div
+										animate={{ x: ["100%", "-100%"] }}
+										transition={{
+											duration: 20,
+											repeat: Infinity,
+											ease: "linear",
+										}}
+										className="whitespace-nowrap py-3 px-4 text-white font-medium text-base md:text-lg">
+										2026–2027 YAYA Questions Update • We are currently updating
+										the questions for the new session • Lesson 1 and Lesson 2
+										have been successfully updated • More updates coming soon!
+									</motion.div>
+								</div>
+							</div>
+						</div>
 						<h2 className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 via-pink-600 to-orange-600 bg-clip-text text-transparent">
 							Ready to Test Your Knowledge?
 						</h2>
 						<p className="text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
-							{loading 
-								? "Loading your quizzes..." 
-								: (quizOptions[0]?.description || "Choose your quiz and start learning!")}
+							{loading
+								? "Loading your quizzes..."
+								: quizOptions[0]?.description ||
+									"Choose your quiz and start learning!"}
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
 							{loading ? (

@@ -1,0 +1,242 @@
+[
+  {
+    "question": "What is the topic of Lesson 1?",
+    "options": [
+      "The Transcendence of God",
+      "The Immanence of God",
+      "Theos Basileia",
+      "Destiny Destroyers"
+    ],
+    "type": "multiple-choice",
+    "answer": "The Immanence of God"
+  },
+  {
+    "question": "The Bible passage for Lesson 1 (The Immanence of God) is",
+    "options": [
+      "Psalms 139:1-5",
+      "Psalms 139:7-12",
+      "1 Chronicles 29:10-12",
+      "Colossians 1:15-20"
+    ],
+    "type": "multiple-choice",
+    "answer": "Psalms 139:1-5"
+  },
+  {
+    "question": "The memory verse for Lesson 1 (The Immanence of God) is taken from",
+    "options": [
+      "Acts 17:28",
+      "John 1:14",
+      "Colossians 1:17",
+      "Hebrews 12:6"
+    ],
+    "type": "multiple-choice",
+    "answer": "Colossians 1:17"
+  },
+  {
+    "question": "The lesson with the topic 'The Immanence of God' is Lesson",
+    "options": [
+      "1",
+      "12",
+      "35",
+      "50"
+    ],
+    "type": "multiple-choice",
+    "answer": "1"
+  },
+  {
+    "question": "The memory verse of the lesson titled 'The Immanence of God' is found in ________",
+    "type": "fill-in-the-blank",
+    "answer": "Colossians 1:17"
+  },
+  {
+    "question": "The Bible passage studied in the lesson 'The Immanence of God' is ________",
+    "type": "fill-in-the-blank",
+    "answer": "Psalms 139:1-5"
+  },
+  {
+    "question": "The memory verse says, 'And He is before all things, and in Him all things ________'",
+    "type": "fill-in-the-blank",
+    "answer": "Consist"
+  },
+  {
+    "question": "The immanence of God refers to His presence, nearness and",
+    "options": [
+      "Active involvement in His creation",
+      "Separation from His creation",
+      "Silence over His creation",
+      "Judgement of His creation"
+    ],
+    "type": "multiple-choice",
+    "answer": "Active involvement in His creation"
+  },
+  {
+    "question": "The immanence of God is different from His ________, which means God is above, infinitely greater and separate from the material universe",
+    "type": "fill-in-the-blank",
+    "answer": "Transcendence"
+  },
+  {
+    "question": "The aim of Lesson 1 is",
+    "options": [
+      "To understand the concept of God's immanence",
+      "To memorise the whole of Psalm 139",
+      "To prove that God exists",
+      "To explain the doctrine of the Trinity"
+    ],
+    "type": "multiple-choice",
+    "answer": "To understand the concept of God's immanence"
+  },
+  {
+    "question": "Psalm 139:1 says, 'O Lord, You have searched me and ________ me'",
+    "type": "fill-in-the-blank",
+    "answer": "Known"
+  },
+  {
+    "question": "According to Psalm 139:2, God knows my sitting down and my",
+    "options": [
+      "Rising up",
+      "Going out",
+      "Coming in",
+      "Lying down"
+    ],
+    "type": "multiple-choice",
+    "answer": "Rising up"
+  },
+  {
+    "question": "At creation, God formed Adam from the ________ and breathed life into him",
+    "type": "fill-in-the-blank",
+    "answer": "Dust"
+  },
+  {
+    "question": "In Genesis 3:8, God's voice was heard walking in the",
+    "options": [
+      "Garden",
+      "Temple",
+      "Wilderness",
+      "Tabernacle"
+    ],
+    "type": "multiple-choice",
+    "answer": "Garden"
+  },
+  {
+    "question": "The burning bush reveals God's personal call to ________ (Exodus 3:4)",
+    "type": "fill-in-the-blank",
+    "answer": "Moses"
+  },
+  {
+    "question": "'Immanuel' means",
+    "options": [
+      "God with us",
+      "God is mighty",
+      "God our provider",
+      "God our healer"
+    ],
+    "type": "multiple-choice",
+    "answer": "God with us"
+  },
+  {
+    "question": "Matthew 1:23 says 'Immanuel' means 'God ________ us'",
+    "type": "fill-in-the-blank",
+    "answer": "With"
+  },
+  {
+    "question": "According to Exodus 25:8, God's presence dwelt among Israel in the",
+    "options": [
+      "Tabernacle",
+      "Ark of Noah",
+      "Upper room",
+      "Palace of Pharaoh"
+    ],
+    "type": "multiple-choice",
+    "answer": "Tabernacle"
+  },
+  {
+    "question": "Jesus promised that the ________ would come to dwell in believers (John 14:17)",
+    "type": "fill-in-the-blank",
+    "answer": "Holy Spirit"
+  },
+  {
+    "question": "Which of the following is an implication of God's immanence?",
+    "options": [
+      "God is accessible",
+      "God is unreachable",
+      "God is indifferent",
+      "God is silent"
+    ],
+    "type": "multiple-choice",
+    "answer": "God is accessible"
+  },
+  {
+    "question": "God is ________ - we can pray and hear from Him (1 John 5:14-15)",
+    "type": "fill-in-the-blank",
+    "answer": "Accessible"
+  },
+  {
+    "question": "God is personal - He knows our thoughts, fears and",
+    "options": [
+      "Desires",
+      "Enemies",
+      "Possessions",
+      "Friends"
+    ],
+    "type": "multiple-choice",
+    "answer": "Desires"
+  },
+  {
+    "question": "God is ________ - He sees suffering and acts accordingly (Exodus 3:7-8)",
+    "type": "fill-in-the-blank",
+    "answer": "Compassionate"
+  },
+  {
+    "question": "God disciplines and guides as a ________ does (Hebrews 12:6-7)",
+    "type": "fill-in-the-blank",
+    "answer": "Father"
+  },
+  {
+    "question": "In the New Heavens and New Earth, God will dwell fully and ________ with His people (Revelation 21:3)",
+    "type": "fill-in-the-blank",
+    "answer": "Forever"
+  },
+  {
+    "question": "The conclusion states that in Him we live and move and have our",
+    "options": [
+      "Being",
+      "Hope",
+      "Reward",
+      "Rest"
+    ],
+    "type": "multiple-choice",
+    "answer": "Being"
+  },
+  {
+    "question": "The conclusion of Lesson 1 is drawn from Acts ________",
+    "type": "fill-in-the-blank",
+    "answer": "17:27-28"
+  },
+  {
+    "question": "The evaluation of Lesson 1 asks students to mention how many implications of God's immanence?",
+    "options": [
+      "Two",
+      "Three",
+      "Four",
+      "Five"
+    ],
+    "type": "multiple-choice",
+    "answer": "Four"
+  },
+  {
+    "question": "God is worthy of ________, not just as Creator but as a loving Father (Revelation 15:4)",
+    "type": "fill-in-the-blank",
+    "answer": "Worship"
+  },
+  {
+    "question": "Jesus becoming God in the flesh (John 1:14) is described as the ultimate act of",
+    "options": [
+      "Divine immanence",
+      "Divine transcendence",
+      "Divine judgement",
+      "Divine silence"
+    ],
+    "type": "multiple-choice",
+    "answer": "Divine immanence"
+  }
+]
