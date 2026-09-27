@@ -154,6 +154,7 @@ const StudentHome = () => {
 										the questions for the new session • Lesson 1 and Lesson 2
 										have been successfully updated • More updates coming soon! */}
 										The first Real quiz for 2026/2027 is currently going on!
+										Lesson 1-4 ONLY
 									</motion.div>
 								</div>
 							</div>
