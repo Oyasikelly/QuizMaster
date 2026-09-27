@@ -150,9 +150,10 @@ const StudentHome = () => {
 											ease: "linear",
 										}}
 										className="whitespace-nowrap py-3 px-4 text-white font-medium text-base md:text-lg">
-										2026–2027 YAYA Questions Update • We are currently updating
+										{/* 2026–2027 YAYA Questions Update • We are currently updating
 										the questions for the new session • Lesson 1 and Lesson 2
-										have been successfully updated • More updates coming soon!
+										have been successfully updated • More updates coming soon! */}
+										The first Real quiz for 2026/2027 is currently going on!
 									</motion.div>
 								</div>
 							</div>
