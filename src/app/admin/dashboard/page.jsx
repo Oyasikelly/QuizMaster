@@ -196,6 +196,24 @@ const AdminDashboard = () => {
 				return cls === "yaya" || cls === "adult";
 			});
 
+			// Resolve each student's org name — RLS already limits which
+			// students come back at all (a province_admin only ever sees
+			// their own province; a super_admin sees every province under
+			// Region 70), so this is purely for display grouping, not an
+			// access check.
+			const orgIds = [...new Set(filteredStudentsData.map((s) => s.org_id).filter(Boolean))];
+			let orgNameById = {};
+			if (orgIds.length > 0) {
+				const { data: orgsData } = await supabase
+					.from("organizations")
+					.select("id, name")
+					.in("id", orgIds);
+				orgNameById = Object.fromEntries((orgsData || []).map((o) => [o.id, o.name]));
+			}
+			filteredStudentsData.forEach((s) => {
+				s.orgName = s.org_id ? orgNameById[s.org_id] || "Unassigned" : "Unassigned";
+			});
+
 			// Load quiz results
 			const { data: rawQuizData } = await withTimeout(
 				supabase
@@ -395,6 +413,53 @@ const AdminDashboard = () => {
 			.filter((c) => !classOrder.includes(c))
 			.sort(),
 	];
+
+	// A super_admin oversees multiple provinces at once (RLS already
+	// returns every province's students to them via org_subtree_ids from
+	// the Region root — see my_scoped_org_ids()), so their table groups by
+	// province first, then by class within it. A province_admin only ever
+	// sees their own single province, so this collapses to one group and
+	// the extra heading is skipped in the render.
+	const isSuperAdminView = user?.role === "super_admin";
+	const groupedByOrg = {};
+	filteredStudents.forEach((student) => {
+		const org = student.orgName || "Unassigned";
+		if (!groupedByOrg[org]) groupedByOrg[org] = [];
+		groupedByOrg[org].push(student);
+	});
+	const sortedOrgNames = Object.keys(groupedByOrg).sort();
+
+	// Flattened render plan shared by both the desktop table and the
+	// mobile card list, so the two stay in sync. A super_admin gets an
+	// extra org-heading row ahead of each province's class groups; a
+	// province_admin (or legacy admin) just gets the plain class groups,
+	// unchanged from before this feature existed.
+	const studentTableGroups = [];
+	if (isSuperAdminView) {
+		sortedOrgNames.forEach((orgName) => {
+			studentTableGroups.push({ type: "org", key: `org-${orgName}`, label: orgName });
+			const studentsInOrg = groupedByOrg[orgName];
+			const byClass = {};
+			studentsInOrg.forEach((s) => {
+				const cls = (s.class || "Other").toLowerCase();
+				if (!byClass[cls]) byClass[cls] = [];
+				byClass[cls].push(s);
+			});
+			const classesInOrg = [
+				...classOrder.filter((c) => byClass[c]),
+				...Object.keys(byClass)
+					.filter((c) => !classOrder.includes(c))
+					.sort(),
+			];
+			classesInOrg.forEach((cls) => {
+				studentTableGroups.push({ type: "class", key: `${orgName}-${cls}`, label: cls, students: byClass[cls] });
+			});
+		});
+	} else {
+		sortedClasses.forEach((cls) => {
+			studentTableGroups.push({ type: "class", key: cls, label: cls, students: groupedByClass[cls] });
+		});
+	}
 
 	const handleEditStudent = (student) => {
 		setEditingStudent({ ...student });
@@ -868,7 +933,7 @@ const AdminDashboard = () => {
 			{/* Main Content */}
 			<div className="flex-1 flex flex-col max-w-screen min-h-screen md:ml-4">
 				{/* Topbar for mobile */}
-				<header className="bg-red-200  shadow-sm border-b md:hidden flex items-center justify-between px-4 py-3">
+				<header className="bg-white shadow-sm border-b md:hidden flex items-center justify-between px-4 py-3">
 					<button
 						className="p-1"
 						onClick={() => setSidebarOpen(true)}>
@@ -883,6 +948,25 @@ const AdminDashboard = () => {
 				</header>
 
 				<main className="flex-1 max-w-7xl mx-auto w-screen lg:w-full px-2 sm:px-4 lg:px-8 py-8 overflow-x-hidden">
+					{/* Scope banner */}
+					<div className="mb-6 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-4 shadow-lg flex items-center justify-between flex-wrap gap-2">
+						<div>
+							<p className="text-xs uppercase tracking-wide text-indigo-100">
+								{roleLabel(user?.role)}
+							</p>
+							<p className="text-lg font-semibold">
+								{isSuperAdminView
+									? `${orgName || "Region 70"} — all provinces`
+									: orgName || "No province assigned"}
+							</p>
+						</div>
+						{isSuperAdminView && (
+							<span className="text-xs bg-white/20 px-3 py-1 rounded-full">
+								{sortedOrgNames.length} province{sortedOrgNames.length === 1 ? "" : "s"} with students
+							</span>
+						)}
+					</div>
+
 					{/* Stats Overview */}
 					<motion.div
 						initial={{ opacity: 0, y: 20 }}
@@ -1085,9 +1169,8 @@ const AdminDashboard = () => {
 									value={filterRole}
 									onChange={(e) => setFilterRole(e.target.value)}
 									className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent w-full sm:w-auto">
-									<option value="all">All Roles</option>
+									<option value="all">All Students</option>
 									<option value="student">Students</option>
-									<option value="admin">Admins</option>
 								</select>
 							</div>
 						</div>
@@ -1124,18 +1207,27 @@ const AdminDashboard = () => {
 									</tr>
 								</thead>
 								<tbody>
-									{sortedClasses.map((cls) => (
-										<React.Fragment key={cls}>
-											<tr key={`heading-${cls}`}>
+									{studentTableGroups.map((group) =>
+										group.type === "org" ? (
+											<tr key={group.key}>
+												<td
+													colSpan={8}
+													className="bg-indigo-700 text-white font-bold py-2 px-4 text-lg">
+													{group.label}
+												</td>
+											</tr>
+										) : (
+										<React.Fragment key={group.key}>
+											<tr key={`heading-${group.key}`}>
 												<td
 													colSpan={8}
 													className="bg-purple-50 text-purple-700 font-bold py-2 px-4 text-lg">
-													{cls.charAt(0).toUpperCase() + cls.slice(1)}
+													{group.label.charAt(0).toUpperCase() + group.label.slice(1)}
 												</td>
 											</tr>
-											{groupedByClass[cls].map((student) => (
+											{group.students.map((student) => (
 												<tr
-													key={`${cls}-${student.id}`}
+													key={`${group.key}-${student.id}`}
 													className="border-b border-gray-100 hover:bg-gray-50">
 													<td className="py-3 px-4">
 														<div className="flex items-center space-x-3">
@@ -1200,22 +1292,30 @@ const AdminDashboard = () => {
 												</tr>
 											))}
 										</React.Fragment>
-									))}
+										)
+									)}
 								</tbody>
 							</table>
 
 							{/* Mobile Cards */}
 							<div className="md:hidden space-y-4 w-full max-w-full">
-								{sortedClasses.map((cls) => (
+								{studentTableGroups.map((group) =>
+									group.type === "org" ? (
+										<div
+											key={group.key}
+											className="bg-indigo-700 text-white font-bold py-2 px-4 text-lg rounded-lg mb-2">
+											{group.label}
+										</div>
+									) : (
 									<div
-										key={cls}
+										key={group.key}
 										className="mb-2 w-full max-w-full">
 										<div className="bg-purple-50 text-purple-700 font-bold py-2 px-4 text-lg rounded-t-lg">
-											{cls.charAt(0).toUpperCase() + cls.slice(1)}
+											{group.label.charAt(0).toUpperCase() + group.label.slice(1)}
 										</div>
-										{groupedByClass[cls].map((student) => (
+										{group.students.map((student) => (
 											<div
-												key={`${cls}-${student.id}`}
+												key={`${group.key}-${student.id}`}
 												className="bg-white rounded-b-lg shadow border border-gray-100 p-4 mb-2 w-full max-w-full">
 												<div className="flex items-center space-x-3 mb-2">
 													<div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
@@ -1272,7 +1372,8 @@ const AdminDashboard = () => {
 											</div>
 										))}
 									</div>
-								))}
+									)
+								)}
 							</div>
 						</div>
 					</motion.div>
