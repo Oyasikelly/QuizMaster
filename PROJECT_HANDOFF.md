@@ -289,3 +289,61 @@ next, in order:
   them are idempotent-safe to blindly re-run against production without
   re-reading what they do first — several assume a specific one-time
   starting state (e.g. the real-quiz lesson being non-empty).
+
+---
+
+## UPDATE 2026-10-16 (later) — Found and fixed a real production RLS gap; promoted real admins to scoped roles
+
+Separately from everything above, two more real pieces of work happened:
+
+1. **The scoped role system (province_admin/super_admin) was finally
+   applied to real accounts.** `oyasikelly2000@gmail.com` → `super_admin`
+   scoped to the Region 70 root (sees every province automatically via
+   the existing `org_subtree_ids()` mechanism, zero backend changes
+   needed). The other two real admins → `province_admin` scoped to
+   Province 23. Also fixed `setup-profile/page.jsx`: new admin signups
+   now correctly get `role: "province_admin"` scoped to whatever org they
+   pick, instead of the unscoped legacy `"admin"` that every self-signup
+   admin was silently getting before (meaning the province picker had
+   been cosmetic for every admin signup until this fix).
+
+2. **A real, confirmed production-only data leak, found via a user
+   bug report** ("Province 20 admin can still see students from other
+   provinces"). Root-caused through extensive live-session testing (see
+   [[project-rls-gateway-bug]] in memory, or the commit message on
+   `5549c42`): a correctly-configured `province_admin` — right role,
+   right `org_id`, `is_admin()`/`my_scoped_org_ids()` and the RLS
+   policy's own boolean expression all verified correct when run directly
+   via RPC from the real session — still got every province's
+   students/results back from a plain `users_profile`/`quiz_results`
+   select. Ruled out one at a time: policy text, function logic,
+   BYPASSRLS, RLS-enabled flags, the deployed anon key, browser cache,
+   CDN cache (identical anon-only request to the same URL correctly
+   returned zero rows). The same setup worked correctly on staging the
+   whole time. The smoking gun: response headers from back-to-back
+   identical requests showed `sb-gateway-version` flipping between `1`
+   and `2` — a genuine inconsistency in Supabase's own gateway
+   infrastructure for this project, not our SQL.
+   **Fix**: `get_scoped_students()` / `get_scoped_quiz_results()`
+   (`20240101000027_scoped_admin_data_rpc.sql`) — `SECURITY DEFINER`
+   functions that do the identical scoping check explicitly in their own
+   body instead of depending on table-level RLS enforcement. Every
+   admin-facing bulk read across the app (dashboard, settings,
+   StudentManagement, QuizAnalytics) was switched to use them.
+   **Still true going forward**: any new admin-facing bulk read of
+   students/quiz results must use these RPCs, not a plain table select —
+   see [[project-rls-gateway-bug]].
+
+### Still open
+- Staging is now several migrations behind production (20240101000024
+  through 20240101000028 — the volatility fix, temp diagnostics since
+  dropped, and the scoped-RPC fix). Not urgent since nothing live depends
+  on it, but sync before the next schema change there.
+- Two test accounts exist purely for this debugging session and should
+  eventually be cleaned up: `eventtrybe2025@gmail.com` on **production**
+  (role `province_admin`, Province 20 — created to reproduce the leak)
+  and a cloned copy of the same account on **staging** (password
+  `StagingDebug-2026!`, in `scripts/clone-admin-to-staging.js` — treat
+  that password as already-known/non-secret since it's in this repo).
+- `oyasikelly2000@gmail.com` has two duplicate `users_profile` rows on
+  production (noted earlier, still unresolved, not urgent).
