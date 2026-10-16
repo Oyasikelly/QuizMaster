@@ -6,6 +6,7 @@ import { supabase } from "../lib/supabase";
 import { FiAward, FiLock, FiAlertCircle } from "react-icons/fi";
 import { isRealQuizActive } from "../lib/quiz-config";
 import { getQuestions } from "../app/actions/getQuestions";
+import { getDbRealQuizQuestions, getDbPracticeQuestions } from "../lib/db-content";
 
 const shuffleArray = (array) => [...array].sort(() => Math.random() - 0.5);
 
@@ -38,9 +39,20 @@ const Quiz = ({ initialQuestions, category }) => {
 			try {
 				const isReal = await isRealQuizActive(supabase);
 				setIsRealQuiz(isReal);
-				
-				// Fetch questions dynamically
-				const fetchedQuestions = await getQuestions(category, lesson, difficulty, year, isReal);
+
+				// DB-first (Phase 5): try the student's own province's content
+				// via RLS; fall back to the bundled JSON files exactly as
+				// before when nothing's there (the overwhelming majority of
+				// students right now, since org assignment just started).
+				let fetchedQuestions = isReal
+					? await getDbRealQuizQuestions(category)
+					: lesson && difficulty
+					? await getDbPracticeQuestions(category, year, difficulty, lesson)
+					: null;
+
+				if (!fetchedQuestions) {
+					fetchedQuestions = await getQuestions(category, lesson, difficulty, year, isReal);
+				}
 				
 				// Only fallback to initialQuestions (the real quiz) if we are in real quiz mode.
 				// In practice mode, an empty result should remain empty, not leak the real quiz.
@@ -182,7 +194,7 @@ const Quiz = ({ initialQuestions, category }) => {
 			const { data: usersData, error: usersError } = await withTimeout(
 				supabase
 					.from("users_profile")
-					.select("email, name, class")
+					.select("email, name, class, org_id")
 					.eq("email", userEmail),
 				15000
 			);
@@ -198,6 +210,7 @@ const Quiz = ({ initialQuestions, category }) => {
 				email: userProfile?.email || userEmail,
 				name: userProfile?.name || "Unknown",
 				class: userProfile?.class || "Unknown",
+				org_id: userProfile?.org_id || null,
 				category,
 				lesson: isRealQuiz ? null : lesson,
 				timestamp: new Date().toISOString(),

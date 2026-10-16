@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { supabase } from "../../../lib/supabase";
+import { isAdminRole } from "../../../lib/roles";
 import StudentManagement from "../../../components/StudentManagement";
 import QuizAnalytics from "../../../components/QuizAnalytics";
 import {
@@ -19,6 +20,8 @@ import {
 	FaBars,
 	FaTimes,
 	FaExclamationTriangle,
+	FaClipboardList,
+	FaHistory,
 } from "react-icons/fa";
 
 const withTimeout = (promise, ms) =>
@@ -33,6 +36,8 @@ const SIDEBAR_LINKS = [
 	{ label: "Dashboard", icon: <FaTrophy />, route: "/admin/dashboard" },
 	{ label: "Student Management", icon: <FaUsers />, tab: "students" },
 	{ label: "Analytics", icon: <FaChartBar />, tab: "analytics" },
+	{ label: "Content Management", icon: <FaClipboardList />, route: "/admin/content" },
+	{ label: "Admin Activity", icon: <FaHistory />, route: "/admin/activity" },
 	{ label: "Settings", icon: <FaCog />, tab: "system", active: true },
 ];
 
@@ -132,7 +137,7 @@ const AdminSettings = () => {
 					.single(),
 				10000
 			);
-			if (profile?.role !== "admin") {
+			if (!isAdminRole(profile?.role)) {
 				router.push("/authenticate");
 				return;
 			}

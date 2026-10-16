@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { supabase } from "../../../lib/supabase";
 import { useAuth } from "../../../contexts/AuthContext";
+import ParishPicker from "../../../components/ParishPicker";
 import {
 	FaUser,
 	FaEnvelope,
@@ -75,12 +76,23 @@ const StudentProfile = () => {
 	const [editForm, setEditForm] = useState({
 		name: "",
 		class: "",
-		denomination: "",
+		phone: "",
+		dateOfBirth: "",
+		gender: "",
 	});
 	const [error, setError] = useState("");
 	const [successMessage, setSuccessMessage] = useState("");
 	const [loadError, setLoadError] = useState(false);
 	const router = useRouter();
+
+	// Current parish name, resolved for display only. The picker below
+	// always starts fresh (see ParishPicker) — selecting something there
+	// is what actually changes org_id; leaving it alone keeps whatever's
+	// already set, shown here read-only.
+	const [currentOrgName, setCurrentOrgName] = useState(null);
+	// Only set once the user actively picks something; null means "don't
+	// touch org_id on save," not "clear it."
+	const [selectedOrgId, setSelectedOrgId] = useState(null);
 
 	const loadProfileData = async () => {
 		if (!user) {
@@ -105,9 +117,22 @@ const StudentProfile = () => {
 				setEditForm({
 					name: profile.name || "",
 					class: profile.class || "",
-					denomination: profile.denomination || "",
+					phone: profile.phone || "",
+					dateOfBirth: profile.date_of_birth || "",
+					gender: profile.gender || "",
 				});
 				setProfileData(profile);
+
+				if (profile.org_id) {
+					const { data: org } = await supabase
+						.from("organizations")
+						.select("name")
+						.eq("id", profile.org_id)
+						.maybeSingle();
+					setCurrentOrgName(org?.name || null);
+				} else {
+					setCurrentOrgName(null);
+				}
 			} else if (profileError) {
 				setError("Failed to load profile data");
 			}
@@ -209,8 +234,11 @@ const StudentProfile = () => {
 		setEditForm({
 			name: profileData?.name || "",
 			class: profileData?.class || "",
-			denomination: profileData?.denomination || "",
+			phone: profileData?.phone || "",
+			dateOfBirth: profileData?.date_of_birth || "",
+			gender: profileData?.gender || "",
 		});
+		setSelectedOrgId(null);
 		setError("");
 		setSuccessMessage("");
 	};
@@ -241,12 +269,19 @@ const StudentProfile = () => {
 				return;
 			}
 
-			// Now try to update
+			// Now try to update. org_id is deliberately omitted unless the
+			// user actively picked something in ParishPicker this session —
+			// an untouched picker must never silently clear an existing value.
 			const updateData = {
 				name: editForm.name,
 				class: editForm.class,
-				denomination: editForm.denomination,
+				phone: editForm.phone || null,
+				date_of_birth: editForm.dateOfBirth || null,
+				gender: editForm.gender || null,
 			};
+			if (selectedOrgId) {
+				updateData.org_id = selectedOrgId;
+			}
 
 			const { data: updateResult, error: updateError } = await supabase
 				.from("users_profile")
@@ -260,6 +295,16 @@ const StudentProfile = () => {
 				return;
 			}
 
+			// A Postgres/RLS permission mismatch doesn't error here — it
+			// just matches zero rows, which looks identical to success
+			// unless this is checked explicitly. (This exact failure mode
+			// is what silently broke this form for a while — see
+			// supabase/migrations/20240101000020_fix_users_profile_self_update.sql.)
+			if (!updateResult || updateResult.length === 0) {
+				setError("Update didn't apply — no permission to change this profile. Please try again or contact an admin.");
+				return;
+			}
+
 			// Refresh profile data after successful update
 			const { data: updatedProfile, error: refreshError } = await supabase
 				.from("users_profile")
@@ -269,7 +314,16 @@ const StudentProfile = () => {
 
 			if (updatedProfile) {
 				setProfileData(updatedProfile);
+				if (updatedProfile.org_id) {
+					const { data: org } = await supabase
+						.from("organizations")
+						.select("name")
+						.eq("id", updatedProfile.org_id)
+						.maybeSingle();
+					setCurrentOrgName(org?.name || null);
+				}
 			}
+			setSelectedOrgId(null);
 
 			setSuccessMessage("Profile updated successfully!");
 			setIsEditing(false);
@@ -587,21 +641,83 @@ const StudentProfile = () => {
 
 								<div>
 									<label className="block text-sm font-medium text-gray-700 mb-2">
-										Denomination
+										Phone Number
 									</label>
 									{isEditing ? (
 										<input
-											type="text"
-											name="denomination"
-											value={editForm.denomination}
+											type="tel"
+											name="phone"
+											value={editForm.phone}
 											onChange={handleChange}
 											className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
 										/>
 									) : (
 										<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
-											<FaBuilding className="text-gray-400" />
-											<span>{profileData?.denomination || "Not set"}</span>
+											<FaPhone className="text-gray-400" />
+											<span>{profileData?.phone || "Not set"}</span>
 										</div>
+									)}
+								</div>
+
+								<div className="grid grid-cols-2 gap-3">
+									<div>
+										<label className="block text-sm font-medium text-gray-700 mb-2">
+											Date of Birth
+										</label>
+										{isEditing ? (
+											<input
+												type="date"
+												name="dateOfBirth"
+												value={editForm.dateOfBirth}
+												onChange={handleChange}
+												className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+											/>
+										) : (
+											<div className="p-3 bg-gray-50 rounded-lg">
+												<span>{profileData?.date_of_birth || "Not set"}</span>
+											</div>
+										)}
+									</div>
+									<div>
+										<label className="block text-sm font-medium text-gray-700 mb-2">
+											Gender
+										</label>
+										{isEditing ? (
+											<select
+												name="gender"
+												value={editForm.gender}
+												onChange={handleChange}
+												className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+												<option value="">Select</option>
+												<option value="male">Male</option>
+												<option value="female">Female</option>
+											</select>
+										) : (
+											<div className="p-3 bg-gray-50 rounded-lg capitalize">
+												<span>{profileData?.gender || "Not set"}</span>
+											</div>
+										)}
+									</div>
+								</div>
+
+								<div>
+									<label className="block text-sm font-medium text-gray-700 mb-2">
+										Parish
+									</label>
+									<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg mb-3">
+										<FaBuilding className="text-gray-400" />
+										<span>Current: {currentOrgName || "Not set"}</span>
+									</div>
+									{isEditing && (
+										<>
+											<ParishPicker
+												label="Change parish"
+												onChange={setSelectedOrgId}
+											/>
+											<p className="text-xs text-gray-400 mt-1">
+												Leave unselected to keep your current parish.
+											</p>
+										</>
 									)}
 								</div>
 							</div>

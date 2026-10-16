@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { supabase } from "../../../../lib/supabase";
+import { isAdminRole } from "../../../../lib/roles";
 import {
 	FaUser,
 	FaSignOutAlt,
@@ -90,7 +91,7 @@ const StudentDetail = () => {
 				10000
 			);
 
-			if (profile?.role !== "admin") {
+			if (!isAdminRole(profile?.role)) {
 				router.push("/authenticate");
 				return;
 			}

@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
+import { isAdminRole } from "../lib/roles";
 
 const AuthContext = createContext();
 
@@ -21,12 +22,49 @@ export const useAuth = () => {
 	return context;
 };
 
+// Keyed by email, not a single slot — a single slot meant signing up a
+// second account (e.g. testing student then admin signup in the same
+// browser) silently overwrote the first's pending role, or cleared it
+// out from under it on completion. Every pending role is looked up
+// against whichever account is actually logged in.
+const SIGNUP_ROLES_STORAGE_KEY = "quizmaster_signup_roles";
+
+const readStoredSignupRoles = () => {
+	if (typeof window === "undefined") return {};
+	try {
+		const raw = window.localStorage.getItem(SIGNUP_ROLES_STORAGE_KEY);
+		return raw ? JSON.parse(raw) : {};
+	} catch {
+		return {};
+	}
+};
+
+const writeStoredSignupRoles = (map) => {
+	try {
+		window.localStorage.setItem(SIGNUP_ROLES_STORAGE_KEY, JSON.stringify(map));
+	} catch {
+		// localStorage unavailable (private browsing etc.) — signup still
+		// works as long as the user doesn't reload before setup-profile.
+	}
+};
+
 export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [userProfile, setUserProfile] = useState(null);
 	const [loading, setLoading] = useState(true);
-	const [signupRole, setSignupRole] = useState(null); // Temporary role during signup
+	// Survives the page reload that happens between signup and completing
+	// /setup-profile (email confirmation round-trip) — resolved per the
+	// currently authenticated user's email, not a single last-set value.
+	const [signupRole, setSignupRole] = useState(null);
 	const router = useRouter();
+
+	// Resolve this user's pending signup role (if any) from the stored
+	// map, only relevant before their profile row exists.
+	const resolveSignupRoleForEmail = (email) => {
+		if (!email) return;
+		const stored = readStoredSignupRoles()[email];
+		if (stored) setSignupRole(stored);
+	};
 
 	// Initialize auth state
 	useEffect(() => {
@@ -51,6 +89,7 @@ export const AuthProvider = ({ children }) => {
 					);
 
 					setUserProfile(profile);
+					if (!profile) resolveSignupRoleForEmail(session.user.email);
 				}
 			} catch (error) {
 				console.error("Auth initialization error:", error);
@@ -82,8 +121,13 @@ export const AuthProvider = ({ children }) => {
 						10000
 					);
 					setUserProfile(profile);
+					if (!profile) resolveSignupRoleForEmail(session.user.email);
 				} catch (profileError) {
 					console.error("Profile fetch on sign-in timed out:", profileError);
+					// Deliberately not resolving signupRole here: a timeout isn't
+					// confirmation the profile doesn't exist, and doing so could
+					// make an existing confirmed user's setup-profile redirect
+					// check (which skips itself while signupRole is set) misfire.
 				}
 			} else if (event === "SIGNED_OUT") {
 				setUser(null);
@@ -95,17 +139,27 @@ export const AuthProvider = ({ children }) => {
 		return () => subscription.unsubscribe();
 	}, []);
 
-	// Set temporary role during signup (secure, server-side validated)
-	const setSignupRoleData = (role, adminCode = null) => {
-		// Only allow valid roles
-		if (role === "admin" || role === "student") {
-			setSignupRole({ role, adminCode });
+	// Set temporary role during signup (secure, server-side validated).
+	// Keyed by email so it survives signing up multiple accounts before
+	// either one completes setup-profile.
+	const setSignupRoleData = (role, adminCode = null, email = null) => {
+		if ((role === "admin" || role === "student") && email) {
+			const value = { role, adminCode };
+			setSignupRole(value);
+			const map = readStoredSignupRoles();
+			map[email] = value;
+			writeStoredSignupRoles(map);
 		}
 	};
 
-	// Clear signup role after profile creation
-	const clearSignupRole = () => {
+	// Clear this account's signup role after its profile is created.
+	const clearSignupRole = (email = null) => {
 		setSignupRole(null);
+		if (email) {
+			const map = readStoredSignupRoles();
+			delete map[email];
+			writeStoredSignupRoles(map);
+		}
 	};
 
 	// Sign out function
@@ -118,9 +172,10 @@ export const AuthProvider = ({ children }) => {
 		}
 	};
 
-	// Check if user is admin
+	// Check if user is admin (any admin-like role, not just the legacy
+	// literal "admin" — see src/lib/roles.js)
 	const isAdmin = () => {
-		return userProfile?.role === "admin";
+		return isAdminRole(userProfile?.role);
 	};
 
 	// Check if user is student
@@ -131,6 +186,13 @@ export const AuthProvider = ({ children }) => {
 	// Get current role
 	const getCurrentRole = () => {
 		return userProfile?.role || signupRole?.role;
+	};
+
+	// The user's organization (Region/Province/Zone/Area/Parish), once
+	// assigned — null for every account today (Phase 1 just added the
+	// column; nothing assigns it yet, see roadmap task t08).
+	const getOrgId = () => {
+		return userProfile?.org_id ?? null;
 	};
 
 	const value = {
@@ -144,6 +206,7 @@ export const AuthProvider = ({ children }) => {
 		isAdmin,
 		isStudent,
 		getCurrentRole,
+		getOrgId,
 	};
 
 	return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

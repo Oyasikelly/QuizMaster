@@ -1,0 +1,168 @@
+[
+  {
+    "question": "Christian pilgrims must stand firm in the _______ without shifting grounds.",
+    "type": "multiple-choice",
+    "options": ["Love", "Strength", "Peace", "Faith"],
+    "answer": "Faith"
+  },
+  {
+    "question": "The Devil is our adversary and we must steadfastly resist all his ________ to shift our focus from Jesus.",
+    "type": "multiple-choice",
+    "options": ["Trails", "Goals", "Antics", "Plans"],
+    "answer": "Antics"
+  },
+  {
+    "question": "What is the conclusion for lesson 6?",
+    "type": "multiple-choice",
+    "options": [
+      "Be resolute in your faith in Christ Jesus because there is no other way",
+      "God's timing is the best, do not run ahead of Him.",
+      "God is not far from believers in Christ.",
+      "Believers must know that a price was paid for their salvation."
+    ],
+    "answer": "Be resolute in your faith in Christ Jesus because there is no other way"
+  },
+  {
+    "question": "What is the first lesson outline for lesson 6?",
+    "type": "multiple-choice",
+    "options": ["Stand firm", "Beyond money", "Staying secure", "The narrow path"],
+    "answer": "The narrow path"
+  },
+  {
+    "question": "\"For we have become partakers of Christ if we hold the beginning of our confidence steadfast to the end.\"",
+    "type": "multiple-choice",
+    "options": ["Hebrews 4:17", "John 4:4", "1Tim. 4:5", "Hebrews 3:14"],
+    "answer": "Hebrews 3:14"
+  },
+  {
+    "question": "Self-denial is a major prerequisite for the journey on ______________",
+    "type": "multiple-choice",
+    "options": ["Salvation", "Righteousness", "Christianity", "The narrow path"],
+    "answer": "The narrow path"
+  },
+  {
+    "question": "What is the Bible passage for lesson 5?",
+    "type": "multiple-choice",
+    "options": ["Is. 5:14-21", "Prov. 10:15", "Is. 14:12-17", "Luke 3:13-7"],
+    "answer": "Is. 14:12-17"
+  },
+  {
+    "question": "The Devil uses fear to keep people in bandage and make them ______________",
+    "type": "multiple-choice",
+    "options": ["repent", "stagnant", "sin", "laugh"],
+    "answer": "stagnant"
+  },
+  {
+    "question": "\"Therefore rejoice, O heavens, and you who dwell in them! Woe to the inhabitants of the earth and the sea! For the devil has come down to you...\"",
+    "type": "multiple-choice",
+    "options": ["Rev. 5:10", "Rev. 3:12", "John 10:10", "Rev. 12:12"],
+    "answer": "Rev. 12:12"
+  },
+  {
+    "question": "If you are sick, request for prayers from Elders in the Church or mature believers and exercise your faith in God's ability to heal. This scripture is found where?",
+    "type": "multiple-choice",
+    "options": ["Matt. 5:18", "Luke 10:2-6", "James 5:14-15", "Rom. 12:18"],
+    "answer": "James 5:14-15"
+  },
+  {
+    "question": "What is the Conclusion for lesson 5?",
+    "type": "multiple-choice",
+    "options": [
+      "What will you be remembered for? Make sure your life counts.",
+      "Set meaningful and achievable goals to fulfill destiny.",
+      "The word of God is a powerful tool given to believers to overcome Satan.",
+      "Love your neighbor as yourself."
+    ],
+    "answer": "The word of God is a powerful tool given to believers to overcome Satan."
+  },
+  {
+    "question": "What is the 2nd outline for Lesson 4?",
+    "type": "multiple-choice",
+    "options": ["Hindrances to opportunities", "Types of boundaries", "The place of grace", "Rising and falling"],
+    "answer": "The place of grace"
+  },
+  {
+    "question": "According to Acts 2:41, \"Then those who gladly received His word were _____________\".",
+    "type": "multiple-choice",
+    "options": ["Saved", "Dismissed", "Baptized", "Raptured"],
+    "answer": "Baptized"
+  },
+  {
+    "question": "The 'world' is a battleground and the Christian life is a _____________",
+    "type": "multiple-choice",
+    "options": ["Battle", "Plan", "Journey", "Warfare"],
+    "answer": "Warfare"
+  },
+  {
+    "question": "The following are Satan's strategies except __________",
+    "type": "multiple-choice",
+    "options": ["Temptations", "Contentment", "Contention", "Confusion"],
+    "answer": "Contentment"
+  },
+  {
+    "question": "The memory verse for Lesson 4 is _________",
+    "type": "multiple-choice",
+    "options": ["John 8:3", "2Tim. 9:2", "John 1:17", "1John 2:5"],
+    "answer": "John 1:17"
+  },
+  {
+    "question": "The summary of all the laws according to Jesus can be found in ___________",
+    "type": "multiple-choice",
+    "options": ["Luke 5:16-27", "Matt. 22:36-40", "James 5:7", "Mark 8:2-4"],
+    "answer": "Matt. 22:36-40"
+  },
+  {
+    "question": "With atonement, a condemned sinner is justified by grace and recognized as a ________________",
+    "type": "multiple-choice",
+    "options": ["disciple", "Worker", "Saint", "Son"],
+    "answer": "Saint"
+  },
+  {
+    "question": "The law, according to the scriptures, refers to the detailed standard God gave to Moses, beginning in ______________.",
+    "type": "multiple-choice",
+    "options": ["Gen. 10", "Ex. 20", "Lev. 8", "Ex. 12"],
+    "answer": "Ex. 20"
+  },
+  {
+    "question": "In 2 Tim. 2:3, Paul called Christians to be ______________ of the Lord Jesus Christ.",
+    "type": "multiple-choice",
+    "options": ["Good soldiers", "Preachers", "Disciples", "mouth piece"],
+    "answer": "Good soldiers"
+  },
+  {
+    "question": "_________________ swerved from the narrow way because of his love for the present world according to 2Tim. 4:10.",
+    "type": "multiple-choice",
+    "options": ["Judas", "Peter", "Timothy", "Demas"],
+    "answer": "Demas"
+  },
+  {
+    "question": "What is the 1st lesson outline for Lesson 2?",
+    "type": "multiple-choice",
+    "options": ["The Price", "The Ear gate", "Ways to cultivate joy", "The Components"],
+    "answer": "The Components"
+  },
+  {
+    "question": "Water baptism is a Christian __________ representing a public profession of faith in Jesus Christ.",
+    "type": "multiple-choice",
+    "options": ["Right", "Rite", "Ritualistic activity", "Expression"],
+    "answer": "Rite"
+  },
+  {
+    "question": "What is the memory verse for Lesson 6?",
+    "type": "multiple-choice",
+    "options": ["Romans. 7:35-39", "James 4:7", "Romans 8:35-39", "3 John 1:2"],
+    "answer": "Romans 8:35-39"
+  },
+  {
+    "question": "The burning bush reveals God's personal __________ to Moses.",
+    "type": "multiple-choice",
+    "options": ["Moment", "Call", "Dedication", "Commitment"],
+    "answer": "Call"
+  },
+  {
+    "question": "The following are components of atonement except ______________.",
+    "type": "multiple-choice",
+    "options": ["Satisfaction", "Propitiation", "Contention", "Sacrifice"],
+    "answer": "Contention"
+  }
+]

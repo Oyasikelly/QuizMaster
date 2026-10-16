@@ -26,6 +26,7 @@ import {
 import { supabase } from "../../lib/supabase";
 import LandingPage from "../../components/LandingPage";
 import { useAuth } from "../../contexts/AuthContext";
+import { isAdminRole } from "../../lib/roles";
 
 const AuthPage = () => {
 	const [isSigningUp, setIsSigningUp] = useState(true);
@@ -111,8 +112,7 @@ const AuthPage = () => {
 						email: email,
 						password: password,
 						options: {
-							emailRedirectTo:
-								"https://quizmasterofficial2024.vercel.app/authenticate",
+							emailRedirectTo: `${window.location.origin}/authenticate`,
 						},
 					});
 
@@ -123,7 +123,7 @@ const AuthPage = () => {
 					}
 
 					// Store role information securely in Context API
-					setSignupRoleData(role, adminCode);
+					setSignupRoleData(role, adminCode, email);
 
 					setSuccessMessage("Sign up successful! Please log in.");
 					setError("");
@@ -187,7 +187,7 @@ const AuthPage = () => {
 					}
 
 					// Redirect based on role
-					if (userProfile.role === "admin") {
+					if (isAdminRole(userProfile.role)) {
 						router.push("/admin/dashboard");
 					} else {
 						router.push("/student/home");

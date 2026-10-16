@@ -115,7 +115,7 @@ const StudentManagement = () => {
 		if (!editingStudent) return;
 
 		try {
-			const { error } = await supabase
+			const { data, error } = await supabase
 				.from("users_profile")
 				.update({
 					name: editingStudent.name,
@@ -123,10 +123,18 @@ const StudentManagement = () => {
 					class: editingStudent.class,
 					denomination: editingStudent.denomination,
 				})
-				.eq("id", editingStudent.id);
+				.eq("id", editingStudent.id)
+				.select();
 
 			if (error) {
 				alert("Error updating student: " + error.message);
+				return;
+			}
+
+			// An RLS mismatch doesn't error — it matches zero rows, which
+			// looks identical to success unless checked explicitly.
+			if (!data || data.length === 0) {
+				alert("Update didn't apply — no permission to change this student's record.");
 				return;
 			}
 

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { getLessons, getAcademicYears } from "../app/actions/getLessons";
 import { getQuestionCount } from "../app/actions/getQuestions";
+import { getDbAcademicYears, getDbLessons, getDbQuestionCount } from "../lib/db-content";
 
 import {
 	FaClock,
@@ -27,6 +28,23 @@ const timeCategories = {
 };
 
 const questionPresets = [10, 20, 30, 50, 100, 150, 200];
+
+// DB-first (Phase 5), falling back to the bundled JSON files exactly as
+// before when a student's own province has no content yet — see
+// src/lib/db-content.js for why no org_id needs to be passed explicitly.
+async function resolveAcademicYears(category) {
+	const dbYears = await getDbAcademicYears(category);
+	return dbYears || (await getAcademicYears(category));
+}
+async function resolveLessons(category, year, difficulty) {
+	const dbLessons = await getDbLessons(category, year, difficulty);
+	return dbLessons || (await getLessons(category, year, difficulty));
+}
+async function resolveQuestionCount(category, lesson, difficulty, year) {
+	const dbCount = await getDbQuestionCount(category, year, difficulty, lesson);
+	if (dbCount !== null) return dbCount;
+	return await getQuestionCount(category, lesson, difficulty, year);
+}
 
 const Categories = [
 	{ name: "yaya", pathname: "/quiz/yaya" },
@@ -65,13 +83,13 @@ export default function SelectTime() {
 				(cat) => pathname === cat.pathname
 			);
 			if (selectedCategory) {
-				const years = await getAcademicYears(selectedCategory.name);
+				const years = await resolveAcademicYears(selectedCategory.name);
 				setAcademicYears(years);
 				const firstYear = years[0] || "";
 				setSelectedYear(firstYear);
 				if (firstYear) {
 					setLessonsLoading(true);
-					const availableLessons = await getLessons(selectedCategory.name, firstYear, "normal");
+					const availableLessons = await resolveLessons(selectedCategory.name, firstYear, "normal");
 					setLessons(availableLessons);
 					if (availableLessons.length > 0) setSelectedLesson(availableLessons[0].id);
 					setLessonsLoading(false);
@@ -89,7 +107,7 @@ export default function SelectTime() {
 		if (!selectedCategory) return;
 		const fetchLessons = async () => {
 			setLessonsLoading(true);
-			const availableLessons = await getLessons(selectedCategory.name, selectedYear, selectedDifficulty);
+			const availableLessons = await resolveLessons(selectedCategory.name, selectedYear, selectedDifficulty);
 			setLessons(availableLessons);
 			if (availableLessons.length > 0) setSelectedLesson(availableLessons[0].id);
 			else setSelectedLesson("");
@@ -106,7 +124,7 @@ export default function SelectTime() {
 
 		const fetchCount = async () => {
 			setCountLoading(true);
-			const count = await getQuestionCount(
+			const count = await resolveQuestionCount(
 				selectedCategory.name,
 				selectedLesson,
 				selectedDifficulty,
@@ -272,7 +290,7 @@ export default function SelectTime() {
 		if (selectedCategory) {
 			let lessonName = selectedCategory.name === 'adults' ? 'adult-questions' : `${selectedCategory.name}-questions`;
 			try {
-				const availableLessons = await getLessons(selectedCategory.name, selectedYear, "practice");
+				const availableLessons = await resolveLessons(selectedCategory.name, selectedYear, "practice");
 				if (availableLessons && availableLessons.length > 0) {
 					lessonName = availableLessons[0].id;
 				}

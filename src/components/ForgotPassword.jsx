@@ -14,42 +14,29 @@ const ForgotPassword = () => {
 	const handleForgotPassword = async (e) => {
 		setIsLoading(true);
 		e.preventDefault();
+		setErrorMssg("");
+		setMessage("");
 
-		const { data, error } = await supabase
-			.from("users_profile")
-			.select("email");
+		// No pre-check against users_profile: that required anon read access
+		// to the whole table (a real privacy leak — every registered email
+		// would be downloadable by anyone on this page, logged in or not)
+		// and told an unauthenticated visitor whether a given email is
+		// registered (account-enumeration risk). resetPasswordForEmail
+		// already only emails real accounts; show the same message either
+		// way so a non-existent email can't be distinguished from a real
+		// one that was just sent a link.
+		const { error } = await supabase.auth.resetPasswordForEmail(email, {
+			redirectTo: `${window.location.origin}/authenticate/forgotpassword/resetpassword`,
+		});
 
-		if (data) {
-			const userEmail = data.find((item) => email === item.email);
-			if (!userEmail) {
-				setTimeout(() => {
-					setErrorMssg("");
-				}, 2500);
-				setErrorMssg("User account not found, try to signUp");
-			} else {
-				setTimeout(() => {
-					setMessage("");
-					setEmail("");
-				}, 2500);
-				setMessage(
-					"A password reset link has been sent to your email address."
-				);
-				setErrorMssg("");
-
-				// Reset User Password
-				const { data, error } = await supabase.auth.resetPasswordForEmail(
-					userEmail.email,
-					{
-						redirectTo:
-							"https://quizmasterofficial2024.vercel.app/authenticate/forgotpassword/resetpassword",
-					}
-				);
-				if (error) {
-					console.error(error);
-				}
-			}
-		} else {
+		if (error) {
 			console.error(error);
+			setErrorMssg("Something went wrong. Please try again in a moment.");
+		} else {
+			setMessage(
+				"If an account exists for that email, a reset link has been sent."
+			);
+			setEmail("");
 		}
 		setIsLoading(false);
 	};

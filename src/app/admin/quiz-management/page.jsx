@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { supabase } from "../../../lib/supabase";
+import { isAdminRole } from "../../../lib/roles";
 import {
 	FaPlus,
 	FaEdit,
@@ -126,7 +127,7 @@ const QuizManagement = () => {
 			10000
 		);
 
-		if (profile?.role !== "admin") {
+		if (!isAdminRole(profile?.role)) {
 			router.push("/access-denied");
 			throw new Error("Access denied");
 		}

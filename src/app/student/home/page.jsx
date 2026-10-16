@@ -16,6 +16,7 @@ import {
 import { Heart, Brain, ArrowRight } from "lucide-react";
 import MenuBar from "../../../components/MenuBar";
 import { useAuth } from "../../../contexts/AuthContext";
+import { isAdminRole } from "../../../lib/roles";
 
 const StudentHome = () => {
 	const { user: authUser, userProfile, loading } = useAuth();
@@ -23,7 +24,15 @@ const StudentHome = () => {
 
 	useEffect(() => {
 		if (!loading) {
-			if (!authUser || !userProfile || userProfile.role !== "student") {
+			if (!authUser || !userProfile) {
+				router.push("/authenticate");
+			} else if (isAdminRole(userProfile.role)) {
+				// An admin-type account landing here (direct URL, stale link,
+				// the login-redirect bug this fixed) belongs on their own
+				// dashboard, not bounced out to the login page looking like
+				// they'd been signed out.
+				router.push("/admin/dashboard");
+			} else if (userProfile.role !== "student") {
 				router.push("/authenticate");
 			}
 		}

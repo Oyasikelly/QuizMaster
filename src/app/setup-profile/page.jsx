@@ -33,18 +33,20 @@ import {
 	FaChartBar,
 	FaCog,
 	FaPhone,
-	FaMapMarkerAlt,
 } from "react-icons/fa";
 import { useAuth } from "../../contexts/AuthContext";
+import ParishPicker from "../../components/ParishPicker";
+import { isAdminRole } from "../../lib/roles";
 
 const SetupProfilePage = () => {
 	const [formData, setFormData] = useState({
 		name: "",
 		classname: "",
-		denomination: "",
 		role: "student",
-		// Admin-specific fields
 		phone: "",
+		dateOfBirth: "",
+		gender: "",
+		// Admin-specific fields
 		position: "",
 		department: "",
 		accessLevel: "standard",
@@ -56,6 +58,10 @@ const SetupProfilePage = () => {
 
 	// Get the current role from context
 	const userRole = getCurrentRole() || "student";
+
+	// Optional: zones/areas/parishes aren't seeded yet, so this can't be
+	// required without locking people out today.
+	const [selectedOrgId, setSelectedOrgId] = useState(null);
 
 	useEffect(() => {
 		// If no user is authenticated, redirect to login
@@ -75,7 +81,7 @@ const SetupProfilePage = () => {
 					.single();
 
 				if (profile) {
-					if (profile.role === "admin") {
+					if (isAdminRole(profile.role)) {
 						router.push("/admin/dashboard");
 					} else {
 						router.push("/student/home");
@@ -103,20 +109,18 @@ const SetupProfilePage = () => {
 		setIsLoading(true);
 		setError("");
 
-		// Validation based on role
+		// Validation based on role. Phone/DOB/gender/parish are collected
+		// but intentionally NOT required here: the org tree only has
+		// provinces seeded so far (no zones/areas/parishes yet), so
+		// requiring a full parish selection would lock everyone out today.
 		if (userRole === "admin") {
-			if (
-				!formData.name ||
-				!formData.phone ||
-				!formData.position ||
-				!formData.department
-			) {
+			if (!formData.name || !formData.position || !formData.department) {
 				setError("All admin fields are required.");
 				setIsLoading(false);
 				return;
 			}
 		} else {
-			if (!formData.name || !formData.classname || !formData.denomination) {
+			if (!formData.name || !formData.classname) {
 				setError("All student fields are required.");
 				setIsLoading(false);
 				return;
@@ -129,17 +133,19 @@ const SetupProfilePage = () => {
 				email: user.email,
 				name: formData.name,
 				role: userRole,
+				phone: formData.phone || null,
+				date_of_birth: formData.dateOfBirth || null,
+				gender: formData.gender || null,
+				org_id: selectedOrgId,
 			};
 
 			// Add role-specific fields
 			if (userRole === "admin") {
-				profileData.phone = formData.phone;
 				profileData.position = formData.position;
 				profileData.department = formData.department;
 				profileData.accessLevel = formData.accessLevel;
 			} else {
 				profileData.class = formData.classname;
-				profileData.denomination = formData.denomination;
 			}
 
 			const { error: insertError } = await supabase
@@ -153,7 +159,7 @@ const SetupProfilePage = () => {
 			}
 
 			// Clear signup role from context
-			clearSignupRole();
+			clearSignupRole(user.email);
 
 			// Redirect based on role
 			if (userRole === "admin") {
@@ -249,31 +255,75 @@ const SetupProfilePage = () => {
 									</div>
 								</motion.div>
 
+								{/* Shared fields: phone, date of birth, gender (all optional) */}
+								<motion.div
+									initial={{ opacity: 0, y: 20 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ delay: 0.35 }}
+									className="relative">
+									<label className="block text-sm font-medium text-gray-700 mb-2">
+										Phone Number
+									</label>
+									<div className="relative">
+										<FaPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+										<input
+											type="tel"
+											name="phone"
+											value={formData.phone}
+											onChange={handleChange}
+											className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+											placeholder="Enter your phone number"
+										/>
+									</div>
+								</motion.div>
+
+								<div className="grid grid-cols-2 gap-3">
+									<motion.div
+										initial={{ opacity: 0, y: 20 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ delay: 0.37 }}
+										className="relative">
+										<label className="block text-sm font-medium text-gray-700 mb-2">
+											Date of Birth
+										</label>
+										<input
+											type="date"
+											name="dateOfBirth"
+											value={formData.dateOfBirth}
+											onChange={handleChange}
+											className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+										/>
+									</motion.div>
+									<motion.div
+										initial={{ opacity: 0, y: 20 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ delay: 0.38 }}
+										className="relative">
+										<label className="block text-sm font-medium text-gray-700 mb-2">
+											Gender
+										</label>
+										<select
+											name="gender"
+											value={formData.gender}
+											onChange={handleChange}
+											className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+											<option value="">Select</option>
+											<option value="male">Male</option>
+											<option value="female">Female</option>
+										</select>
+									</motion.div>
+								</div>
+
+								<motion.div
+									initial={{ opacity: 0, y: 20 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ delay: 0.39 }}>
+									<ParishPicker onChange={setSelectedOrgId} />
+								</motion.div>
+
 								{/* Admin-specific fields */}
 								{userRole === "admin" && (
 									<>
-										{/* Phone Field */}
-										<motion.div
-											initial={{ opacity: 0, y: 20 }}
-											animate={{ opacity: 1, y: 0 }}
-											transition={{ delay: 0.4 }}
-											className="relative">
-											<label className="block text-sm font-medium text-gray-700 mb-2">
-												Phone Number
-											</label>
-											<div className="relative">
-												<FaPhone className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-												<input
-													type="tel"
-													name="phone"
-													value={formData.phone}
-													onChange={handleChange}
-													className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
-													placeholder="Enter your phone number"
-												/>
-											</div>
-										</motion.div>
-
 										{/* Position Field */}
 										<motion.div
 											initial={{ opacity: 0, y: 20 }}
@@ -366,28 +416,6 @@ const SetupProfilePage = () => {
 													<option value="yaya">Yaya</option>
 													<option value="adult">Adult</option>
 												</select>
-											</div>
-										</motion.div>
-
-										{/* Denomination Field */}
-										<motion.div
-											initial={{ opacity: 0, y: 20 }}
-											animate={{ opacity: 1, y: 0 }}
-											transition={{ delay: 0.5 }}
-											className="relative">
-											<label className="block text-sm font-medium text-gray-700 mb-2">
-												Denomination
-											</label>
-											<div className="relative">
-												<FaBuilding className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-												<input
-													type="text"
-													name="denomination"
-													value={formData.denomination}
-													onChange={handleChange}
-													className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-													placeholder="Enter your denomination"
-												/>
 											</div>
 										</motion.div>
 									</>
