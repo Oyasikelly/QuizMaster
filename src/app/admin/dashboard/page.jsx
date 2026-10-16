@@ -191,9 +191,19 @@ const AdminDashboard = () => {
 	const loadDashboardData = async () => {
 		try {
 			// Load students
-			const { data: studentsData } = await withTimeout(
+			const { data: studentsData, error: studentsErr } = await withTimeout(
 				supabase.from("users_profile").select("*").eq("role", "student"),
 				10000
+			);
+
+			// TEMP DIAGNOSTIC — remove after the province-scoping leak is found.
+			console.log(
+				"[DIAG] studentsData.length:",
+				studentsData?.length,
+				"error:",
+				studentsErr,
+				"org_ids seen:",
+				[...new Set((studentsData || []).map((s) => s.org_id))]
 			);
 
 			// Only keep students in 'yaya' or 'adult' class (case-insensitive)
