@@ -142,6 +142,11 @@ const AdminDashboard = () => {
 			const { data: scopeDiag, error: scopeDiagErr } = await supabase.rpc("my_scoped_org_ids");
 			console.log("[DIAG] auth.uid():", user.id, "profile:", profile, "my_scoped_org_ids():", scopeDiag, scopeDiagErr);
 
+			const { data: policyEval, error: policyEvalErr } = await supabase.rpc("diag_check_policy_eval", {
+				p_target_org_id: "6a2c4cb9-60ce-4a6a-a9d5-b5c6ffc30761", // Province 23
+			});
+			console.log("[DIAG] diag_check_policy_eval(Province23):", policyEval, policyEvalErr);
+
 			setUser({ ...user, ...profile });
 
 			if (profile.org_id) {
