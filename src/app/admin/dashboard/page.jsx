@@ -26,6 +26,7 @@ import {
 	FaHistory,
 	FaBars,
 	FaExclamationTriangle,
+	FaUserShield,
 } from "react-icons/fa";
 
 const withTimeout = (promise, ms) =>
@@ -842,6 +843,15 @@ const AdminDashboard = () => {
 			icon: <FaHistory />,
 			onClick: () => router.push("/admin/activity"),
 		},
+		...(user?.role === "super_admin"
+			? [
+					{
+						label: "Admin Management",
+						icon: <FaUserShield />,
+						onClick: () => router.push("/admin/manage-admins"),
+					},
+			  ]
+			: []),
 		{
 			label: "Settings",
 			icon: <FaCog />,

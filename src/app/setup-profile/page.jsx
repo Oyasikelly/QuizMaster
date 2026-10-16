@@ -49,7 +49,6 @@ const SetupProfilePage = () => {
 		// Admin-specific fields
 		position: "",
 		department: "",
-		accessLevel: "standard",
 	});
 	const [error, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
@@ -110,12 +109,16 @@ const SetupProfilePage = () => {
 		setError("");
 
 		// Validation based on role. Phone/DOB/gender/parish are collected
-		// but intentionally NOT required here: the org tree only has
-		// provinces seeded so far (no zones/areas/parishes yet), so
-		// requiring a full parish selection would lock everyone out today.
+		// but intentionally NOT required for students: the org tree only
+		// has provinces seeded so far (no zones/areas/parishes yet), and a
+		// student with no org_id just falls back to the bundled JSON
+		// content, not a lockout. An admin is different: they become
+		// province_admin, scoped entirely by org_id via
+		// my_scoped_org_ids() — with no org_id picked they'd see nothing
+		// at all, so it's required here.
 		if (userRole === "admin") {
-			if (!formData.name || !formData.position || !formData.department) {
-				setError("All admin fields are required.");
+			if (!formData.name || !formData.position || !formData.department || !selectedOrgId) {
+				setError("All admin fields are required, including your province.");
 				setIsLoading(false);
 				return;
 			}
@@ -128,11 +131,16 @@ const SetupProfilePage = () => {
 		}
 
 		try {
+			// Self-signup admins become province_admin, scoped to whatever
+			// org they pick above via my_scoped_org_ids() (already fully
+			// supported by RLS — see 20240101000016). super_admin is
+			// deliberately NOT reachable from signup; it's only ever
+			// granted by an existing super_admin's own action.
 			const profileData = {
 				id: user.id,
 				email: user.email,
 				name: formData.name,
-				role: userRole,
+				role: userRole === "admin" ? "province_admin" : userRole,
 				phone: formData.phone || null,
 				date_of_birth: formData.dateOfBirth || null,
 				gender: formData.gender || null,
@@ -143,7 +151,6 @@ const SetupProfilePage = () => {
 			if (userRole === "admin") {
 				profileData.position = formData.position;
 				profileData.department = formData.department;
-				profileData.accessLevel = formData.accessLevel;
 			} else {
 				profileData.class = formData.classname;
 			}
@@ -365,28 +372,6 @@ const SetupProfilePage = () => {
 													className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
 													placeholder="e.g., Education, IT, Management"
 												/>
-											</div>
-										</motion.div>
-
-										{/* Access Level Field */}
-										<motion.div
-											initial={{ opacity: 0, y: 20 }}
-											animate={{ opacity: 1, y: 0 }}
-											transition={{ delay: 0.7 }}
-											className="relative">
-											<label className="block text-sm font-medium text-gray-700 mb-2">
-												Access Level
-											</label>
-											<div className="relative">
-												<FaShieldAlt className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-												<select
-													name="accessLevel"
-													value={formData.accessLevel}
-													onChange={handleChange}
-													className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all">
-													<option value="standard">Standard Admin</option>
-													<option value="limited">Limited Access</option>
-												</select>
 											</div>
 										</motion.div>
 									</>
