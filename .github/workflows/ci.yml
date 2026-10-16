@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Build
+        run: npm run build
+        env:
+          # Set these as repository secrets (Settings → Secrets and
+          # variables → Actions) — see PROJECT_HANDOFF.md for the values
+          # to use (they're the same NEXT_PUBLIC_ values already in
+          # .env.local; only needed here so the build doesn't fail while
+          # prerendering pages that reference them at module scope).
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          NEXT_PUBLIC_ADMIN_INVITE_CODE: ${{ secrets.NEXT_PUBLIC_ADMIN_INVITE_CODE }}
