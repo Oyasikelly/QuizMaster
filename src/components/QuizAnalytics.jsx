@@ -43,20 +43,14 @@ const QuizAnalytics = () => {
 		try {
 			setLoading(true);
 			setLoadError(false);
-			// Load quiz results
-			const { data: quizData } = await withTimeout(
-				supabase
-					.from("quiz_results")
-					.select("*")
-					.order("timestamp", { ascending: false }),
-				10000
+			// Uses the scoped RPCs rather than plain table reads — see the
+			// note in admin/dashboard/page.jsx's loadDashboardData for why.
+			const { data: quizDataUnsorted } = await withTimeout(supabase.rpc("get_scoped_quiz_results"), 10000);
+			const quizData = [...(quizDataUnsorted || [])].sort(
+				(a, b) => new Date(b.timestamp) - new Date(a.timestamp)
 			);
 
-			// Load students
-			const { data: studentsData } = await withTimeout(
-				supabase.from("users_profile").select("*").eq("role", "student"),
-				10000
-			);
+			const { data: studentsData } = await withTimeout(supabase.rpc("get_scoped_students"), 10000);
 
 			setQuizResults(quizData || []);
 			setStudents(studentsData || []);

@@ -51,17 +51,10 @@ const StudentManagement = () => {
 		try {
 			setLoading(true);
 			setLoadError(false);
-			// Load students
-			const { data: studentsData } = await withTimeout(
-				supabase.from("users_profile").select("*").eq("role", "student"),
-				10000
-			);
-
-			// Load quiz results
-			const { data: quizData } = await withTimeout(
-				supabase.from("quiz_results").select("*"),
-				10000
-			);
+			// Uses the scoped RPCs rather than plain table reads — see the
+			// note in admin/dashboard/page.jsx's loadDashboardData for why.
+			const { data: studentsData } = await withTimeout(supabase.rpc("get_scoped_students"), 10000);
+			const { data: quizData } = await withTimeout(supabase.rpc("get_scoped_quiz_results"), 10000);
 
 			// Calculate submission counts for each student based on the unified row
 			const studentsWithCounts =

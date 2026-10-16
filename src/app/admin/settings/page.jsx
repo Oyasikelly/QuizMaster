@@ -89,14 +89,10 @@ const AdminSettings = () => {
 
 	const loadData = useCallback(async () => {
 		try {
-			const { data: studentsData = [] } = await withTimeout(
-				supabase.from("users_profile").select("*").eq("role", "student"),
-				10000
-			);
-			const { data: quizData = [] } = await withTimeout(
-				supabase.from("quiz_results").select("*"),
-				10000
-			);
+			// Uses the scoped RPCs rather than plain table reads — see the
+			// note in admin/dashboard/page.jsx's loadDashboardData for why.
+			const { data: studentsData = [] } = await withTimeout(supabase.rpc("get_scoped_students"), 10000);
+			const { data: quizData = [] } = await withTimeout(supabase.rpc("get_scoped_quiz_results"), 10000);
 			const studentsWithCounts = studentsData.map((student) => ({
 				...student,
 				submissionCount: quizData.filter((r) => r.student_id === student.id)

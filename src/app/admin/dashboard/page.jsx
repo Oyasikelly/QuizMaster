@@ -137,16 +137,6 @@ const AdminDashboard = () => {
 				return;
 			}
 
-			// TEMP DIAGNOSTIC — remove after the province-scoping leak is
-			// found. Logs exactly what RLS resolves for this real session.
-			const { data: scopeDiag, error: scopeDiagErr } = await supabase.rpc("my_scoped_org_ids");
-			console.log("[DIAG] auth.uid():", user.id, "profile:", profile, "my_scoped_org_ids():", scopeDiag, scopeDiagErr);
-
-			const { data: policyEval, error: policyEvalErr } = await supabase.rpc("diag_check_policy_eval", {
-				p_target_org_id: "6a2c4cb9-60ce-4a6a-a9d5-b5c6ffc30761", // Province 23
-			});
-			console.log("[DIAG] diag_check_policy_eval(Province23):", policyEval, policyEvalErr);
-
 			setUser({ ...user, ...profile });
 
 			if (profile.org_id) {
@@ -195,21 +185,15 @@ const AdminDashboard = () => {
 
 	const loadDashboardData = async () => {
 		try {
-			// Load students
-			const { data: studentsData, error: studentsErr } = await withTimeout(
-				supabase.from("users_profile").select("*").eq("role", "student"),
-				10000
-			);
-
-			// TEMP DIAGNOSTIC — remove after the province-scoping leak is found.
-			console.log(
-				"[DIAG] studentsData.length:",
-				studentsData?.length,
-				"error:",
-				studentsErr,
-				"org_ids seen:",
-				[...new Set((studentsData || []).map((s) => s.org_id))]
-			);
+			// Load students. Uses get_scoped_students() rather than a plain
+			// `.from("users_profile").select()` — production's RLS
+			// enforcement for this exact request shape was found to be
+			// unreliable (confirmed via direct testing: the same policy
+			// logic, verified correct when run explicitly, was not being
+			// applied consistently by Supabase's gateway for this plain
+			// table read). The RPC does the identical scoping check
+			// explicitly in its own body instead of depending on it.
+			const { data: studentsData } = await withTimeout(supabase.rpc("get_scoped_students"), 10000);
 
 			// Only keep students in 'yaya' or 'adult' class (case-insensitive)
 			const filteredStudentsData = (studentsData || []).filter((student) => {
@@ -235,13 +219,11 @@ const AdminDashboard = () => {
 				s.orgName = s.org_id ? orgNameById[s.org_id] || "Unassigned" : "Unassigned";
 			});
 
-			// Load quiz results
-			const { data: rawQuizData } = await withTimeout(
-				supabase
-					.from("quiz_results")
-					.select("*")
-					.order("timestamp", { ascending: false }),
-				10000
+			// Load quiz results — see get_scoped_students() note above; same
+			// reasoning applies here.
+			const { data: rawQuizDataUnsorted } = await withTimeout(supabase.rpc("get_scoped_quiz_results"), 10000);
+			const rawQuizData = [...(rawQuizDataUnsorted || [])].sort(
+				(a, b) => new Date(b.timestamp) - new Date(a.timestamp)
 			);
 
 			const quizData = extractAttempts(rawQuizData);
