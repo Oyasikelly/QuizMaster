@@ -137,6 +137,11 @@ const AdminDashboard = () => {
 				return;
 			}
 
+			// TEMP DIAGNOSTIC — remove after the province-scoping leak is
+			// found. Logs exactly what RLS resolves for this real session.
+			const { data: scopeDiag, error: scopeDiagErr } = await supabase.rpc("my_scoped_org_ids");
+			console.log("[DIAG] auth.uid():", user.id, "profile:", profile, "my_scoped_org_ids():", scopeDiag, scopeDiagErr);
+
 			setUser({ ...user, ...profile });
 
 			if (profile.org_id) {
