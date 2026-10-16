@@ -440,6 +440,10 @@ const Quiz = ({ initialQuestions, category }) => {
 											value={answers[currentQuestion] || ""}
 											onChange={(e) => handleAnswer(e.target.value)}
 										/>
+										<p className="mt-2 text-sm text-gray-500">
+											For Bible references, use "Book Chapter:Verse" (e.g. Hebrews 13:1).
+											Minor spelling, capitalization, and singular/plural differences are fine.
+										</p>
 									</div>
 								)}
 							</div>

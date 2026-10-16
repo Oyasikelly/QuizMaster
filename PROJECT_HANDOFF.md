@@ -221,3 +221,71 @@ Nothing has been committed to git yet — everything above is working-tree chang
 3. Decide when to actually push the full migration history to **production** (currently applied to staging only). When that happens: the schema-reconciliation migration (`20240101000015`) will for the first time make admin signup actually work against production's real schema — worth testing that specifically right after.
 4. t14 is unblocked but not done — if/when the project owner wants a real pilot scoped admin, assign them an `org_id` and a role like `province_admin` and confirm their access matches expectations.
 5. Next phase decision: Phase 4 (member data model) or Phase 5 (shared content migration, respecting the "one question bank" correction) — both have explicitly open product rules (see above) to surface before building, not invent.
+
+---
+
+## UPDATE 2026-10-16 — Production is live, confirmed working for Sunday's quiz
+
+Everything above in this file predates the actual production push; it was
+written while only staging had been touched. Here's what actually happened
+next, in order:
+
+1. **All 23 migrations pushed to production** (`eubroxxcchuozvpcwbdv`) for
+   the first time via `supabase db push`. Verified zero data loss
+   afterward (`users_profile` 27, `quiz_results` 48, `quiz_settings` 1 —
+   unchanged row counts pre/post push).
+2. **Backups taken immediately before the push**: `backups/prod_schema_2026-10-15.sql`
+   (schema, via pg_dump the day before) + `backups/prod_data_users_profile_2026-10-16.json`,
+   `prod_data_quiz_results_2026-10-16.json`, `prod_data_quiz_settings_2026-10-16.json`
+   (same-day data snapshot via `scripts/backup-data.js`, since neither
+   `pg_dump` nor Docker was available locally and the Supabase free plan
+   has no automatic backups).
+3. **Province 23 content imported to production** via
+   `scripts/import-content.js SUPABASE_URL=<prod>` — 158 lessons, 2308
+   questions, matching staging exactly.
+4. **Important correction caught before go-live**: the YAYA "real-quiz"
+   lesson on staging held the *old* 40-question 2026/2027 lesson-content
+   set (`REAL_YAYA_QUIZ.json`, committed back in September — Immanence/
+   Atonement/baptism topics), not the actual 26-question Sunday quiz
+   (Hebrews 3:14 / narrow path content, `docs/recent question.txt`,
+   converted earlier this session). The earlier bulk-upload "test" never
+   actually landed in the DB at all. Fixed via `scripts/swap-yaya-real-quiz.js`:
+   moves the 40 questions to a new **Practice Entire Year** pool
+   (`lesson_key=practice-entire-year`, `difficulty=practice`, academic
+   year 2026-2027) rather than deleting them, then inserts the real 26
+   into the now-empty real-quiz lesson. Run on staging first, verified,
+   then identically against production.
+5. **org_id assigned on production**: Province 23 given to all 3 real
+   admin accounts and 16 real YAYA student accounts (`scripts/assign-province23.js`).
+   Adult students deliberately left with `org_id = null` — this round only
+   concerned the YAYA Sunday quiz; they keep working unchanged on the old
+   JSON-file path.
+6. **Root cause of "it's still showing the old quiz" after all of the above**:
+   none of this session's application code had ever been committed or
+   pushed — `git status` showed it all sitting as working-tree changes
+   since the session began, so the live Vercel deployment was still
+   running pre-multi-tenant code with no DB-first lookup at all. Fixed by
+   committing (`66515ed`, caught and reverted an accidental
+   `@supabase/supabase-js` version bump from `2.47.13` to `2.118.0` first —
+   unrelated side effect of `npm install` for the backup script, not
+   something to ride along into a pre-event deploy) and pushing to `main`.
+   Vercel's GitHub integration auto-deployed from there.
+7. **Confirmed working** on the live production site by the project owner
+   as a real YAYA student: the quiz now serves the correct 26-question
+   content.
+
+### What's still open
+- Adult students still have `org_id = null` and remain on the JSON-file
+  path — fine for now, but worth doing the same org-assignment pass for
+  them when there's time, not under Sunday pressure.
+- `.env.staging.local` and `.env.scripts.local` both exist locally
+  (gitignored via the repo's blanket `.env*` rule) holding staging's and
+  production's service role keys respectively — keep them separate,
+  don't let one overwrite the other.
+- The one-off scripts in `scripts/` (`import-content.js`,
+  `assign-province23.js`, `swap-yaya-real-quiz.js`, `backup-data.js`,
+  `export-sunday-quiz.js`) are now committed to the repo as a historical
+  record and a template for the next province's onboarding, but none of
+  them are idempotent-safe to blindly re-run against production without
+  re-reading what they do first — several assume a specific one-time
+  starting state (e.g. the real-quiz lesson being non-empty).

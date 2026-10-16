@@ -8,7 +8,7 @@ export const standardizeBibleReference = (text) => {
 		return match;
 	});
 	return processed.replace(
-		/(?:([123]|i{1,3})\s*)?([a-z]{3})[a-z]*\.?\s+(\d+)(?:\s*[:v]\s*|\s+vs\.?\s+|\s+)(\d+(?:\s*-\s*\d+)?)/gi,
+		/(?:([123]|i{1,3})\s*)?([a-z]{3})[a-z]*\.?\s+(\d+)(?:\s*vs\.?\s*|\s*[:v]\s*|\s+)(\d+(?:\s*-\s*\d+)?)/gi,
 		(match, bookNum, bookName, chapter, verse) => {
 			let num = bookNum ? bookNum.toLowerCase() : "";
 			if (num === "i") num = "1";
@@ -27,6 +27,19 @@ export const normalize = (str) =>
 		.toLowerCase()
 		.replace(/[^\w\s]/g, "");
 
+// Crude English singularizer so "angel"/"angels", "church"/"churches",
+// "enemy"/"enemies" etc. are treated as the same word for single-word
+// fill-in-the-blank answers — students shouldn't lose credit over plural
+// vs singular. Length guards avoid mangling short words ("is", "us").
+const singularize = (word) => {
+	if (word.length > 4 && word.endsWith("ies")) return word.slice(0, -3) + "y";
+	if (word.length > 3 && word.endsWith("es")) return word.slice(0, -2);
+	if (word.length > 2 && word.endsWith("s")) return word.slice(0, -1);
+	return word;
+};
+
+const wordsMatch = (a, b) => a === b || singularize(a) === singularize(b);
+
 export const evaluateFillInTheBlank = (question, userAnswer) => {
 	const normalizedUserWords = normalize(userAnswer).split(/\s+/);
 	const rawAnswers = question.answer
@@ -40,7 +53,7 @@ export const evaluateFillInTheBlank = (question, userAnswer) => {
 		if (
 			correct.includes(" ")
 				? normalizedUserAnswerString.includes(correct)
-				: normalizedUserWords.includes(correct)
+				: normalizedUserWords.some((w) => wordsMatch(w, correct))
 		) {
 			matchCount++;
 		}
