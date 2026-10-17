@@ -202,7 +202,7 @@ const QuizAnalytics = () => {
 					</p>
 					<button
 						onClick={loadData}
-						className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg shadow-lg hover:bg-purple-700 transition-colors font-medium">
+						className="w-full px-4 py-3 bg-brand-600 text-white rounded-lg shadow-lg hover:bg-brand-700 transition-colors font-medium">
 						Retry Connection
 					</button>
 				</div>
@@ -214,7 +214,7 @@ const QuizAnalytics = () => {
 		return (
 			<div className="flex items-center justify-center py-8">
 				<div className="text-center">
-					<div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+					<div className="w-8 h-8 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
 					<p className="text-gray-600">Loading analytics...</p>
 				</div>
 			</div>
@@ -228,7 +228,7 @@ const QuizAnalytics = () => {
 				<select
 					value={filterPeriod}
 					onChange={(e) => setFilterPeriod(e.target.value)}
-					className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+					className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
 					<option value="all">All Time</option>
 					<option value="week">Last Week</option>
 					<option value="month">Last Month</option>
@@ -237,7 +237,7 @@ const QuizAnalytics = () => {
 				<select
 					value={filterClass}
 					onChange={(e) => setFilterClass(e.target.value)}
-					className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+					className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
 					<option value="all">All Classes</option>
 					<option value="yaya">Yaya</option>
 					<option value="adult">Adult</option>
@@ -277,8 +277,8 @@ const QuizAnalytics = () => {
 				</div>
 				<div className="bg-white rounded-xl shadow-lg p-6">
 					<div className="flex items-center space-x-3">
-						<div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-							<FaMedal className="text-purple-600" />
+						<div className="w-12 h-12 bg-brand-100 rounded-lg flex items-center justify-center">
+							<FaMedal className="text-brand-600" />
 						</div>
 						<div>
 							<p className="text-sm text-gray-500">Best Score</p>
@@ -427,7 +427,7 @@ const QuizAnalytics = () => {
 										</td>
 										<td className="py-3 px-4">
 											<div className="flex items-center space-x-3">
-												<div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+												<div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-brand-600 rounded-full flex items-center justify-center">
 													<span className="text-white text-sm font-medium">
 														{student?.name?.charAt(0) || "U"}
 													</span>
@@ -475,7 +475,7 @@ const QuizAnalytics = () => {
 					<h3 className="text-lg font-semibold text-gray-900">
 						Recent Quiz Activity
 					</h3>
-					<button className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+					<button className="flex items-center space-x-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors">
 						<FaDownload size={14} />
 						<span>Export Data</span>
 					</button>
@@ -525,7 +525,7 @@ const QuizAnalytics = () => {
 										className="border-b border-gray-100 hover:bg-gray-50">
 										<td className="py-3 px-4">
 											<div className="flex items-center space-x-3">
-												<div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+												<div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-brand-600 rounded-full flex items-center justify-center">
 													<span className="text-white text-sm font-medium">
 														{student?.name?.charAt(0) || "U"}
 													</span>

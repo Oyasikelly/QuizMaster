@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { supabase } from "../../../lib/supabase";
-import { QUIZ_CONFIG } from "../../../lib/quiz-config";
+import { isAdminRole } from "../../../lib/roles";
+import AdminShell from "../../../components/AdminShell";
 import {
 	FaCog,
 	FaSave,
 	FaClock,
-	FaQuestionCircle,
 	FaLock,
 	FaUnlock,
 	FaPlay,
@@ -42,7 +42,37 @@ export default function QuizSettingsAdmin() {
 	const [loadError, setLoadError] = useState(false);
 	const [saving, setSaving] = useState(false);
 	const [message, setMessage] = useState("");
+	const [currentUser, setCurrentUser] = useState(null);
+	const [orgName, setOrgName] = useState("");
 	const router = useRouter();
+
+	const loadUser = async () => {
+		const {
+			data: { user },
+		} = await supabase.auth.getUser();
+		if (!user) {
+			router.push("/authenticate");
+			return;
+		}
+		const { data: profile } = await supabase
+			.from("users_profile")
+			.select("role, org_id")
+			.eq("id", user.id)
+			.single();
+		if (!isAdminRole(profile?.role)) {
+			router.push("/authenticate");
+			return;
+		}
+		setCurrentUser({ ...user, ...profile });
+		if (profile.org_id) {
+			const { data: org } = await supabase
+				.from("organizations")
+				.select("name")
+				.eq("id", profile.org_id)
+				.maybeSingle();
+			setOrgName(org?.name || "");
+		}
+	};
 
 	const loadSettings = async () => {
 		setLoading(true);
@@ -87,6 +117,7 @@ export default function QuizSettingsAdmin() {
 	};
 
 	useEffect(() => {
+		loadUser();
 		loadSettings();
 	}, []);
 
@@ -123,16 +154,16 @@ export default function QuizSettingsAdmin() {
 
 	if (loadError) {
 		return (
-			<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center p-4">
+			<div className="min-h-screen bg-background flex items-center justify-center p-4">
 				<div className="text-center bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full">
 					<FaExclamationTriangle className="text-red-500 text-5xl mx-auto mb-4" />
-					<h2 className="text-xl font-bold text-gray-800 mb-2">Network Error</h2>
+					<h2 className="font-display text-xl font-bold text-gray-800 mb-2">Network Error</h2>
 					<p className="text-gray-600 mb-6">
 						We couldn't connect to the server. Please check your internet connection and try again.
 					</p>
 					<button
 						onClick={loadSettings}
-						className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
+						className="w-full px-4 py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors font-medium">
 						Retry Connection
 					</button>
 				</div>
@@ -142,9 +173,9 @@ export default function QuizSettingsAdmin() {
 
 	if (loading) {
 		return (
-			<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-indigo-100">
+			<div className="min-h-screen flex items-center justify-center bg-background">
 				<div className="text-center">
-					<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
+					<div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-600 mx-auto mb-4"></div>
 					<p className="text-gray-600">Loading settings...</p>
 				</div>
 			</div>
@@ -152,8 +183,8 @@ export default function QuizSettingsAdmin() {
 	}
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100">
-			<div className="max-w-4xl mx-auto p-8">
+		<AdminShell user={currentUser} orgName={orgName} active="settings">
+			<div className="max-w-4xl mx-auto p-4 sm:p-8">
 				{/* Header */}
 				<motion.div
 					initial={{ opacity: 0, y: -20 }}
@@ -161,10 +192,10 @@ export default function QuizSettingsAdmin() {
 					className="flex items-center justify-between mb-8">
 					<div className="flex items-center space-x-4">
 						<div className="flex items-center space-x-3">
-							<div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
+							<div className="w-12 h-12 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center">
 								<FaCog className="text-white text-xl" />
 							</div>
-							<h1 className="text-3xl font-bold text-gray-900">
+							<h1 className="font-display text-3xl font-bold text-gray-900">
 								Quiz Settings Admin
 							</h1>
 						</div>
@@ -180,7 +211,7 @@ export default function QuizSettingsAdmin() {
 						{/* Mode Toggles Section */}
 						<div className="space-y-6">
 							<h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-								<FaDatabase className="text-purple-600" />
+								<FaDatabase className="text-brand-600" />
 								Quiz Mode Settings
 							</h2>
 
@@ -193,7 +224,7 @@ export default function QuizSettingsAdmin() {
 										onChange={(e) =>
 											setSettings({ ...settings, is_active: e.target.checked })
 										}
-										className="w-5 h-5 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 focus:ring-2"
+										className="w-5 h-5 text-brand-600 bg-gray-100 border-gray-300 rounded focus:ring-brand-500 focus:ring-2"
 									/>
 									<div className="flex items-center gap-2">
 										{settings.is_active ? (
@@ -224,7 +255,7 @@ export default function QuizSettingsAdmin() {
 												practice_mode: e.target.checked,
 											})
 										}
-										className="w-5 h-5 text-purple-600 bg-gray-100 border-gray-300 rounded focus:ring-purple-500 focus:ring-2"
+										className="w-5 h-5 text-brand-600 bg-gray-100 border-gray-300 rounded focus:ring-brand-500 focus:ring-2"
 									/>
 									<div className="flex items-center gap-2">
 										{settings.practice_mode ? (
@@ -245,8 +276,8 @@ export default function QuizSettingsAdmin() {
 						</div>
 
 						{/* Mode Status Display */}
-						<div className="bg-purple-50 rounded-lg p-4">
-							<h4 className="font-semibold mb-3 text-purple-800">
+						<div className="bg-brand-50 rounded-lg p-4">
+							<h4 className="font-semibold mb-3 text-brand-800">
 								Current Mode Status:
 							</h4>
 							<div className="space-y-3">
@@ -296,7 +327,7 @@ export default function QuizSettingsAdmin() {
 						{/* Quiz Configuration Section */}
 						<div className="space-y-6">
 							<h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
-								<FaClock className="text-purple-600" />
+								<FaClock className="text-brand-600" />
 								Quiz Configuration
 							</h2>
 
@@ -314,7 +345,7 @@ export default function QuizSettingsAdmin() {
 												time: parseInt(e.target.value),
 											})
 										}
-										className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+										className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
 									/>
 								</div>
 
@@ -331,7 +362,7 @@ export default function QuizSettingsAdmin() {
 												questions: parseInt(e.target.value),
 											})
 										}
-										className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+										className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
 									/>
 								</div>
 							</div>
@@ -347,7 +378,7 @@ export default function QuizSettingsAdmin() {
 										onChange={(e) =>
 											setSettings({ ...settings, start_time: e.target.value })
 										}
-										className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+										className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
 									/>
 								</div>
 
@@ -361,7 +392,7 @@ export default function QuizSettingsAdmin() {
 										onChange={(e) =>
 											setSettings({ ...settings, end_time: e.target.value })
 										}
-										className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+										className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
 									/>
 								</div>
 							</div>
@@ -386,7 +417,7 @@ export default function QuizSettingsAdmin() {
 							<button
 								onClick={handleSave}
 								disabled={saving}
-								className="flex-1 bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700 disabled:opacity-50 transition-colors flex items-center justify-center gap-2 font-medium">
+								className="flex-1 bg-brand-600 text-white py-3 px-6 rounded-lg hover:bg-brand-700 disabled:opacity-50 transition-colors flex items-center justify-center gap-2 font-medium">
 								<FaSave />
 								{saving ? "Saving..." : "Save Settings"}
 							</button>
@@ -399,20 +430,7 @@ export default function QuizSettingsAdmin() {
 						</div>
 					</div>
 				</motion.div>
-
-				{/* Additional Links */}
-				<motion.div
-					initial={{ opacity: 0, y: 20 }}
-					animate={{ opacity: 1, y: 0 }}
-					transition={{ delay: 0.2 }}
-					className="mt-8 text-center">
-					<a
-						href="/test-db"
-						className="text-purple-600 hover:text-purple-700 hover:underline font-medium">
-						View Database Test Page
-					</a>
-				</motion.div>
 			</div>
-		</div>
+		</AdminShell>
 	);
 }

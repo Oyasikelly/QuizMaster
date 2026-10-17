@@ -5,24 +5,12 @@ import { useRouter, useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { supabase } from "../../../../lib/supabase";
 import { isAdminRole } from "../../../../lib/roles";
+import AdminShell from "../../../../components/AdminShell";
 import {
 	FaUser,
-	FaSignOutAlt,
-	FaUsers,
-	FaChartBar,
-	FaTrophy,
 	FaClipboardList,
-	FaCog,
-	FaBell,
 	FaDownload,
-	FaSearch,
-	FaFilter,
-	FaEye,
 	FaEdit,
-	FaTrash,
-	FaCheck,
-	FaTimes,
-	FaArrowLeft,
 	FaEnvelope,
 	FaGraduationCap,
 	FaChurch,
@@ -43,6 +31,7 @@ const withTimeout = (promise, ms) =>
 
 const StudentDetail = () => {
 	const [user, setUser] = useState(null);
+	const [orgName, setOrgName] = useState("");
 	const [student, setStudent] = useState(null);
 	const [quizResults, setQuizResults] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -85,7 +74,7 @@ const StudentDetail = () => {
 			const { data: profile } = await withTimeout(
 				supabase
 					.from("users_profile")
-					.select("role, name, email")
+					.select("role, name, email, org_id")
 					.eq("id", user.id)
 					.single(),
 				10000
@@ -97,6 +86,14 @@ const StudentDetail = () => {
 			}
 
 			setUser({ ...user, ...profile });
+			if (profile.org_id) {
+				const { data: org } = await supabase
+					.from("organizations")
+					.select("name")
+					.eq("id", profile.org_id)
+					.maybeSingle();
+				setOrgName(org?.name || "");
+			}
 			await loadStudentData();
 		} catch (error) {
 			console.error("Error fetching user:", error);
@@ -187,9 +184,33 @@ const StudentDetail = () => {
 		}
 	};
 
-	const handleSignOut = async () => {
-		await supabase.auth.signOut();
-		router.push("/");
+	// Was a visible button with no onClick at all — confirmed dead in this
+	// session's audit. Exports exactly this student's quiz history, same
+	// CSV-building approach already used on the dashboard.
+	const handleExportResults = () => {
+		if (quizResults.length === 0) return;
+		const headers = ["Date", "Mode", "Score", "Questions", "Percentage"];
+		const rows = quizResults.map((r) => {
+			const percentage = Math.round((r.score / r.total_questions) * 100);
+			return [
+				new Date(r.timestamp).toLocaleDateString(),
+				r.mode,
+				r.score,
+				r.total_questions,
+				`${percentage}%`,
+			];
+		});
+		let csvContent = "data:text/csv;charset=utf-8,";
+		csvContent += headers.join(",") + "\n";
+		rows.forEach((row) => {
+			csvContent += row.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(",") + "\n";
+		});
+		const link = document.createElement("a");
+		link.setAttribute("href", encodeURI(csvContent));
+		link.setAttribute("download", `${student?.name || "student"}-quiz-results.csv`);
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
 	};
 
 	const calculateStats = () => {
@@ -224,16 +245,16 @@ const StudentDetail = () => {
 
 	if (loadError) {
 		return (
-			<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center p-4">
+			<div className="min-h-screen bg-background flex items-center justify-center p-4">
 				<div className="text-center bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full border border-gray-100">
 					<FaExclamationTriangle className="text-red-500 text-5xl mx-auto mb-4" />
-					<h2 className="text-2xl font-bold text-gray-800 mb-2">Network Error</h2>
+					<h2 className="font-display text-2xl font-bold text-gray-800 mb-2">Network Error</h2>
 					<p className="text-gray-600 mb-8 leading-relaxed">
 						We couldn't connect to the server. Please check your internet connection and try again.
 					</p>
 					<button
 						onClick={getUser}
-						className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg shadow-lg hover:bg-purple-700 transition-colors font-medium">
+						className="w-full px-4 py-3 bg-brand-600 text-white rounded-lg shadow-lg hover:bg-brand-700 transition-colors font-medium">
 						Retry Connection
 					</button>
 				</div>
@@ -243,9 +264,9 @@ const StudentDetail = () => {
 
 	if (loading) {
 		return (
-			<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center">
+			<div className="min-h-screen bg-background flex items-center justify-center">
 				<div className="text-center">
-					<div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+					<div className="w-16 h-16 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
 					<p className="text-gray-600">Loading Student Details...</p>
 				</div>
 			</div>
@@ -254,7 +275,7 @@ const StudentDetail = () => {
 
 	if (!student) {
 		return (
-			<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center">
+			<div className="min-h-screen bg-background flex items-center justify-center">
 				<div className="text-center">
 					<FaExclamationTriangle className="text-red-500 text-4xl mx-auto mb-4" />
 					<p className="text-gray-600">Student not found</p>
@@ -264,46 +285,33 @@ const StudentDetail = () => {
 	}
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100">
+		<AdminShell user={user} orgName={orgName} active="dashboard">
 			{/* Header */}
-			<header className="bg-white shadow-sm border-b">
+			<div className="bg-white shadow-sm border-b">
 				<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-					<div className="flex justify-between items-center py-4">
+					<div className="flex flex-wrap justify-between items-center gap-4 py-4">
 						<div className="flex items-center space-x-3">
-							<button
-								onClick={() => router.push("/admin/dashboard")}
-								className="p-2 text-gray-600 hover:text-gray-800 transition-colors">
-								<FaArrowLeft size={20} />
-							</button>
-							<div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-								<FaUser className="text-white" />
+							<div className="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center">
+								<FaUser className="text-white" size={16} />
 							</div>
 							<div>
-								<h1 className="text-xl font-semibold text-gray-900">
+								<h1 className="font-display text-xl font-semibold text-gray-900">
 									Student Details
 								</h1>
 								<p className="text-sm text-gray-500">{student.name}</p>
 							</div>
 						</div>
-						<div className="flex items-center space-x-4">
-							<button
-								onClick={() =>
-									router.push(`/admin/settings?tab=students&edit=${student.id}`)
-								}
-								className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
-								<FaEdit className="inline mr-2" />
-								Edit Student
-							</button>
-							<button
-								onClick={handleSignOut}
-								className="flex items-center space-x-2 px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors">
-								<FaSignOutAlt />
-								<span>Sign Out</span>
-							</button>
-						</div>
+						<button
+							onClick={() =>
+								router.push(`/admin/settings?tab=students&edit=${student.id}`)
+							}
+							className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors">
+							<FaEdit className="inline mr-2" />
+							Edit Student
+						</button>
 					</div>
 				</div>
-			</header>
+			</div>
 
 			{/* Main Content */}
 			<main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -427,8 +435,8 @@ const StudentDetail = () => {
 					</div>
 					<div className="bg-white rounded-xl shadow-lg p-6">
 						<div className="flex items-center space-x-3">
-							<div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-								<FaMedal className="text-purple-600" />
+							<div className="w-12 h-12 bg-brand-100 rounded-lg flex items-center justify-center">
+								<FaMedal className="text-brand-600" />
 							</div>
 							<div>
 								<p className="text-sm text-gray-500">Best Score</p>
@@ -463,7 +471,10 @@ const StudentDetail = () => {
 						<h2 className="text-xl font-semibold text-gray-900">
 							Quiz History
 						</h2>
-						<button className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+						<button
+							onClick={handleExportResults}
+							disabled={quizResults.length === 0}
+							className="flex items-center space-x-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
 							<FaDownload size={14} />
 							<span>Export Results</span>
 						</button>
@@ -560,7 +571,7 @@ const StudentDetail = () => {
 					)}
 				</motion.div>
 			</main>
-		</div>
+		</AdminShell>
 	);
 };
 

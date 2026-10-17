@@ -203,7 +203,7 @@ const StudentManagement = () => {
 					</p>
 					<button
 						onClick={loadData}
-						className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg shadow-lg hover:bg-purple-700 transition-colors font-medium">
+						className="w-full px-4 py-3 bg-brand-600 text-white rounded-lg shadow-lg hover:bg-brand-700 transition-colors font-medium">
 						Retry Connection
 					</button>
 				</div>
@@ -215,7 +215,7 @@ const StudentManagement = () => {
 		return (
 			<div className="flex items-center justify-center py-8">
 				<div className="text-center">
-					<div className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+					<div className="w-8 h-8 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
 					<p className="text-gray-600">Loading students...</p>
 				</div>
 			</div>
@@ -233,13 +233,13 @@ const StudentManagement = () => {
 						placeholder="Search students by name or email..."
 						value={searchTerm}
 						onChange={(e) => setSearchTerm(e.target.value)}
-						className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+						className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent"
 					/>
 				</div>
 				<select
 					value={filterClass}
 					onChange={(e) => setFilterClass(e.target.value)}
-					className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+					className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500 focus:border-transparent">
 					<option value="all">All Classes</option>
 					<option value="yaya">Yaya</option>
 					<option value="adult">Adult</option>
@@ -289,11 +289,11 @@ const StudentManagement = () => {
 														name: e.target.value,
 													})
 												}
-												className="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500"
+												className="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-brand-500"
 											/>
 										) : (
 											<div className="flex items-center space-x-3">
-												<div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+												<div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-brand-600 rounded-full flex items-center justify-center">
 													<span className="text-white text-sm font-medium">
 														{student.name?.charAt(0) || "U"}
 													</span>
@@ -315,7 +315,7 @@ const StudentManagement = () => {
 														email: e.target.value,
 													})
 												}
-												className="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500"
+												className="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-brand-500"
 											/>
 										) : (
 											<span className="text-gray-600">{student.email}</span>
@@ -331,7 +331,7 @@ const StudentManagement = () => {
 														class: e.target.value,
 													})
 												}
-												className="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500">
+												className="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-brand-500">
 												<option value="">Select Class</option>
 												<option value="yaya">Yaya</option>
 												<option value="adult">Adult</option>
@@ -354,7 +354,7 @@ const StudentManagement = () => {
 														denomination: e.target.value,
 													})
 												}
-												className="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-purple-500"
+												className="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-brand-500"
 											/>
 										) : (
 											<span className="text-gray-600">
@@ -389,7 +389,7 @@ const StudentManagement = () => {
 												<>
 													<button
 														onClick={() => handleViewStudent(student)}
-														className="p-1 text-purple-600 hover:text-purple-800"
+														className="p-1 text-brand-600 hover:text-brand-800"
 														title="View Details">
 														<FaEye size={14} />
 													</button>
@@ -427,7 +427,7 @@ const StudentManagement = () => {
 							{/* Header */}
 							<div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
 								<div className="flex items-center space-x-4">
-									<div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+									<div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-brand-600 rounded-full flex items-center justify-center">
 										<span className="text-white text-lg font-medium">
 											{selectedStudent.name?.charAt(0) || "U"}
 										</span>
@@ -452,7 +452,7 @@ const StudentManagement = () => {
 								<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 									<div className="bg-gray-50 rounded-lg p-4">
 										<h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-											<FaUser className="mr-2 text-purple-600" />
+											<FaUser className="mr-2 text-brand-600" />
 											Personal Information
 										</h3>
 										<div className="space-y-3">
@@ -532,7 +532,7 @@ const StudentManagement = () => {
 												<label className="text-sm font-medium text-gray-700">
 													Best Score
 												</label>
-												<p className="text-2xl font-bold text-purple-600">
+												<p className="text-2xl font-bold text-brand-600">
 													{(() => {
 														const resultRow = quizResults.find(
 															(result) => result.student_id === selectedStudent.id
@@ -551,7 +551,7 @@ const StudentManagement = () => {
 								<div className="bg-white border border-gray-200 rounded-lg">
 									<div className="border-b border-gray-200 px-6 py-4">
 										<h3 className="text-lg font-semibold text-gray-900 flex items-center">
-											<FaHistory className="mr-2 text-indigo-600" />
+											<FaHistory className="mr-2 text-brand-600" />
 											Quiz History
 										</h3>
 									</div>
@@ -708,7 +708,7 @@ const StudentManagement = () => {
 											<FaChartBar className="text-2xl opacity-80" />
 										</div>
 									</div>
-									<div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-4 text-white">
+									<div className="bg-gradient-to-r from-brand-500 to-brand-600 rounded-lg p-4 text-white">
 										<div className="flex items-center justify-between">
 											<div>
 												<p className="text-sm opacity-90">Best Performance</p>

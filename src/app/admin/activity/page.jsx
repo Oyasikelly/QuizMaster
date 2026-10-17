@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabase";
 import { isAdminRole, roleLabel } from "../../../lib/roles";
-import { FaArrowLeft, FaHistory, FaExclamationTriangle } from "react-icons/fa";
+import AdminShell from "../../../components/AdminShell";
+import { FaHistory, FaExclamationTriangle } from "react-icons/fa";
 
 const ACTION_COLORS = {
 	INSERT: "bg-green-100 text-green-700",
@@ -18,6 +19,8 @@ const AdminActivity = () => {
 	const [error, setError] = useState("");
 	const [entries, setEntries] = useState([]);
 	const [actors, setActors] = useState({});
+	const [currentUser, setCurrentUser] = useState(null);
+	const [orgName, setOrgName] = useState("");
 
 	useEffect(() => {
 		const init = async () => {
@@ -31,13 +34,22 @@ const AdminActivity = () => {
 
 			const { data: profile } = await supabase
 				.from("users_profile")
-				.select("role")
+				.select("role, org_id")
 				.eq("id", user.id)
 				.single();
 
 			if (!isAdminRole(profile?.role)) {
 				router.push("/authenticate");
 				return;
+			}
+			setCurrentUser({ ...user, ...profile });
+			if (profile.org_id) {
+				const { data: org } = await supabase
+					.from("organizations")
+					.select("name")
+					.eq("id", profile.org_id)
+					.maybeSingle();
+				setOrgName(org?.name || "");
 			}
 
 			// RLS scopes this automatically: a legacy admin or a super_admin
@@ -78,9 +90,9 @@ const AdminActivity = () => {
 
 	if (loading) {
 		return (
-			<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-indigo-100">
+			<div className="min-h-screen flex items-center justify-center bg-background">
 				<div className="text-center">
-					<div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+					<div className="w-16 h-16 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
 					<p className="text-gray-600">Loading activity...</p>
 				</div>
 			</div>
@@ -88,18 +100,13 @@ const AdminActivity = () => {
 	}
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 p-4 sm:p-8">
-			<div className="max-w-4xl mx-auto">
+		<AdminShell user={currentUser} orgName={orgName} active="activity">
+			<div className="max-w-4xl mx-auto p-4 sm:p-8">
 				<div className="flex items-center gap-3 mb-6">
-					<button
-						onClick={() => router.push("/admin/dashboard")}
-						className="p-2 text-gray-600 hover:text-gray-800 transition-colors">
-						<FaArrowLeft size={18} />
-					</button>
-					<div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
-						<FaHistory className="text-white" />
+					<div className="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center">
+						<FaHistory className="text-white" size={16} />
 					</div>
-					<h1 className="text-xl font-semibold text-gray-900">Admin Activity</h1>
+					<h1 className="font-display text-xl font-semibold text-gray-900">Admin Activity</h1>
 				</div>
 
 				{error && (
@@ -108,7 +115,7 @@ const AdminActivity = () => {
 					</div>
 				)}
 
-				<div className="bg-white rounded-xl shadow overflow-hidden">
+				<div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
 					{entries.length === 0 ? (
 						<p className="text-sm text-gray-400 p-6 text-center">
 							No admin activity recorded yet in your scope.
@@ -153,7 +160,7 @@ const AdminActivity = () => {
 					)}
 				</div>
 			</div>
-		</div>
+		</AdminShell>
 	);
 };
 

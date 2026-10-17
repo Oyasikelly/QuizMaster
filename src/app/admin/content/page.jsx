@@ -4,8 +4,8 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabase";
 import { isAdminRole } from "../../../lib/roles";
+import AdminShell from "../../../components/AdminShell";
 import {
-	FaArrowLeft,
 	FaPlus,
 	FaTrash,
 	FaChevronRight,
@@ -53,6 +53,7 @@ const ContentManagement = () => {
 	const [loading, setLoading] = useState(true);
 	const [accessDenied, setAccessDenied] = useState(false);
 	const [error, setError] = useState("");
+	const [currentUser, setCurrentUser] = useState(null);
 
 	// Which org this admin is managing content for. A legacy `admin`
 	// isn't tied to one org (is_admin() bypasses scoping entirely), so
@@ -131,6 +132,7 @@ const ContentManagement = () => {
 				router.push("/authenticate");
 				return;
 			}
+			setCurrentUser({ ...user, ...profile });
 
 			if (profile.role === "admin") {
 				// Legacy global admin: not tied to one org, so pick one.
@@ -534,9 +536,9 @@ const ContentManagement = () => {
 
 	if (loading) {
 		return (
-			<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-indigo-100">
+			<div className="min-h-screen flex items-center justify-center bg-background">
 				<div className="text-center">
-					<div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+					<div className="w-16 h-16 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
 					<p className="text-gray-600">Loading content management...</p>
 				</div>
 			</div>
@@ -545,14 +547,14 @@ const ContentManagement = () => {
 
 	if (accessDenied) {
 		return (
-			<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 to-indigo-100 p-4">
+			<div className="min-h-screen flex items-center justify-center bg-background p-4">
 				<div className="text-center bg-white p-8 rounded-2xl shadow-xl max-w-md w-full border border-gray-100">
 					<FaExclamationTriangle className="text-amber-500 text-5xl mx-auto mb-4" />
-					<h2 className="text-2xl font-bold text-gray-800 mb-2">Can't manage content yet</h2>
+					<h2 className="font-display text-2xl font-bold text-gray-800 mb-2">Can't manage content yet</h2>
 					<p className="text-gray-600 mb-6">{error}</p>
 					<button
 						onClick={() => router.push("/admin/dashboard")}
-						className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
+						className="px-6 py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors font-medium">
 						Back to Dashboard
 					</button>
 				</div>
@@ -561,19 +563,14 @@ const ContentManagement = () => {
 	}
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 p-4 sm:p-8">
-			<div className="max-w-5xl mx-auto">
+		<AdminShell user={currentUser} orgName={orgName} active="content">
+			<div className="max-w-5xl mx-auto p-4 sm:p-8">
 				<div className="flex items-center gap-3 mb-6">
-					<button
-						onClick={() => router.push("/admin/dashboard")}
-						className="p-2 text-gray-600 hover:text-gray-800 transition-colors">
-						<FaArrowLeft size={18} />
-					</button>
-					<div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
-						<FaBook className="text-white" />
+					<div className="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center">
+						<FaBook className="text-white" size={16} />
 					</div>
 					<div>
-						<h1 className="text-xl font-semibold text-gray-900">Content Management</h1>
+						<h1 className="font-display text-xl font-semibold text-gray-900">Content Management</h1>
 						<p className="text-sm text-gray-500">
 							Managing: <span className="font-medium">{orgName || "—"}</span>
 						</p>
@@ -590,7 +587,7 @@ const ContentManagement = () => {
 								setOrgId(p?.id || null);
 								setOrgName(p?.name || "");
 							}}
-							className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500">
+							className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-brand-500">
 							{provinces.map((p) => (
 								<option key={p.id} value={p.id}>
 									{p.name}
@@ -615,7 +612,7 @@ const ContentManagement = () => {
 							onClick={() => setCategory(c.value)}
 							className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
 								category === c.value
-									? "bg-purple-600 text-white"
+									? "bg-brand-600 text-white"
 									: "bg-white text-gray-600 hover:bg-gray-50"
 							}`}>
 							{c.label}
@@ -631,33 +628,33 @@ const ContentManagement = () => {
 					<button
 						onClick={() => setMode("lessons")}
 						className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
-							mode === "lessons" ? "bg-indigo-600 text-white" : "bg-white text-gray-600 hover:bg-gray-50"
+							mode === "lessons" ? "bg-brand-600 text-white" : "bg-white text-gray-600 hover:bg-gray-50"
 						}`}>
 						Practice Lessons
 					</button>
 					<button
 						onClick={() => setMode("practiceYear")}
 						className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
-							mode === "practiceYear" ? "bg-indigo-600 text-white" : "bg-white text-gray-600 hover:bg-gray-50"
+							mode === "practiceYear" ? "bg-brand-600 text-white" : "bg-white text-gray-600 hover:bg-gray-50"
 						}`}>
 						Practice Entire Year
 					</button>
 					<button
 						onClick={() => setMode("real")}
 						className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
-							mode === "real" ? "bg-indigo-600 text-white" : "bg-white text-gray-600 hover:bg-gray-50"
+							mode === "real" ? "bg-brand-600 text-white" : "bg-white text-gray-600 hover:bg-gray-50"
 						}`}>
 						Real Quiz
 					</button>
 				</div>
 
 				{mode === "practiceYear" && (
-					<div className="bg-indigo-50 border border-indigo-200 text-indigo-800 rounded-lg p-3 mb-4 text-sm">
+					<div className="bg-brand-50 border border-brand-200 text-brand-800 rounded-lg p-3 mb-4 text-sm">
 						One shared question pool per academic year for the "Practice Entire Year" button — pick a year on the left, then add questions on the right. No separate lessons here.
 					</div>
 				)}
 				{mode === "real" && (
-					<div className="bg-indigo-50 border border-indigo-200 text-indigo-800 rounded-lg p-3 mb-4 text-sm">
+					<div className="bg-brand-50 border border-brand-200 text-brand-800 rounded-lg p-3 mb-4 text-sm">
 						One shared question pool for the official timed quiz in this category — no years or lessons here, just the question list on the right.
 					</div>
 				)}
@@ -676,7 +673,7 @@ const ContentManagement = () => {
 								<div
 									key={y.id}
 									className={`flex items-center justify-between px-3 py-2 rounded-lg cursor-pointer text-sm ${
-										selectedYearId === y.id ? "bg-purple-100 text-purple-800" : "hover:bg-gray-50"
+										selectedYearId === y.id ? "bg-brand-100 text-brand-800" : "hover:bg-gray-50"
 									}`}
 									onClick={() => setSelectedYearId(y.id)}>
 									<span className="flex items-center gap-1">
@@ -704,7 +701,7 @@ const ContentManagement = () => {
 							/>
 							<button
 								onClick={handleAddYear}
-								className="px-3 py-1.5 bg-purple-600 text-white rounded-lg hover:bg-purple-700">
+								className="px-3 py-1.5 bg-brand-600 text-white rounded-lg hover:bg-brand-700">
 								<FaPlus size={12} />
 							</button>
 						</div>
@@ -738,7 +735,7 @@ const ContentManagement = () => {
 										<div
 											key={l.id}
 											className={`flex items-center justify-between px-3 py-2 rounded-lg cursor-pointer text-sm ${
-												selectedLessonId === l.id ? "bg-purple-100 text-purple-800" : "hover:bg-gray-50"
+												selectedLessonId === l.id ? "bg-brand-100 text-brand-800" : "hover:bg-gray-50"
 											}`}
 											onClick={() => setSelectedLessonId(l.id)}>
 											<span className="flex items-center gap-1 truncate">
@@ -780,7 +777,7 @@ const ContentManagement = () => {
 									/>
 									<button
 										onClick={handleAddLesson}
-										className="w-full px-3 py-1.5 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-sm flex items-center justify-center gap-1">
+										className="w-full px-3 py-1.5 bg-brand-600 text-white rounded-lg hover:bg-brand-700 text-sm flex items-center justify-center gap-1">
 										<FaPlus size={12} /> Add Lesson
 									</button>
 								</div>
@@ -871,7 +868,7 @@ const ContentManagement = () => {
 									/>
 									<button
 										onClick={handleAddQuestion}
-										className="w-full px-3 py-1.5 bg-purple-600 text-white rounded-lg hover:bg-purple-700 text-sm flex items-center justify-center gap-1">
+										className="w-full px-3 py-1.5 bg-brand-600 text-white rounded-lg hover:bg-brand-700 text-sm flex items-center justify-center gap-1">
 										<FaPlus size={12} /> Add Question
 									</button>
 									{addedFlash && (
@@ -936,7 +933,7 @@ const ContentManagement = () => {
 														// there to select and copy manually.
 													}
 												}}
-												className="text-xs text-purple-600 hover:text-purple-800">
+												className="text-xs text-brand-600 hover:text-brand-800">
 												Copy
 											</button>
 										</div>
@@ -978,7 +975,7 @@ const ContentManagement = () => {
 					</div>
 				</div>
 			</div>
-		</div>
+		</AdminShell>
 	);
 };
 

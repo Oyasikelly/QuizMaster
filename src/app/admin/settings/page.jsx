@@ -1,27 +1,18 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect, useCallback, useMemo, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { supabase } from "../../../lib/supabase";
 import { isAdminRole } from "../../../lib/roles";
+import AdminShell from "../../../components/AdminShell";
 import StudentManagement from "../../../components/StudentManagement";
 import QuizAnalytics from "../../../components/QuizAnalytics";
 import {
-	FaUser,
-	FaSignOutAlt,
 	FaUsers,
 	FaChartBar,
-	FaTrophy,
-	FaCog,
 	FaShieldAlt,
-	FaKey,
-	FaSave,
-	FaBars,
-	FaTimes,
 	FaExclamationTriangle,
-	FaClipboardList,
-	FaHistory,
 } from "react-icons/fa";
 
 const withTimeout = (promise, ms) =>
@@ -32,25 +23,9 @@ const withTimeout = (promise, ms) =>
 		),
 	]);
 
-const SIDEBAR_LINKS = [
-	{ label: "Dashboard", icon: <FaTrophy />, route: "/admin/dashboard" },
-	{ label: "Student Management", icon: <FaUsers />, tab: "students" },
-	{ label: "Analytics", icon: <FaChartBar />, tab: "analytics" },
-	{ label: "Content Management", icon: <FaClipboardList />, route: "/admin/content" },
-	{ label: "Admin Activity", icon: <FaHistory />, route: "/admin/activity" },
-	{ label: "Settings", icon: <FaCog />, tab: "system", active: true },
-];
-
-const DEFAULT_SYSTEM_SETTINGS = {
-	allowStudentRegistration: true,
-	requireEmailVerification: true,
-	maxQuizAttempts: 3,
-	quizTimeLimit: 30,
-	showResultsImmediately: true,
-};
-
-const AdminSettings = () => {
+function AdminSettingsInner() {
 	const [user, setUser] = useState(null);
+	const [orgName, setOrgName] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [loadError, setLoadError] = useState(false);
 	const [activeTab, setActiveTab] = useState("students");
@@ -60,32 +35,8 @@ const AdminSettings = () => {
 	const [editingStudent, setEditingStudent] = useState(null);
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [studentToDelete, setStudentToDelete] = useState(null);
-	const [adminCode, setAdminCode] = useState("ADMIN2024");
-	const [systemSettings, setSystemSettings] = useState(DEFAULT_SYSTEM_SETTINGS);
-	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const router = useRouter();
-
-	// Sidebar links with handlers
-	const sidebarLinks = useMemo(
-		() =>
-			SIDEBAR_LINKS.map((link) => ({
-				...link,
-				onClick: () => {
-					if (link.route) router.push(link.route);
-					if (link.tab) setActiveTab(link.tab);
-				},
-			})).concat([
-				{
-					label: "Logout",
-					icon: <FaSignOutAlt />,
-					onClick: async () => {
-						await supabase.auth.signOut();
-						router.push("/");
-					},
-				},
-			]),
-		[router]
-	);
+	const searchParams = useSearchParams();
 
 	const loadData = useCallback(async () => {
 		try {
@@ -128,7 +79,7 @@ const AdminSettings = () => {
 			const { data: profile } = await withTimeout(
 				supabase
 					.from("users_profile")
-					.select("role, name, email")
+					.select("role, name, email, org_id")
 					.eq("id", user.id)
 					.single(),
 				10000
@@ -138,6 +89,14 @@ const AdminSettings = () => {
 				return;
 			}
 			setUser({ ...user, ...profile });
+			if (profile.org_id) {
+				const { data: org } = await supabase
+					.from("organizations")
+					.select("name")
+					.eq("id", profile.org_id)
+					.maybeSingle();
+				setOrgName(org?.name || "");
+			}
 			await loadData();
 		} catch (error) {
 			console.error("Init error:", error);
@@ -167,6 +126,32 @@ const AdminSettings = () => {
 
 		return () => subscription.unsubscribe();
 	}, [getUser, router]);
+
+	// Dashboard and the Student Detail page link here as
+	// /admin/settings?tab=students&delete=<id> or &edit=<id> — this was
+	// previously a dead link (confirmed: nothing on this page ever read
+	// these params, so clicking Delete/Edit silently landed on the plain
+	// Students tab with no modal and no prefilled edit state).
+	useEffect(() => {
+		if (!searchParams || students.length === 0) return;
+		const tab = searchParams.get("tab");
+		if (tab) setActiveTab(tab);
+
+		const deleteId = searchParams.get("delete");
+		if (deleteId) {
+			const target = students.find((s) => s.id === deleteId);
+			if (target) {
+				setStudentToDelete(target);
+				setShowDeleteModal(true);
+			}
+		}
+
+		const editId = searchParams.get("edit");
+		if (editId) {
+			const target = students.find((s) => s.id === editId);
+			if (target) setEditingStudent({ ...target });
+		}
+	}, [searchParams, students]);
 
 	// Student edit/save/delete handlers
 	const handleEditStudent = (student) => setEditingStudent({ ...student });
@@ -221,11 +206,6 @@ const AdminSettings = () => {
 		}
 	};
 
-	const handleUpdateSystemSettings = async () => {
-		// In a real app, save to DB
-		alert("System settings updated successfully!");
-	};
-
 	const handleQuizSchedule = () => {
 		router.push("/admin/quiz-settings");
 	};
@@ -243,7 +223,7 @@ const AdminSettings = () => {
 
 	if (loadError) {
 		return (
-			<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center p-4">
+			<div className="min-h-screen bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center p-4">
 				<div className="text-center bg-white p-8 rounded-2xl shadow-xl max-w-sm w-full">
 					<FaExclamationTriangle className="text-red-500 text-5xl mx-auto mb-4" />
 					<h2 className="text-xl font-bold text-gray-800 mb-2">Network Error</h2>
@@ -252,7 +232,7 @@ const AdminSettings = () => {
 					</p>
 					<button
 						onClick={getUser}
-						className="w-full px-4 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-medium">
+						className="w-full px-4 py-3 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors font-medium">
 						Retry Connection
 					</button>
 				</div>
@@ -262,9 +242,9 @@ const AdminSettings = () => {
 
 	if (loading) {
 		return (
-			<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center">
+			<div className="min-h-screen bg-gradient-to-br from-brand-50 to-brand-100 flex items-center justify-center">
 				<div className="text-center">
-					<div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+					<div className="w-16 h-16 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
 					<p className="text-gray-600">Loading Admin Settings...</p>
 				</div>
 			</div>
@@ -272,91 +252,31 @@ const AdminSettings = () => {
 	}
 
 	return (
-		<div className="min-h-screen overflow-hidden scrollbar-hide flex bg-gradient-to-br from-purple-50 to-indigo-100">
-			{/* Sidebar */}
-			<aside
-				className={`fixed z-30 inset-y-0 left-0 w-64 bg-white shadow-lg transform ${
-					sidebarOpen ? "translate-x-0" : "-translate-x-full"
-				} transition-transform duration-200 ease-in-out md:relative md:translate-x-0 md:w-56 md:block`}>
-				<div className="flex items-center justify-between px-6 py-4 border-b">
-					<div className="flex items-center space-x-2">
-						<div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
-							<FaUser className="text-white" />
-						</div>
-						<span className="font-bold text-lg text-gray-800">Admin</span>
-					</div>
-					<button
-						className="md:hidden p-2"
-						onClick={() => setSidebarOpen(false)}>
-						<FaTimes size={20} />
-					</button>
-				</div>
-				<nav className="mt-6 space-y-2 px-4">
-					{sidebarLinks.map((link) => (
+		<AdminShell user={user} orgName={orgName} active="settings">
+			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+				{/* Tab Navigation */}
+				<motion.div
+					initial={{ opacity: 0, y: 20 }}
+					animate={{ opacity: 1, y: 0 }}
+					className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
+					<div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
 						<button
-							key={link.label}
-							onClick={() => {
-								link.onClick();
-								setSidebarOpen(false);
-							}}
-							className={`flex items-center w-full px-4 py-3 rounded-lg text-gray-700 hover:bg-purple-100 transition-colors font-medium gap-3 ${
-								link.active ? "bg-purple-100 text-purple-700" : ""
+							onClick={() => setActiveTab("students")}
+							className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+								activeTab === "students"
+									? "bg-white text-brand-600 shadow-sm"
+									: "text-gray-600 hover:text-gray-900"
 							}`}>
-							{link.icon}
-							<span>{link.label}</span>
+							<FaUsers className="inline mr-2" />
+							Student Management
 						</button>
-					))}
-				</nav>
-			</aside>
-
-			{/* Overlay for mobile sidebar */}
-			{sidebarOpen && (
-				<div
-					className="fixed inset-0 z-20 bg-black bg-opacity-30 md:hidden"
-					onClick={() => setSidebarOpen(false)}></div>
-			)}
-
-			{/* Main Content */}
-			<div className="flex-1 flex flex-col max-w-screen min-h-screen md:ml-4">
-				{/* Topbar for mobile */}
-				<header className="bg-white shadow-sm border-b md:hidden flex items-center justify-between px-4 py-3">
-					<button
-						className="p-1"
-						onClick={() => setSidebarOpen(true)}>
-						<FaBars size={22} />
-					</button>
-					<div className="flex items-center w-auto space-x-2">
-						<div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
-							<FaUser className="text-white" />
-						</div>
-						<span className="font-semibold text-gray-800">{user?.name}</span>
-					</div>
-				</header>
-
-				<main className="flex-1 max-w-7xl mx-auto w-screen lg:w-full px-2 sm:px-4 lg:px-8 py-8 overflow-x-hidden">
-					{/* Tab Navigation */}
-					<motion.div
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						className="bg-white rounded-xl shadow-lg p-6 mb-8">
-						<div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
-							<button
-								onClick={() => setActiveTab("students")}
-								className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
-									activeTab === "students"
-										? "bg-white text-purple-600 shadow-sm"
-										: "text-gray-600 hover:text-gray-900"
-								}`}>
-								<FaUsers className="inline mr-2" />
-								Student Management
-							</button>
-							<button
-								onClick={() => setActiveTab("analytics")}
-								className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
-									activeTab === "analytics"
-										? "bg-white text-purple-600 shadow-sm"
-										: "text-gray-600 hover:text-gray-900"
-								}`}>
+						<button
+							onClick={() => setActiveTab("analytics")}
+							className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+								activeTab === "analytics"
+									? "bg-white text-brand-600 shadow-sm"
+									: "text-gray-600 hover:text-gray-900"
+							}`}>
 								<FaChartBar className="inline mr-2" />
 								Quiz Analytics
 							</button>
@@ -364,7 +284,7 @@ const AdminSettings = () => {
 								onClick={() => setActiveTab("system")}
 								className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
 									activeTab === "system"
-										? "bg-white text-purple-600 shadow-sm"
+										? "bg-white text-brand-600 shadow-sm"
 										: "text-gray-600 hover:text-gray-900"
 								}`}>
 								<FaShieldAlt className="inline mr-2" />
@@ -379,185 +299,44 @@ const AdminSettings = () => {
 					{/* Quiz Analytics Tab */}
 					{activeTab === "analytics" && <QuizAnalytics />}
 
-					{/* System Settings Tab */}
+					{/* System Settings Tab — only ever held one real, working
+					    control (Quiz Scheduling). The rest (General Settings
+					    toggles, Admin Invite Code field) looked interactive but
+					    weren't connected to anything: systemSettings/adminCode
+					    were local-only state, and Save was a stub `alert()` —
+					    nothing ever persisted. Removed rather than left as a
+					    convincing-looking no-op. The real admin invite code
+					    lives in an env var (NEXT_PUBLIC_ADMIN_INVITE_CODE),
+					    which a web form can't change anyway. */}
 					{activeTab === "system" && (
 						<motion.div
 							initial={{ opacity: 0, y: 20 }}
 							animate={{ opacity: 1, y: 0 }}
-							className="space-y-6">
-							{/* General Settings */}
-							<div className="bg-white rounded-xl shadow-lg p-6">
-								<h3 className="text-lg font-semibold text-gray-900 mb-4">
-									General Settings
-								</h3>
-								<div className="space-y-4">
-									<SettingSwitch
-										label="Allow Student Registration"
-										description="Enable new students to register"
-										checked={systemSettings.allowStudentRegistration}
-										onChange={(checked) =>
-											setSystemSettings((s) => ({
-												...s,
-												allowStudentRegistration: checked,
-											}))
-										}
-									/>
-									<SettingSwitch
-										label="Require Email Verification"
-										description="Students must verify their email before accessing quizzes"
-										checked={systemSettings.requireEmailVerification}
-										onChange={(checked) =>
-											setSystemSettings((s) => ({
-												...s,
-												requireEmailVerification: checked,
-											}))
-										}
-									/>
-									<SettingSwitch
-										label="Show Results Immediately"
-										description="Display quiz results right after completion"
-										checked={systemSettings.showResultsImmediately}
-										onChange={(checked) =>
-											setSystemSettings((s) => ({
-												...s,
-												showResultsImmediately: checked,
-											}))
-										}
-									/>
-								</div>
-							</div>
-
-							{/* Quiz Settings */}
-							<div className="bg-white rounded-xl shadow-lg p-6">
-								<h3 className="text-lg font-semibold text-gray-900 mb-4">
-									Quiz Scheduling
-								</h3>
-								<button
-									onClick={handleQuizSchedule}
-									className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
-									Schedule
-								</button>
-								{/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-									<SettingNumberInput
-										label="Maximum Quiz Attempts"
-										value={systemSettings.maxQuizAttempts}
-										min={1}
-										max={10}
-										onChange={(val) =>
-											setSystemSettings((s) => ({
-												...s,
-												maxQuizAttempts: val,
-											}))
-										}
-									/>
-									<SettingNumberInput
-										label="Quiz Time Limit (minutes)"
-										value={systemSettings.quizTimeLimit}
-										min={5}
-										max={120}
-										onChange={(val) =>
-											setSystemSettings((s) => ({
-												...s,
-												quizTimeLimit: val,
-											}))
-										}
-									/>
-								</div> */}
-							</div>
-
-							{/* Admin Settings */}
-							<div className="bg-white rounded-xl shadow-lg p-6">
-								<h3 className="text-lg font-semibold text-gray-900 mb-4">
-									Admin Settings
-								</h3>
-								<div className="space-y-4">
-									<div>
-										<label className="block text-sm font-medium text-gray-700 mb-2">
-											Admin Invite Code
-										</label>
-										<div className="flex space-x-2">
-											<input
-												type="text"
-												value={adminCode}
-												onChange={(e) => setAdminCode(e.target.value)}
-												className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-												placeholder="Enter admin invite code"
-											/>
-											<button className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
-												<FaKey className="inline mr-2" />
-												Update
-											</button>
-										</div>
-										<p className="text-xs text-gray-500 mt-1">
-											This code is required for new admin registrations
-										</p>
-									</div>
-								</div>
-							</div>
-
-							{/* Save Settings Button */}
-							<div className="flex justify-end">
-								<button
-									onClick={handleUpdateSystemSettings}
-									className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors flex items-center space-x-2">
-									<FaSave className="inline" />
-									<span>Save Settings</span>
-								</button>
-							</div>
+							className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+							<h3 className="font-display text-lg font-semibold text-gray-900 mb-1">
+								Quiz Scheduling
+							</h3>
+							<p className="text-sm text-gray-500 mb-4">
+								Set the active window, time limit, and question count for the real quiz.
+							</p>
+							<button
+								onClick={handleQuizSchedule}
+								className="px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors">
+								Open Quiz Scheduling
+							</button>
 						</motion.div>
 					)}
-				</main>
-
-				{/* Delete Confirmation Modal */}
-				{showDeleteModal && (
-					<DeleteModal
-						student={studentToDelete}
-						onCancel={() => setShowDeleteModal(false)}
-						onDelete={handleDeleteStudent}
-					/>
-				)}
 			</div>
-		</div>
-	);
-};
 
-// Reusable switch component for settings
-function SettingSwitch({ label, description, checked, onChange }) {
-	return (
-		<div className="flex items-center justify-between">
-			<div>
-				<label className="text-sm font-medium text-gray-700">{label}</label>
-				<p className="text-xs text-gray-500">{description}</p>
-			</div>
-			<label className="relative inline-flex items-center cursor-pointer">
-				<input
-					type="checkbox"
-					checked={checked}
-					onChange={(e) => onChange(e.target.checked)}
-					className="sr-only peer"
+			{/* Delete Confirmation Modal */}
+			{showDeleteModal && (
+				<DeleteModal
+					student={studentToDelete}
+					onCancel={() => setShowDeleteModal(false)}
+					onDelete={handleDeleteStudent}
 				/>
-				<div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-purple-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
-			</label>
-		</div>
-	);
-}
-
-// Reusable number input for settings
-function SettingNumberInput({ label, value, min, max, onChange }) {
-	return (
-		<div>
-			<label className="block text-sm font-medium text-gray-700 mb-2">
-				{label}
-			</label>
-			<input
-				type="number"
-				value={value}
-				onChange={(e) => onChange(parseInt(e.target.value) || min)}
-				className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-				min={min}
-				max={max}
-			/>
-		</div>
+			)}
+		</AdminShell>
 	);
 }
 
@@ -593,4 +372,10 @@ function DeleteModal({ student, onCancel, onDelete }) {
 	);
 }
 
-export default AdminSettings;
+export default function AdminSettings() {
+	return (
+		<Suspense fallback={null}>
+			<AdminSettingsInner />
+		</Suspense>
+	);
+}
