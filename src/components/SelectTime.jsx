@@ -132,14 +132,15 @@ export default function SelectTime() {
 			);
 			setMaxAvailableQuestions(count);
 			// Auto-set defaults: all questions, time = 1.5 min per question (rounded to 5)
-			const suggestedQ = count;
+			if (quizState.isRealQuiz) { setCountLoading(false); return; }
+				const suggestedQ = count;
 			const suggestedT = Math.max(5, Math.ceil((count * 1.5) / 5) * 5);
 			setSelectedQuestions(suggestedQ);
 			setSelectedTime(suggestedT);
 			setCountLoading(false);
 		};
 		fetchCount();
-	}, [selectedLesson, selectedDifficulty, selectedYear, pathname]);
+	}, [selectedLesson, selectedDifficulty, selectedYear, pathname, quizState.isRealQuiz]);
 
 	// Remove loading overlay if returning from quiz page
 	useEffect(() => {
