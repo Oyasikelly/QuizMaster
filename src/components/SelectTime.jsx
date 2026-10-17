@@ -64,6 +64,15 @@ export default function SelectTime() {
 		canTakeQuiz: true,
 		message: "",
 	});
+	// True only once checkQuizState's async work has actually finished —
+	// quizState.isRealQuiz is FALSE by default before that, which isn't
+	// "known false", it's "not known yet". The lesson-count effect below
+	// must not run at all until this is true, or it can still win a race
+	// against checkQuizState's own setSelectedTime/setSelectedQuestions
+	// calls depending on which async chain happens to resolve last — a
+	// real quiz briefly showed a 180-minute timer this way even after an
+	// earlier fix that only guarded the effect's re-runs, not its first.
+	const [quizStateResolved, setQuizStateResolved] = useState(false);
 	const [user, setUser] = useState(null);
 	const [lessons, setLessons] = useState([]);
 	const [selectedLesson, setSelectedLesson] = useState("");
@@ -116,8 +125,17 @@ export default function SelectTime() {
 		fetchLessons();
 	}, [selectedYear, selectedDifficulty, pathname]);
 
-	// Fetch question count whenever lesson, difficulty, year or category changes
+	// Fetch question count whenever lesson, difficulty, year or category
+	// changes — practice-mode only. Gated on quizStateResolved, not just
+	// !quizState.isRealQuiz: until checkQuizState's async work finishes,
+	// isRealQuiz is FALSE by default (unknown, not "confirmed not a real
+	// quiz"), so this effect must not run AT ALL yet — not even to fetch,
+	// let alone to call setSelectedTime/setSelectedQuestions — or it can
+	// still win the race against checkQuizState depending on which
+	// resolves last, overwriting the correct real-quiz time/questions
+	// with a practice-mode suggestion no one asked for.
 	useEffect(() => {
+		if (!quizStateResolved || quizState.isRealQuiz) return;
 		if (!selectedLesson || !selectedDifficulty || !selectedYear) return;
 		const selectedCategory = Categories.find((cat) => pathname === cat.pathname);
 		if (!selectedCategory) return;
@@ -132,15 +150,14 @@ export default function SelectTime() {
 			);
 			setMaxAvailableQuestions(count);
 			// Auto-set defaults: all questions, time = 1.5 min per question (rounded to 5)
-			if (quizState.isRealQuiz) { setCountLoading(false); return; }
-				const suggestedQ = count;
+			const suggestedQ = count;
 			const suggestedT = Math.max(5, Math.ceil((count * 1.5) / 5) * 5);
 			setSelectedQuestions(suggestedQ);
 			setSelectedTime(suggestedT);
 			setCountLoading(false);
 		};
 		fetchCount();
-	}, [selectedLesson, selectedDifficulty, selectedYear, pathname, quizState.isRealQuiz]);
+	}, [quizStateResolved, quizState.isRealQuiz, selectedLesson, selectedDifficulty, selectedYear, pathname]);
 
 	// Remove loading overlay if returning from quiz page
 	useEffect(() => {
@@ -249,6 +266,8 @@ export default function SelectTime() {
 					canTakeQuiz: false,
 					message: "Error loading quiz settings",
 				});
+			} finally {
+				setQuizStateResolved(true);
 			}
 		};
 

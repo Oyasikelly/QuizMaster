@@ -60,7 +60,12 @@ const ContentManagement = () => {
 	// they pick a province. A scoped admin (province_admin etc.) is
 	// locked to their own org_id — content is owned at province level,
 	// and RLS only lets them write where their scope actually reaches.
-	const [isLegacyAdmin, setIsLegacyAdmin] = useState(false);
+	// True for any admin not directly tied to a single province: a legacy
+	// `admin` (is_admin() bypasses scoping entirely) or a `super_admin`
+	// (scoped to the Region root, not a province — their own org_id is
+	// NOT a province, which previously hit the "not assigned to a
+	// province" error below instead of giving them a picker).
+	const [showProvincePicker, setShowProvincePicker] = useState(false);
 	const [provinces, setProvinces] = useState([]);
 	const [orgId, setOrgId] = useState(null);
 	const [orgName, setOrgName] = useState("");
@@ -134,9 +139,11 @@ const ContentManagement = () => {
 			}
 			setCurrentUser({ ...user, ...profile });
 
-			if (profile.role === "admin") {
-				// Legacy global admin: not tied to one org, so pick one.
-				setIsLegacyAdmin(true);
+			if (profile.role === "admin" || profile.role === "super_admin") {
+				// Not tied to one province — give them a picker instead of
+				// assuming their own org_id (for super_admin, the Region
+				// root) is a province to write content under directly.
+				setShowProvincePicker(true);
 				const { data: provinceList } = await supabase
 					.from("organizations")
 					.select("id, name")
@@ -577,7 +584,7 @@ const ContentManagement = () => {
 					</div>
 				</div>
 
-				{isLegacyAdmin && provinces.length > 0 && (
+				{showProvincePicker && provinces.length > 0 && (
 					<div className="bg-white rounded-xl shadow p-4 mb-4">
 						<label className="block text-sm font-medium text-gray-700 mb-2">Province</label>
 						<select
