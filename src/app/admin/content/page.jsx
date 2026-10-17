@@ -102,6 +102,13 @@ const ContentManagement = () => {
 	const [bulkSuccess, setBulkSuccess] = useState("");
 	const [bulkBusy, setBulkBusy] = useState(false);
 	const [addedFlash, setAddedFlash] = useState("");
+	// Real Quiz only (see handleBulkAdd): a quarter's new real-quiz
+	// content has twice now landed on top of the previous quarter's
+	// questions instead of replacing them, because bulk import always
+	// just adds. Defaults to off every time the lesson changes so a
+	// Practice Lessons/Practice Entire Year import is never accidentally
+	// destructive.
+	const [replaceExisting, setReplaceExisting] = useState(false);
 
 	// ---- Access check + resolve which org this admin manages ----
 	useEffect(() => {
@@ -383,6 +390,7 @@ const ContentManagement = () => {
 
 	useEffect(() => {
 		loadQuestions();
+		setReplaceExisting(false);
 	}, [loadQuestions]);
 
 	const handleAddQuestion = async () => {
@@ -475,7 +483,29 @@ const ContentManagement = () => {
 			}
 		}
 
+		// Real Quiz only: replacing means the previous batch is gone for
+		// good, so this is the one bulk-import path that gets its own
+		// explicit confirmation on top of the checkbox already being an
+		// opt-in — see the replaceExisting state declaration for why this
+		// exists at all.
+		if (mode === "real" && replaceExisting && questions.length > 0) {
+			const confirmed = window.confirm(
+				`This will permanently delete the existing ${questions.length} Real Quiz question(s) before adding the new ${parsed.length}. This can't be undone. Continue?`
+			);
+			if (!confirmed) return;
+		}
+
 		setBulkBusy(true);
+
+		if (mode === "real" && replaceExisting && questions.length > 0) {
+			const { error: deleteError } = await supabase.from("questions").delete().eq("lesson_id", selectedLessonId);
+			if (deleteError) {
+				setBulkBusy(false);
+				setBulkError(`Couldn't clear the existing questions first: ${deleteError.message}`);
+				return;
+			}
+		}
+
 		const rows = parsed.map((q) => ({
 			lesson_id: selectedLessonId,
 			org_id: orgId,
@@ -492,7 +522,12 @@ const ContentManagement = () => {
 			return;
 		}
 		setBulkText("");
-		setBulkSuccess(`Imported ${rows.length} question${rows.length === 1 ? "" : "s"} successfully.`);
+		setReplaceExisting(false);
+		setBulkSuccess(
+			mode === "real" && replaceExisting
+				? `Replaced the old pool — now ${rows.length} question${rows.length === 1 ? "" : "s"}.`
+				: `Imported ${rows.length} question${rows.length === 1 ? "" : "s"} successfully.`
+		);
 		setTimeout(() => setBulkSuccess(""), 4000);
 		loadQuestions();
 	};
@@ -845,6 +880,23 @@ const ContentManagement = () => {
 								</div>
 
 								<div className="border-t pt-3 mt-3">
+									{mode === "real" && questions.length > 0 && (
+										<div className="bg-amber-50 border border-amber-200 rounded-lg p-2.5 mb-2">
+											<label className="flex items-start gap-2 text-xs text-amber-800 cursor-pointer">
+												<input
+													type="checkbox"
+													checked={replaceExisting}
+													onChange={(e) => setReplaceExisting(e.target.checked)}
+													className="mt-0.5"
+												/>
+												<span>
+													<strong>This Real Quiz pool already has {questions.length} question{questions.length === 1 ? "" : "s"}.</strong>{" "}
+													By default, a bulk import <strong>adds</strong> to them, not replaces them — check this box
+													to delete the existing {questions.length} first (e.g. when uploading a brand new quarter's quiz).
+												</span>
+											</label>
+										</div>
+									)}
 									<p className="text-xs font-medium text-gray-600 mb-1">
 										Bulk add (paste a JSON array)
 									</p>
@@ -904,8 +956,18 @@ const ContentManagement = () => {
 									<button
 										onClick={handleBulkAdd}
 										disabled={bulkBusy || !bulkText.trim()}
-										className="w-full mt-1 px-3 py-1.5 bg-gray-700 text-white rounded-lg hover:bg-gray-800 text-sm disabled:opacity-50">
-										{bulkBusy ? "Importing..." : "Bulk Import"}
+										className={`w-full mt-1 px-3 py-1.5 text-white rounded-lg text-sm disabled:opacity-50 ${
+											mode === "real" && replaceExisting
+												? "bg-red-600 hover:bg-red-700"
+												: "bg-gray-700 hover:bg-gray-800"
+										}`}>
+										{bulkBusy
+											? mode === "real" && replaceExisting
+												? "Replacing..."
+												: "Importing..."
+											: mode === "real" && replaceExisting
+											? `Replace ${questions.length} Question${questions.length === 1 ? "" : "s"}`
+											: "Bulk Import"}
 									</button>
 									{bulkSuccess && (
 										<p className="text-xs text-green-600 font-medium mt-1">{bulkSuccess}</p>
