@@ -6,27 +6,20 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { supabase } from "../../../lib/supabase";
 import { isAdminRole, roleLabel } from "../../../lib/roles";
+import AdminShell from "../../../components/AdminShell";
 import {
 	FaUser,
-	FaSignOutAlt,
 	FaUsers,
 	FaChartBar,
-	FaTrophy,
 	FaClipboardList,
-	FaCog,
-	FaBell,
 	FaDownload,
 	FaSearch,
-	FaFilter,
 	FaEye,
 	FaEdit,
 	FaTrash,
-	FaCheck,
 	FaTimes,
 	FaHistory,
-	FaBars,
 	FaExclamationTriangle,
-	FaUserShield,
 } from "react-icons/fa";
 
 const withTimeout = (promise, ms) =>
@@ -68,7 +61,6 @@ const AdminDashboard = () => {
 	const [studentQuizResults, setStudentQuizResults] = useState([]);
 	const [showEditModal, setShowEditModal] = useState(false);
 	const [editingStudent, setEditingStudent] = useState(null);
-	const [sidebarOpen, setSidebarOpen] = useState(false);
 	const [showExportModal, setShowExportModal] = useState(false);
 	const [isRefreshing, setIsRefreshing] = useState(false);
 	const router = useRouter();
@@ -309,11 +301,6 @@ const AdminDashboard = () => {
 		} finally {
 			setIsRefreshing(false);
 		}
-	};
-
-	const handleSignOut = async () => {
-		await supabase.auth.signOut();
-		router.push("/authenticate");
 	};
 
 	const handleViewStudent = async (student) => {
@@ -812,56 +799,6 @@ const AdminDashboard = () => {
 		}
 	};
 
-	// Sidebar links
-	const sidebarLinks = [
-		{
-			label: "Dashboard",
-			icon: <FaTrophy />,
-			onClick: () => router.push("/admin/dashboard"),
-		},
-		{
-			label: "Student Management",
-			icon: <FaUsers />,
-			onClick: () =>
-				document
-					.getElementById("student-management")
-					?.scrollIntoView({ behavior: "smooth" }),
-		},
-		{
-			label: "Analytics",
-			icon: <FaChartBar />,
-			onClick: () =>
-				document
-					.getElementById("analytics-section")
-					?.scrollIntoView({ behavior: "smooth" }),
-		},
-		{
-			label: "Content Management",
-			icon: <FaClipboardList />,
-			onClick: () => router.push("/admin/content"),
-		},
-		{
-			label: "Admin Activity",
-			icon: <FaHistory />,
-			onClick: () => router.push("/admin/activity"),
-		},
-		...(user?.role === "super_admin"
-			? [
-					{
-						label: "Admin Management",
-						icon: <FaUserShield />,
-						onClick: () => router.push("/admin/manage-admins"),
-					},
-			  ]
-			: []),
-		{
-			label: "Settings",
-			icon: <FaCog />,
-			onClick: () => router.push("/admin/settings"),
-		},
-		{ label: "Logout", icon: <FaSignOutAlt />, onClick: handleSignOut },
-	];
-
 	if (loadError) {
 		return (
 			<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center p-4">
@@ -893,75 +830,10 @@ const AdminDashboard = () => {
 	}
 
 	return (
-		<div className="min-h-screen overflow-hidden scrollbar-hide flex bg-gradient-to-br from-purple-50 to-indigo-100">
-			{/* Sidebar */}
-			<aside
-				className={`fixed z-30 inset-y-0 left-0 w-64 bg-white shadow-lg transform ${
-					sidebarOpen ? "translate-x-0" : "-translate-x-full"
-				} transition-transform duration-200 ease-in-out md:relative md:translate-x-0 md:w-56 md:block`}>
-				<div className="flex items-center justify-between px-6 py-4 border-b">
-					<div className="flex items-center space-x-2">
-						<div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center flex-shrink-0">
-							<FaUser className="text-white" />
-						</div>
-						<div className="min-w-0">
-							<span className="font-bold text-lg text-gray-800 block truncate">
-								{roleLabel(user?.role)}
-							</span>
-							{orgName && (
-								<span className="text-xs text-gray-500 block truncate">{orgName}</span>
-							)}
-						</div>
-					</div>
-					<button
-						className="md:hidden p-2"
-						onClick={() => setSidebarOpen(false)}>
-						<FaTimes size={20} />
-					</button>
-				</div>
-				<nav className="mt-6 space-y-2 px-4">
-					{sidebarLinks.map((link, idx) => (
-						<button
-							key={link.label}
-							onClick={() => {
-								link.onClick();
-								setSidebarOpen(false);
-							}}
-							className="flex items-center w-full px-4 py-3 rounded-lg text-gray-700 hover:bg-purple-100 transition-colors font-medium gap-3">
-							{link.icon}
-							<span>{link.label}</span>
-						</button>
-					))}
-				</nav>
-			</aside>
-
-			{/* Overlay for mobile sidebar */}
-			{sidebarOpen && (
-				<div
-					className="fixed inset-0 z-20 bg-black bg-opacity-30 md:hidden"
-					onClick={() => setSidebarOpen(false)}></div>
-			)}
-
-			{/* Main Content */}
-			<div className="flex-1 flex flex-col max-w-screen min-h-screen md:ml-4">
-				{/* Topbar for mobile */}
-				<header className="bg-white shadow-sm border-b md:hidden flex items-center justify-between px-4 py-3">
-					<button
-						className="p-1"
-						onClick={() => setSidebarOpen(true)}>
-						<FaBars size={22} />
-					</button>
-					<div className="flex items-center w-auto space-x-2">
-						<div className="w-8 h-8 bg-gradient-to-r from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
-							<FaUser className="text-white" />
-						</div>
-						<span className="font-semibold text-gray-800">{user?.name}</span>
-					</div>
-				</header>
-
-				<main className="flex-1 max-w-7xl mx-auto w-screen lg:w-full px-2 sm:px-4 lg:px-8 py-8 overflow-x-hidden">
-					{/* Scope banner */}
-					<div className="mb-6 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-4 shadow-lg flex items-center justify-between flex-wrap gap-2">
+		<AdminShell user={user} orgName={orgName} active="dashboard">
+			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+				{/* Scope banner */}
+				<div className="mb-6 rounded-xl bg-gradient-to-r from-brand-600 to-brand-800 text-white px-6 py-4 shadow-lg flex items-center justify-between flex-wrap gap-2">
 						<div>
 							<p className="text-xs uppercase tracking-wide text-indigo-100">
 								{roleLabel(user?.role)}
@@ -983,41 +855,41 @@ const AdminDashboard = () => {
 					<motion.div
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
-						className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8 w-full max-w-full">
-						<div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-full overflow-x-auto">
-							<div className="flex items-center space-x-3">
-								<div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-									<FaUsers className="text-blue-600" />
+						className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8 w-full max-w-full">
+						<div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-6 w-full max-w-full overflow-x-auto">
+							<div className="flex items-center gap-4">
+								<div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center flex-shrink-0">
+									<FaUsers className="text-blue-600" size={18} />
 								</div>
 								<div>
-									<p className="text-sm text-gray-500">Total Students</p>
-									<p className="text-2xl font-bold text-gray-900">
+									<p className="text-sm text-gray-500 mb-0.5">Total Students</p>
+									<p className="font-display text-3xl font-bold text-gray-900 tabular-nums">
 										{stats.totalStudents}
 									</p>
 								</div>
 							</div>
 						</div>
-						<div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-full overflow-x-auto">
-							<div className="flex items-center space-x-3">
-								<div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-									<FaClipboardList className="text-green-600" />
+						<div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-6 w-full max-w-full overflow-x-auto">
+							<div className="flex items-center gap-4">
+								<div className="w-12 h-12 bg-emerald-50 rounded-xl flex items-center justify-center flex-shrink-0">
+									<FaClipboardList className="text-emerald-600" size={18} />
 								</div>
 								<div>
-									<p className="text-sm text-gray-500">Total Quizzes</p>
-									<p className="text-2xl font-bold text-gray-900">
+									<p className="text-sm text-gray-500 mb-0.5">Total Quizzes</p>
+									<p className="font-display text-3xl font-bold text-gray-900 tabular-nums">
 										{stats.totalQuizzes}
 									</p>
 								</div>
 							</div>
 						</div>
-						<div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-full overflow-x-auto">
-							<div className="flex items-center space-x-3">
-								<div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-									<FaChartBar className="text-purple-600" />
+						<div className="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow p-6 w-full max-w-full overflow-x-auto">
+							<div className="flex items-center gap-4">
+								<div className="w-12 h-12 bg-brand-50 rounded-xl flex items-center justify-center flex-shrink-0">
+									<FaChartBar className="text-brand-600" size={18} />
 								</div>
 								<div>
-									<p className="text-sm text-gray-500">Average Score</p>
-									<p className="text-2xl font-bold text-gray-900">
+									<p className="text-sm text-gray-500 mb-0.5">Average Score</p>
+									<p className="font-display text-3xl font-bold text-gray-900 tabular-nums">
 										{stats.averageScore}%
 									</p>
 								</div>
@@ -1030,16 +902,16 @@ const AdminDashboard = () => {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.1 }}
-						className="bg-white rounded-xl shadow-lg p-6 mb-8 w-full max-w-full overflow-x-auto">
+						className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8 w-full max-w-full overflow-x-auto">
 						<div className="flex justify-between items-center mb-6">
-							<h2 className="text-xl font-semibold text-gray-900">
+							<h2 className="font-display text-xl font-semibold text-gray-900">
 								Recent Quiz Results
 							</h2>
 							<div className="flex gap-3">
 								<button
 									onClick={handleRefresh}
 									disabled={isRefreshing}
-									className="flex items-center space-x-2 px-4 py-2 bg-indigo-50 text-indigo-600 rounded-lg hover:bg-indigo-100 transition-colors border border-indigo-200 disabled:opacity-50">
+									className="flex items-center space-x-2 px-4 py-2 bg-brand-50 text-brand-700 rounded-lg hover:bg-brand-100 transition-colors border border-brand-100 disabled:opacity-50">
 									<svg
 										className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`}
 										fill="none"
@@ -1052,7 +924,7 @@ const AdminDashboard = () => {
 								</button>
 								<button
 									onClick={() => setShowExportModal(true)}
-									className="flex items-center space-x-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
+									className="flex items-center space-x-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors shadow-sm">
 									<FaDownload size={14} />
 									<span>Export</span>
 								</button>
@@ -1161,9 +1033,9 @@ const AdminDashboard = () => {
 						initial={{ opacity: 0, y: 20 }}
 						animate={{ opacity: 1, y: 0 }}
 						transition={{ delay: 0.2 }}
-						className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-8 overflow-x-auto w-full max-w-full">
+						className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6 mb-8 overflow-x-auto w-full max-w-full">
 						<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
-							<h2 className="text-xl font-semibold text-gray-900">
+							<h2 className="font-display text-xl font-semibold text-gray-900">
 								Student Management
 							</h2>
 							<div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
@@ -1788,7 +1660,6 @@ const AdminDashboard = () => {
 							</div>
 						</div>
 					</motion.div>
-				</main>
 			</div>
 
 			{/* Student Detail Modal */}
@@ -2385,7 +2256,7 @@ const AdminDashboard = () => {
 					</div>
 				</div>
 			)}
-		</div>
+		</AdminShell>
 	);
 };
 

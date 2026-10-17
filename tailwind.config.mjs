@@ -8,7 +8,24 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "var(--font-sans)", "ui-sans-serif", "system-ui", "sans-serif"],
+      },
       colors: {
+        brand: {
+          50: "#f4f2ff",
+          100: "#ebe7ff",
+          200: "#d9d2ff",
+          300: "#bcaeff",
+          400: "#9b82ff",
+          500: "#7c52f7",
+          600: "#6b32ec",
+          700: "#5c24d1",
+          800: "#4c1fa9",
+          900: "#401d87",
+          950: "#260f54",
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {
