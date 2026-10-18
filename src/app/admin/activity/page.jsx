@@ -52,15 +52,19 @@ const AdminActivity = () => {
 				setOrgName(org?.name || "");
 			}
 
-			// RLS scopes this automatically: a legacy admin or a super_admin
-			// assigned to Region 70 sees everything, a province_admin sees
-			// only activity within their own province's subtree, etc. — same
-			// mechanism as every other scoped screen, nothing special here.
-			const { data, error: fetchError } = await supabase
-				.from("admin_activity_log")
-				.select("*")
-				.order("created_at", { ascending: false })
-				.limit(100);
+			// Uses get_scoped_admin_activity() rather than a plain table read.
+			// admin_activity_log's RLS policy scopes a super_admin via
+			// `org_id = any(my_scoped_org_ids())` evaluated through
+			// PostgREST — the exact request shape that was confirmed
+			// unreliable on production's gateway for the original
+			// cross-province leak (see 20240101000027 / get_scoped_students).
+			// This SECURITY DEFINER function does the same scoping check
+			// explicitly in its own body instead of leaning on the gateway
+			// to apply it.
+			const { data, error: fetchError } = await supabase.rpc("get_scoped_admin_activity", {
+				p_actor_id: null,
+				p_limit: 100,
+			});
 
 			if (fetchError) {
 				setError(fetchError.message);
