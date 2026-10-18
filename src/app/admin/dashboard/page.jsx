@@ -1165,7 +1165,7 @@ const AdminDashboard = () => {
 															<button
 																onClick={() =>
 																	router.push(
-																		`/admin/settings?tab=students&delete=${student.id}`
+																		`/admin/students?delete=${student.id}`
 																	)
 																}
 																className="p-1 text-red-600 hover:text-red-800">
@@ -1246,7 +1246,7 @@ const AdminDashboard = () => {
 													<button
 														onClick={() =>
 															router.push(
-																`/admin/settings?tab=students&delete=${student.id}`
+																`/admin/students?delete=${student.id}`
 															)
 														}
 														className="p-1 text-red-600 hover:text-red-800">

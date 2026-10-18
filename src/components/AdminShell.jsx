@@ -14,6 +14,8 @@ import {
 	FaBars,
 	FaTimes,
 	FaUser,
+	FaUsers,
+	FaChartBar,
 } from "react-icons/fa";
 
 // Shared sidebar + topbar shell for every admin-facing page. Each page
@@ -36,6 +38,8 @@ export default function AdminShell({ user, orgName, active, children }) {
 	const links = [
 		{ key: "dashboard", label: "Dashboard", icon: <FaTrophy />, href: "/admin/dashboard" },
 		{ key: "content", label: "Content Management", icon: <FaClipboardList />, href: "/admin/content" },
+		{ key: "students", label: "Student Management", icon: <FaUsers />, href: "/admin/students" },
+		{ key: "analytics", label: "Quiz Analytics", icon: <FaChartBar />, href: "/admin/analytics" },
 		{ key: "activity", label: "Admin Activity", icon: <FaHistory />, href: "/admin/activity" },
 		...(user?.role === "super_admin"
 			? [{ key: "manage-admins", label: "Admin Management", icon: <FaUserShield />, href: "/admin/manage-admins" }]

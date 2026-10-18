@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "../lib/supabase";
 import {
@@ -30,7 +30,14 @@ const withTimeout = (promise, ms) =>
 		),
 	]);
 
-const StudentManagement = () => {
+// initialEditId/initialDeleteId: the Dashboard's Delete button and the
+// Student Detail page's Edit button both deep-link here (now
+// /admin/students?delete=<id> / ?edit=<id>, previously
+// /admin/settings?tab=students&...). This component owns its own
+// edit/delete UI, so it's the one place that can actually open it —
+// the page just hands over which id to act on once its own student
+// list has loaded.
+const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 	const [students, setStudents] = useState([]);
 	const [quizResults, setQuizResults] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
@@ -46,6 +53,29 @@ const StudentManagement = () => {
 	useEffect(() => {
 		loadData();
 	}, []);
+
+	// Applies the deep-linked action once, the first time the target
+	// student actually shows up in a loaded list — guarded by a ref so
+	// closing the resulting form/modal doesn't reopen it on the next
+	// unrelated re-render.
+	const appliedInitialRef = useRef(false);
+	useEffect(() => {
+		if (appliedInitialRef.current || students.length === 0) return;
+		if (initialEditId) {
+			const target = students.find((s) => s.id === initialEditId);
+			if (target) {
+				setEditingStudent({ ...target });
+				appliedInitialRef.current = true;
+			}
+		} else if (initialDeleteId) {
+			const target = students.find((s) => s.id === initialDeleteId);
+			if (target) {
+				setStudentToDelete(target);
+				setShowDeleteModal(true);
+				appliedInitialRef.current = true;
+			}
+		}
+	}, [students, initialEditId, initialDeleteId]);
 
 	const loadData = async () => {
 		try {
