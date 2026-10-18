@@ -1724,6 +1724,12 @@ const AdminDashboard = () => {
 												{selectedStudent.denomination || "Not set"}
 											</span>
 										</div>
+										<div className="flex justify-between">
+											<span className="text-gray-600">Province:</span>
+											<span className="font-medium">
+												{selectedStudent.orgName || "Not assigned"}
+											</span>
+										</div>
 									</div>
 								</div>
 
