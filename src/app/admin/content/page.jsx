@@ -106,15 +106,27 @@ const ContentManagement = () => {
 	const [bulkText, setBulkText] = useState("");
 	const [bulkError, setBulkError] = useState("");
 	const [bulkSuccess, setBulkSuccess] = useState("");
-	const [bulkBusy, setBulkBusy] = useState(false);
 	const [addedFlash, setAddedFlash] = useState("");
-	// Real Quiz only (see handleBulkAdd): a quarter's new real-quiz
+	// Real Quiz only (see handleUploadBatch): a quarter's new real-quiz
 	// content has twice now landed on top of the previous quarter's
-	// questions instead of replacing them, because bulk import always
-	// just adds. Defaults to off every time the lesson changes so a
-	// Practice Lessons/Practice Entire Year import is never accidentally
+	// questions instead of replacing them, because upload always just
+	// added. Defaults to off every time the lesson changes so a Practice
+	// Lessons/Practice Entire Year upload is never accidentally
 	// destructive.
 	const [replaceExisting, setReplaceExisting] = useState(false);
+
+	// ---- Staged batch: nothing below hits the database until the admin
+	// explicitly clicks Upload. Single "Add to Batch" and pasted-JSON
+	// "Bulk Import" both just append drafts here, so the admin can look
+	// through everything — fix a typo, delete a bad entry — in one place
+	// before the one irreversible write. _localId is client-only, never
+	// sent to the database.
+	const [pendingQuestions, setPendingQuestions] = useState([]);
+	const [editingPendingId, setEditingPendingId] = useState(null);
+	const [editingPendingDraft, setEditingPendingDraft] = useState(null);
+	const [uploadBusy, setUploadBusy] = useState(false);
+	const [uploadError, setUploadError] = useState("");
+	const [uploadSuccess, setUploadSuccess] = useState("");
 
 	// ---- Access check + resolve which org this admin manages ----
 	useEffect(() => {
@@ -400,46 +412,76 @@ const ContentManagement = () => {
 	useEffect(() => {
 		loadQuestions();
 		setReplaceExisting(false);
+		setPendingQuestions([]);
+		setEditingPendingId(null);
+		setEditingPendingDraft(null);
 	}, [loadQuestions]);
 
-	const handleAddQuestion = async () => {
-		if (!newQuestion.question.trim() || !newQuestion.answer.trim()) {
-			setError("Question text and answer are required.");
-			return;
+	// Validates one question draft (shared by single-add, bulk-paste, and
+	// pending-batch edits) and returns the normalized {question, type,
+	// answer, options} on success, or null after setting `setErrorFn`.
+	const validateDraft = (draft, setErrorFn) => {
+		if (!draft.question?.trim() || !draft.answer?.trim()) {
+			setErrorFn("Question text and answer are required.");
+			return null;
 		}
-		const trimmedAnswer = newQuestion.answer.trim();
-		const trimmedOptions =
-			newQuestion.type === "multiple-choice"
-				? newQuestion.options.map((o) => o.trim()).filter(Boolean)
-				: null;
-		if (newQuestion.type === "multiple-choice") {
+		if (draft.type !== "multiple-choice" && draft.type !== "fill-in-the-blank") {
+			setErrorFn(`"type" must be exactly "multiple-choice" or "fill-in-the-blank" (got ${JSON.stringify(draft.type)}).`);
+			return null;
+		}
+		const trimmedAnswer = draft.answer.trim();
+		let trimmedOptions = null;
+		if (draft.type === "multiple-choice") {
+			trimmedOptions = (draft.options || []).map((o) => o.trim()).filter(Boolean);
 			if (trimmedOptions.length < 2) {
-				setError("Multiple choice needs at least 2 options filled in.");
-				return;
+				setErrorFn("Multiple choice needs at least 2 options filled in.");
+				return null;
 			}
 			if (!trimmedOptions.includes(trimmedAnswer)) {
-				setError('The correct answer must exactly match the text of one of the options — otherwise a student can never select it as correct.');
-				return;
+				setErrorFn('The correct answer must exactly match the text of one of the options — otherwise a student can never select it as correct.');
+				return null;
 			}
 		}
-		const row = {
-			lesson_id: selectedLessonId,
-			org_id: orgId,
-			category,
-			question: newQuestion.question.trim(),
-			type: newQuestion.type,
-			answer: trimmedAnswer,
-			options: trimmedOptions,
-		};
-		const { error: insertError } = await supabase.from("questions").insert(row);
-		if (insertError) {
-			setError(`Couldn't add question: ${insertError.message}`);
-			return;
-		}
+		return { question: draft.question.trim(), type: draft.type, answer: trimmedAnswer, options: trimmedOptions };
+	};
+
+	// Adds the one-at-a-time form to the staged batch below — NOT to the
+	// database. Nothing is written until the admin reviews the batch and
+	// clicks Upload.
+	const handleAddQuestion = () => {
+		const normalized = validateDraft(newQuestion, setError);
+		if (!normalized) return;
+		setPendingQuestions((prev) => [
+			...prev,
+			{ _localId: `local-${Date.now()}-${Math.random().toString(36).slice(2)}`, ...normalized },
+		]);
 		setNewQuestion({ question: "", type: "multiple-choice", options: ["", "", "", ""], answer: "" });
-		setAddedFlash("Question added.");
+		setAddedFlash("Added to the pending batch below — review it before uploading.");
 		setTimeout(() => setAddedFlash(""), 3000);
-		loadQuestions();
+	};
+
+	const startEditPending = (q) => {
+		setEditingPendingId(q._localId);
+		setEditingPendingDraft({ ...q, options: q.options ? [...q.options] : ["", "", "", ""] });
+	};
+
+	const cancelEditPending = () => {
+		setEditingPendingId(null);
+		setEditingPendingDraft(null);
+	};
+
+	const saveEditPending = () => {
+		const normalized = validateDraft(editingPendingDraft, setError);
+		if (!normalized) return;
+		setPendingQuestions((prev) =>
+			prev.map((p) => (p._localId === editingPendingId ? { ...p, ...normalized } : p))
+		);
+		cancelEditPending();
+	};
+
+	const handleDeletePending = (localId) => {
+		setPendingQuestions((prev) => prev.filter((p) => p._localId !== localId));
+		if (editingPendingId === localId) cancelEditPending();
 	};
 
 	const handleDeleteQuestion = async (id) => {
@@ -452,7 +494,10 @@ const ContentManagement = () => {
 		loadQuestions();
 	};
 
-	const handleBulkAdd = async () => {
+	// Parses the pasted JSON and appends every entry to the staged batch
+	// below — NOT to the database. The actual write happens only in
+	// handleUploadBatch, once the admin has reviewed the combined batch.
+	const handleBulkAdd = () => {
 		setBulkError("");
 		let parsed;
 		try {
@@ -466,56 +511,62 @@ const ContentManagement = () => {
 			return;
 		}
 
-		// Checked client-side, not left to the database: one bad "type"
-		// value would otherwise fail the table's CHECK constraint and
-		// reject the WHOLE batch, including every valid entry in it —
-		// better to point at the exact broken entry before sending anything.
+		// Checked client-side so the exact broken entry can be pointed out
+		// before anything is even staged, rather than discovering it only
+		// once the whole batch is reviewed.
+		const drafts = [];
 		for (let i = 0; i < parsed.length; i++) {
 			const q = parsed[i];
-			if (!q.question || !q.answer) {
-				setBulkError(`Entry ${i + 1} is missing "question" or "answer".`);
-				return;
-			}
-			if (q.type !== "multiple-choice" && q.type !== "fill-in-the-blank") {
-				setBulkError(`Entry ${i + 1}: "type" must be exactly "multiple-choice" or "fill-in-the-blank" (got ${JSON.stringify(q.type)}).`);
-				return;
-			}
-			if (q.type === "multiple-choice") {
-				if (!Array.isArray(q.options) || q.options.length < 2) {
-					setBulkError(`Entry ${i + 1}: multiple-choice needs an "options" array with at least 2 choices.`);
-					return;
-				}
-				if (!q.options.includes(q.answer)) {
-					setBulkError(`Entry ${i + 1}: "answer" (${JSON.stringify(q.answer)}) must exactly match one of the "options" — students pick from those options, a mismatched answer can never be selected as correct.`);
-					return;
-				}
-			}
+			const normalized = validateDraft(q, (msg) => setBulkError(`Entry ${i + 1}: ${msg}`));
+			if (!normalized) return;
+			drafts.push({
+				_localId: `local-${Date.now()}-${i}-${Math.random().toString(36).slice(2)}`,
+				...normalized,
+			});
 		}
 
-		// Real Quiz only: replacing means the previous batch is gone for
-		// good, so this is the one bulk-import path that gets its own
-		// explicit confirmation on top of the checkbox already being an
-		// opt-in — see the replaceExisting state declaration for why this
-		// exists at all.
-		if (mode === "real" && replaceExisting && questions.length > 0) {
-			const confirmed = window.confirm(
-				`This will permanently delete the existing ${questions.length} Real Quiz question(s) before adding the new ${parsed.length}. This can't be undone. Continue?`
-			);
-			if (!confirmed) return;
-		}
+		setPendingQuestions((prev) => [...prev, ...drafts]);
+		setBulkText("");
+		setBulkSuccess(
+			`Added ${drafts.length} question${drafts.length === 1 ? "" : "s"} to the pending batch below — review before uploading.`
+		);
+		setTimeout(() => setBulkSuccess(""), 4000);
+	};
 
-		setBulkBusy(true);
+	// The one write to the database for everything staged above. Gated by
+	// an explicit warning because, once uploaded, students may see these
+	// questions immediately and the admin side has no undo/edit for a
+	// mistake past this point — only the technical/development team can
+	// fix it after the fact.
+	const handleUploadBatch = async () => {
+		if (pendingQuestions.length === 0) return;
 
-		if (mode === "real" && replaceExisting && questions.length > 0) {
+		const willReplace = mode === "real" && replaceExisting && questions.length > 0;
+		const warning = [
+			`You're about to upload ${pendingQuestions.length} question${pendingQuestions.length === 1 ? "" : "s"} to "${orgName}".`,
+			willReplace
+				? `This will also permanently DELETE the existing ${questions.length} Real Quiz question${questions.length === 1 ? "" : "s"} first — that can't be undone.`
+				: null,
+			"Once uploaded, students may see these questions right away, and this screen can no longer correct them — only the technical/development team can fix a mistake after this point.",
+			"Make sure every question, option, and answer has been checked. Continue?",
+		]
+			.filter(Boolean)
+			.join("\n\n");
+		if (!window.confirm(warning)) return;
+
+		setUploadBusy(true);
+		setUploadError("");
+
+		if (willReplace) {
 			const { error: deleteError } = await supabase.from("questions").delete().eq("lesson_id", selectedLessonId);
 			if (deleteError) {
-				setBulkBusy(false);
-				setBulkError(`Couldn't clear the existing questions first: ${deleteError.message}`);
+				setUploadBusy(false);
+				setUploadError(`Couldn't clear the existing questions first: ${deleteError.message}`);
 				return;
 			}
 		}
 
-		const rows = parsed.map((q) => ({
+		const rows = pendingQuestions.map((q) => ({
 			lesson_id: selectedLessonId,
 			org_id: orgId,
 			category,
@@ -525,19 +576,19 @@ const ContentManagement = () => {
 			options: q.type === "multiple-choice" ? q.options || [] : null,
 		}));
 		const { error: insertError } = await supabase.from("questions").insert(rows);
-		setBulkBusy(false);
+		setUploadBusy(false);
 		if (insertError) {
-			setBulkError(`Import failed: ${insertError.message}`);
+			setUploadError(`Upload failed: ${insertError.message}`);
 			return;
 		}
-		setBulkText("");
+		setPendingQuestions([]);
 		setReplaceExisting(false);
-		setBulkSuccess(
-			mode === "real" && replaceExisting
+		setUploadSuccess(
+			willReplace
 				? `Replaced the old pool — now ${rows.length} question${rows.length === 1 ? "" : "s"}.`
-				: `Imported ${rows.length} question${rows.length === 1 ? "" : "s"} successfully.`
+				: `Uploaded ${rows.length} question${rows.length === 1 ? "" : "s"} successfully.`
 		);
-		setTimeout(() => setBulkSuccess(""), 4000);
+		setTimeout(() => setUploadSuccess(""), 4000);
 		loadQuestions();
 	};
 
@@ -797,7 +848,9 @@ const ContentManagement = () => {
 					{/* Questions */}
 					<div className="bg-white rounded-xl shadow p-4">
 						<h3 className="font-semibold text-gray-800 mb-3">
-							{mode === "real" ? `Real Quiz Questions — ${CATEGORIES.find((c) => c.value === category)?.label}` : "Questions"}
+							{mode === "real"
+								? `Uploaded Real Quiz Questions — ${CATEGORIES.find((c) => c.value === category)?.label}`
+								: `Uploaded Questions (${questions.length})`}
 						</h3>
 						{!selectedLessonId ? (
 							<p className="text-sm text-gray-400">
@@ -821,8 +874,12 @@ const ContentManagement = () => {
 										</div>
 									))}
 								</div>
+								<p className="text-xs text-gray-400 mb-3">
+									Already live — deleting here is immediate, not part of the staged batch below.
+								</p>
 
 								<div className="border-t pt-3 space-y-1">
+									<p className="text-xs font-medium text-gray-600">1. Create a question</p>
 									<input
 										type="text"
 										value={newQuestion.question}
@@ -876,10 +933,128 @@ const ContentManagement = () => {
 									<button
 										onClick={handleAddQuestion}
 										className="w-full px-3 py-1.5 bg-brand-600 text-white rounded-lg hover:bg-brand-700 text-sm flex items-center justify-center gap-1">
-										<FaPlus size={12} /> Add Question
+										<FaPlus size={12} /> Add to Batch
 									</button>
 									{addedFlash && (
 										<p className="text-xs text-green-600 font-medium">{addedFlash}</p>
+									)}
+								</div>
+
+								{/* Step 2: review. Nothing here is in the database yet — every
+								    entry (from the form above or the JSON paste below) lands in
+								    this list first, where it can be fixed or removed before the
+								    one upload click at the bottom commits it for real. */}
+								<div className="border-t pt-3 mt-3">
+									<p className="text-xs font-medium text-gray-600 mb-1">
+										2. Review the pending batch ({pendingQuestions.length})
+									</p>
+									{pendingQuestions.length === 0 ? (
+										<p className="text-xs text-gray-400 mb-2">
+											Nothing staged yet — questions you create or paste will show up here for review before upload.
+										</p>
+									) : (
+										<div className="space-y-1 mb-2 max-h-72 overflow-y-auto">
+											{pendingQuestions.map((q) => (
+												<div key={q._localId} className="rounded-lg border border-brand-200 bg-brand-50/60 p-2 text-sm">
+													{editingPendingId === q._localId ? (
+														<div className="space-y-1">
+															<input
+																type="text"
+																value={editingPendingDraft.question}
+																onChange={(e) =>
+																	setEditingPendingDraft({ ...editingPendingDraft, question: e.target.value })
+																}
+																placeholder="Question text"
+																className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+															/>
+															<select
+																value={editingPendingDraft.type}
+																onChange={(e) => {
+																	const type = e.target.value;
+																	setEditingPendingDraft({
+																		...editingPendingDraft,
+																		type,
+																		options:
+																			type === "multiple-choice"
+																				? editingPendingDraft.options?.length
+																					? editingPendingDraft.options
+																					: ["", "", "", ""]
+																				: editingPendingDraft.options,
+																	});
+																}}
+																className="w-full px-2 py-1 border border-gray-300 rounded text-sm">
+																<option value="multiple-choice">Multiple choice</option>
+																<option value="fill-in-the-blank">Fill in the blank</option>
+															</select>
+															{editingPendingDraft.type === "multiple-choice" &&
+																(editingPendingDraft.options?.length ? editingPendingDraft.options : ["", "", "", ""]).map(
+																	(opt, i) => (
+																		<input
+																			key={i}
+																			type="text"
+																			value={opt}
+																			onChange={(e) => {
+																				const options = [
+																					...(editingPendingDraft.options?.length
+																						? editingPendingDraft.options
+																						: ["", "", "", ""]),
+																				];
+																				options[i] = e.target.value;
+																				setEditingPendingDraft({ ...editingPendingDraft, options });
+																			}}
+																			placeholder={`Option ${i + 1}`}
+																			className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+																		/>
+																	)
+																)}
+															<input
+																type="text"
+																value={editingPendingDraft.answer}
+																onChange={(e) =>
+																	setEditingPendingDraft({ ...editingPendingDraft, answer: e.target.value })
+																}
+																placeholder="Correct answer"
+																className="w-full px-2 py-1 border border-gray-300 rounded text-sm"
+															/>
+															<div className="flex gap-1">
+																<button
+																	onClick={saveEditPending}
+																	className="flex-1 px-2 py-1 bg-brand-600 text-white rounded text-xs hover:bg-brand-700">
+																	Save Fix
+																</button>
+																<button
+																	onClick={cancelEditPending}
+																	className="flex-1 px-2 py-1 bg-gray-200 text-gray-700 rounded text-xs hover:bg-gray-300">
+																	Cancel
+																</button>
+															</div>
+														</div>
+													) : (
+														<div className="flex items-start justify-between gap-2">
+															<div className="min-w-0">
+																<p className="truncate">{q.question}</p>
+																<p className="text-xs text-gray-500 truncate">
+																	Answer: {q.answer}
+																	{q.options?.length ? ` · Options: ${q.options.join(", ")}` : ""}
+																</p>
+															</div>
+															<div className="flex items-center gap-2 flex-shrink-0">
+																<button
+																	onClick={() => startEditPending(q)}
+																	className="text-brand-600 hover:text-brand-800 text-xs font-medium">
+																	Edit
+																</button>
+																<button
+																	onClick={() => handleDeletePending(q._localId)}
+																	className="text-red-400 hover:text-red-600">
+																	<FaTrash size={12} />
+																</button>
+															</div>
+														</div>
+													)}
+												</div>
+											))}
+										</div>
 									)}
 								</div>
 
@@ -895,14 +1070,14 @@ const ContentManagement = () => {
 												/>
 												<span>
 													<strong>This Real Quiz pool already has {questions.length} question{questions.length === 1 ? "" : "s"}.</strong>{" "}
-													By default, a bulk import <strong>adds</strong> to them, not replaces them — check this box
-													to delete the existing {questions.length} first (e.g. when uploading a brand new quarter's quiz).
+													By default, uploading <strong>adds</strong> to them, not replaces them — check this box
+													to delete the existing {questions.length} first when you upload (e.g. a brand new quarter's quiz).
 												</span>
 											</label>
 										</div>
 									)}
 									<p className="text-xs font-medium text-gray-600 mb-1">
-										Bulk add (paste a JSON array)
+										Or paste a JSON array to add many at once to the batch above
 									</p>
 									<div className="text-xs text-gray-400 mb-1.5 space-y-0.5">
 										<p>
@@ -959,22 +1134,42 @@ const ContentManagement = () => {
 									{bulkError && <p className="text-xs text-red-600 mt-1">{bulkError}</p>}
 									<button
 										onClick={handleBulkAdd}
-										disabled={bulkBusy || !bulkText.trim()}
-										className={`w-full mt-1 px-3 py-1.5 text-white rounded-lg text-sm disabled:opacity-50 ${
-											mode === "real" && replaceExisting
-												? "bg-red-600 hover:bg-red-700"
-												: "bg-gray-700 hover:bg-gray-800"
-										}`}>
-										{bulkBusy
-											? mode === "real" && replaceExisting
-												? "Replacing..."
-												: "Importing..."
-											: mode === "real" && replaceExisting
-											? `Replace ${questions.length} Question${questions.length === 1 ? "" : "s"}`
-											: "Bulk Import"}
+										disabled={!bulkText.trim()}
+										className="w-full mt-1 px-3 py-1.5 bg-gray-700 text-white rounded-lg hover:bg-gray-800 text-sm disabled:opacity-50">
+										Add to Batch
 									</button>
 									{bulkSuccess && (
 										<p className="text-xs text-green-600 font-medium mt-1">{bulkSuccess}</p>
+									)}
+								</div>
+
+								{/* Step 3: the one actual write. Everything above is local
+								    state — this is the only place anything in this screen
+								    touches the database, which is why it carries its own
+								    explicit confirmation on top of being disabled until
+								    there's something staged to send. */}
+								<div className="border-t pt-3 mt-3">
+									<p className="text-xs font-medium text-gray-600 mb-1">3. Upload</p>
+									<p className="text-xs text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-2 mb-2">
+										Double-check every question above first. Once uploaded, this screen can't correct a mistake — only the technical/development team can, after the fact.
+									</p>
+									{uploadError && <p className="text-xs text-red-600 mb-1">{uploadError}</p>}
+									<button
+										onClick={handleUploadBatch}
+										disabled={uploadBusy || pendingQuestions.length === 0}
+										className={`w-full px-3 py-1.5 text-white rounded-lg text-sm font-medium disabled:opacity-50 ${
+											mode === "real" && replaceExisting
+												? "bg-red-600 hover:bg-red-700"
+												: "bg-green-600 hover:bg-green-700"
+										}`}>
+										{uploadBusy
+											? "Uploading..."
+											: mode === "real" && replaceExisting
+											? `Replace & Upload ${pendingQuestions.length} Question${pendingQuestions.length === 1 ? "" : "s"}`
+											: `Upload ${pendingQuestions.length} Question${pendingQuestions.length === 1 ? "" : "s"}`}
+									</button>
+									{uploadSuccess && (
+										<p className="text-xs text-green-600 font-medium mt-1">{uploadSuccess}</p>
 									)}
 								</div>
 							</>
