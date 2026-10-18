@@ -20,6 +20,8 @@ import {
 	FaTimes,
 	FaHistory,
 	FaExclamationTriangle,
+	FaChevronDown,
+	FaChevronRight,
 } from "react-icons/fa";
 
 const withTimeout = (promise, ms) =>
@@ -63,6 +65,18 @@ const AdminDashboard = () => {
 	const [editingStudent, setEditingStudent] = useState(null);
 	const [showExportModal, setShowExportModal] = useState(false);
 	const [isRefreshing, setIsRefreshing] = useState(false);
+	// Which province sections are collapsed, keyed by org name — a
+	// super_admin can have dozens of students across several provinces in
+	// one flat list otherwise, with no way to focus on just one.
+	const [collapsedOrgs, setCollapsedOrgs] = useState(new Set());
+	const toggleOrgCollapsed = (orgName) => {
+		setCollapsedOrgs((prev) => {
+			const next = new Set(prev);
+			if (next.has(orgName)) next.delete(orgName);
+			else next.add(orgName);
+			return next;
+		});
+	};
 	const router = useRouter();
 
 	const extractAttempts = (results) => {
@@ -427,8 +441,8 @@ const AdminDashboard = () => {
 	const studentTableGroups = [];
 	if (isSuperAdminView) {
 		sortedOrgNames.forEach((orgName) => {
-			studentTableGroups.push({ type: "org", key: `org-${orgName}`, label: orgName });
 			const studentsInOrg = groupedByOrg[orgName];
+			studentTableGroups.push({ type: "org", key: `org-${orgName}`, label: orgName, count: studentsInOrg.length });
 			const byClass = {};
 			studentsInOrg.forEach((s) => {
 				const cls = (s.class || "Other").toLowerCase();
@@ -442,7 +456,7 @@ const AdminDashboard = () => {
 					.sort(),
 			];
 			classesInOrg.forEach((cls) => {
-				studentTableGroups.push({ type: "class", key: `${orgName}-${cls}`, label: cls, students: byClass[cls] });
+				studentTableGroups.push({ type: "class", key: `${orgName}-${cls}`, label: cls, students: byClass[cls], org: orgName });
 			});
 		});
 	} else {
@@ -1094,13 +1108,24 @@ const AdminDashboard = () => {
 									{studentTableGroups.map((group) =>
 										group.type === "org" ? (
 											<tr key={group.key}>
-												<td
-													colSpan={8}
-													className="bg-indigo-700 text-white font-bold py-2 px-4 text-lg">
-													{group.label}
+												<td colSpan={8} className="p-0">
+													<button
+														type="button"
+														onClick={() => toggleOrgCollapsed(group.label)}
+														className="w-full flex items-center gap-2 bg-indigo-700 text-white font-bold py-2 px-4 text-lg hover:bg-indigo-800 transition-colors">
+														{collapsedOrgs.has(group.label) ? (
+															<FaChevronRight size={14} />
+														) : (
+															<FaChevronDown size={14} />
+														)}
+														{group.label}
+														<span className="ml-auto text-sm font-normal text-indigo-200">
+															{group.count} student{group.count === 1 ? "" : "s"}
+														</span>
+													</button>
 												</td>
 											</tr>
-										) : (
+										) : collapsedOrgs.has(group.org) ? null : (
 										<React.Fragment key={group.key}>
 											<tr key={`heading-${group.key}`}>
 												<td
@@ -1185,12 +1210,22 @@ const AdminDashboard = () => {
 							<div className="md:hidden space-y-4 w-full max-w-full">
 								{studentTableGroups.map((group) =>
 									group.type === "org" ? (
-										<div
+										<button
+											type="button"
 											key={group.key}
-											className="bg-indigo-700 text-white font-bold py-2 px-4 text-lg rounded-lg mb-2">
+											onClick={() => toggleOrgCollapsed(group.label)}
+											className="w-full flex items-center gap-2 bg-indigo-700 text-white font-bold py-2 px-4 text-lg rounded-lg mb-2">
+											{collapsedOrgs.has(group.label) ? (
+												<FaChevronRight size={14} />
+											) : (
+												<FaChevronDown size={14} />
+											)}
 											{group.label}
-										</div>
-									) : (
+											<span className="ml-auto text-sm font-normal text-indigo-200">
+												{group.count} student{group.count === 1 ? "" : "s"}
+											</span>
+										</button>
+									) : collapsedOrgs.has(group.org) ? null : (
 									<div
 										key={group.key}
 										className="mb-2 w-full max-w-full">

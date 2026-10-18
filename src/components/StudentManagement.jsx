@@ -19,6 +19,8 @@ import {
 	FaExclamationTriangle,
 	FaCheck,
 	FaTimes as FaTimesIcon,
+	FaChevronDown,
+	FaChevronRight,
 } from "react-icons/fa";
 import { FaTrophy, FaHistory, FaChartBar } from "react-icons/fa";
 
@@ -49,6 +51,22 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 	const [showStudentDetails, setShowStudentDetails] = useState(false);
 	const [loading, setLoading] = useState(true);
 	const [loadError, setLoadError] = useState(false);
+	// A super_admin oversees every province at once, so their list is
+	// grouped by province (collapsible — otherwise students from
+	// different provinces sit in one flat list with no way to tell them
+	// apart, flagged directly by a user screenshot). A province_admin
+	// only ever sees their own single province, so grouping would just
+	// be one redundant header.
+	const [viewerIsSuperAdmin, setViewerIsSuperAdmin] = useState(false);
+	const [collapsedOrgs, setCollapsedOrgs] = useState(new Set());
+	const toggleOrgCollapsed = (orgName) => {
+		setCollapsedOrgs((prev) => {
+			const next = new Set(prev);
+			if (next.has(orgName)) next.delete(orgName);
+			else next.add(orgName);
+			return next;
+		});
+	};
 
 	useEffect(() => {
 		loadData();
@@ -81,10 +99,34 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 		try {
 			setLoading(true);
 			setLoadError(false);
+
+			const {
+				data: { user },
+			} = await withTimeout(supabase.auth.getUser(), 10000);
+			let isSuperAdmin = false;
+			if (user) {
+				const { data: viewerProfile } = await supabase
+					.from("users_profile")
+					.select("role")
+					.eq("id", user.id)
+					.single();
+				isSuperAdmin = viewerProfile?.role === "super_admin";
+			}
+			setViewerIsSuperAdmin(isSuperAdmin);
+
 			// Uses the scoped RPCs rather than plain table reads — see the
 			// note in admin/dashboard/page.jsx's loadDashboardData for why.
 			const { data: studentsData } = await withTimeout(supabase.rpc("get_scoped_students"), 10000);
 			const { data: quizData } = await withTimeout(supabase.rpc("get_scoped_quiz_results"), 10000);
+
+			let orgNameById = {};
+			if (isSuperAdmin) {
+				const orgIds = [...new Set((studentsData || []).map((s) => s.org_id).filter(Boolean))];
+				if (orgIds.length > 0) {
+					const { data: orgsData } = await supabase.from("organizations").select("id, name").in("id", orgIds);
+					orgNameById = Object.fromEntries((orgsData || []).map((o) => [o.id, o.name]));
+				}
+			}
 
 			// Calculate submission counts for each student based on the unified row
 			const studentsWithCounts =
@@ -106,7 +148,12 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 						if (resultRow.practice_entire_total > 0) submissionCount++;
 					});
 
-					return { ...student, submissionCount, realScore };
+					return {
+						...student,
+						submissionCount,
+						realScore,
+						orgName: isSuperAdmin ? (student.org_id ? orgNameById[student.org_id] || "Unassigned" : "Unassigned") : null,
+					};
 				}) || [];
 
 			setStudents(studentsWithCounts);
@@ -222,6 +269,16 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 		return matchesSearch && matchesFilter;
 	});
 
+	// Grouped by province for a super_admin (collapsible); everyone else
+	// gets a single unlabeled group, same flat list as before.
+	const groupedByOrg = {};
+	filteredStudents.forEach((student) => {
+		const org = viewerIsSuperAdmin ? student.orgName || "Unassigned" : "__all__";
+		if (!groupedByOrg[org]) groupedByOrg[org] = [];
+		groupedByOrg[org].push(student);
+	});
+	const groupedOrgNames = viewerIsSuperAdmin ? Object.keys(groupedByOrg).sort() : Object.keys(groupedByOrg);
+
 	if (loadError) {
 		return (
 			<div className="flex items-center justify-center py-8">
@@ -304,7 +361,34 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 							</tr>
 						</thead>
 						<tbody>
-							{filteredStudents.map((student) => (
+							{groupedOrgNames.flatMap((orgName) => {
+								const rows = [];
+								if (viewerIsSuperAdmin) {
+									rows.push(
+										<tr key={`org-${orgName}`}>
+											<td colSpan={6} className="p-0">
+												<button
+													type="button"
+													onClick={() => toggleOrgCollapsed(orgName)}
+													className="w-full flex items-center gap-2 bg-indigo-700 text-white font-bold py-2 px-4 text-base hover:bg-indigo-800 transition-colors">
+													{collapsedOrgs.has(orgName) ? (
+														<FaChevronRight size={12} />
+													) : (
+														<FaChevronDown size={12} />
+													)}
+													{orgName}
+													<span className="ml-auto text-xs font-normal text-indigo-200">
+														{groupedByOrg[orgName].length} student
+														{groupedByOrg[orgName].length === 1 ? "" : "s"}
+													</span>
+												</button>
+											</td>
+										</tr>
+									);
+								}
+								if (viewerIsSuperAdmin && collapsedOrgs.has(orgName)) return rows;
+								groupedByOrg[orgName].forEach((student) => {
+									rows.push(
 								<tr
 									key={student.id}
 									className="border-b border-gray-100 hover:bg-gray-50">
@@ -443,16 +527,42 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 										</div>
 									</td>
 								</tr>
-							))}
+									);
+								});
+								return rows;
+							})}
 						</tbody>
 					</table>
 				</div>
 
 				{/* Mobile cards */}
 				<div className="md:hidden divide-y divide-gray-100">
-					{filteredStudents.map((student) => {
+					{groupedOrgNames.flatMap((orgName) => {
+						const cards = [];
+						if (viewerIsSuperAdmin) {
+							cards.push(
+								<button
+									type="button"
+									key={`org-${orgName}`}
+									onClick={() => toggleOrgCollapsed(orgName)}
+									className="w-full flex items-center gap-2 bg-indigo-700 text-white font-bold py-2 px-4 text-base">
+									{collapsedOrgs.has(orgName) ? (
+										<FaChevronRight size={12} />
+									) : (
+										<FaChevronDown size={12} />
+									)}
+									{orgName}
+									<span className="ml-auto text-xs font-normal text-indigo-200">
+										{groupedByOrg[orgName].length} student
+										{groupedByOrg[orgName].length === 1 ? "" : "s"}
+									</span>
+								</button>
+							);
+						}
+						if (viewerIsSuperAdmin && collapsedOrgs.has(orgName)) return cards;
+						groupedByOrg[orgName].forEach((student) => {
 						const isEditing = editingStudent?.id === student.id;
-						return (
+						cards.push(
 							<div key={student.id} className="p-4">
 								{isEditing ? (
 									<div className="space-y-2">
@@ -548,6 +658,8 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 								)}
 							</div>
 						);
+					});
+					return cards;
 					})}
 				</div>
 			</div>
