@@ -259,39 +259,48 @@ function AdminSettingsInner() {
 					initial={{ opacity: 0, y: 20 }}
 					animate={{ opacity: 1, y: 0 }}
 					className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-8">
-					<div className="flex space-x-1 bg-gray-100 p-1 rounded-lg">
+					<div className="grid grid-cols-3 gap-1 bg-gray-100 p-1 rounded-lg">
 						<button
 							onClick={() => setActiveTab("students")}
-							className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+							className={`flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 py-2 px-1 sm:px-4 rounded-md font-medium text-xs sm:text-sm transition-colors min-w-0 ${
 								activeTab === "students"
 									? "bg-white text-brand-600 shadow-sm"
 									: "text-gray-600 hover:text-gray-900"
 							}`}>
-							<FaUsers className="inline mr-2" />
-							Student Management
+							<FaUsers className="flex-shrink-0" />
+							<span className="truncate">
+								<span className="sm:hidden">Students</span>
+								<span className="hidden sm:inline">Student Management</span>
+							</span>
 						</button>
 						<button
 							onClick={() => setActiveTab("analytics")}
-							className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
+							className={`flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 py-2 px-1 sm:px-4 rounded-md font-medium text-xs sm:text-sm transition-colors min-w-0 ${
 								activeTab === "analytics"
 									? "bg-white text-brand-600 shadow-sm"
 									: "text-gray-600 hover:text-gray-900"
 							}`}>
-								<FaChartBar className="inline mr-2" />
-								Quiz Analytics
-							</button>
-							<button
-								onClick={() => setActiveTab("system")}
-								className={`flex-1 py-2 px-4 rounded-md font-medium transition-colors ${
-									activeTab === "system"
-										? "bg-white text-brand-600 shadow-sm"
-										: "text-gray-600 hover:text-gray-900"
-								}`}>
-								<FaShieldAlt className="inline mr-2" />
-								System Settings
-							</button>
-						</div>
-					</motion.div>
+							<FaChartBar className="flex-shrink-0" />
+							<span className="truncate">
+								<span className="sm:hidden">Analytics</span>
+								<span className="hidden sm:inline">Quiz Analytics</span>
+							</span>
+						</button>
+						<button
+							onClick={() => setActiveTab("system")}
+							className={`flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-2 py-2 px-1 sm:px-4 rounded-md font-medium text-xs sm:text-sm transition-colors min-w-0 ${
+								activeTab === "system"
+									? "bg-white text-brand-600 shadow-sm"
+									: "text-gray-600 hover:text-gray-900"
+							}`}>
+							<FaShieldAlt className="flex-shrink-0" />
+							<span className="truncate">
+								<span className="sm:hidden">Settings</span>
+								<span className="hidden sm:inline">System Settings</span>
+							</span>
+						</button>
+					</div>
+				</motion.div>
 
 					{/* Student Management Tab */}
 					{activeTab === "students" && <StudentManagement />}

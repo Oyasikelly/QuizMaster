@@ -250,7 +250,7 @@ const StudentManagement = () => {
 			{/* Students Table */}
 			<div className="bg-white rounded-xl shadow-lg overflow-hidden">
 				<div className="overflow-x-auto">
-					<table className="w-full">
+					<table className="hidden md:table w-full">
 						<thead className="bg-gray-50">
 							<tr>
 								<th className="text-left py-3 px-4 font-medium text-gray-900">
@@ -416,6 +416,109 @@ const StudentManagement = () => {
 							))}
 						</tbody>
 					</table>
+				</div>
+
+				{/* Mobile cards */}
+				<div className="md:hidden divide-y divide-gray-100">
+					{filteredStudents.map((student) => {
+						const isEditing = editingStudent?.id === student.id;
+						return (
+							<div key={student.id} className="p-4">
+								{isEditing ? (
+									<div className="space-y-2">
+										<input
+											type="text"
+											value={editingStudent.name}
+											onChange={(e) => setEditingStudent({ ...editingStudent, name: e.target.value })}
+											placeholder="Name"
+											className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500"
+										/>
+										<input
+											type="email"
+											value={editingStudent.email}
+											onChange={(e) => setEditingStudent({ ...editingStudent, email: e.target.value })}
+											placeholder="Email"
+											className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500"
+										/>
+										<select
+											value={editingStudent.class || ""}
+											onChange={(e) => setEditingStudent({ ...editingStudent, class: e.target.value })}
+											className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500">
+											<option value="">Select Class</option>
+											<option value="yaya">Yaya</option>
+											<option value="adult">Adult</option>
+											<option value="adults">Adults</option>
+										</select>
+										<input
+											type="text"
+											value={editingStudent.denomination || ""}
+											onChange={(e) => setEditingStudent({ ...editingStudent, denomination: e.target.value })}
+											placeholder="Denomination"
+											className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500"
+										/>
+										<div className="flex gap-2 pt-1">
+											<button
+												onClick={handleSaveStudent}
+												className="flex-1 flex items-center justify-center gap-1 py-2 bg-green-600 text-white rounded-lg text-sm font-medium">
+												<FaSave size={12} /> Save
+											</button>
+											<button
+												onClick={() => setEditingStudent(null)}
+												className="flex-1 flex items-center justify-center gap-1 py-2 bg-gray-200 text-gray-700 rounded-lg text-sm font-medium">
+												<FaTimesIcon size={12} /> Cancel
+											</button>
+										</div>
+									</div>
+								) : (
+									<>
+										<div className="flex items-center gap-3 mb-2">
+											<div className="w-9 h-9 bg-gradient-to-r from-blue-500 to-brand-600 rounded-full flex items-center justify-center flex-shrink-0">
+												<span className="text-white text-sm font-medium">
+													{student.name?.charAt(0) || "U"}
+												</span>
+											</div>
+											<div className="min-w-0">
+												<p className="font-medium text-gray-900 truncate">{student.name}</p>
+												<p className="text-xs text-gray-500 truncate">{student.email}</p>
+											</div>
+										</div>
+										<div className="flex flex-wrap gap-2 text-xs mb-3">
+											<span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">
+												{student.class || "Class not set"}
+											</span>
+											<span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">
+												{student.denomination || "Denomination not set"}
+											</span>
+											<span className="flex items-center gap-1 bg-yellow-50 text-yellow-700 px-2 py-1 rounded">
+												<FaTrophy size={10} className={student.realScore !== null ? "text-yellow-500" : "text-gray-400"} />
+												{student.realScore !== null ? `${student.realScore}%` : "Not Taken"}
+											</span>
+										</div>
+										<div className="flex gap-3">
+											<button
+												onClick={() => handleViewStudent(student)}
+												className="flex items-center gap-1 text-brand-600 text-sm font-medium">
+												<FaEye size={14} /> View
+											</button>
+											<button
+												onClick={() => handleEditStudent(student)}
+												className="flex items-center gap-1 text-blue-600 text-sm font-medium">
+												<FaEdit size={14} /> Edit
+											</button>
+											<button
+												onClick={() => {
+													setStudentToDelete(student);
+													setShowDeleteModal(true);
+												}}
+												className="flex items-center gap-1 text-red-600 text-sm font-medium">
+												<FaTrash size={14} /> Delete
+											</button>
+										</div>
+									</>
+								)}
+							</div>
+						);
+					})}
 				</div>
 			</div>
 

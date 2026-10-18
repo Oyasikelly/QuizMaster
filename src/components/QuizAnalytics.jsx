@@ -191,6 +191,36 @@ const QuizAnalytics = () => {
 	const performanceDistribution = getPerformanceDistribution(allAttempts);
 	const topPerformers = getTopPerformers(allAttempts);
 
+	// Was a visible button with no onClick at all.
+	const handleExportData = () => {
+		if (allAttempts.length === 0) return;
+		const headers = ["Student", "Score", "Mode", "Questions", "Date", "Performance"];
+		const rows = allAttempts.map((result) => {
+			const student = students.find((s) => s.id === result.student_id);
+			const percentage = Math.round((result.score / result.total_questions) * 100);
+			const performance = percentage >= 80 ? "Excellent" : percentage >= 60 ? "Good" : "Needs Improvement";
+			return [
+				student?.name || "Unknown Student",
+				`${result.score}/${result.total_questions}`,
+				result.mode,
+				result.total_questions,
+				new Date(result.timestamp).toLocaleDateString(),
+				performance,
+			];
+		});
+		let csvContent = "data:text/csv;charset=utf-8,";
+		csvContent += headers.join(",") + "\n";
+		rows.forEach((row) => {
+			csvContent += row.map((v) => `"${String(v).replace(/"/g, '""')}"`).join(",") + "\n";
+		});
+		const link = document.createElement("a");
+		link.setAttribute("href", encodeURI(csvContent));
+		link.setAttribute("download", `quiz-analytics-${new Date().toISOString().split("T")[0]}.csv`);
+		document.body.appendChild(link);
+		link.click();
+		document.body.removeChild(link);
+	};
+
 	if (loadError) {
 		return (
 			<div className="flex items-center justify-center py-8">
@@ -372,7 +402,7 @@ const QuizAnalytics = () => {
 					Top Performers
 				</h3>
 				<div className="overflow-x-auto">
-					<table className="w-full">
+					<table className="hidden md:table w-full">
 						<thead>
 							<tr className="border-b border-gray-200">
 								<th className="text-left py-3 px-4 font-medium text-gray-900">
@@ -463,6 +493,43 @@ const QuizAnalytics = () => {
 						</tbody>
 					</table>
 				</div>
+
+				{/* Mobile cards */}
+				<div className="md:hidden divide-y divide-gray-100">
+					{topPerformers.map((performer, index) => {
+						const student = students.find((s) => s.id === performer.studentId);
+						const performance =
+							performer.averageScore >= 80 ? "Excellent" : performer.averageScore >= 60 ? "Good" : "Needs Improvement";
+						return (
+							<div key={performer.studentId} className="py-3 flex items-center gap-3">
+								<div className="w-6 flex-shrink-0 text-center">
+									{index < 3 ? (
+										<FaTrophy className={`text-${index === 0 ? "yellow" : index === 1 ? "gray" : "orange"}-500`} />
+									) : (
+										<span className="text-gray-400 text-sm">#{index + 1}</span>
+									)}
+								</div>
+								<div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-brand-600 rounded-full flex items-center justify-center flex-shrink-0">
+									<span className="text-white text-sm font-medium">{student?.name?.charAt(0) || "U"}</span>
+								</div>
+								<div className="min-w-0 flex-1">
+									<p className="font-medium text-gray-900 truncate">{student?.name || "Unknown Student"}</p>
+									<p className="text-xs text-gray-500">{performer.averageScore.toFixed(1)}% avg · {performer.quizCount} quizzes</p>
+								</div>
+								<span
+									className={`flex-shrink-0 px-2 py-1 rounded-full text-xs font-medium ${
+										performer.averageScore >= 80
+											? "bg-green-100 text-green-800"
+											: performer.averageScore >= 60
+											? "bg-blue-100 text-blue-800"
+											: "bg-red-100 text-red-800"
+									}`}>
+									{performance}
+								</span>
+							</div>
+						);
+					})}
+				</div>
 			</motion.div>
 
 			{/* Recent Activity */}
@@ -475,13 +542,16 @@ const QuizAnalytics = () => {
 					<h3 className="text-lg font-semibold text-gray-900">
 						Recent Quiz Activity
 					</h3>
-					<button className="flex items-center space-x-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors">
+					<button
+						onClick={handleExportData}
+						disabled={allAttempts.length === 0}
+						className="flex items-center space-x-2 px-4 py-2 bg-brand-600 text-white rounded-lg hover:bg-brand-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
 						<FaDownload size={14} />
 						<span>Export Data</span>
 					</button>
 				</div>
 				<div className="overflow-x-auto">
-					<table className="w-full">
+					<table className="hidden md:table w-full">
 						<thead>
 							<tr className="border-b border-gray-200">
 								<th className="text-left py-3 px-4 font-medium text-gray-900">
@@ -564,6 +634,40 @@ const QuizAnalytics = () => {
 							})}
 						</tbody>
 					</table>
+				</div>
+
+				{/* Mobile cards */}
+				<div className="md:hidden divide-y divide-gray-100">
+					{allAttempts.slice(0, 10).map((result, index) => {
+						const student = students.find((s) => s.id === result.student_id);
+						const percentage = Math.round((result.score / result.total_questions) * 100);
+						const performance = percentage >= 80 ? "Excellent" : percentage >= 60 ? "Good" : "Needs Improvement";
+						return (
+							<div key={index} className="py-3">
+								<div className="flex items-center justify-between gap-2 mb-1.5">
+									<div className="flex items-center gap-2 min-w-0">
+										<div className="w-7 h-7 bg-gradient-to-r from-blue-500 to-brand-600 rounded-full flex items-center justify-center flex-shrink-0">
+											<span className="text-white text-xs font-medium">{student?.name?.charAt(0) || "U"}</span>
+										</div>
+										<span className="font-medium text-gray-900 truncate">{student?.name || "Unknown Student"}</span>
+									</div>
+									<span
+										className={`flex-shrink-0 px-2 py-0.5 rounded-full text-xs font-medium ${
+											percentage >= 80
+												? "bg-green-100 text-green-800"
+												: percentage >= 60
+												? "bg-blue-100 text-blue-800"
+												: "bg-red-100 text-red-800"
+										}`}>
+										{percentage}%
+									</span>
+								</div>
+								<p className="text-xs text-gray-500">
+									{result.mode} · {result.score}/{result.total_questions} · {new Date(result.timestamp).toLocaleDateString()} · {performance}
+								</p>
+							</div>
+						);
+					})}
 				</div>
 			</motion.div>
 		</div>

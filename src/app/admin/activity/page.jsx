@@ -121,42 +121,72 @@ const AdminActivity = () => {
 							No admin activity recorded yet in your scope.
 						</p>
 					) : (
-						<table className="w-full text-sm">
-							<thead>
-								<tr className="border-b text-left text-gray-500">
-									<th className="px-4 py-3 font-medium">When</th>
-									<th className="px-4 py-3 font-medium">Who</th>
-									<th className="px-4 py-3 font-medium">Action</th>
-									<th className="px-4 py-3 font-medium">Details</th>
-								</tr>
-							</thead>
-							<tbody>
+						<>
+							{/* Desktop table */}
+							<table className="hidden md:table w-full text-sm">
+								<thead>
+									<tr className="border-b text-left text-gray-500">
+										<th className="px-4 py-3 font-medium">When</th>
+										<th className="px-4 py-3 font-medium">Who</th>
+										<th className="px-4 py-3 font-medium">Action</th>
+										<th className="px-4 py-3 font-medium">Details</th>
+									</tr>
+								</thead>
+								<tbody>
+									{entries.map((e) => {
+										const actor = actors[e.actor_id];
+										return (
+											<tr key={e.id} className="border-b last:border-0 hover:bg-gray-50">
+												<td className="px-4 py-3 text-gray-500 whitespace-nowrap">
+													{new Date(e.created_at).toLocaleString()}
+												</td>
+												<td className="px-4 py-3">
+													<div className="font-medium text-gray-800">{actor?.name || "Unknown"}</div>
+													<div className="text-xs text-gray-400">{roleLabel(e.actor_role)}</div>
+												</td>
+												<td className="px-4 py-3">
+													<span
+														className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+															ACTION_COLORS[e.action] || "bg-gray-100 text-gray-700"
+														}`}>
+														{e.action}
+													</span>
+													<div className="text-xs text-gray-400 mt-0.5">{e.table_name}</div>
+												</td>
+												<td className="px-4 py-3 text-gray-700 max-w-xs truncate">{e.summary}</td>
+											</tr>
+										);
+									})}
+								</tbody>
+							</table>
+
+							{/* Mobile cards */}
+							<div className="md:hidden divide-y">
 								{entries.map((e) => {
 									const actor = actors[e.actor_id];
 									return (
-										<tr key={e.id} className="border-b last:border-0 hover:bg-gray-50">
-											<td className="px-4 py-3 text-gray-500 whitespace-nowrap">
-												{new Date(e.created_at).toLocaleString()}
-											</td>
-											<td className="px-4 py-3">
-												<div className="font-medium text-gray-800">{actor?.name || "Unknown"}</div>
-												<div className="text-xs text-gray-400">{roleLabel(e.actor_role)}</div>
-											</td>
-											<td className="px-4 py-3">
+										<div key={e.id} className="p-4">
+											<div className="flex items-start justify-between gap-2 mb-1.5">
+												<div className="min-w-0">
+													<p className="font-medium text-gray-800 truncate">{actor?.name || "Unknown"}</p>
+													<p className="text-xs text-gray-400">{roleLabel(e.actor_role)}</p>
+												</div>
 												<span
-													className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+													className={`px-2 py-0.5 rounded-full text-xs font-medium flex-shrink-0 ${
 														ACTION_COLORS[e.action] || "bg-gray-100 text-gray-700"
 													}`}>
 													{e.action}
 												</span>
-												<div className="text-xs text-gray-400 mt-0.5">{e.table_name}</div>
-											</td>
-											<td className="px-4 py-3 text-gray-700 max-w-xs truncate">{e.summary}</td>
-										</tr>
+											</div>
+											<p className="text-sm text-gray-700 break-words">{e.summary}</p>
+											<p className="text-xs text-gray-400 mt-1">
+												{e.table_name} · {new Date(e.created_at).toLocaleString()}
+											</p>
+										</div>
 									);
 								})}
-							</tbody>
-						</table>
+							</div>
+						</>
 					)}
 				</div>
 			</div>
