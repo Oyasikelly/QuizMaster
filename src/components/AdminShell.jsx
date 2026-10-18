@@ -41,6 +41,7 @@ export default function AdminShell({ user, orgName, active, children }) {
 			? [{ key: "manage-admins", label: "Admin Management", icon: <FaUserShield />, href: "/admin/manage-admins" }]
 			: []),
 		{ key: "settings", label: "Settings", icon: <FaCog />, href: "/admin/settings" },
+		{ key: "profile", label: "My Profile", icon: <FaUser />, href: "/admin/profile" },
 	];
 
 	return (
