@@ -13,15 +13,10 @@ import {
 	FaChartBar,
 	FaClipboardList,
 	FaDownload,
-	FaSearch,
 	FaEye,
-	FaEdit,
-	FaTrash,
 	FaTimes,
 	FaHistory,
 	FaExclamationTriangle,
-	FaChevronDown,
-	FaChevronRight,
 } from "react-icons/fa";
 
 const withTimeout = (promise, ms) =>
@@ -56,27 +51,11 @@ const AdminDashboard = () => {
 	});
 	const [students, setStudents] = useState([]);
 	const [quizResults, setQuizResults] = useState([]);
-	const [searchTerm, setSearchTerm] = useState("");
-	const [filterRole, setFilterRole] = useState("all");
 	const [showStudentModal, setShowStudentModal] = useState(false);
 	const [selectedStudent, setSelectedStudent] = useState(null);
 	const [studentQuizResults, setStudentQuizResults] = useState([]);
-	const [showEditModal, setShowEditModal] = useState(false);
-	const [editingStudent, setEditingStudent] = useState(null);
 	const [showExportModal, setShowExportModal] = useState(false);
 	const [isRefreshing, setIsRefreshing] = useState(false);
-	// Which province sections are collapsed, keyed by org name — a
-	// super_admin can have dozens of students across several provinces in
-	// one flat list otherwise, with no way to focus on just one.
-	const [collapsedOrgs, setCollapsedOrgs] = useState(new Set());
-	const toggleOrgCollapsed = (orgName) => {
-		setCollapsedOrgs((prev) => {
-			const next = new Set(prev);
-			if (next.has(orgName)) next.delete(orgName);
-			else next.add(orgName);
-			return next;
-		});
-	};
 	const router = useRouter();
 
 	const extractAttempts = (results) => {
@@ -395,116 +374,20 @@ const AdminDashboard = () => {
 		};
 	};
 
-	const filteredStudents = students.filter((student) => {
-		const matchesSearch =
-			student.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-			student.email?.toLowerCase().includes(searchTerm.toLowerCase());
-		const matchesFilter = filterRole === "all" || student.role === filterRole;
-		return matchesSearch && matchesFilter;
-	});
-
-	// Group students by class
-	const classOrder = ["yaya", "Adult"];
-	const groupedByClass = {};
-	filteredStudents.forEach((student) => {
-		const cls = (student.class || "Other").toLowerCase();
-		if (!groupedByClass[cls]) groupedByClass[cls] = [];
-		groupedByClass[cls].push(student);
-	});
-	const sortedClasses = [
-		...classOrder.filter((c) => groupedByClass[c]),
-		...Object.keys(groupedByClass)
-			.filter((c) => !classOrder.includes(c))
-			.sort(),
-	];
-
-	// A super_admin oversees multiple provinces at once (RLS already
-	// returns every province's students to them via org_subtree_ids from
-	// the Region root — see my_scoped_org_ids()), so their table groups by
-	// province first, then by class within it. A province_admin only ever
-	// sees their own single province, so this collapses to one group and
-	// the extra heading is skipped in the render.
+	// Powers only the scope banner's province count now — full
+	// per-student management (search, edit, delete, the collapsible
+	// province breakdown) lives at /admin/students; duplicating it here
+	// too meant two separate fetches of the same data that could drift
+	// out of sync, and the user flagged the redundancy directly.
 	const isSuperAdminView = user?.role === "super_admin";
 	const groupedByOrg = {};
-	filteredStudents.forEach((student) => {
+	students.forEach((student) => {
 		const org = student.orgName || "Unassigned";
 		if (!groupedByOrg[org]) groupedByOrg[org] = [];
 		groupedByOrg[org].push(student);
 	});
+
 	const sortedOrgNames = Object.keys(groupedByOrg).sort();
-
-	// Flattened render plan shared by both the desktop table and the
-	// mobile card list, so the two stay in sync. A super_admin gets an
-	// extra org-heading row ahead of each province's class groups; a
-	// province_admin (or legacy admin) just gets the plain class groups,
-	// unchanged from before this feature existed.
-	const studentTableGroups = [];
-	if (isSuperAdminView) {
-		sortedOrgNames.forEach((orgName) => {
-			const studentsInOrg = groupedByOrg[orgName];
-			studentTableGroups.push({ type: "org", key: `org-${orgName}`, label: orgName, count: studentsInOrg.length });
-			const byClass = {};
-			studentsInOrg.forEach((s) => {
-				const cls = (s.class || "Other").toLowerCase();
-				if (!byClass[cls]) byClass[cls] = [];
-				byClass[cls].push(s);
-			});
-			const classesInOrg = [
-				...classOrder.filter((c) => byClass[c]),
-				...Object.keys(byClass)
-					.filter((c) => !classOrder.includes(c))
-					.sort(),
-			];
-			classesInOrg.forEach((cls) => {
-				studentTableGroups.push({ type: "class", key: `${orgName}-${cls}`, label: cls, students: byClass[cls], org: orgName });
-			});
-		});
-	} else {
-		sortedClasses.forEach((cls) => {
-			studentTableGroups.push({ type: "class", key: cls, label: cls, students: groupedByClass[cls] });
-		});
-	}
-
-	const handleEditStudent = (student) => {
-		setEditingStudent({ ...student });
-		setShowEditModal(true);
-	};
-
-	const handleEditChange = (e) => {
-		const { name, value } = e.target;
-		setEditingStudent((prev) => ({ ...prev, [name]: value }));
-	};
-
-	const handleSaveEdit = async () => {
-		if (!editingStudent) return;
-		try {
-			const { error } = await supabase
-				.from("users_profile")
-				.update({
-					name: editingStudent.name,
-					email: editingStudent.email,
-					class: editingStudent.class,
-					denomination: editingStudent.denomination,
-				})
-				.eq("id", editingStudent.id);
-			if (error) {
-				alert("Error updating student: " + error.message);
-				return;
-			}
-			setShowEditModal(false);
-			setEditingStudent(null);
-			await loadDashboardData();
-			alert("Student updated successfully!");
-		} catch (error) {
-			console.error("Error updating student:", error);
-			alert("Error updating student");
-		}
-	};
-
-	const handleCancelEdit = () => {
-		setShowEditModal(false);
-		setEditingStudent(null);
-	};
 
 	const handleExportResults = () => {
 		try {
@@ -1038,262 +921,6 @@ const AdminDashboard = () => {
 									})}
 								</tbody>
 							</table>
-						</div>
-					</motion.div>
-
-					{/* Student Management */}
-					<motion.div
-						id="student-management"
-						initial={{ opacity: 0, y: 20 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ delay: 0.2 }}
-						className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6 mb-8 overflow-x-auto w-full max-w-full">
-						<div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 gap-4">
-							<h2 className="font-display text-xl font-semibold text-gray-900">
-								Student Management
-							</h2>
-							<div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-								<div className="relative w-full sm:w-auto">
-									<FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-									<input
-										type="text"
-										placeholder="Search students..."
-										value={searchTerm}
-										onChange={(e) => setSearchTerm(e.target.value)}
-										className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent w-full sm:w-64"
-									/>
-								</div>
-								<select
-									value={filterRole}
-									onChange={(e) => setFilterRole(e.target.value)}
-									className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent w-full sm:w-auto">
-									<option value="all">All Students</option>
-									<option value="student">Students</option>
-								</select>
-							</div>
-						</div>
-
-						{/* Responsive Table or Cards */}
-						<div className="block w-full overflow-x-auto max-w-full">
-							<table className="hidden md:table w-full max-w-full">
-								<thead>
-									<tr className="border-b border-gray-200">
-										<th className="text-left py-3 px-4 font-medium text-gray-900">
-											Name
-										</th>
-										<th className="text-left py-3 px-4 font-medium text-gray-900">
-											Email
-										</th>
-										<th className="text-left py-3 px-4 font-medium text-gray-900">
-											Class
-										</th>
-										<th className="text-left py-3 px-4 font-medium text-gray-900">
-											Quiz Submissions
-										</th>
-										<th className="text-left py-3 px-4 font-medium text-gray-900">
-											Avg Score
-										</th>
-										<th className="text-left py-3 px-4 font-medium text-gray-900">
-											Best
-										</th>
-										<th className="text-left py-3 px-4 font-medium text-gray-900">
-											Recent
-										</th>
-										<th className="text-left py-3 px-4 font-medium text-gray-900">
-											Actions
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									{studentTableGroups.map((group) =>
-										group.type === "org" ? (
-											<tr key={group.key}>
-												<td colSpan={8} className="p-0">
-													<button
-														type="button"
-														onClick={() => toggleOrgCollapsed(group.label)}
-														className="w-full flex items-center gap-2 bg-indigo-700 text-white font-bold py-2 px-4 text-lg hover:bg-indigo-800 transition-colors">
-														{collapsedOrgs.has(group.label) ? (
-															<FaChevronRight size={14} />
-														) : (
-															<FaChevronDown size={14} />
-														)}
-														{group.label}
-														<span className="ml-auto text-sm font-normal text-indigo-200">
-															{group.count} student{group.count === 1 ? "" : "s"}
-														</span>
-													</button>
-												</td>
-											</tr>
-										) : collapsedOrgs.has(group.org) ? null : (
-										<React.Fragment key={group.key}>
-											<tr key={`heading-${group.key}`}>
-												<td
-													colSpan={8}
-													className="bg-purple-50 text-purple-700 font-bold py-2 px-4 text-lg">
-													{group.label.charAt(0).toUpperCase() + group.label.slice(1)}
-												</td>
-											</tr>
-											{group.students.map((student) => (
-												<tr
-													key={`${group.key}-${student.id}`}
-													className="border-b border-gray-100 hover:bg-gray-50">
-													<td className="py-3 px-4">
-														<div className="flex items-center space-x-3">
-															<div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-																<span className="text-white text-sm font-medium">
-																	{student.name?.charAt(0) || "U"}
-																</span>
-															</div>
-															<span className="font-medium text-gray-900">
-																{student.name}
-															</span>
-														</div>
-													</td>
-													<td className="py-3 px-4 text-gray-600">
-														{student.email}
-													</td>
-													<td className="py-3 px-4">
-														<span className="text-gray-600">
-															{student.class || "Not set"}
-														</span>
-													</td>
-													<td className="py-3 px-4">
-														<span className="flex items-center space-x-2">
-															<FaClipboardList className="text-blue-500" />
-															<span className="font-medium text-gray-900">
-																{student.submissionCount || 0}
-															</span>
-														</span>
-													</td>
-													<td className="py-3 px-4 text-blue-700 font-semibold">
-														{student.averageScore || 0}%
-													</td>
-													<td className="py-3 px-4 text-green-700 font-semibold">
-														{student.bestScore || 0}%
-													</td>
-													<td className="py-3 px-4 text-purple-700 font-semibold">
-														{student.recentScore || 0}%
-													</td>
-													<td className="py-3 px-4">
-														<div className="flex space-x-2">
-															<button
-																onClick={() => handleViewStudent(student)}
-																className="p-1 text-blue-600 hover:text-blue-800">
-																<FaEye size={14} />
-															</button>
-															<button
-																onClick={() => handleEditStudent(student)}
-																className="p-1 text-green-600 hover:text-green-800">
-																<FaEdit size={14} />
-															</button>
-															<button
-																onClick={() =>
-																	router.push(
-																		`/admin/students?delete=${student.id}`
-																	)
-																}
-																className="p-1 text-red-600 hover:text-red-800">
-																<FaTrash size={14} />
-															</button>
-														</div>
-													</td>
-												</tr>
-											))}
-										</React.Fragment>
-										)
-									)}
-								</tbody>
-							</table>
-
-							{/* Mobile Cards */}
-							<div className="md:hidden space-y-4 w-full max-w-full">
-								{studentTableGroups.map((group) =>
-									group.type === "org" ? (
-										<button
-											type="button"
-											key={group.key}
-											onClick={() => toggleOrgCollapsed(group.label)}
-											className="w-full flex items-center gap-2 bg-indigo-700 text-white font-bold py-2 px-4 text-lg rounded-lg mb-2">
-											{collapsedOrgs.has(group.label) ? (
-												<FaChevronRight size={14} />
-											) : (
-												<FaChevronDown size={14} />
-											)}
-											{group.label}
-											<span className="ml-auto text-sm font-normal text-indigo-200">
-												{group.count} student{group.count === 1 ? "" : "s"}
-											</span>
-										</button>
-									) : collapsedOrgs.has(group.org) ? null : (
-									<div
-										key={group.key}
-										className="mb-2 w-full max-w-full">
-										<div className="bg-purple-50 text-purple-700 font-bold py-2 px-4 text-lg rounded-t-lg">
-											{group.label.charAt(0).toUpperCase() + group.label.slice(1)}
-										</div>
-										{group.students.map((student) => (
-											<div
-												key={`${group.key}-${student.id}`}
-												className="bg-white rounded-b-lg shadow border border-gray-100 p-4 mb-2 w-full max-w-full">
-												<div className="flex items-center space-x-3 mb-2">
-													<div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-														<span className="text-white text-sm font-medium">
-															{student.name?.charAt(0) || "U"}
-														</span>
-													</div>
-													<span className="font-medium text-gray-900">
-														{student.name}
-													</span>
-												</div>
-												<div className="text-gray-600 text-sm mb-1">
-													<b>Email:</b> {student.email}
-												</div>
-												<div className="text-gray-600 text-sm mb-1">
-													<b>Class:</b> {student.class || "Not set"}
-												</div>
-												<div className="flex flex-wrap gap-2 text-xs mb-2">
-													<span className="flex items-center gap-1 bg-blue-50 text-blue-700 px-2 py-1 rounded">
-														<FaClipboardList className="text-blue-500" />{" "}
-														{student.submissionCount || 0} submissions
-													</span>
-													<span className="bg-blue-100 text-blue-700 px-2 py-1 rounded">
-														Avg: {student.averageScore || 0}%
-													</span>
-													<span className="bg-green-100 text-green-700 px-2 py-1 rounded">
-														Best: {student.bestScore || 0}%
-													</span>
-													<span className="bg-purple-100 text-purple-700 px-2 py-1 rounded">
-														Recent: {student.recentScore || 0}%
-													</span>
-												</div>
-												<div className="flex space-x-2">
-													<button
-														onClick={() => handleViewStudent(student)}
-														className="p-1 text-blue-600 hover:text-blue-800">
-														<FaEye size={16} />
-													</button>
-													<button
-														onClick={() => handleEditStudent(student)}
-														className="p-1 text-green-600 hover:text-green-800">
-														<FaEdit size={16} />
-													</button>
-													<button
-														onClick={() =>
-															router.push(
-																`/admin/students?delete=${student.id}`
-															)
-														}
-														className="p-1 text-red-600 hover:text-red-800">
-														<FaTrash size={16} />
-													</button>
-												</div>
-											</div>
-										))}
-									</div>
-									)
-								)}
-							</div>
 						</div>
 					</motion.div>
 
@@ -2059,96 +1686,6 @@ const AdminDashboard = () => {
 										<p className="text-gray-500">No quiz attempts yet</p>
 									</div>
 								)}
-							</div>
-						</div>
-					</div>
-				</div>
-			)}
-
-			{/* Edit Student Modal */}
-			{showEditModal && editingStudent && (
-				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-					<div className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-hidden">
-						{/* Modal Header */}
-						<div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
-							<div className="flex items-center space-x-3">
-								<div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-									<span className="text-white text-lg font-medium">
-										{editingStudent.name?.charAt(0) || "U"}
-									</span>
-								</div>
-								<div>
-									<h2 className="text-xl font-semibold text-gray-900">
-										Edit Student
-									</h2>
-									<p className="text-sm text-gray-500">{editingStudent.name}</p>
-								</div>
-							</div>
-							<button
-								onClick={handleCancelEdit}
-								className="p-2 text-gray-400 hover:text-gray-600 transition-colors">
-								<FaTimes size={20} />
-							</button>
-						</div>
-
-						{/* Modal Content */}
-						<div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)] custom-scrollbar">
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-								<div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6">
-									<h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-										<FaUser className="mr-2 text-blue-500" />
-										Personal Information
-									</h3>
-									<div className="space-y-3">
-										<div className="flex justify-between">
-											<span className="text-gray-600">Name:</span>
-											<input
-												type="text"
-												name="name"
-												value={editingStudent.name}
-												onChange={handleEditChange}
-												className="border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-											/>
-										</div>
-										<div className="flex justify-between">
-											<span className="text-gray-600">Email:</span>
-											<input
-												type="text"
-												name="email"
-												value={editingStudent.email}
-												onChange={handleEditChange}
-												className="border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-											/>
-										</div>
-										<div className="flex justify-between">
-											<span className="text-gray-600">Class:</span>
-											<input
-												type="text"
-												name="class"
-												value={editingStudent.class}
-												onChange={handleEditChange}
-												className="border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-											/>
-										</div>
-										<div className="flex justify-between">
-											<span className="text-gray-600">Denomination:</span>
-											<input
-												type="text"
-												name="denomination"
-												value={editingStudent.denomination}
-												onChange={handleEditChange}
-												className="border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-											/>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div className="mt-6">
-								<button
-									onClick={handleSaveEdit}
-									className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors">
-									Save Changes
-								</button>
 							</div>
 						</div>
 					</div>
