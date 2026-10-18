@@ -1,19 +1,29 @@
-import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { AuthProvider } from "../contexts/AuthContext";
 
-// Display font for headings — gives the admin UI real visual character
-// instead of the default system sans. Body stays on Inter, built for
-// legibility in dense, data-heavy screens.
-const jakarta = Plus_Jakarta_Sans({
+// Self-hosted rather than next/font/google: that fetches font data from
+// Google at BUILD TIME, which is reliable locally and on Vercel but
+// proved flaky in GitHub Actions CI (TypeError: Cannot read properties
+// of null (reading '1') in next/font's loader — a known class of issue
+// when a CI runner's network path to Google Fonts gets rate-limited or
+// blocked). Self-hosting removes that dependency from the build
+// entirely. Both files are the actual variable-weight fonts Google
+// serves (one file covers the whole weight range, not one per weight —
+// confirmed by fetching the real CSS2 API response, not guessed), latin
+// subset only, which is all this app needs.
+const jakarta = localFont({
+	src: "./fonts/plus-jakarta-sans.woff2",
 	variable: "--font-display",
-	subsets: ["latin"],
-	weight: ["500", "600", "700", "800"],
+	weight: "500 800",
+	display: "swap",
 });
 
-const inter = Inter({
+const inter = localFont({
+	src: "./fonts/inter.woff2",
 	variable: "--font-sans",
-	subsets: ["latin"],
+	weight: "400 700",
+	display: "swap",
 });
 
 export const metadata = {
