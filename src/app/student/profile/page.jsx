@@ -66,6 +66,13 @@ const StudentProfile = () => {
 	const [loading, setLoading] = useState(true);
 	const [isEditing, setIsEditing] = useState(false);
 	const [quizHistory, setQuizHistory] = useState([]);
+	// "View All" used to route to /quiz/results, which is built to show
+	// the outcome of a single just-finished attempt (from session state
+	// right after submitting), not a general history list -- navigating
+	// there cold showed NaN since no such attempt was in context. The
+	// full history is already loaded above; this just reveals the rest
+	// of it in place instead.
+	const [showAllHistory, setShowAllHistory] = useState(false);
 	const [profileData, setProfileData] = useState(null);
 	const [stats, setStats] = useState({
 		totalQuizzes: 0,
@@ -733,16 +740,18 @@ const StudentProfile = () => {
 								<h3 className="text-xl font-semibold text-gray-800">
 									Recent Quiz History
 								</h3>
-								<button
-									onClick={() => router.push("/quiz/results")}
-									className="text-blue-600 hover:text-blue-700 font-medium">
-									View All
-								</button>
+								{quizHistory.length > 5 && (
+									<button
+										onClick={() => setShowAllHistory((v) => !v)}
+										className="text-blue-600 hover:text-blue-700 font-medium">
+										{showAllHistory ? "Show Less" : "View All"}
+									</button>
+								)}
 							</div>
 
 							{quizHistory.length > 0 ? (
 								<div className="space-y-3">
-									{quizHistory.slice(0, 5).map((quiz, index) => {
+									{(showAllHistory ? quizHistory : quizHistory.slice(0, 5)).map((quiz, index) => {
 										const percentage = Math.round(
 											(quiz.score / quiz.total_questions) * 100
 										);
