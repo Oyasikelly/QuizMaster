@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { supabase } from "../../../lib/supabase";
 import { ADMIN_ROLES, roleLabel } from "../../../lib/roles";
+import AdminShell from "../../../components/AdminShell";
 import {
 	FaUserShield,
 	FaTrash,
 	FaSave,
-	FaArrowLeft,
 	FaEye,
 	FaTimes,
 	FaUser,
@@ -39,6 +39,7 @@ const ASSIGNABLE_ROLES = ["province_admin", "zone_admin", "area_admin", "parish_
 export default function ManageAdminsPage() {
 	const router = useRouter();
 	const [viewer, setViewer] = useState(null);
+	const [orgName, setOrgName] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [admins, setAdmins] = useState([]);
 	const [provinces, setProvinces] = useState([]);
@@ -97,7 +98,7 @@ export default function ManageAdminsPage() {
 				}
 
 				const { data: profile } = await withTimeout(
-					supabase.from("users_profile").select("role, name, email").eq("id", user.id).single(),
+					supabase.from("users_profile").select("role, name, email, org_id").eq("id", user.id).single(),
 					10000
 				);
 
@@ -106,6 +107,14 @@ export default function ManageAdminsPage() {
 					return;
 				}
 				setViewer({ ...user, ...profile });
+				if (profile.org_id) {
+					const { data: org } = await supabase
+						.from("organizations")
+						.select("name")
+						.eq("id", profile.org_id)
+						.maybeSingle();
+					setOrgName(org?.name || "");
+				}
 
 				const { data: provincesData } = await supabase
 					.from("organizations")
@@ -215,9 +224,9 @@ export default function ManageAdminsPage() {
 
 	if (loading) {
 		return (
-			<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center">
+			<div className="min-h-screen flex items-center justify-center bg-background">
 				<div className="text-center">
-					<div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+					<div className="w-16 h-16 border-4 border-brand-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
 					<p className="text-gray-600">Loading Admin Management...</p>
 				</div>
 			</div>
@@ -225,34 +234,29 @@ export default function ManageAdminsPage() {
 	}
 
 	return (
-		<div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 px-4 py-8">
-			<div className="max-w-5xl mx-auto">
-				<button
-					onClick={() => router.push("/admin/dashboard")}
-					className="flex items-center gap-2 text-indigo-700 hover:text-indigo-900 font-medium mb-6">
-					<FaArrowLeft /> Back to Dashboard
-				</button>
-
+		<AdminShell user={viewer} orgName={orgName} active="manage-admins">
+			<div className="max-w-5xl mx-auto p-4 sm:p-8">
 				<div className="flex items-center gap-3 mb-6">
-					<div className="w-12 h-12 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center">
-						<FaUserShield className="text-white text-xl" />
+					<div className="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center">
+						<FaUserShield className="text-white" size={16} />
 					</div>
 					<div>
-						<h1 className="text-2xl font-bold text-gray-900">Admin Management</h1>
+						<h1 className="font-display text-xl font-semibold text-gray-900">Admin Management</h1>
 						<p className="text-sm text-gray-500">
-							Visible only to Super Admin. Change an admin's role/province, or revoke their access.
+							Change an admin's role/province, or revoke their access.
 						</p>
 					</div>
 				</div>
 
 				{error && (
-					<div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl">{error}</div>
+					<div className="mb-4 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">{error}</div>
 				)}
 				{successMsg && (
-					<div className="mb-4 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl">{successMsg}</div>
+					<div className="mb-4 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl text-sm">{successMsg}</div>
 				)}
 
-				<div className="bg-white rounded-xl shadow-lg overflow-x-auto">
+				{/* Desktop table */}
+				<div className="hidden md:block bg-white rounded-xl shadow-lg overflow-hidden">
 					<table className="w-full">
 						<thead>
 							<tr className="border-b border-gray-200 bg-gray-50">
@@ -277,7 +281,7 @@ export default function ManageAdminsPage() {
 										<td className="py-3 px-4 text-gray-600">{admin.email}</td>
 										<td className="py-3 px-4">
 											{isSelf ? (
-												<span className="px-2 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+												<span className="px-2 py-1 rounded-full text-xs font-medium bg-brand-100 text-brand-800">
 													{roleLabel(admin.role)} (you)
 												</span>
 											) : (
@@ -315,7 +319,7 @@ export default function ManageAdminsPage() {
 											<div className="flex gap-2">
 												<button
 													onClick={() => handleViewAdmin(admin)}
-													className="p-2 text-indigo-600 hover:text-indigo-800"
+													className="p-2 text-brand-600 hover:text-brand-800"
 													title="View profile">
 													<FaEye size={14} />
 												</button>
@@ -353,12 +357,105 @@ export default function ManageAdminsPage() {
 					</table>
 				</div>
 
+				{/* Mobile cards */}
+				<div className="md:hidden space-y-3">
+					{admins.length === 0 && (
+						<p className="text-center text-gray-400 py-6">No admin accounts found.</p>
+					)}
+					{admins.map((admin) => {
+						const isSelf = admin.id === viewer?.id;
+						const edit = edits[admin.id] || { role: admin.role, orgId: admin.org_id || "" };
+						return (
+							<motion.div
+								key={admin.id}
+								initial={{ opacity: 0 }}
+								animate={{ opacity: 1 }}
+								className="bg-white rounded-xl shadow p-4">
+								<div className="flex items-start justify-between gap-2 mb-3">
+									<div className="min-w-0">
+										<p className="font-medium text-gray-900 truncate">{admin.name || "—"}</p>
+										<p className="text-sm text-gray-500 truncate">{admin.email}</p>
+									</div>
+									{isSelf && (
+										<span className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-medium bg-brand-100 text-brand-800">
+											You
+										</span>
+									)}
+								</div>
+
+								<div className="space-y-2 mb-3">
+									<div>
+										<label className="block text-xs text-gray-500 mb-1">Role</label>
+										{isSelf ? (
+											<p className="text-sm font-medium text-gray-800">{roleLabel(admin.role)}</p>
+										) : (
+											<select
+												value={edit.role}
+												onChange={(e) => handleEditChange(admin.id, "role", e.target.value)}
+												className="w-full px-2 py-1.5 border border-gray-300 rounded-lg text-sm">
+												{admin.role === "admin" && <option value="admin">Admin (legacy)</option>}
+												{ASSIGNABLE_ROLES.map((r) => (
+													<option key={r} value={r}>
+														{roleLabel(r)}
+													</option>
+												))}
+											</select>
+										)}
+									</div>
+									<div>
+										<label className="block text-xs text-gray-500 mb-1">Province</label>
+										{isSelf ? (
+											<p className="text-sm font-medium text-gray-800">{admin.orgName}</p>
+										) : (
+											<select
+												value={edit.orgId}
+												onChange={(e) => handleEditChange(admin.id, "orgId", e.target.value)}
+												className="w-full px-2 py-1.5 border border-gray-300 rounded-lg text-sm">
+												<option value="">Select province</option>
+												{provinces.map((p) => (
+													<option key={p.id} value={p.id}>
+														{p.name}
+													</option>
+												))}
+											</select>
+										)}
+									</div>
+								</div>
+
+								<div className="flex gap-2 pt-2 border-t border-gray-100">
+									<button
+										onClick={() => handleViewAdmin(admin)}
+										className="flex-1 flex items-center justify-center gap-1 py-2 bg-brand-50 text-brand-700 rounded-lg text-sm font-medium">
+										<FaEye size={12} /> View
+									</button>
+									{!isSelf && (
+										<>
+											<button
+												onClick={() => handleSave(admin)}
+												disabled={busyId === admin.id}
+												className="flex-1 flex items-center justify-center gap-1 py-2 bg-green-50 text-green-700 rounded-lg text-sm font-medium disabled:opacity-50">
+												<FaSave size={12} /> Save
+											</button>
+											<button
+												onClick={() => handleRevoke(admin)}
+												disabled={busyId === admin.id}
+												className="flex-1 flex items-center justify-center gap-1 py-2 bg-red-50 text-red-700 rounded-lg text-sm font-medium disabled:opacity-50">
+												<FaTrash size={12} /> Revoke
+											</button>
+										</>
+									)}
+								</div>
+							</motion.div>
+						);
+					})}
+				</div>
+
 				{showProfileModal && selectedAdmin && (
 					<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
 						<div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-hidden">
 							<div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center">
 								<div className="flex items-center space-x-3">
-									<div className="w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center">
+									<div className="w-12 h-12 bg-gradient-to-br from-brand-500 to-brand-700 rounded-full flex items-center justify-center">
 										<span className="text-white text-lg font-medium">
 											{selectedAdmin.name?.charAt(0) || "A"}
 										</span>
@@ -376,9 +473,9 @@ export default function ManageAdminsPage() {
 							</div>
 
 							<div className="p-6 overflow-y-auto max-h-[calc(90vh-80px)] custom-scrollbar">
-								<div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-6 mb-6">
+								<div className="bg-brand-50 rounded-xl p-6 mb-6">
 									<h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-										<FaUser className="mr-2 text-indigo-500" />
+										<FaUser className="mr-2 text-brand-500" />
 										Personal Information
 									</h3>
 									<div className="space-y-3">
@@ -423,7 +520,7 @@ export default function ManageAdminsPage() {
 
 								<div className="bg-white rounded-xl border border-gray-200 p-6">
 									<h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-										<FaHistory className="mr-2 text-indigo-500" />
+										<FaHistory className="mr-2 text-brand-500" />
 										Recent Activity
 									</h3>
 									{activityLoading ? (
@@ -436,7 +533,7 @@ export default function ManageAdminsPage() {
 										<>
 											<div className="flex items-center gap-4 mb-4 text-sm">
 												<span className="flex items-center gap-1 text-gray-600">
-													<FaIdBadge className="text-indigo-400" size={12} />
+													<FaIdBadge className="text-brand-400" size={12} />
 													{adminActivity.length === 50 ? "Last 50 actions" : `${adminActivity.length} action${adminActivity.length === 1 ? "" : "s"}`}
 												</span>
 												<span className="text-gray-400">
@@ -473,6 +570,6 @@ export default function ManageAdminsPage() {
 					</div>
 				)}
 			</div>
-		</div>
+		</AdminShell>
 	);
 }
