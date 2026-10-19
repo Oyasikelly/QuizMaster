@@ -63,8 +63,41 @@ const withTimeout = (promise, ms) =>
 		),
 	]);
 
+// Walks parent_id up from a student's org_id to resolve every level
+// along the way, by name. Returns { province, zone, area, parish } with
+// whichever levels don't apply left null -- a student's org_id can land
+// at any of these four levels (a Zone or Area can itself be someone's
+// actual church, not just a routing point to named Areas/Parishes
+// under it), so showing all four separately is the only way to show
+// exactly where someone is without implying every student has a named
+// Parish specifically.
+const resolveOrgChain = async (orgId) => {
+	const chain = { province: null, zone: null, area: null, parish: null };
+	let currentId = orgId;
+	while (currentId) {
+		const { data: org } = await supabase
+			.from("organizations")
+			.select("name, level, parent_id")
+			.eq("id", currentId)
+			.maybeSingle();
+		if (!org) break;
+		if (org.level in chain) chain[org.level] = org.name;
+		currentId = org.parent_id;
+	}
+	return chain;
+};
+
 const StudentProfile = () => {
-	const { user, userProfile, signOut } = useAuth();
+	// authLoading: AuthContext hasn't finished its own async session check
+	// yet (not to be confused with this component's own `loading` below,
+	// which tracks fetching this student's profile/quiz data). A direct
+	// visit or hard reload of this page always bounced a logged-in
+	// student straight back to /authenticate -- confirmed via real
+	// browser testing, 100% reproducible, not a flake: loadProfileData's
+	// `if (!user)` check ran on first mount, before AuthContext's
+	// session check had resolved, so `user` was still its initial null
+	// and this page treated that as "not logged in" every single time.
+	const { user, userProfile, signOut, loading: authLoading } = useAuth();
 	const [loading, setLoading] = useState(true);
 	const [isEditing, setIsEditing] = useState(false);
 	const [quizHistory, setQuizHistory] = useState([]);
@@ -95,16 +128,23 @@ const StudentProfile = () => {
 	const [loadError, setLoadError] = useState(false);
 	const router = useRouter();
 
-	// Current parish name, resolved for display only. The picker below
-	// always starts fresh (see ParishPicker) — selecting something there
-	// is what actually changes org_id; leaving it alone keeps whatever's
-	// already set, shown here read-only.
-	const [currentOrgName, setCurrentOrgName] = useState(null);
+	// Current Province/Zone/Area/Parish, resolved for display only (by
+	// walking parent_id up from org_id). A Zone or Area can itself BE
+	// someone's church — not every zone has named areas under it, not
+	// every area has named parishes — so a student's org_id can land at
+	// any of these four levels, not just "parish" specifically; showing
+	// all four (blank where not applicable) makes that visible instead
+	// of forcing everyone into one generically-labeled "Parish" field.
+	// The picker below always starts fresh (see ParishPicker) —
+	// selecting something there is what actually changes org_id; leaving
+	// it alone keeps whatever's already set, shown here read-only.
+	const [currentOrgChain, setCurrentOrgChain] = useState({ province: null, zone: null, area: null, parish: null });
 	// Only set once the user actively picks something; null means "don't
 	// touch org_id on save," not "clear it."
 	const [selectedOrgId, setSelectedOrgId] = useState(null);
 
 	const loadProfileData = async () => {
+		if (authLoading) return;
 		if (!user) {
 			router.push("/authenticate");
 			return;
@@ -135,14 +175,9 @@ const StudentProfile = () => {
 				setProfileData(profile);
 
 				if (profile.org_id) {
-					const { data: org } = await supabase
-						.from("organizations")
-						.select("name")
-						.eq("id", profile.org_id)
-						.maybeSingle();
-					setCurrentOrgName(org?.name || null);
+					setCurrentOrgChain(await resolveOrgChain(profile.org_id));
 				} else {
-					setCurrentOrgName(null);
+					setCurrentOrgChain({ province: null, zone: null, area: null, parish: null });
 				}
 			} else if (profileError) {
 				setError("Failed to load profile data");
@@ -222,7 +257,7 @@ const StudentProfile = () => {
 
 	useEffect(() => {
 		loadProfileData();
-	}, [user, router]);
+	}, [user, authLoading, router]);
 
 	useEffect(() => {
 		if (error || successMessage) {
@@ -332,12 +367,7 @@ const StudentProfile = () => {
 			if (updatedProfile) {
 				setProfileData(updatedProfile);
 				if (updatedProfile.org_id) {
-					const { data: org } = await supabase
-						.from("organizations")
-						.select("name")
-						.eq("id", updatedProfile.org_id)
-						.maybeSingle();
-					setCurrentOrgName(org?.name || null);
+					setCurrentOrgChain(await resolveOrgChain(updatedProfile.org_id));
 				}
 			}
 			setSelectedOrgId(null);
@@ -746,11 +776,25 @@ const StudentProfile = () => {
 
 								<div>
 									<label className="block text-sm font-medium text-gray-700 mb-2">
-										Parish
+										Location
 									</label>
-									<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg mb-3">
-										<FaBuilding className="text-gray-400" />
-										<span>Current: {currentOrgName || "Not set"}</span>
+									<div className="grid grid-cols-2 gap-2 mb-3">
+										<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
+											<FaBuilding className="text-gray-400 flex-shrink-0" />
+											<span className="truncate">Province: {currentOrgChain.province || "Not set"}</span>
+										</div>
+										<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
+											<FaBuilding className="text-gray-400 flex-shrink-0" />
+											<span className="truncate">Zone: {currentOrgChain.zone || "Not set"}</span>
+										</div>
+										<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
+											<FaBuilding className="text-gray-400 flex-shrink-0" />
+											<span className="truncate">Area: {currentOrgChain.area || "Not set"}</span>
+										</div>
+										<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
+											<FaChurch className="text-gray-400 flex-shrink-0" />
+											<span className="truncate">Parish: {currentOrgChain.parish || "Not set"}</span>
+										</div>
 									</div>
 									{isEditing && (
 										<>
@@ -759,7 +803,7 @@ const StudentProfile = () => {
 												onChange={setSelectedOrgId}
 											/>
 											<p className="text-xs text-gray-400 mt-1">
-												Leave unselected to keep your current parish.
+												Leave unselected to keep your current location.
 											</p>
 										</>
 									)}
