@@ -180,10 +180,17 @@ const AdminDashboard = () => {
 			// explicitly in its own body instead of depending on it.
 			const { data: studentsData } = await withTimeout(supabase.rpc("get_scoped_students"), 10000);
 
-			// Only keep students in 'yaya' or 'adult' class (case-insensitive)
+			// Only keep students in a real class (case-insensitive). Used to
+			// only check for "yaya"/"adult" — StudentManagement's own class
+			// dropdown also offers "adults" (plural), so any student an
+			// admin set to that value was silently excluded here, which
+			// cascades to every quiz-results export below too (it's built
+			// from this same filtered list). No "adults" students exist in
+			// production today, but the dropdown makes it reachable, so
+			// this stays broad rather than hardcoding exact values again.
 			const filteredStudentsData = (studentsData || []).filter((student) => {
 				const cls = (student.class || "").toLowerCase();
-				return cls === "yaya" || cls === "adult";
+				return cls === "yaya" || cls === "adult" || cls === "adults";
 			});
 
 			// Resolve each student's org name — RLS already limits which
@@ -388,6 +395,14 @@ const AdminDashboard = () => {
 	});
 
 	const sortedOrgNames = Object.keys(groupedByOrg).sort();
+
+	// The Export modal's "Export by Class" section needs the distinct
+	// class values actually present — it used to read a top-level
+	// `groupedByClass` that only existed to feed the now-removed
+	// Student Management table, so removing that table left this
+	// referencing an undefined variable: opening Export crashed outright
+	// for every admin, regardless of role.
+	const availableClasses = [...new Set(students.map((s) => s.class).filter(Boolean))].sort();
 
 	const handleExportResults = () => {
 		try {
@@ -1769,7 +1784,7 @@ const AdminDashboard = () => {
 										Export by Class
 									</h3>
 									<div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-										{Object.keys(groupedByClass).map((className) => {
+										{availableClasses.map((className) => {
 											const classResults = quizResults.filter((result) => {
 												const student = students.find(
 													(s) => s.email === result.email
@@ -1811,7 +1826,7 @@ const AdminDashboard = () => {
 									<div className="text-sm text-green-700 space-y-1">
 										<p>• Total Results: {quizResults.length}</p>
 										<p>
-											• Classes Available: {Object.keys(groupedByClass).length}
+											• Classes Available: {availableClasses.length}
 										</p>
 										<p>
 											• Date Range:{" "}
