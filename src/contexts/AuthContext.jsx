@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useRef } from "react";
 import { supabase } from "../lib/supabase";
 import { useRouter } from "next/navigation";
 import { isAdminRole } from "../lib/roles";
@@ -57,6 +57,19 @@ export const AuthProvider = ({ children }) => {
 	// currently authenticated user's email, not a single last-set value.
 	const [signupRole, setSignupRole] = useState(null);
 	const router = useRouter();
+	// Tracks the signed-in user's id across the long-lived
+	// onAuthStateChange subscription below (a ref, not state, since the
+	// subscription is only set up once on mount — see its empty dep
+	// array). Lets that handler tell "genuinely signed in as someone
+	// new" apart from "same account, Supabase silently refreshed the
+	// token" (which it does on every tab/window refocus, firing
+	// SIGNED_IN again with a freshly-built session.user object each
+	// time). Without this, setUser/setUserProfile below handed every
+	// consumer a brand-new object reference on each refocus, so any
+	// effect keyed on `user`/`userProfile` (e.g. the student dashboard's
+	// stats loader) refetched its data every time the tab regained
+	// focus, even though nothing had actually changed.
+	const currentUserIdRef = useRef(null);
 
 	// Resolve this user's pending signup role (if any) from the stored
 	// map, only relevant before their profile row exists.
@@ -76,6 +89,7 @@ export const AuthProvider = ({ children }) => {
 				} = await withTimeout(supabase.auth.getSession(), 15000);
 
 				if (session?.user) {
+					currentUserIdRef.current = session.user.id;
 					setUser(session.user);
 
 					// Fetch user profile with a 10-second timeout
@@ -108,6 +122,14 @@ export const AuthProvider = ({ children }) => {
 			console.log("Auth state changed:", event);
 
 			if (event === "SIGNED_IN" && session?.user) {
+				// Supabase fires SIGNED_IN again on every tab/window refocus
+				// (it silently refreshes the token), not just on a genuine
+				// new login. When it's the same account as before, skip
+				// updating state entirely — that keeps `user`/`userProfile`
+				// at the exact same object references, so effects elsewhere
+				// keyed on them don't refire and refetch for no reason.
+				if (currentUserIdRef.current === session.user.id) return;
+				currentUserIdRef.current = session.user.id;
 				setUser(session.user);
 
 				// Fetch user profile with timeout
@@ -130,6 +152,7 @@ export const AuthProvider = ({ children }) => {
 					// check (which skips itself while signupRole is set) misfire.
 				}
 			} else if (event === "SIGNED_OUT") {
+				currentUserIdRef.current = null;
 				setUser(null);
 				setUserProfile(null);
 				setSignupRole(null);

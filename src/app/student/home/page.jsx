@@ -73,8 +73,31 @@ const StudentHome = () => {
 
 	useEffect(() => {
 		if (!authUser) return;
+
+		// Stale-while-revalidate: a returning tab (the browser discarded it
+		// in the background and reloads it fresh on refocus, or any other
+		// full remount) otherwise shows an empty skeleton for a beat even
+		// though nothing actually changed. Showing last-known numbers
+		// immediately, then quietly replacing them once the real fetch
+		// resolves, makes that feel instant instead of a visible reload.
+		const cacheKey = `qm_student_stats_${authUser.id}`;
+		let hadCache = false;
+		try {
+			const cached = localStorage.getItem(cacheKey);
+			if (cached) {
+				const parsed = JSON.parse(cached);
+				setStats(parsed.stats);
+				setRecentActivity(parsed.recentActivity);
+				setStatsLoading(false);
+				hadCache = true;
+			}
+		} catch {
+			// localStorage unavailable (private browsing, etc.) — falls
+			// through to the normal loading-skeleton path below.
+		}
+
 		const loadStats = async () => {
-			setStatsLoading(true);
+			if (!hadCache) setStatsLoading(true);
 			try {
 				let { data: rows } = await withTimeout(
 					supabase.from("quiz_results").select("*").eq("email", authUser.email).order("timestamp", { ascending: false }),
@@ -88,17 +111,25 @@ const StudentHome = () => {
 					rows = byId;
 				}
 				const attempts = extractAttempts(rows);
-				if (attempts.length > 0) {
-					const scores = attempts.map((a) => (a.score / a.total) * 100);
-					setStats({
-						totalQuizzes: attempts.length,
-						averageScore: Math.round(scores.reduce((a, b) => a + b, 0) / scores.length),
-						bestScore: Math.round(Math.max(...scores)),
-					});
-				} else {
-					setStats({ totalQuizzes: 0, averageScore: 0, bestScore: 0 });
+				const newStats =
+					attempts.length > 0
+						? {
+								totalQuizzes: attempts.length,
+								averageScore: Math.round(
+									attempts.reduce((sum, a) => sum + (a.score / a.total) * 100, 0) / attempts.length
+								),
+								bestScore: Math.round(Math.max(...attempts.map((a) => (a.score / a.total) * 100))),
+						  }
+						: { totalQuizzes: 0, averageScore: 0, bestScore: 0 };
+				const newRecentActivity = attempts.slice(0, 5);
+
+				setStats(newStats);
+				setRecentActivity(newRecentActivity);
+				try {
+					localStorage.setItem(cacheKey, JSON.stringify({ stats: newStats, recentActivity: newRecentActivity }));
+				} catch {
+					// Non-fatal — just means next load won't have a cache to show.
 				}
-				setRecentActivity(attempts.slice(0, 5));
 			} catch (err) {
 				console.error("Error loading dashboard stats:", err);
 			} finally {
@@ -219,13 +250,13 @@ const StudentHome = () => {
 							Ready to Test Your Knowledge?
 						</h2>
 						<p className="text-base sm:text-xl text-gray-600 mb-10 max-w-3xl mx-auto leading-relaxed">
-							{loading ? "Loading your quizzes..." : quizOptions[0]?.description || "Choose your quiz and start learning!"}
+							{loading ? "Loading your quizzes..." : "Choose a category below to begin"}
 						</p>
-						<div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+						<div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
 							{loading ? (
 								<>
-									<div className="bg-white/50 p-8 rounded-3xl shadow-xl border border-white/50 w-full sm:w-64 h-48 sm:h-64 animate-pulse"></div>
-									<div className="bg-white/50 p-8 rounded-3xl shadow-xl border border-white/50 w-full sm:w-64 h-48 sm:h-64 animate-pulse"></div>
+									<div className="bg-white/50 p-8 rounded-3xl shadow-xl border border-white/50 h-56 sm:h-64 animate-pulse"></div>
+									<div className="bg-white/50 p-8 rounded-3xl shadow-xl border border-white/50 h-56 sm:h-64 animate-pulse"></div>
 								</>
 							) : (
 								quizOptions.map((category, index) => (
@@ -235,17 +266,18 @@ const StudentHome = () => {
 										animate={{ opacity: 1, y: 0 }}
 										transition={{ duration: 0.6, delay: index * 0.2 }}
 										whileHover={{ y: -8 }}
-										className="group w-full sm:w-64">
+										className="group">
 										<button
 											onClick={() => router.push(category.path)}
-											className="w-full bg-brand-50 p-8 rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-500 border border-brand-100 flex flex-col items-center">
-											<div className="w-16 h-16 bg-gradient-to-br from-brand-500 to-brand-700 rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300">
+											className="w-full h-full bg-brand-50 p-8 sm:p-10 rounded-3xl shadow-sm hover:shadow-2xl transition-all duration-500 border border-brand-100 flex flex-col items-center text-center">
+											<div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-brand-500 to-brand-700 rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform duration-300">
 												{category.icon}
 											</div>
-											<h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-4">
+											<h3 className="font-display text-xl sm:text-2xl font-bold text-gray-900 mb-2">
 												{category.title.toUpperCase()}
 											</h3>
-											<div className="flex items-center text-brand-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
+											<p className="text-sm text-gray-500 mb-5">{category.description}</p>
+											<div className="mt-auto flex items-center text-brand-600 font-semibold group-hover:translate-x-2 transition-transform duration-300">
 												<span>Start Quiz</span>
 												<ArrowRight className="w-4 h-4 ml-2" />
 											</div>
