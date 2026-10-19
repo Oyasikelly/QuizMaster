@@ -19,6 +19,7 @@ import {
 	FaChartLine,
 	FaMedal,
 	FaExclamationTriangle,
+	FaMapMarkerAlt,
 } from "react-icons/fa";
 
 const withTimeout = (promise, ms) =>
@@ -354,6 +355,15 @@ const StudentDetail = () => {
 									<p className="text-sm text-gray-500">Denomination</p>
 									<p className="font-medium text-gray-900">
 										{student.denomination || "Not set"}
+									</p>
+								</div>
+							</div>
+							<div className="flex items-center space-x-3">
+								<FaMapMarkerAlt className="text-blue-500" />
+								<div>
+									<p className="text-sm text-gray-500">Zone / Area / Parish</p>
+									<p className="font-medium text-gray-900">
+										{[student.zone, student.area, student.parish].filter(Boolean).join(" · ") || "Not set"}
 									</p>
 								</div>
 							</div>

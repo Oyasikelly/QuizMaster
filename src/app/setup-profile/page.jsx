@@ -48,6 +48,11 @@ const SetupProfilePage = () => {
 		dateOfBirth: "",
 		gender: "",
 		denomination: "",
+		// Self-reported, free text -- not tied to an admin-managed
+		// hierarchy (see ParishPicker). Optional, like phone/DOB/gender.
+		zone: "",
+		area: "",
+		parish: "",
 		// Admin-specific fields
 		position: "",
 		department: "",
@@ -147,6 +152,9 @@ const SetupProfilePage = () => {
 				date_of_birth: formData.dateOfBirth || null,
 				gender: formData.gender || null,
 				denomination: formData.denomination,
+				zone: formData.zone || null,
+				area: formData.area || null,
+				parish: formData.parish || null,
 				org_id: selectedOrgId,
 			};
 
@@ -352,6 +360,37 @@ const SetupProfilePage = () => {
 									animate={{ opacity: 1, y: 0 }}
 									transition={{ delay: 0.39 }}>
 									<ParishPicker onChange={setSelectedOrgId} />
+								</motion.div>
+
+								<motion.div
+									initial={{ opacity: 0, y: 20 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ delay: 0.395 }}
+									className="grid grid-cols-3 gap-2">
+									<input
+										type="text"
+										name="zone"
+										value={formData.zone}
+										onChange={handleChange}
+										placeholder="Zone"
+										className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+									/>
+									<input
+										type="text"
+										name="area"
+										value={formData.area}
+										onChange={handleChange}
+										placeholder="Area"
+										className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+									/>
+									<input
+										type="text"
+										name="parish"
+										value={formData.parish}
+										onChange={handleChange}
+										placeholder="Parish"
+										className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+									/>
 								</motion.div>
 
 								{/* Admin-specific fields */}

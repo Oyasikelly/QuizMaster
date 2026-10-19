@@ -63,28 +63,16 @@ const withTimeout = (promise, ms) =>
 		),
 	]);
 
-// Walks parent_id up from a student's org_id to resolve every level
-// along the way, by name. Returns { province, zone, area, parish } with
-// whichever levels don't apply left null -- a student's org_id can land
-// at any of these four levels (a Zone or Area can itself be someone's
-// actual church, not just a routing point to named Areas/Parishes
-// under it), so showing all four separately is the only way to show
-// exactly where someone is without implying every student has a named
-// Parish specifically.
-const resolveOrgChain = async (orgId) => {
-	const chain = { province: null, zone: null, area: null, parish: null };
-	let currentId = orgId;
-	while (currentId) {
-		const { data: org } = await supabase
-			.from("organizations")
-			.select("name, level, parent_id")
-			.eq("id", currentId)
-			.maybeSingle();
-		if (!org) break;
-		if (org.level in chain) chain[org.level] = org.name;
-		currentId = org.parent_id;
-	}
-	return chain;
+// Province is the only level still backed by an admin-managed org
+// table (a small, stable, pre-seeded list) -- Zone/Area/Parish used to
+// walk a parent_id chain through the same table, but that turned out
+// to be more complexity than the real need called for. They're now
+// plain text fields a student fills in themselves, read directly off
+// their own profile row like `class` or `phone`.
+const resolveProvinceName = async (orgId) => {
+	if (!orgId) return null;
+	const { data } = await supabase.from("organizations").select("name").eq("id", orgId).maybeSingle();
+	return data?.name || null;
 };
 
 const StudentProfile = () => {
@@ -122,23 +110,22 @@ const StudentProfile = () => {
 		dateOfBirth: "",
 		gender: "",
 		denomination: "",
+		zone: "",
+		area: "",
+		parish: "",
 	});
 	const [error, setError] = useState("");
 	const [successMessage, setSuccessMessage] = useState("");
 	const [loadError, setLoadError] = useState(false);
 	const router = useRouter();
 
-	// Current Province/Zone/Area/Parish, resolved for display only (by
-	// walking parent_id up from org_id). A Zone or Area can itself BE
-	// someone's church — not every zone has named areas under it, not
-	// every area has named parishes — so a student's org_id can land at
-	// any of these four levels, not just "parish" specifically; showing
-	// all four (blank where not applicable) makes that visible instead
-	// of forcing everyone into one generically-labeled "Parish" field.
-	// The picker below always starts fresh (see ParishPicker) —
-	// selecting something there is what actually changes org_id; leaving
-	// it alone keeps whatever's already set, shown here read-only.
-	const [currentOrgChain, setCurrentOrgChain] = useState({ province: null, zone: null, area: null, parish: null });
+	// Province name, resolved for display only from org_id. The picker
+	// below always starts fresh (see ParishPicker) — selecting something
+	// there is what actually changes org_id; leaving it alone keeps
+	// whatever's already set, shown here read-only. Zone/Area/Parish are
+	// plain text on the profile row itself (editForm.zone/area/parish),
+	// no separate resolution needed.
+	const [currentProvinceName, setCurrentProvinceName] = useState(null);
 	// Only set once the user actively picks something; null means "don't
 	// touch org_id on save," not "clear it."
 	const [selectedOrgId, setSelectedOrgId] = useState(null);
@@ -171,14 +158,12 @@ const StudentProfile = () => {
 					dateOfBirth: profile.date_of_birth || "",
 					gender: profile.gender || "",
 					denomination: profile.denomination || "",
+					zone: profile.zone || "",
+					area: profile.area || "",
+					parish: profile.parish || "",
 				});
 				setProfileData(profile);
-
-				if (profile.org_id) {
-					setCurrentOrgChain(await resolveOrgChain(profile.org_id));
-				} else {
-					setCurrentOrgChain({ province: null, zone: null, area: null, parish: null });
-				}
+				setCurrentProvinceName(await resolveProvinceName(profile.org_id));
 			} else if (profileError) {
 				setError("Failed to load profile data");
 			}
@@ -284,6 +269,9 @@ const StudentProfile = () => {
 			dateOfBirth: profileData?.date_of_birth || "",
 			gender: profileData?.gender || "",
 			denomination: profileData?.denomination || "",
+			zone: profileData?.zone || "",
+			area: profileData?.area || "",
+			parish: profileData?.parish || "",
 		});
 		setSelectedOrgId(null);
 		setError("");
@@ -330,6 +318,9 @@ const StudentProfile = () => {
 				date_of_birth: editForm.dateOfBirth || null,
 				gender: editForm.gender || null,
 				denomination: editForm.denomination,
+				zone: editForm.zone || null,
+				area: editForm.area || null,
+				parish: editForm.parish || null,
 			};
 			if (selectedOrgId) {
 				updateData.org_id = selectedOrgId;
@@ -366,9 +357,7 @@ const StudentProfile = () => {
 
 			if (updatedProfile) {
 				setProfileData(updatedProfile);
-				if (updatedProfile.org_id) {
-					setCurrentOrgChain(await resolveOrgChain(updatedProfile.org_id));
-				}
+				setCurrentProvinceName(await resolveProvinceName(updatedProfile.org_id));
 			}
 			setSelectedOrgId(null);
 
@@ -778,34 +767,59 @@ const StudentProfile = () => {
 									<label className="block text-sm font-medium text-gray-700 mb-2">
 										Location
 									</label>
-									<div className="grid grid-cols-2 gap-2 mb-3">
-										<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
-											<FaBuilding className="text-gray-400 flex-shrink-0" />
-											<span className="truncate">Province: {currentOrgChain.province || "Not set"}</span>
-										</div>
-										<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
-											<FaBuilding className="text-gray-400 flex-shrink-0" />
-											<span className="truncate">Zone: {currentOrgChain.zone || "Not set"}</span>
-										</div>
-										<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
-											<FaBuilding className="text-gray-400 flex-shrink-0" />
-											<span className="truncate">Area: {currentOrgChain.area || "Not set"}</span>
-										</div>
-										<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
-											<FaChurch className="text-gray-400 flex-shrink-0" />
-											<span className="truncate">Parish: {currentOrgChain.parish || "Not set"}</span>
-										</div>
+									<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg mb-2">
+										<FaBuilding className="text-gray-400 flex-shrink-0" />
+										<span className="truncate">Province: {currentProvinceName || "Not set"}</span>
 									</div>
 									{isEditing && (
 										<>
-											<ParishPicker
-												label="Change parish"
-												onChange={setSelectedOrgId}
-											/>
-											<p className="text-xs text-gray-400 mt-1">
-												Leave unselected to keep your current location.
+											<ParishPicker onChange={setSelectedOrgId} />
+											<p className="text-xs text-gray-400 mt-1 mb-3">
+												Leave unselected to keep your current province.
 											</p>
 										</>
+									)}
+
+									{/* Zone/Area/Parish: self-reported free text, not an
+									    admin-managed list -- just type whichever applies to
+									    where you worship. */}
+									{isEditing ? (
+										<div className="grid grid-cols-3 gap-2 mt-2">
+											<input
+												type="text"
+												value={editForm.zone}
+												onChange={(e) => setEditForm({ ...editForm, zone: e.target.value })}
+												placeholder="Zone"
+												className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
+											/>
+											<input
+												type="text"
+												value={editForm.area}
+												onChange={(e) => setEditForm({ ...editForm, area: e.target.value })}
+												placeholder="Area"
+												className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
+											/>
+											<input
+												type="text"
+												value={editForm.parish}
+												onChange={(e) => setEditForm({ ...editForm, parish: e.target.value })}
+												placeholder="Parish"
+												className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
+											/>
+										</div>
+									) : (
+										<div className="grid grid-cols-3 gap-2 mt-2">
+											<div className="p-3 bg-gray-50 rounded-lg text-sm truncate">
+												Zone: {profileData?.zone || "Not set"}
+											</div>
+											<div className="p-3 bg-gray-50 rounded-lg text-sm truncate">
+												Area: {profileData?.area || "Not set"}
+											</div>
+											<div className="p-3 bg-gray-50 rounded-lg text-sm truncate">
+												<FaChurch className="inline text-gray-400 mr-1" />
+												{profileData?.parish || "Not set"}
+											</div>
+										</div>
 									)}
 								</div>
 							</div>

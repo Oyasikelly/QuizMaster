@@ -197,6 +197,9 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 					email: editingStudent.email,
 					class: editingStudent.class,
 					denomination: editingStudent.denomination,
+					zone: editingStudent.zone || null,
+					area: editingStudent.area || null,
+					parish: editingStudent.parish || null,
 				})
 				.eq("id", editingStudent.id)
 				.select();
@@ -335,7 +338,6 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 					<option value="all">All Classes</option>
 					<option value="yaya">Yaya</option>
 					<option value="adult">Adult</option>
-					<option value="adults">Adults</option>
 					<option value="teenagers">Teenagers</option>
 				</select>
 			</div>
@@ -357,6 +359,9 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 								</th>
 								<th className="text-left py-3 px-4 font-medium text-gray-900">
 									Denomination
+								</th>
+								<th className="text-left py-3 px-4 font-medium text-gray-900">
+									Location
 								</th>
 								<th className="text-left py-3 px-4 font-medium text-gray-900">
 									Real Quiz Score
@@ -455,7 +460,6 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 												<option value="">Select Class</option>
 												<option value="yaya">Yaya</option>
 												<option value="adult">Adult</option>
-												<option value="adults">Adults</option>
 												<option value="teenagers">Teenagers</option>
 											</select>
 										) : (
@@ -485,6 +489,37 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 										) : (
 											<span className="text-gray-600">
 												{student.denomination || "Not set"}
+											</span>
+										)}
+									</td>
+									<td className="py-3 px-4">
+										{editingStudent?.id === student.id ? (
+											<div className="space-y-1">
+												<input
+													type="text"
+													value={editingStudent.zone || ""}
+													onChange={(e) => setEditingStudent({ ...editingStudent, zone: e.target.value })}
+													placeholder="Zone"
+													className="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-brand-500 text-xs"
+												/>
+												<input
+													type="text"
+													value={editingStudent.area || ""}
+													onChange={(e) => setEditingStudent({ ...editingStudent, area: e.target.value })}
+													placeholder="Area"
+													className="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-brand-500 text-xs"
+												/>
+												<input
+													type="text"
+													value={editingStudent.parish || ""}
+													onChange={(e) => setEditingStudent({ ...editingStudent, parish: e.target.value })}
+													placeholder="Parish"
+													className="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-brand-500 text-xs"
+												/>
+											</div>
+										) : (
+											<span className="text-gray-600 text-xs">
+												{[student.zone, student.area, student.parish].filter(Boolean).join(" · ") || "Not set"}
 											</span>
 										)}
 									</td>
@@ -599,7 +634,6 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 											<option value="">Select Class</option>
 											<option value="yaya">Yaya</option>
 											<option value="adult">Adult</option>
-											<option value="adults">Adults</option>
 											<option value="teenagers">Teenagers</option>
 										</select>
 										<select
@@ -613,6 +647,29 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 												</option>
 											))}
 										</select>
+										<div className="grid grid-cols-3 gap-1">
+											<input
+												type="text"
+												value={editingStudent.zone || ""}
+												onChange={(e) => setEditingStudent({ ...editingStudent, zone: e.target.value })}
+												placeholder="Zone"
+												className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500"
+											/>
+											<input
+												type="text"
+												value={editingStudent.area || ""}
+												onChange={(e) => setEditingStudent({ ...editingStudent, area: e.target.value })}
+												placeholder="Area"
+												className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500"
+											/>
+											<input
+												type="text"
+												value={editingStudent.parish || ""}
+												onChange={(e) => setEditingStudent({ ...editingStudent, parish: e.target.value })}
+												placeholder="Parish"
+												className="w-full px-2 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500"
+											/>
+										</div>
 										<div className="flex gap-2 pt-1">
 											<button
 												onClick={handleSaveStudent}
@@ -646,6 +703,11 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 											<span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">
 												{student.denomination || "Denomination not set"}
 											</span>
+											{(student.zone || student.area || student.parish) && (
+												<span className="bg-gray-100 text-gray-700 px-2 py-1 rounded">
+													{[student.zone, student.area, student.parish].filter(Boolean).join(" · ")}
+												</span>
+											)}
 											<span className="flex items-center gap-1 bg-yellow-50 text-yellow-700 px-2 py-1 rounded">
 												<FaTrophy size={10} className={student.realScore !== null ? "text-yellow-500" : "text-gray-400"} />
 												{student.realScore !== null ? `${student.realScore}%` : "Not Taken"}
@@ -744,6 +806,16 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 												</label>
 												<p className="text-gray-900">
 													{selectedStudent.denomination || "Not set"}
+												</p>
+											</div>
+											<div>
+												<label className="text-sm font-medium text-gray-700">
+													Zone / Area / Parish
+												</label>
+												<p className="text-gray-900">
+													{[selectedStudent.zone, selectedStudent.area, selectedStudent.parish]
+														.filter(Boolean)
+														.join(" · ") || "Not set"}
 												</p>
 											</div>
 											<div>

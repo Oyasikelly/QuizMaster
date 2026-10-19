@@ -180,17 +180,13 @@ const AdminDashboard = () => {
 			// explicitly in its own body instead of depending on it.
 			const { data: studentsData } = await withTimeout(supabase.rpc("get_scoped_students"), 10000);
 
-			// Only keep students in a real class (case-insensitive). Used to
-			// only check for "yaya"/"adult" — StudentManagement's own class
-			// dropdown also offers "adults" (plural), so any student an
-			// admin set to that value was silently excluded here, which
-			// cascades to every quiz-results export below too (it's built
-			// from this same filtered list). No "adults" students exist in
-			// production today, but the dropdown makes it reachable, so
-			// this stays broad rather than hardcoding exact values again.
+			// Only keep students in a real class (case-insensitive). "adults"
+			// (plural) was briefly a selectable duplicate of "adult" in
+			// StudentManagement's own dropdown -- removed there, so no new
+			// students can land on it; this stays just the three real values.
 			const filteredStudentsData = (studentsData || []).filter((student) => {
 				const cls = (student.class || "").toLowerCase();
-				return cls === "yaya" || cls === "adult" || cls === "adults" || cls === "teenagers";
+				return cls === "yaya" || cls === "adult" || cls === "teenagers";
 			});
 
 			// Resolve each student's org name — RLS already limits which
@@ -1405,6 +1401,14 @@ const AdminDashboard = () => {
 											<span className="text-gray-600">Province:</span>
 											<span className="font-medium">
 												{selectedStudent.orgName || "Not assigned"}
+											</span>
+										</div>
+										<div className="flex justify-between">
+											<span className="text-gray-600">Zone / Area / Parish:</span>
+											<span className="font-medium">
+												{[selectedStudent.zone, selectedStudent.area, selectedStudent.parish]
+													.filter(Boolean)
+													.join(" · ") || "Not set"}
 											</span>
 										</div>
 									</div>
