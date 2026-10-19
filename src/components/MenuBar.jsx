@@ -7,7 +7,6 @@ import {
 	Home,
 	User,
 	LogOut,
-	BarChart2,
 	Bot,
 	Menu as MenuIcon,
 	X as CloseIcon,
@@ -17,35 +16,18 @@ import { supabase } from "../lib/supabase";
 import { Button } from "./ui/enhanced-button";
 import { useRouter } from "next/navigation";
 
-// Helper for performance color/icon
-const getPerformanceColor = (percent) => {
-	if (percent >= 80) return "from-green-500 to-emerald-600";
-	if (percent >= 60) return "from-yellow-500 to-orange-500";
-	return "from-red-500 to-pink-600";
-};
-const getPerformanceIcon = (percent) => {
-	if (percent >= 80) return <BarChart2 className="w-6 h-6 text-green-500" />;
-	if (percent >= 60) return <BarChart2 className="w-6 h-6 text-yellow-500" />;
-	return <BarChart2 className="w-6 h-6 text-red-500" />;
-};
-
 const DESKTOP_MENU = [
 	{ href: "/", icon: <Home className="w-6 h-6" />, label: "Home" },
 	{
 		href: null,
 		icon: <Bot className="w-6 h-6" />,
-		label: "Chat with AI coming soon..",
+		label: "Chat with AI",
+		isComingSoon: true,
 	},
 	{
 		href: "/student/profile",
 		icon: <User className="w-6 h-6" />,
 		label: "Profile",
-	},
-	{
-		href: null,
-		icon: <BarChart2 className="w-6 h-6 text-purple-500" />,
-		label: "Performance",
-		isPerformance: true,
 	},
 	{
 		href: null,
@@ -58,7 +40,7 @@ const DESKTOP_MENU = [
 export default function MenuBar() {
 	const [userData, setUserData] = useState(null);
 	const [showLogout, setShowLogout] = useState(false);
-	const [quizPerf, setQuizPerf] = useState(null);
+	const [showComingSoon, setShowComingSoon] = useState(false);
 	const [open, setOpen] = useState(false);
 	const [hovered, setHovered] = useState(null);
 	const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -89,26 +71,6 @@ export default function MenuBar() {
 			if (userData && userData.length > 0) setUserData(userData[0]);
 		}
 		getUser();
-	}, []);
-
-	// Fetch quiz performance from localStorage
-	useEffect(() => {
-		try {
-			const quizResults = localStorage.getItem("quizResults");
-			if (quizResults) {
-				const { answers, questions } = JSON.parse(quizResults);
-				const correct = answers.filter(
-					(a, i) => a === questions[i].answer
-				).length;
-				setQuizPerf({
-					correct,
-					total: questions.length,
-					percent: Math.round((correct / questions.length) * 100),
-				});
-			}
-		} catch (e) {
-			setQuizPerf(null);
-		}
 	}, []);
 
 	// Logout logic
@@ -180,9 +142,9 @@ export default function MenuBar() {
 						onMouseEnter={() => setHovered(idx)}
 						onMouseLeave={() => setHovered(null)}>
 						{/* Icon or button */}
-						{item.isPerformance && quizPerf ? (
+						{item.isComingSoon ? (
 							<button
-								onClick={() => setOpen(true)}
+								onClick={() => setShowComingSoon(true)}
 								className="p-2 rounded-full hover:bg-blue-100 transition flex items-center justify-center"
 								aria-label={item.label}>
 								{item.icon}
@@ -271,39 +233,19 @@ export default function MenuBar() {
 								)}
 							</div>
 						</div>
-						{/* Performance Widget */}
-						{quizPerf && (
-							<div className="flex flex-col items-center mb-8">
-								<div
-									className={`w-16 h-16 flex items-center justify-center rounded-full bg-gradient-to-r ${getPerformanceColor(
-										quizPerf.percent
-									)} shadow-lg mb-1`}
-									title={`Last Score: ${quizPerf.correct}/${quizPerf.total}`}>
-									<span className="text-2xl font-bold text-white">
-										{quizPerf.percent}%
-									</span>
-								</div>
-								<span className="text-xs text-gray-700 font-medium">
-									Last Score
-								</span>
-							</div>
-						)}
 						{/* Navigation Links */}
 						<nav className="flex flex-col gap-3 mb-8">
 							<DrawerNavLink
-								href="/"
 								icon={<Home className="w-5 h-5" />}
 								onClick={handleHomeNavigation}>
 								Home
 							</DrawerNavLink>
 							<DrawerNavLink
-								href="/"
 								icon={<Bot className="w-5 h-5" />}
-								onClick={() => handleNavigation("/")}>
-								Chat with AI coming out soon..
+								onClick={() => setShowComingSoon(true)}>
+								Chat with AI
 							</DrawerNavLink>
 							<DrawerNavLink
-								href="/student/profile"
 								icon={<User className="w-5 h-5" />}
 								onClick={() => handleNavigation("/student/profile")}>
 								Profile
@@ -320,6 +262,44 @@ export default function MenuBar() {
 							Logout
 						</Button>
 					</motion.aside>
+				)}
+			</AnimatePresence>
+
+			{/* Chat with AI — Coming Soon */}
+			<AnimatePresence>
+				{showComingSoon && (
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						onClick={() => setShowComingSoon(false)}
+						className="fixed inset-0 z-[300] flex items-center justify-center bg-black/30 backdrop-blur-sm">
+						<motion.div
+							initial={{ scale: 0.9, opacity: 0 }}
+							animate={{ scale: 1, opacity: 1 }}
+							exit={{ scale: 0.9, opacity: 0 }}
+							transition={{ duration: 0.3 }}
+							onClick={(e) => e.stopPropagation()}
+							className="bg-white/90 rounded-3xl shadow-2xl p-8 max-w-xs w-full border border-white/60 flex flex-col items-center text-center">
+							<div className="w-14 h-14 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center mb-4">
+								<Bot className="w-7 h-7 text-white" />
+							</div>
+							<h3 className="text-xl font-bold mb-2 text-gray-800">
+								Chat with AI
+							</h3>
+							<p className="text-gray-600 mb-6">
+								We're building an AI study companion to help you learn — coming soon!
+							</p>
+							<Button
+								variant="softPrimary"
+								size="sm"
+								rounded="full"
+								className="w-full"
+								onClick={() => setShowComingSoon(false)}>
+								Got it
+							</Button>
+						</motion.div>
+					</motion.div>
 				)}
 			</AnimatePresence>
 
@@ -515,7 +495,7 @@ export default function MenuBar() {
 }
 
 // Drawer nav link
-function DrawerNavLink({ href, icon, children, onClick }) {
+function DrawerNavLink({ icon, children, onClick }) {
 	return (
 		<button
 			onClick={onClick}
