@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { supabase } from "../../../lib/supabase";
 import { isAdminRole, roleLabel } from "../../../lib/roles";
 import AdminShell from "../../../components/AdminShell";
+import { DENOMINATIONS } from "../../../lib/denominations";
 import { FaUser, FaIdBadge, FaSave } from "react-icons/fa";
 
 const AdminProfile = () => {
@@ -32,6 +33,7 @@ const AdminProfile = () => {
 		department: "",
 		dateOfBirth: "",
 		gender: "",
+		denomination: "",
 	});
 
 	useEffect(() => {
@@ -46,7 +48,7 @@ const AdminProfile = () => {
 
 			const { data: profile, error: profileError } = await supabase
 				.from("users_profile")
-				.select("role, name, email, phone, position, department, date_of_birth, gender, org_id, created_at")
+				.select("role, name, email, phone, position, department, date_of_birth, gender, denomination, org_id, created_at")
 				.eq("id", user.id)
 				.single();
 
@@ -64,6 +66,7 @@ const AdminProfile = () => {
 				department: profile.department || "",
 				dateOfBirth: profile.date_of_birth || "",
 				gender: profile.gender || "",
+				denomination: profile.denomination || "",
 			});
 
 			if (profile.org_id) {
@@ -93,6 +96,10 @@ const AdminProfile = () => {
 			setError("Name is required.");
 			return;
 		}
+		if (!form.denomination) {
+			setError("Denomination is required.");
+			return;
+		}
 		setSaving(true);
 		const { error: updateError } = await supabase
 			.from("users_profile")
@@ -103,6 +110,7 @@ const AdminProfile = () => {
 				department: form.department.trim() || null,
 				date_of_birth: form.dateOfBirth || null,
 				gender: form.gender || null,
+				denomination: form.denomination,
 			})
 			.eq("id", currentUser.id);
 		setSaving(false);
@@ -217,6 +225,19 @@ const AdminProfile = () => {
 								placeholder="Department (e.g. Education)"
 								className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
 							/>
+							<select
+								name="denomination"
+								value={form.denomination}
+								onChange={handleChange}
+								required
+								className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm">
+								<option value="">Select denomination</option>
+								{DENOMINATIONS.map((d) => (
+									<option key={d} value={d}>
+										{d}
+									</option>
+								))}
+							</select>
 							<div className="grid grid-cols-2 gap-2">
 								<input
 									type="date"

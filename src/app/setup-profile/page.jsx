@@ -37,6 +37,7 @@ import {
 import { useAuth } from "../../contexts/AuthContext";
 import ParishPicker from "../../components/ParishPicker";
 import { isAdminRole } from "../../lib/roles";
+import { DENOMINATIONS } from "../../lib/denominations";
 
 const SetupProfilePage = () => {
 	const [formData, setFormData] = useState({
@@ -46,6 +47,7 @@ const SetupProfilePage = () => {
 		phone: "",
 		dateOfBirth: "",
 		gender: "",
+		denomination: "",
 		// Admin-specific fields
 		position: "",
 		department: "",
@@ -117,14 +119,14 @@ const SetupProfilePage = () => {
 		// my_scoped_org_ids() — with no org_id picked they'd see nothing
 		// at all, so it's required here.
 		if (userRole === "admin") {
-			if (!formData.name || !formData.position || !formData.department || !selectedOrgId) {
-				setError("All admin fields are required, including your province.");
+			if (!formData.name || !formData.position || !formData.department || !formData.denomination || !selectedOrgId) {
+				setError("All admin fields are required, including your province and denomination.");
 				setIsLoading(false);
 				return;
 			}
 		} else {
-			if (!formData.name || !formData.classname) {
-				setError("All student fields are required.");
+			if (!formData.name || !formData.classname || !formData.denomination) {
+				setError("All student fields are required, including denomination.");
 				setIsLoading(false);
 				return;
 			}
@@ -144,6 +146,7 @@ const SetupProfilePage = () => {
 				phone: formData.phone || null,
 				date_of_birth: formData.dateOfBirth || null,
 				gender: formData.gender || null,
+				denomination: formData.denomination,
 				org_id: selectedOrgId,
 			};
 
@@ -320,6 +323,29 @@ const SetupProfilePage = () => {
 										</select>
 									</motion.div>
 								</div>
+
+								<motion.div
+									initial={{ opacity: 0, y: 20 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ delay: 0.385 }}
+									className="relative">
+									<label className="block text-sm font-medium text-gray-700 mb-2">
+										Denomination <span className="text-red-500">*</span>
+									</label>
+									<select
+										name="denomination"
+										value={formData.denomination}
+										onChange={handleChange}
+										required
+										className="w-full px-3 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all">
+										<option value="">Select denomination</option>
+										{DENOMINATIONS.map((d) => (
+											<option key={d} value={d}>
+												{d}
+											</option>
+										))}
+									</select>
+								</motion.div>
 
 								<motion.div
 									initial={{ opacity: 0, y: 20 }}

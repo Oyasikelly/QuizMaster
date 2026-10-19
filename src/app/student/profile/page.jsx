@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { supabase } from "../../../lib/supabase";
 import { useAuth } from "../../../contexts/AuthContext";
 import ParishPicker from "../../../components/ParishPicker";
+import { DENOMINATIONS } from "../../../lib/denominations";
 import {
 	FaUser,
 	FaEnvelope,
@@ -26,6 +27,7 @@ import {
 	FaCheckCircle,
 	FaExclamationTriangle,
 	FaArrowLeft,
+	FaChurch,
 } from "react-icons/fa";
 import {
 	User,
@@ -86,6 +88,7 @@ const StudentProfile = () => {
 		phone: "",
 		dateOfBirth: "",
 		gender: "",
+		denomination: "",
 	});
 	const [error, setError] = useState("");
 	const [successMessage, setSuccessMessage] = useState("");
@@ -127,6 +130,7 @@ const StudentProfile = () => {
 					phone: profile.phone || "",
 					dateOfBirth: profile.date_of_birth || "",
 					gender: profile.gender || "",
+					denomination: profile.denomination || "",
 				});
 				setProfileData(profile);
 
@@ -244,6 +248,7 @@ const StudentProfile = () => {
 			phone: profileData?.phone || "",
 			dateOfBirth: profileData?.date_of_birth || "",
 			gender: profileData?.gender || "",
+			denomination: profileData?.denomination || "",
 		});
 		setSelectedOrgId(null);
 		setError("");
@@ -253,6 +258,10 @@ const StudentProfile = () => {
 	const handleSave = async () => {
 		if (!editForm.name.trim()) {
 			setError("Name is required");
+			return;
+		}
+		if (!editForm.denomination) {
+			setError("Denomination is required");
 			return;
 		}
 
@@ -285,6 +294,7 @@ const StudentProfile = () => {
 				phone: editForm.phone || null,
 				date_of_birth: editForm.dateOfBirth || null,
 				gender: editForm.gender || null,
+				denomination: editForm.denomination,
 			};
 			if (selectedOrgId) {
 				updateData.org_id = selectedOrgId;
@@ -642,6 +652,32 @@ const StudentProfile = () => {
 										<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
 											<FaGraduationCap className="text-gray-400" />
 											<span>{profileData?.class || "Not set"}</span>
+										</div>
+									)}
+								</div>
+
+								<div>
+									<label className="block text-sm font-medium text-gray-700 mb-2">
+										Denomination
+									</label>
+									{isEditing ? (
+										<select
+											name="denomination"
+											value={editForm.denomination}
+											onChange={handleChange}
+											required
+											className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+											<option value="">Select denomination</option>
+											{DENOMINATIONS.map((d) => (
+												<option key={d} value={d}>
+													{d}
+												</option>
+											))}
+										</select>
+									) : (
+										<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
+											<FaChurch className="text-gray-400" />
+											<span>{profileData?.denomination || "Not set"}</span>
 										</div>
 									)}
 								</div>

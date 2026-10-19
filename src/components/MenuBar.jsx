@@ -264,6 +264,11 @@ export default function MenuBar() {
 										{userData.class}
 									</span>
 								)}
+								{userData?.denomination && (
+									<span className="text-xs text-gray-400">
+										{userData.denomination}
+									</span>
+								)}
 							</div>
 						</div>
 						{/* Performance Widget */}

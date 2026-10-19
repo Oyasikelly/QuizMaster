@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "../lib/supabase";
+import { DENOMINATIONS } from "../lib/denominations";
 import {
 	FaUser,
 	FaEnvelope,
@@ -183,6 +184,10 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 
 	const handleSaveStudent = async () => {
 		if (!editingStudent) return;
+		if (!editingStudent.denomination) {
+			alert("Denomination is required.");
+			return;
+		}
 
 		try {
 			const { data, error } = await supabase
@@ -459,8 +464,7 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 									</td>
 									<td className="py-3 px-4">
 										{editingStudent?.id === student.id ? (
-											<input
-												type="text"
+											<select
 												value={editingStudent.denomination || ""}
 												onChange={(e) =>
 													setEditingStudent({
@@ -468,8 +472,14 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 														denomination: e.target.value,
 													})
 												}
-												className="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-brand-500"
-											/>
+												className="w-full px-2 py-1 border border-gray-300 rounded focus:ring-2 focus:ring-brand-500">
+												<option value="">Select denomination</option>
+												{DENOMINATIONS.map((d) => (
+													<option key={d} value={d}>
+														{d}
+													</option>
+												))}
+											</select>
 										) : (
 											<span className="text-gray-600">
 												{student.denomination || "Not set"}
@@ -589,13 +599,17 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 											<option value="adult">Adult</option>
 											<option value="adults">Adults</option>
 										</select>
-										<input
-											type="text"
+										<select
 											value={editingStudent.denomination || ""}
 											onChange={(e) => setEditingStudent({ ...editingStudent, denomination: e.target.value })}
-											placeholder="Denomination"
-											className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500"
-										/>
+											className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-brand-500">
+											<option value="">Select denomination</option>
+											{DENOMINATIONS.map((d) => (
+												<option key={d} value={d}>
+													{d}
+												</option>
+											))}
+										</select>
 										<div className="flex gap-2 pt-1">
 											<button
 												onClick={handleSaveStudent}
