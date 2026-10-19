@@ -336,6 +336,7 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 					<option value="yaya">Yaya</option>
 					<option value="adult">Adult</option>
 					<option value="adults">Adults</option>
+					<option value="teenagers">Teenagers</option>
 				</select>
 			</div>
 
@@ -455,6 +456,7 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 												<option value="yaya">Yaya</option>
 												<option value="adult">Adult</option>
 												<option value="adults">Adults</option>
+												<option value="teenagers">Teenagers</option>
 											</select>
 										) : (
 											<span className="text-gray-600">
@@ -598,6 +600,7 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 											<option value="yaya">Yaya</option>
 											<option value="adult">Adult</option>
 											<option value="adults">Adults</option>
+											<option value="teenagers">Teenagers</option>
 										</select>
 										<select
 											value={editingStudent.denomination || ""}

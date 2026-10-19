@@ -271,6 +271,7 @@ const QuizAnalytics = () => {
 					<option value="all">All Classes</option>
 					<option value="yaya">Yaya</option>
 					<option value="adult">Adult</option>
+					<option value="teenagers">Teenagers</option>
 				</select>
 			</div>
 

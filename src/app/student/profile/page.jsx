@@ -647,6 +647,7 @@ const StudentProfile = () => {
 											<option value="">Select your class</option>
 											<option value="yaya">Yaya</option>
 											<option value="adult">Adult</option>
+											<option value="teenagers">Teenagers</option>
 										</select>
 									) : (
 										<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">

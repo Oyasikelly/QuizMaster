@@ -190,7 +190,7 @@ const AdminDashboard = () => {
 			// this stays broad rather than hardcoding exact values again.
 			const filteredStudentsData = (studentsData || []).filter((student) => {
 				const cls = (student.class || "").toLowerCase();
-				return cls === "yaya" || cls === "adult" || cls === "adults";
+				return cls === "yaya" || cls === "adult" || cls === "adults" || cls === "teenagers";
 			});
 
 			// Resolve each student's org name — RLS already limits which

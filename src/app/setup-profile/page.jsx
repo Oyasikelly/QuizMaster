@@ -425,6 +425,7 @@ const SetupProfilePage = () => {
 													<option value="">Select your class</option>
 													<option value="yaya">Yaya</option>
 													<option value="adult">Adult</option>
+													<option value="teenagers">Teenagers</option>
 												</select>
 											</div>
 										</motion.div>

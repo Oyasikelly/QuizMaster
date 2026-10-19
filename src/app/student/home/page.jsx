@@ -11,7 +11,7 @@ import {
 	FaChartBar,
 	FaClipboardList,
 } from "react-icons/fa";
-import { Heart, Brain, ArrowRight } from "lucide-react";
+import { Heart, Brain, Users, ArrowRight } from "lucide-react";
 import MenuBar from "../../../components/MenuBar";
 import { useAuth } from "../../../contexts/AuthContext";
 import { isAdminRole } from "../../../lib/roles";
@@ -170,6 +170,15 @@ const StudentHome = () => {
 				description: "Specialized content for caregivers",
 				icon: <Heart className="w-8 h-8" />,
 				path: "/quiz/yaya",
+			},
+		];
+	} else if (userClass === "teenagers") {
+		quizOptions = [
+			{
+				title: "Teenagers Quiz",
+				description: "Built for teens — age-appropriate questions",
+				icon: <Users className="w-8 h-8" />,
+				path: "/quiz/teenagers",
 			},
 		];
 	}
