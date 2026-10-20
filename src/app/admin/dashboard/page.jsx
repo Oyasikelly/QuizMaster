@@ -1425,6 +1425,12 @@ const AdminDashboard = () => {
 											</span>
 										</div>
 										<div className="flex justify-between">
+											<span className="text-gray-600">Phone:</span>
+											<span className="font-medium">
+												{selectedStudent.phone || "Not set"}
+											</span>
+										</div>
+										<div className="flex justify-between">
 											<span className="text-gray-600">Province:</span>
 											<span className="font-medium">
 												{selectedStudent.orgName || "Not assigned"}
@@ -1436,6 +1442,12 @@ const AdminDashboard = () => {
 												{[selectedStudent.zone, selectedStudent.area, selectedStudent.parish]
 													.filter(Boolean)
 													.join(" · ") || "Not set"}
+											</span>
+										</div>
+										<div className="flex flex-col gap-0.5">
+											<span className="text-gray-600">Address:</span>
+											<span className="font-medium break-words">
+												{selectedStudent.address || "Not set"}
 											</span>
 										</div>
 									</div>

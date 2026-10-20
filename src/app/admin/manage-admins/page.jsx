@@ -59,7 +59,7 @@ export default function ManageAdminsPage() {
 	const loadAdmins = useCallback(async () => {
 		const { data, error: adminsError } = await supabase
 			.from("users_profile")
-			.select("id, name, email, role, org_id, phone, position, department, denomination, created_at")
+			.select("id, name, email, role, org_id, phone, address, position, department, denomination, created_at")
 			.in("role", Array.from(ADMIN_ROLES))
 			.order("role");
 		if (adminsError) {
@@ -490,6 +490,10 @@ export default function ManageAdminsPage() {
 										<div className="flex justify-between">
 											<span className="text-gray-600">Phone:</span>
 											<span className="font-medium">{selectedAdmin.phone || "Not set"}</span>
+										</div>
+										<div className="flex justify-between gap-3">
+											<span className="text-gray-600">Address:</span>
+											<span className="font-medium text-right">{selectedAdmin.address || "Not set"}</span>
 										</div>
 										<div className="flex justify-between">
 											<span className="text-gray-600">Position:</span>

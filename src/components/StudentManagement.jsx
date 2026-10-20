@@ -123,13 +123,15 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 			const { data: studentsData } = await withTimeout(supabase.rpc("get_scoped_students"), 10000);
 			const { data: quizData } = await withTimeout(supabase.rpc("get_scoped_quiz_results"), 10000);
 
+			// Resolved for every viewer now, not just super_admin: the
+			// Student Details modal and the export both want a per-student
+			// Province, and a province_admin's own students need it too even
+			// though grouping-by-province below stays super_admin-only.
 			let orgNameById = {};
-			if (isSuperAdmin) {
-				const orgIds = [...new Set((studentsData || []).map((s) => s.org_id).filter(Boolean))];
-				if (orgIds.length > 0) {
-					const { data: orgsData } = await supabase.from("organizations").select("id, name").in("id", orgIds);
-					orgNameById = Object.fromEntries((orgsData || []).map((o) => [o.id, o.name]));
-				}
+			const orgIds = [...new Set((studentsData || []).map((s) => s.org_id).filter(Boolean))];
+			if (orgIds.length > 0) {
+				const { data: orgsData } = await supabase.from("organizations").select("id, name").in("id", orgIds);
+				orgNameById = Object.fromEntries((orgsData || []).map((o) => [o.id, o.name]));
 			}
 
 			// Calculate submission counts for each student based on the unified row
@@ -156,7 +158,7 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 						...student,
 						submissionCount,
 						realScore,
-						orgName: isSuperAdmin ? (student.org_id ? orgNameById[student.org_id] || "Unassigned" : "Unassigned") : null,
+						orgName: student.org_id ? orgNameById[student.org_id] || "Unassigned" : "Unassigned",
 					};
 				}) || [];
 
@@ -295,15 +297,18 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 	// surprise full list when a filter is active.
 	const handleExportStudents = async (format) => {
 		setShowExportMenu(false);
-		const headers = ["Name", "Email", "Class", "Denomination", "Zone", "Area", "Parish"];
+		const headers = ["Name", "Email", "Phone", "Class", "Denomination", "Province", "Zone", "Area", "Parish", "Address"];
 		const rows = filteredStudents.map((student) => [
 			student.name || "",
 			student.email || "",
+			student.phone || "",
 			student.class || "",
 			student.denomination || "",
+			student.orgName || "",
 			student.zone || "",
 			student.area || "",
 			student.parish || "",
+			student.address || "",
 		]);
 		const stamp = new Date().toISOString().slice(0, 10);
 		if (format === "csv") {
@@ -868,12 +873,36 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 											</div>
 											<div>
 												<label className="text-sm font-medium text-gray-700">
-													Zone / Area / Parish
+													Phone
 												</label>
 												<p className="text-gray-900">
+													{selectedStudent.phone || "Not set"}
+												</p>
+											</div>
+											<div>
+												<label className="text-sm font-medium text-gray-700">
+													Province
+												</label>
+												<p className="text-gray-900">
+													{selectedStudent.orgName || "Not set"}
+												</p>
+											</div>
+											<div>
+												<label className="text-sm font-medium text-gray-700">
+													Zone / Area / Parish
+												</label>
+												<p className="text-gray-900 break-words">
 													{[selectedStudent.zone, selectedStudent.area, selectedStudent.parish]
 														.filter(Boolean)
 														.join(" · ") || "Not set"}
+												</p>
+											</div>
+											<div>
+												<label className="text-sm font-medium text-gray-700">
+													Address
+												</label>
+												<p className="text-gray-900 break-words">
+													{selectedStudent.address || "Not set"}
 												</p>
 											</div>
 											<div>

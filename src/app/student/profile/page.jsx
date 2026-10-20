@@ -107,6 +107,7 @@ const StudentProfile = () => {
 		name: "",
 		class: "",
 		phone: "",
+		address: "",
 		dateOfBirth: "",
 		gender: "",
 		denomination: "",
@@ -155,6 +156,7 @@ const StudentProfile = () => {
 					name: profile.name || "",
 					class: profile.class || "",
 					phone: profile.phone || "",
+					address: profile.address || "",
 					dateOfBirth: profile.date_of_birth || "",
 					gender: profile.gender || "",
 					denomination: profile.denomination || "",
@@ -266,6 +268,7 @@ const StudentProfile = () => {
 			name: profileData?.name || "",
 			class: profileData?.class || "",
 			phone: profileData?.phone || "",
+			address: profileData?.address || "",
 			dateOfBirth: profileData?.date_of_birth || "",
 			gender: profileData?.gender || "",
 			denomination: profileData?.denomination || "",
@@ -315,6 +318,7 @@ const StudentProfile = () => {
 				name: editForm.name,
 				class: editForm.class,
 				phone: editForm.phone || null,
+				address: editForm.address || null,
 				date_of_birth: editForm.dateOfBirth || null,
 				gender: editForm.gender || null,
 				denomination: editForm.denomination,
@@ -718,6 +722,26 @@ const StudentProfile = () => {
 										<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
 											<FaPhone className="text-gray-400" />
 											<span>{profileData?.phone || "Not set"}</span>
+										</div>
+									)}
+								</div>
+
+								<div>
+									<label className="block text-sm font-medium text-gray-700 mb-2">
+										Address
+									</label>
+									{isEditing ? (
+										<input
+											type="text"
+											name="address"
+											value={editForm.address}
+											onChange={handleChange}
+											className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+										/>
+									) : (
+										<div className="flex items-center space-x-2 p-3 bg-gray-50 rounded-lg">
+											<FaBuilding className="text-gray-400" />
+											<span>{profileData?.address || "Not set"}</span>
 										</div>
 									)}
 								</div>

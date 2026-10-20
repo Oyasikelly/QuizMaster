@@ -29,6 +29,7 @@ const AdminProfile = () => {
 	const [form, setForm] = useState({
 		name: "",
 		phone: "",
+		address: "",
 		position: "",
 		department: "",
 		dateOfBirth: "",
@@ -48,7 +49,7 @@ const AdminProfile = () => {
 
 			const { data: profile, error: profileError } = await supabase
 				.from("users_profile")
-				.select("role, name, email, phone, position, department, date_of_birth, gender, denomination, org_id, created_at")
+				.select("role, name, email, phone, address, position, department, date_of_birth, gender, denomination, org_id, created_at")
 				.eq("id", user.id)
 				.single();
 
@@ -62,6 +63,7 @@ const AdminProfile = () => {
 			setForm({
 				name: profile.name || "",
 				phone: profile.phone || "",
+				address: profile.address || "",
 				position: profile.position || "",
 				department: profile.department || "",
 				dateOfBirth: profile.date_of_birth || "",
@@ -106,6 +108,7 @@ const AdminProfile = () => {
 			.update({
 				name: form.name.trim(),
 				phone: form.phone.trim() || null,
+				address: form.address.trim() || null,
 				position: form.position.trim() || null,
 				department: form.department.trim() || null,
 				date_of_birth: form.dateOfBirth || null,
@@ -207,6 +210,14 @@ const AdminProfile = () => {
 								value={form.phone}
 								onChange={handleChange}
 								placeholder="Phone number"
+								className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
+							/>
+							<input
+								type="text"
+								name="address"
+								value={form.address}
+								onChange={handleChange}
+								placeholder="Address"
 								className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm"
 							/>
 							<input

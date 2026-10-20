@@ -45,6 +45,7 @@ const SetupProfilePage = () => {
 		classname: "",
 		role: "student",
 		phone: "",
+		address: "",
 		dateOfBirth: "",
 		gender: "",
 		denomination: "",
@@ -149,6 +150,7 @@ const SetupProfilePage = () => {
 				name: formData.name,
 				role: userRole === "admin" ? "province_admin" : userRole,
 				phone: formData.phone || null,
+				address: formData.address || null,
 				date_of_birth: formData.dateOfBirth || null,
 				gender: formData.gender || null,
 				denomination: formData.denomination,
@@ -293,6 +295,24 @@ const SetupProfilePage = () => {
 											placeholder="Enter your phone number"
 										/>
 									</div>
+								</motion.div>
+
+								<motion.div
+									initial={{ opacity: 0, y: 20 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ delay: 0.355 }}
+									className="relative">
+									<label className="block text-sm font-medium text-gray-700 mb-2">
+										Address
+									</label>
+									<input
+										type="text"
+										name="address"
+										value={formData.address}
+										onChange={handleChange}
+										className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+										placeholder="Enter your home address"
+									/>
 								</motion.div>
 
 								<div className="grid grid-cols-2 gap-3">

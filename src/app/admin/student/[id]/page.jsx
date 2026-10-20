@@ -20,6 +20,9 @@ import {
 	FaMedal,
 	FaExclamationTriangle,
 	FaMapMarkerAlt,
+	FaPhone,
+	FaBuilding,
+	FaHome,
 } from "react-icons/fa";
 
 const withTimeout = (promise, ms) =>
@@ -33,6 +36,7 @@ const withTimeout = (promise, ms) =>
 const StudentDetail = () => {
 	const [user, setUser] = useState(null);
 	const [orgName, setOrgName] = useState("");
+	const [studentOrgName, setStudentOrgName] = useState("");
 	const [student, setStudent] = useState(null);
 	const [quizResults, setQuizResults] = useState([]);
 	const [loading, setLoading] = useState(true);
@@ -177,6 +181,15 @@ const StudentDetail = () => {
 
 			setStudent(studentData);
 			setQuizResults(extractAttempts(rawQuizData));
+
+			if (studentData?.org_id) {
+				const { data: org } = await supabase
+					.from("organizations")
+					.select("name")
+					.eq("id", studentData.org_id)
+					.maybeSingle();
+				setStudentOrgName(org?.name || "");
+			}
 		} catch (error) {
 			console.error("Error loading student data:", error);
 			throw error; // Rethrow to let getUser handle network errors
@@ -357,11 +370,38 @@ const StudentDetail = () => {
 								</div>
 							</div>
 							<div className="flex items-center space-x-3">
+								<FaPhone className="text-blue-500" />
+								<div>
+									<p className="text-sm text-gray-500">Phone</p>
+									<p className="font-medium text-gray-900">
+										{student.phone || "Not set"}
+									</p>
+								</div>
+							</div>
+							<div className="flex items-center space-x-3">
+								<FaBuilding className="text-blue-500" />
+								<div>
+									<p className="text-sm text-gray-500">Province</p>
+									<p className="font-medium text-gray-900">
+										{studentOrgName || "Not set"}
+									</p>
+								</div>
+							</div>
+							<div className="flex items-center space-x-3">
 								<FaMapMarkerAlt className="text-blue-500" />
 								<div>
 									<p className="text-sm text-gray-500">Zone / Area / Parish</p>
 									<p className="font-medium text-gray-900">
 										{[student.zone, student.area, student.parish].filter(Boolean).join(" · ") || "Not set"}
+									</p>
+								</div>
+							</div>
+							<div className="flex items-center space-x-3">
+								<FaHome className="text-blue-500" />
+								<div>
+									<p className="text-sm text-gray-500">Address</p>
+									<p className="font-medium text-gray-900">
+										{student.address || "Not set"}
 									</p>
 								</div>
 							</div>
