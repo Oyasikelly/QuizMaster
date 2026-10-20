@@ -119,8 +119,6 @@ const StudentDetail = () => {
 		const {
 			data: { subscription },
 		} = supabase.auth.onAuthStateChange(async (event, session) => {
-			console.log("Auth state changed:", event, session?.user?.email);
-
 			if (event === "SIGNED_OUT") {
 				// User signed out, redirect to authenticate
 				router.push("/authenticate");

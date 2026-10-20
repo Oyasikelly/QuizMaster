@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { supabase } from "../../../lib/supabase";
 import { isAdminRole, roleLabel } from "../../../lib/roles";
 import AdminShell from "../../../components/AdminShell";
+import { exportPDF, exportDOCX } from "../../../lib/exportHelpers";
 import {
 	FaUser,
 	FaUsers,
@@ -156,8 +157,6 @@ const AdminDashboard = () => {
 		const {
 			data: { subscription },
 		} = supabase.auth.onAuthStateChange(async (event, session) => {
-			console.log("Auth state changed:", event, session?.user?.email);
-
 			if (event === "SIGNED_OUT") {
 				// User signed out, redirect to authenticate
 				router.push("/authenticate");
@@ -704,6 +703,34 @@ const AdminDashboard = () => {
 		} catch (error) {
 			console.error("Error exporting class results:", error);
 			alert("Error exporting class results. Please try again.");
+		}
+	};
+
+	const handleExportResultsFile = async (format) => {
+		try {
+			const headers = ["Student Name", "Email", "Class", "Mode", "Score", "Percentage", "Date"];
+			const rows = quizResults.map((result) => {
+				const student = students.find((s) => s.email === result.email);
+				const scorePercentage = Math.round((result.score / result.total_questions) * 100);
+				return [
+					student?.name || "Unknown",
+					result.email,
+					student?.class || "Not set",
+					result.mode,
+					`${result.score}/${result.total_questions}`,
+					`${scorePercentage}%`,
+					new Date(result.timestamp).toLocaleDateString(),
+				];
+			});
+			const stamp = new Date().toISOString().split("T")[0];
+			if (format === "pdf") {
+				exportPDF("Quiz Results", headers, rows, `quiz-results-${stamp}.pdf`);
+			} else if (format === "docx") {
+				await exportDOCX("Quiz Results", headers, rows, `quiz-results-${stamp}.docx`);
+			}
+		} catch (error) {
+			console.error("Error exporting results:", error);
+			alert("Error exporting results. Please try again.");
 		}
 	};
 
@@ -1403,9 +1430,9 @@ const AdminDashboard = () => {
 												{selectedStudent.orgName || "Not assigned"}
 											</span>
 										</div>
-										<div className="flex justify-between">
+										<div className="flex flex-col gap-0.5">
 											<span className="text-gray-600">Zone / Area / Parish:</span>
-											<span className="font-medium">
+											<span className="font-medium break-words">
 												{[selectedStudent.zone, selectedStudent.area, selectedStudent.parish]
 													.filter(Boolean)
 													.join(" · ") || "Not set"}
@@ -1778,6 +1805,35 @@ const AdminDashboard = () => {
 											className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
 											Export Detailed
 										</button>
+									</div>
+
+									{/* PDF / DOCX */}
+									<div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-6 border border-amber-200 md:col-span-2">
+										<h3 className="text-lg font-semibold text-gray-900 mb-2 flex items-center">
+											<FaDownload className="mr-2 text-amber-600" />
+											PDF / Word Document
+										</h3>
+										<p className="text-sm text-gray-600 mb-4">
+											Export all results as a formatted document
+										</p>
+										<div className="flex flex-col sm:flex-row gap-3">
+											<button
+												onClick={() => {
+													handleExportResultsFile("pdf");
+													setShowExportModal(false);
+												}}
+												className="flex-1 px-4 py-2 bg-amber-600 text-white rounded-lg hover:bg-amber-700 transition-colors">
+												Export as PDF
+											</button>
+											<button
+												onClick={() => {
+													handleExportResultsFile("docx");
+													setShowExportModal(false);
+												}}
+												className="flex-1 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors">
+												Export as Word (.docx)
+											</button>
+										</div>
 									</div>
 								</div>
 

@@ -53,7 +53,7 @@ export default function AdminShell({ user, orgName, active, children }) {
 			<aside
 				className={`fixed z-30 inset-y-0 left-0 w-64 bg-white shadow-lg transform ${
 					sidebarOpen ? "translate-x-0" : "-translate-x-full"
-				} transition-transform duration-200 ease-in-out md:relative md:translate-x-0 md:w-60 md:flex-shrink-0`}>
+				} transition-transform duration-200 ease-in-out md:sticky md:top-0 md:h-screen md:translate-x-0 md:w-60 md:flex-shrink-0 md:self-start md:overflow-y-auto`}>
 				<div className="flex items-center justify-between px-6 py-5 border-b">
 					<div className="flex items-center gap-3 min-w-0">
 						<div className="w-10 h-10 bg-gradient-to-br from-brand-500 to-brand-700 rounded-xl flex items-center justify-center flex-shrink-0">

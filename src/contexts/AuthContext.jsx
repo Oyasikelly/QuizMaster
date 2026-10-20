@@ -119,8 +119,6 @@ export const AuthProvider = ({ children }) => {
 		const {
 			data: { subscription },
 		} = supabase.auth.onAuthStateChange(async (event, session) => {
-			console.log("Auth state changed:", event);
-
 			if (event === "SIGNED_IN" && session?.user) {
 				// Supabase fires SIGNED_IN again on every tab/window refocus
 				// (it silently refreshes the token), not just on a genuine

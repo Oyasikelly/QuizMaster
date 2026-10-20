@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { supabase } from "../lib/supabase";
 import { DENOMINATIONS } from "../lib/denominations";
+import { exportCSV, exportPDF, exportDOCX } from "../lib/exportHelpers";
 import {
 	FaUser,
 	FaEnvelope,
@@ -22,6 +23,7 @@ import {
 	FaTimes as FaTimesIcon,
 	FaChevronDown,
 	FaChevronRight,
+	FaDownload,
 } from "react-icons/fa";
 import { FaTrophy, FaHistory, FaChartBar } from "react-icons/fa";
 
@@ -60,6 +62,7 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 	// be one redundant header.
 	const [viewerIsSuperAdmin, setViewerIsSuperAdmin] = useState(false);
 	const [collapsedOrgs, setCollapsedOrgs] = useState(new Set());
+	const [showExportMenu, setShowExportMenu] = useState(false);
 	const toggleOrgCollapsed = (orgName) => {
 		setCollapsedOrgs((prev) => {
 			const next = new Set(prev);
@@ -287,6 +290,31 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 	});
 	const groupedOrgNames = viewerIsSuperAdmin ? Object.keys(groupedByOrg).sort() : Object.keys(groupedByOrg);
 
+	// Exports whatever the admin is currently looking at (search + class
+	// filter applied) so "download" matches what's on screen, not a
+	// surprise full list when a filter is active.
+	const handleExportStudents = async (format) => {
+		setShowExportMenu(false);
+		const headers = ["Name", "Email", "Class", "Denomination", "Zone", "Area", "Parish"];
+		const rows = filteredStudents.map((student) => [
+			student.name || "",
+			student.email || "",
+			student.class || "",
+			student.denomination || "",
+			student.zone || "",
+			student.area || "",
+			student.parish || "",
+		]);
+		const stamp = new Date().toISOString().slice(0, 10);
+		if (format === "csv") {
+			exportCSV(headers, rows, `students_${stamp}.csv`);
+		} else if (format === "pdf") {
+			exportPDF("Student Information", headers, rows, `students_${stamp}.pdf`);
+		} else if (format === "docx") {
+			await exportDOCX("Student Information", headers, rows, `students_${stamp}.docx`);
+		}
+	};
+
 	if (loadError) {
 		return (
 			<div className="flex items-center justify-center py-8">
@@ -340,6 +368,36 @@ const StudentManagement = ({ initialEditId, initialDeleteId } = {}) => {
 					<option value="adult">Adult</option>
 					<option value="teenagers">Teenagers</option>
 				</select>
+				<div className="relative">
+					<button
+						onClick={() => setShowExportMenu((prev) => !prev)}
+						className="w-full sm:w-auto flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors font-medium">
+						<FaDownload />
+						Export
+					</button>
+					{showExportMenu && (
+						<>
+							<div className="fixed inset-0 z-10" onClick={() => setShowExportMenu(false)} />
+							<div className="absolute right-0 sm:right-auto left-0 sm:left-auto mt-1 w-44 bg-white border border-gray-200 rounded-lg shadow-lg z-20 overflow-hidden">
+								<button
+									onClick={() => handleExportStudents("csv")}
+									className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+									Export as CSV
+								</button>
+								<button
+									onClick={() => handleExportStudents("pdf")}
+									className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+									Export as PDF
+								</button>
+								<button
+									onClick={() => handleExportStudents("docx")}
+									className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+									Export as Word (.docx)
+								</button>
+							</div>
+						</>
+					)}
+				</div>
 			</div>
 
 			{/* Students Table */}
