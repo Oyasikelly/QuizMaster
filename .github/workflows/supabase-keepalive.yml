@@ -1,0 +1,31 @@
+name: Supabase Keep-Alive
+
+# Free-tier Supabase projects pause after ~1 week with no API traffic.
+# Pings both projects' REST API on a schedule so they never go quiet
+# long enough to pause -- any HTTP response (even a permission-denied
+# 401/403) counts as real traffic reaching the project; a connection
+# failure is the only thing that should fail this job.
+on:
+  schedule:
+    # Mon & Thu, 00:00 UTC -- under 4 days between runs even if one is
+    # delayed or skipped, comfortably inside the ~7-day pause window.
+    - cron: "0 0 * * 1,4"
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping staging Supabase project
+        run: |
+          status=$(curl -s -o /dev/null -w "%{http_code}" \
+            "${{ secrets.STAGING_SUPABASE_URL }}/rest/v1/organizations?select=id&limit=1" \
+            -H "apikey: ${{ secrets.STAGING_SUPABASE_ANON_KEY }}")
+          echo "staging responded: $status"
+
+      - name: Ping production Supabase project
+        run: |
+          status=$(curl -s -o /dev/null -w "%{http_code}" \
+            "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}/rest/v1/organizations?select=id&limit=1" \
+            -H "apikey: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}")
+          echo "production responded: $status"
