@@ -29,6 +29,19 @@ const inter = localFont({
 export const metadata = {
 	title: "QuizMaster",
 	description: "A quiz platform for RCCG Region 70",
+	icons: {
+		icon: "/favicon.ico",
+		apple: "/apple-touch-icon.png",
+	},
+	appleWebApp: {
+		capable: true,
+		statusBarStyle: "default",
+		title: "QuizMaster",
+	},
+};
+
+export const viewport = {
+	themeColor: "#7c52f7",
 };
 
 export default function RootLayout({ children }) {
