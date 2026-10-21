@@ -17,15 +17,30 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Ping staging Supabase project
+        env:
+          SUPABASE_URL: ${{ secrets.STAGING_SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.STAGING_SUPABASE_ANON_KEY }}
         run: |
+          # Secrets pasted via the GitHub UI can pick up a trailing
+          # newline from the clipboard, which splits the URL mid-string
+          # and gives curl a "malformed URL" error (exit 3) -- strip any
+          # stray whitespace/newlines rather than relying on a perfectly
+          # clean paste every time a secret is updated.
+          url=$(printf '%s' "$SUPABASE_URL" | tr -d '[:space:]')
+          key=$(printf '%s' "$SUPABASE_ANON_KEY" | tr -d '[:space:]')
           status=$(curl -s -o /dev/null -w "%{http_code}" \
-            "${{ secrets.STAGING_SUPABASE_URL }}/rest/v1/organizations?select=id&limit=1" \
-            -H "apikey: ${{ secrets.STAGING_SUPABASE_ANON_KEY }}")
+            "$url/rest/v1/organizations?select=id&limit=1" \
+            -H "apikey: $key")
           echo "staging responded: $status"
 
       - name: Ping production Supabase project
+        env:
+          SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
         run: |
+          url=$(printf '%s' "$SUPABASE_URL" | tr -d '[:space:]')
+          key=$(printf '%s' "$SUPABASE_ANON_KEY" | tr -d '[:space:]')
           status=$(curl -s -o /dev/null -w "%{http_code}" \
-            "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}/rest/v1/organizations?select=id&limit=1" \
-            -H "apikey: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}")
+            "$url/rest/v1/organizations?select=id&limit=1" \
+            -H "apikey: $key")
           echo "production responded: $status"
