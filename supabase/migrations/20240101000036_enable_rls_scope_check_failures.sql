@@ -1,0 +1,19 @@
+-- Fixes a real production security hole flagged by Supabase's Security
+-- Advisor (critical: "RLS Disabled in Public"): scope_check_failures
+-- (20240101000029) was only ever meant to be written and read by the
+-- scope-check Edge Function via the service role -- its own comment says
+-- so -- but the migration that created it never actually enabled RLS.
+-- Supabase grants anon/authenticated default access to new public-schema
+-- tables unless RLS is turned on; the explicit `grant ... to service_role`
+-- in that migration was real but additive, not a restriction, so the
+-- table has been readable, writable, and deletable by anyone with the
+-- project's anon key this whole time.
+--
+-- service_role bypasses RLS entirely (Supabase's standard BYPASSRLS
+-- grant), so the Edge Function's existing insert/read behavior is
+-- unaffected. No policies are added for anon/authenticated -- enabling
+-- RLS with zero policies is a default-deny, which is exactly right here:
+-- nothing in the app reads this table, per the original migration's own
+-- comment ("No human or client-side code needs to read this directly
+-- right now").
+alter table scope_check_failures enable row level security;
