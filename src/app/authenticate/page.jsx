@@ -242,7 +242,7 @@ const AuthPage = () => {
 									/>
 								</motion.div>
 								<h2 className="text-2xl font-bold text-gray-800 mb-2">
-									{isSigningUp ? "Join QuizMaster" : "Welcome Back"}
+									{isSigningUp ? "Join SunSchool Quiz" : "Welcome Back"}
 								</h2>
 								<p className="text-gray-600">
 									{isSigningUp

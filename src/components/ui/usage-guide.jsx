@@ -49,7 +49,7 @@ const UsageGuide = () => {
 					level={1}
 					variant="primary"
 					className="mb-4">
-					QuizMaster Design System
+					SunSchool Quiz Design System
 				</Heading>
 				<Text
 					variant="muted"
@@ -455,7 +455,7 @@ const UsageGuide = () => {
 								<Heading
 									level={5}
 									variant="primary">
-									QuizMaster
+									SunSchool Quiz
 								</Heading>
 								<nav className="flex items-center gap-4">
 									<Link

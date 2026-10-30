@@ -245,7 +245,7 @@ const SetupProfilePage = () => {
 								<p className="text-gray-600">
 									{userRole === "admin"
 										? "Set up your administrator account"
-										: "Set up your account to get started with QuizMaster"}
+										: "Set up your account to get started with SunSchool Quiz"}
 								</p>
 							</div>
 

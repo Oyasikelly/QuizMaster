@@ -27,7 +27,7 @@ const inter = localFont({
 });
 
 export const metadata = {
-	title: "QuizMaster",
+	title: "SunSchool Quiz",
 	description: "A quiz platform for RCCG Region 70",
 	icons: {
 		icon: "/favicon.ico",
@@ -36,7 +36,7 @@ export const metadata = {
 	appleWebApp: {
 		capable: true,
 		statusBarStyle: "default",
-		title: "QuizMaster",
+		title: "SunSchool Quiz",
 	},
 };
 

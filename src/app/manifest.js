@@ -3,8 +3,8 @@
 // needed.
 export default function manifest() {
 	return {
-		name: "QuizMaster",
-		short_name: "QuizMaster",
+		name: "SunSchool Quiz",
+		short_name: "SunSchool Quiz",
 		description: "A quiz platform for RCCG Region 70",
 		start_url: "/",
 		display: "standalone",

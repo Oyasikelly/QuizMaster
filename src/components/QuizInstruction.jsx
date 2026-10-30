@@ -4,7 +4,7 @@ export default function QuizInstructions() {
 	return (
 		<div className="max-w-4xl mx-auto p-6 bg-white rounded-2xl shadow-xl mt-10 text-gray-800">
 			<h1 className="text-3xl font-bold text-center text-blue-600 mb-6">
-				Welcome to QuizMaster!
+				Welcome to SunSchool Quiz!
 			</h1>
 
 			<p className="text-lg mb-4 text-center">

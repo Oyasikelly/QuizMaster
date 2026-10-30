@@ -73,7 +73,7 @@ const LandingPage = () => {
 							<Brain className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
 						</div>
 						<span className="font-display text-lg sm:text-2xl font-bold text-gray-900">
-							QuizMaster
+							SunSchool Quiz
 						</span>
 					</motion.div>
 					<motion.div

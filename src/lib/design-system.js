@@ -1,4 +1,4 @@
-// Design System for QuizMaster
+// Design System for SunSchool Quiz
 // This file contains all reusable design tokens, colors, typography, and spacing
 
 export const colors = {
